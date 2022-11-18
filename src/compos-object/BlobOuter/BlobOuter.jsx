@@ -21,7 +21,7 @@ export function BlobOuter({ radius = 13, children }) {
     let geo = buffGeoSphere
 
     let k = 2.6
-    let time = 0
+    let time = 3
     let p = new Vector3()
     let sizeArr = []
     for (let i = 0; i < geo.attributes.position.count; i++) {

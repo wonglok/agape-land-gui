@@ -26,7 +26,7 @@ export function DotScene() {
             thickness={5}
             clearcoat={1}
             clearcoatRoughness={0.1}
-            flatShading={true}
+            flatShading={false}
             transparent={true}
           ></BlobMat>
         </BlobOuter>
