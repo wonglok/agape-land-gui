@@ -1,4 +1,4 @@
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { useTweaks } from 'use-tweaks'
 
 export const SceneEffects = () => {
@@ -12,6 +12,7 @@ export const SceneEffects = () => {
   return (
     <EffectComposer>
       <Bloom {...bloom}></Bloom>
+      <SSR></SSR>
     </EffectComposer>
   )
 }

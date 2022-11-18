@@ -65,7 +65,7 @@ float fbm6( vec2 p ) {
     return f/0.96875;
 }
 
-float pattern (vec2 p) {
+float pattern (vec2 p, float time) {
   float vout = fbm4( p + time + fbm6(  p + fbm4( p + time )) );
   return abs(vout);
 }
@@ -79,9 +79,9 @@ vec4 mainImage (vec2 uv, vec3 direction, vec3 pos)  {
   hdrTextureC4.rgb *= hdrTextureC4.a;
 
   hdrTextureC4.rgb *= vec3(
-    2.5 * pattern(uv.xy * 15.0 + 0.1 + time * 0.5),
-    2.5 * pattern(uv.xy * 15.0 + 0.0 + time * 0.5),
-    2.5 * pattern(uv.xy * 15.0 + -0.1 + time * 0.5)
+    1.0 - pattern(uv.xy * 15.0 + 0.1, time * 0.01),
+    1.0 - pattern(uv.xy * 15.0 + 0.0, time * 0.01),
+    1.0 - pattern(uv.xy * 15.0 + -0.1, time * 0.01)
   );
 
   hdrTextureC4 *= envLightIntensity;
@@ -90,13 +90,13 @@ vec4 mainImage (vec2 uv, vec3 direction, vec3 pos)  {
 }
 `,
     uniforms,
-    1024,
-    false
+    16,
+    true
   )
   let scene = useThree((s) => s.scene)
   scene.environment = envMap
 
-  scene.background = envMap
+  scene.background = texture
 
   return null
 }

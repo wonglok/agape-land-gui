@@ -1,5 +1,7 @@
 import { BlobMat } from '@/compos-object/BlobOuter/BlobMat'
 import { BlobOuter } from '@/compos-object/BlobOuter/BlobOuter'
+import { BridgeControl } from '@/compos-object/WayOut/BridgeControl'
+import { WayOut } from '@/compos-object/WayOut/WayOut'
 import { Box, Center, OrbitControls, Text, Text3D } from '@react-three/drei'
 import { Light } from './Light'
 import { SceneEffects } from './SceneEffects'
@@ -14,7 +16,7 @@ export function DotScene() {
       {/* <Environment preset='apartment' background></Environment> */}
 
       {/*  */}
-      <group position={[0, 0, 0]}>
+      {/* <group scale={0.1} position={[0, 2, -25]}>
         <BlobOuter radius={13}>
           <BlobMat
             envMapIntensity={5}
@@ -30,9 +32,9 @@ export function DotScene() {
             transparent={true}
           ></BlobMat>
         </BlobOuter>
-      </group>
+      </group> */}
 
-      <group position={[0, 0, -25]}>
+      {/* <group position={[0, 0, -25]}>
         <Center>
           <Text3D scale={3.5} font={`/fonts/Days/Days_Regular.json`} {...{}}>
             Agape Land
@@ -44,11 +46,14 @@ export function DotScene() {
             />
           </Text3D>
         </Center>
-      </group>
+      </group> */}
+
+      <BridgeControl></BridgeControl>
+      <WayOut></WayOut>
 
       {/* <Box args={[10, 10, 10]}></Box> */}
 
-      <OrbitControls object-position={[0, 0, 50]} makeDefault></OrbitControls>
+      {/* <OrbitControls object-position={[0, 0, 50]} makeDefault></OrbitControls> */}
 
       {/*  */}
     </group>
