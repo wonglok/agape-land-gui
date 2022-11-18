@@ -17,3 +17,16 @@
     overflow: hidden;
   }
 }
+
+@media (max-width: 500px) {
+  .tp-dfwv {
+    display: none;
+  }
+  .topleftbuttons {
+    display: none;
+  }
+}
+.tp-dfwv {
+  max-height: 90vh;
+  overflow: scroll;
+}
