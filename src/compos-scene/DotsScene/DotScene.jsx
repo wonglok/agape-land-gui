@@ -1,8 +1,15 @@
-import { BlobMat } from '@/compos-object/BlobOuter/BlobMat'
-import { BlobOuter } from '@/compos-object/BlobOuter/BlobOuter'
+// import { BlobMat } from '@/compos-object/BlobOuter/BlobMat'
+// import { BlobOuter } from '@/compos-object/BlobOuter/BlobOuter'
 import { BridgeControl } from '@/compos-object/WayOut/BridgeControl'
 import { WayOut } from '@/compos-object/WayOut/WayOut'
-import { Box, Center, OrbitControls, Text, Text3D } from '@react-three/drei'
+// import {
+//   Box,
+//   Center,
+//   Environment,
+//   OrbitControls,
+//   Text,
+//   Text3D,
+// } from '@react-three/drei'
 import { Light } from './Light'
 import { SceneEffects } from './SceneEffects'
 
@@ -19,7 +26,7 @@ export function DotScene() {
 
       <WayOut></WayOut>
 
-      {/* <Environment preset='apartment' background></Environment> */}
+      {/* <Environment preset='night' background></Environment> */}
 
       {/*  */}
       {/* <group scale={0.1} position={[0, 2, -25]}>

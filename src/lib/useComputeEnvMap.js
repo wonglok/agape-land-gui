@@ -71,8 +71,7 @@ export function useComputeEnvMap(
   uniforms = {},
   res = 128,
   doCompute = true,
-  newAngle = 0,
-  generateMipmaps = false
+  newAngle = 0
 ) {
   let { gl } = useThree()
 
@@ -103,34 +102,11 @@ export function useComputeEnvMap(
       `,
 
       fragmentShader: `
-        varying vec3 vWorldDirection;
-        varying vec3 vPos;
-        #define RECIPROCAL_PI 0.31830988618
-        #define RECIPROCAL_PI2 0.15915494
-
-        uniform float time;
-        uniform float rotY;
-
-        mat3 rotateY(float rad) {
-            float c = cos(rad);
-            float s = sin(rad);
-            return mat3(
-                c, 0.0, -s,
-                0.0, 1.0, 0.0,
-                s, 0.0, c
-            );
-        }
 
         ${code || DefaultCode}
 
         void main() {
-          vec3 direction = normalize( vWorldDirection * rotateY(rotY + time * rotY)  );
-          vec2 sampleUV;
-          sampleUV.y = asin( clamp( direction.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
-          sampleUV.x = atan( direction.z, direction.x ) * RECIPROCAL_PI2 + 0.5;
-
-          gl_FragColor = mainImage(sampleUV, direction, vPos);
-
+          gl_FragColor = mainImage();
         }
       `,
     }

@@ -6,6 +6,20 @@ import '@/styles/index.css'
 //   ssr: false,
 // })
 
+import studio from '@theatre/studio'
+import extension from '@theatre/r3f/dist/extension'
+
+// create-react-app
+if (
+  process.env.NODE_ENV === 'development' &&
+  typeof localStorage !== 'undefined'
+) {
+  try {
+    studio.initialize()
+    studio.extend(extension)
+  } catch (e) {}
+}
+
 function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>

@@ -2395,7 +2395,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@theatre/core@^0.5.0":
+"@theatre/core@0.5":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@theatre/core/-/core-0.5.0.tgz#a7c1fbd658d514432e637c31fa44da687fc7a53c"
   integrity sha512-IW3Ym3mPL+u6+Ectn36Ku7oXEsGRXESZ6lX6EhG+LFSs4cibMRnDgmuUIs7PMHBa1a5RBK7Y91SdjHhTy4D1rg==
@@ -2409,12 +2409,12 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@theatre/r3f@^0.5.0":
+"@theatre/r3f@0.5":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@theatre/r3f/-/r3f-0.5.0.tgz#039f9ee9522a302793bdc8c45dd743d9a068e65b"
   integrity sha512-C6A5hy8Hr8w95SNax1Fhy8gmSQQBNwPrQtJy0Nec5A+ZffL34nulW3GwEQM05rvJ4ly4RBT/pzmya/ZmFbqpQw==
 
-"@theatre/studio@^0.5.0":
+"@theatre/studio@0.5":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@theatre/studio/-/studio-0.5.0.tgz#153f54b5468d926c3c48af1c3b3b1fbaeb9188bf"
   integrity sha512-4Uvm8L/C9rJptz/7DvRp0fP10GkMNV5XVlgYgYELpDgxK2l0m9L68ZPg1wYCDLOqDCBKIs/LKzm0TMW/DAj8Iw==

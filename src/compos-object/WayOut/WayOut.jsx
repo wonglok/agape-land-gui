@@ -38,7 +38,7 @@ export function WayOut() {
               it.material.envMapIntensity = 1
             }
             if (it.material) {
-              console.log(it.material, it.material.name)
+              // console.log(it.material, it.material.name)
 
               if (it.material.name === 'steel black') {
                 it.material.roughness = 0.1
@@ -48,7 +48,7 @@ export function WayOut() {
               if (it.material.name === 'plastic') {
                 it.material.roughness = 0.1
                 it.material.color = new Color('#333333')
-                it.material.metalness = 0.5
+                it.material.metalness = 1
               }
               if (it.material.name === 'light') {
                 it.material.roughness = 0.0
@@ -67,11 +67,11 @@ export function WayOut() {
   return (
     <group>
       {/* <ambientLight intensity={1}></ambientLight> */}
-      <directionalLight
+      {/* <directionalLight
         intensity={0.3}
         color={'#0000ff'}
         position={[0, 1.67, 3]}
-      ></directionalLight>
+      ></directionalLight> */}
 
       {/* <directionalLight
         color={'#0000ff'}

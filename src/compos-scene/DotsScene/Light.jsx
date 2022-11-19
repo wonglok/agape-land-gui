@@ -1,4 +1,5 @@
 import { useComputeEnvMap } from '@/lib/useComputeEnvMap'
+import { useTweaksDisable } from '@/lib/useTweakDisable'
 import { useTexture } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { sRGBEncoding } from 'three'
@@ -22,8 +23,7 @@ export function Light({}) {
   bg.mapping = EquirectangularReflectionMapping
   bg.encoding = sRGBEncoding
 
-  //
-  let { envLightIntensity, rotY } = useTweaks('ComputedEnvMap', {
+  let { envLightIntensity, rotY } = useTweaksDisable('ComputedEnvMap', {
     rotY: { value: 0.5, min: -10, max: 10 },
     envLightIntensity: { value: 1, min: 0, max: 20 },
   })
@@ -32,7 +32,7 @@ export function Light({}) {
   let uniforms = {
     rotY: { value: rotY },
     envLightIntensity: { value: envLightIntensity },
-    hdrTexture: { value: texture },
+    hdrTexture: { value: bg },
   }
 
   //
@@ -72,27 +72,54 @@ float pattern (vec2 p, float time) {
 
 uniform sampler2D hdrTexture;
 uniform float envLightIntensity;
-vec4 mainImage (vec2 uv, vec3 direction, vec3 pos)  {
+varying vec3 vWorldDirection;
+varying vec3 vPos;
+#define RECIPROCAL_PI 0.31830988618
+#define RECIPROCAL_PI2 0.15915494
+
+uniform float time;
+uniform float rotY;
+
+mat3 rotateY(float rad) {
+    float c = cos(rad);
+    float s = sin(rad);
+    return mat3(
+        c, 0.0, -s,
+        0.0, 1.0, 0.0,
+        s, 0.0, c
+    );
+}
+
+vec4 mainImage ()  {
+  vec3 direction = normalize( vWorldDirection * rotateY(rotY));
+  vec2 uv;
+  uv.y = asin( clamp( direction.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
+  uv.x = atan( direction.z, direction.x ) * RECIPROCAL_PI2 + 0.5;
 
   vec4 hdrTextureC4 = texture2D(hdrTexture, uv);
 
-  hdrTextureC4.rgb *= hdrTextureC4.a;
+  vec4 outColor;
+  outColor.a = 1.0;
 
-  hdrTextureC4.rgb *= vec3(
-    1.0 - pattern(uv.xy * 15.0 + 0.1, time * 0.01),
-    1.0 - pattern(uv.xy * 15.0 + 0.0, time * 0.01),
-    1.0 - pattern(uv.xy * 15.0 + -0.1, time * 0.01)
-  );
+  // outColor.rgb = vec3(
+  //   pattern(vPos.zy * 2.0 + 0.1, time * 0.1),
+  //   pattern(vPos.zy * 2.0 + 0.0, time * 0.1),
+  //   pattern(vPos.zy * 2.0 + -0.1, time * 0.1)
+  // );
 
-  hdrTextureC4 *= envLightIntensity;
 
-  return hdrTextureC4;
+  outColor += hdrTextureC4;
+
+  outColor *= envLightIntensity;
+
+  return outColor;
 }
 `,
     uniforms,
-    16,
-    false
+    64,
+    true
   )
+
   let scene = useThree((s) => s.scene)
   scene.environment = envMap
 
