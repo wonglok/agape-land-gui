@@ -1,18 +1,19 @@
-import { useTweaksDisable } from '@/lib/useTweakDisable'
+// import { useTweaksDisable } from '@/lib/useTweakDisable'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
-// import { useTweaks } from 'use-tweaks'
+import { useEffect, useState } from 'react'
+import { useTheatreProps } from './AgapeSheet'
 
 export const SceneEffects = () => {
-  let bloom = useTweaksDisable('Bloom', {
-    mipmapBlur: { value: true },
-    intensity: { value: 1, min: 0, max: 5 },
-    luminanceSmoothing: { value: 0.5, min: 0, max: 1 },
-    luminanceThreshold: { value: 0.1, min: 0, max: 1 },
+  let myBloom = useTheatreProps('Bloom', {
+    mipmapBlur: { type: 'boolean', value: true },
+    intensity: { type: 'number', value: 1, range: [1, 5] },
+    luminanceSmoothing: { type: 'number', value: 0.5, range: [0, 1] },
+    luminanceThreshold: { type: 'number', value: 0.1, range: [0, 1] },
   })
 
   return (
     <EffectComposer>
-      <Bloom {...bloom}></Bloom>
+      <Bloom {...myBloom}></Bloom>
       <SSR></SSR>
     </EffectComposer>
   )

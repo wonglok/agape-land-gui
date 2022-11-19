@@ -1,10 +1,19 @@
 import { DotScene } from '@/compos-scene/DotsScene/DotScene'
 import { AgapeSheet } from '@/compos-scene/DotsScene/AgapeSheet'
 import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { SheetProvider } from '@theatre/r3f'
 
 export default function Index() {
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') {
+      AgapeSheet.project.ready.then(() =>
+        AgapeSheet.sequence.play({ iterationCount: Infinity, range: [0, 6] })
+      )
+    }
+  }, [])
+
+  //
   return (
     <div className='w-full h-full'>
       {/* {`<OpenMetaverse usingYour={glb.scene} />`} */}

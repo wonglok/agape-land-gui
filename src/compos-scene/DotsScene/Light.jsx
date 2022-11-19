@@ -5,12 +5,17 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { sRGBEncoding } from 'three'
 // import { RGBELoader } from 'three-stdlib'
 import { EquirectangularReflectionMapping } from 'three'
-import { useTweaks } from 'use-tweaks'
-
 import { editable as e, SheetProvider } from '@theatre/r3f'
-import { PerspectiveCamera } from '@react-three/drei'
+import { forwardRef, useEffect } from 'react'
+import { useTheatreProps } from './AgapeSheet'
 
-export function Light({}) {
+// const LightFwd = forwardRef(function FowradLight({ rotYaxis }, ref) {
+
+// })
+
+// export const Light = e(LightFwd, 'group')
+
+export function Light() {
   //
 
   // let [hdrURL, setHDRURL] = useState(
@@ -26,17 +31,31 @@ export function Light({}) {
   bg.mapping = EquirectangularReflectionMapping
   bg.encoding = sRGBEncoding
 
-  let { envLightIntensity, rotY } = useTweaksDisable('ComputedEnvMap', {
-    rotY: { value: 0.5, min: -10, max: 10 },
-    envLightIntensity: { value: 1, min: 0, max: 20 },
+  let { rotY, envLightIntensity } = useTheatreProps('ComputedEnvMap', {
+    envLightIntensity: { type: 'number', value: 0.5, range: [0, 10] },
+    rotY: { type: 'number', value: 0, range: [0, 2] },
+
+    //rotY
+    // mipmapBlur: { type: 'boolean', value: true },
+    // intensity: { type: 'number', value: 1, range: [1, 5] },
+    // luminanceSmoothing: { type: 'number', value: 0.5, range: [0, 1] },
+    // luminanceThreshold: { type: 'number', value: 0.1, range: [0, 1] },
   })
 
+  // let { envLightIntensity, rotY } = useTweaksDisable('ComputedEnvMap', {
+  //   rotY: { value: 0.5, min: -10, max: 10 },
+  //   envLightIntensity: { value: 1, min: 0, max: 20 },
+  // })
   //
   let uniforms = {
     rotY: { value: rotY },
     envLightIntensity: { value: envLightIntensity },
     hdrTexture: { value: bg },
   }
+
+  useEffect(() => {
+    //
+  }, [])
 
   //
 
