@@ -1,8 +1,17 @@
 import { getProject, types } from '@theatre/core'
 import { useEffect, useState } from 'react'
+import AgapeState from './AgapeState.json'
+
+const state = {}
+
+if (process.env.NODE_ENV !== 'development') {
+  state.state = AgapeState
+}
 
 // our Theatre.js project sheet, we'll use this later
-export const AgapeSheet = getProject('Agape Land Project').sheet('Agape Sheet')
+export const AgapeSheet = getProject('Agape Land Project', state).sheet(
+  'Agape Sheet'
+)
 
 export const AgapeCache = new Map()
 
