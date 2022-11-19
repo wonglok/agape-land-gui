@@ -12,7 +12,13 @@ export function DotScene() {
       {/*  */}
 
       <Light></Light>
+
       <SceneEffects></SceneEffects>
+
+      <BridgeControl></BridgeControl>
+
+      <WayOut></WayOut>
+
       {/* <Environment preset='apartment' background></Environment> */}
 
       {/*  */}
@@ -47,9 +53,6 @@ export function DotScene() {
           </Text3D>
         </Center>
       </group> */}
-
-      <BridgeControl></BridgeControl>
-      <WayOut></WayOut>
 
       {/* <Box args={[10, 10, 10]}></Box> */}
 
