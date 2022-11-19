@@ -8,7 +8,11 @@ export default function Index() {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') {
       AgapeSheet.project.ready.then(() =>
-        AgapeSheet.sequence.play({ iterationCount: Infinity, range: [0, 6] })
+        AgapeSheet.sequence.play({
+          iterationCount: Infinity,
+          range: [0, 6],
+          direction: 'alternate',
+        })
       )
     }
   }, [])
