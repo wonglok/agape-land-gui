@@ -67,11 +67,6 @@ export function WayOut() {
   return (
     <group>
       {/* <ambientLight intensity={1}></ambientLight> */}
-      {/* <directionalLight
-        intensity={0.3}
-        color={'#0000ff'}
-        position={[0, 1.67, 3]}
-      ></directionalLight> */}
 
       {/* <directionalLight
         color={'#0000ff'}

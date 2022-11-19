@@ -7,6 +7,9 @@ import { sRGBEncoding } from 'three'
 import { EquirectangularReflectionMapping } from 'three'
 import { useTweaks } from 'use-tweaks'
 
+import { editable as e, SheetProvider } from '@theatre/r3f'
+import { PerspectiveCamera } from '@react-three/drei'
+
 export function Light({}) {
   //
 
@@ -125,5 +128,14 @@ vec4 mainImage ()  {
 
   scene.background = texture
 
-  return null
+  return (
+    <group>
+      <e.directionalLight
+        theatreKey={'UpperLight'}
+        intensity={0.3}
+        color={'#0000ff'}
+        position={[0, 1.67, 3]}
+      ></e.directionalLight>
+    </group>
+  )
 }

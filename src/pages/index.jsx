@@ -1,15 +1,19 @@
 import { DotScene } from '@/compos-scene/DotsScene/DotScene'
+import { AgapeSheet } from '@/compos-scene/DotsScene/AgapeSheet'
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
+import { SheetProvider } from '@theatre/r3f'
 
 export default function Index() {
   return (
     <div className='w-full h-full'>
       {/* {`<OpenMetaverse usingYour={glb.scene} />`} */}
-      <Canvas>
-        <Suspense fallback={null}>
-          <DotScene></DotScene>
-        </Suspense>
+      <Canvas gl={{ preserveDrawingBuffer: true }}>
+        <SheetProvider sheet={AgapeSheet}>
+          <Suspense fallback={null}>
+            <DotScene></DotScene>
+          </Suspense>
+        </SheetProvider>
       </Canvas>
 
       {/*  */}

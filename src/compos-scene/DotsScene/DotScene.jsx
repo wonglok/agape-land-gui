@@ -1,7 +1,7 @@
 // import { BlobMat } from '@/compos-object/BlobOuter/BlobMat'
 // import { BlobOuter } from '@/compos-object/BlobOuter/BlobOuter'
-import { BridgeControl } from '@/compos-object/WayOut/BridgeControl'
 import { WayOut } from '@/compos-object/WayOut/WayOut'
+import { PerspectiveCamera } from '@react-three/drei'
 // import {
 //   Box,
 //   Center,
@@ -13,21 +13,21 @@ import { WayOut } from '@/compos-object/WayOut/WayOut'
 import { Light } from './Light'
 import { SceneEffects } from './SceneEffects'
 
+import { editable as e, SheetProvider } from '@theatre/r3f'
+const EditableCamera = e(PerspectiveCamera, 'perspectiveCamera')
+
 export function DotScene() {
   return (
     <group>
       {/*  */}
-
       <Light></Light>
-
       <SceneEffects></SceneEffects>
-
-      <BridgeControl></BridgeControl>
+      {/* <BridgeControl></BridgeControl> */}
+      <EditableCamera makeDefault theatreKey='EditableCamera'></EditableCamera>
 
       <WayOut></WayOut>
 
       {/* <Environment preset='night' background></Environment> */}
-
       {/*  */}
       {/* <group scale={0.1} position={[0, 2, -25]}>
         <BlobOuter radius={13}>
@@ -46,7 +46,6 @@ export function DotScene() {
           ></BlobMat>
         </BlobOuter>
       </group> */}
-
       {/* <group position={[0, 0, -25]}>
         <Center>
           <Text3D scale={3.5} font={`/fonts/Days/Days_Regular.json`} {...{}}>
@@ -60,11 +59,8 @@ export function DotScene() {
           </Text3D>
         </Center>
       </group> */}
-
       {/* <Box args={[10, 10, 10]}></Box> */}
-
       {/* <OrbitControls object-position={[0, 0, 50]} makeDefault></OrbitControls> */}
-
       {/*  */}
     </group>
   )
