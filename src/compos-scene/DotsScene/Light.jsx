@@ -25,14 +25,14 @@ export function Light({}) {
   //
   let { envLightIntensity, rotY } = useTweaks('ComputedEnvMap', {
     rotY: { value: 0.5, min: -10, max: 10 },
-    envLightIntensity: { value: 2.61, min: -10, max: 10 },
+    envLightIntensity: { value: 1, min: 0, max: 20 },
   })
 
   //
   let uniforms = {
     rotY: { value: rotY },
     envLightIntensity: { value: envLightIntensity },
-    hdrTexture: { value: bg },
+    hdrTexture: { value: texture },
   }
 
   //
@@ -91,7 +91,7 @@ vec4 mainImage (vec2 uv, vec3 direction, vec3 pos)  {
 `,
     uniforms,
     16,
-    true
+    false
   )
   let scene = useThree((s) => s.scene)
   scene.environment = envMap

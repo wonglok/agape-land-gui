@@ -32,6 +32,12 @@ const Config = {
 
 export function BridgeControl({ children = () => null }) {
   let controls = useThree((s) => s.controls)
+  let camera = useThree((s) => s.camera)
+  camera.near = 0.1
+  camera.far = 100
+  camera.fov = 75
+  camera.updateProjectionMatrix()
+
   useEffect(() => {
     let hh = ({ key }) => {
       if (key === 'w') {
@@ -174,7 +180,13 @@ export function BridgeControl({ children = () => null }) {
   return (
     <group>
       {children({ player })}
-      <OrbitControls makeDefault></OrbitControls>
+      <OrbitControls
+        minDistance={0}
+        maxDistance={0.01}
+        enableDamping={true}
+        rotateSpeed={-1}
+        makeDefault
+      ></OrbitControls>
       {/* <group position={[0.7141255933707404, 1.4, -18.160777622439785]}> */}
 
       {/* </group> */}
