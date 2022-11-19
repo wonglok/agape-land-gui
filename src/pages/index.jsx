@@ -5,18 +5,6 @@ import { Suspense, useEffect } from 'react'
 import { SheetProvider } from '@theatre/r3f'
 
 export default function Index() {
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'development') {
-      AgapeSheet.project.ready.then(() =>
-        AgapeSheet.sequence.play({
-          iterationCount: Infinity,
-          range: [0, 6],
-          direction: 'alternate',
-        })
-      )
-    }
-  }, [])
-
   //
   return (
     <div className='w-full h-full'>
@@ -24,6 +12,7 @@ export default function Index() {
       <Canvas gl={{ preserveDrawingBuffer: true }}>
         <SheetProvider sheet={AgapeSheet}>
           <Suspense fallback={null}>
+            <Play></Play>
             <DotScene></DotScene>
           </Suspense>
         </SheetProvider>
@@ -35,6 +24,21 @@ export default function Index() {
       {/*  */}
     </div>
   )
+}
+
+function Play() {
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') {
+      AgapeSheet.project.ready.then(() =>
+        AgapeSheet.sequence.play({
+          iterationCount: Infinity,
+          range: [0, 6],
+          direction: 'alternate',
+        })
+      )
+    }
+  }, [])
+  return null
 }
 
 export async function getStaticProps(context) {
