@@ -6,7 +6,7 @@ import { sRGBEncoding } from 'three'
 // import { RGBELoader } from 'three-stdlib'
 import { EquirectangularReflectionMapping } from 'three'
 import { editable as e, SheetProvider } from '@theatre/r3f'
-import { forwardRef, useEffect } from 'react'
+import { forwardRef, useEffect, useMemo } from 'react'
 import { useTheatreProps } from './AgapeSheet'
 
 // const LightFwd = forwardRef(function FowradLight({ rotYaxis }, ref) {
@@ -47,11 +47,18 @@ export function Light() {
   //   envLightIntensity: { value: 1, min: 0, max: 20 },
   // })
   //
-  let uniforms = {
-    rotY: { value: rotY },
-    envLightIntensity: { value: envLightIntensity },
-    hdrTexture: { value: bg },
-  }
+  let uniforms = useMemo(() => {
+    return {
+      rotY: { value: 0 },
+      envLightIntensity: { value: 1 },
+      hdrTexture: { value: bg },
+    }
+  }, [bg])
+
+  useFrame(() => {
+    uniforms.rotY.value = rotY
+    uniforms.envLightIntensity.value = envLightIntensity
+  })
 
   useEffect(() => {
     //

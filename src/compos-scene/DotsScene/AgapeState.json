@@ -12,12 +12,18 @@
           "EditableCamera": {
             "position": {
               "x": 0,
-              "z": 6.69,
+              "z": 8.162991034767694,
               "y": 1.7068552087383568
             },
             "zoom": 1,
             "far": 100,
-            "fov": 74.99999999999997
+            "fov": 74.99999999999997,
+            "scale": {
+              "z": 1
+            },
+            "rotation": {
+              "z": 0
+            }
           },
           "Cube": {
             "scale": {
@@ -297,6 +303,10 @@
             "trackIdByPropPath": {
               "[\"envLightIntensity\"]": "bJGNzOnPTU"
             }
+          },
+          "EditableCamera": {
+            "trackData": {},
+            "trackIdByPropPath": {}
           }
         }
       }
@@ -304,6 +314,7 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "l1QRnL5z8Y3SbMlP",
     "8iKsyC_9RRsYmPmF",
     "-sT5uAJJFVA6AVny"
   ]

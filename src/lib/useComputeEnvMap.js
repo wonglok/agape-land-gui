@@ -76,8 +76,6 @@ export function useComputeEnvMap(
   let { gl } = useThree()
 
   let { envMap, compute, cubeRtt } = useMemo(() => {
-    console.info('uniforms:', uniforms)
-
     let scene = new Scene()
 
     let shader = {
@@ -123,6 +121,8 @@ export function useComputeEnvMap(
     let mesh = new Mesh(new SphereBufferGeometry(5, 32, 32), material)
     scene.add(mesh)
 
+    shader.uniforms.time.value = 0.4
+
     let cubeRtt = new WebGLCubeRenderTarget(res, {
       format: RGBAFormat,
       generateMipmaps: true,
@@ -132,7 +132,6 @@ export function useComputeEnvMap(
 
     let camera = new CubeCamera(1, 100000, cubeRtt)
 
-    shader.uniforms.time.value = 0.4
     camera.update(gl, scene)
 
     let compute = () => {
