@@ -7,9 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 // import { BridgeControl } from './BridgeControl'
 
 export function WayOut() {
-  const [gScene, setGS] = useState(
-    <gridHelper args={[100, 100, 0xff0000, 0xffff00]} />
-  )
+  const [gScene, setGS] = useState(null)
   const scene = useThree((s) => s.scene)
 
   useEffect(() => {
