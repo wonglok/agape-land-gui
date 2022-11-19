@@ -69,14 +69,14 @@ export function WayOut() {
       {/* <ambientLight intensity={1}></ambientLight> */}
       <directionalLight
         intensity={1}
-        color={'#ffffff'}
+        color={'#0000ff'}
         position={[0, 1.67, 3]}
       ></directionalLight>
-      <directionalLight
-        color={'#ffffff'}
+      {/* <directionalLight
+        color={'#0000ff'}
         intensity={1}
         position={[0, 1.67, -1]}
-      ></directionalLight>
+      ></directionalLight> */}
       <group position={[0, 0, 0]} scale={1}>
         {gScene}
       </group>
