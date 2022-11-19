@@ -22,7 +22,7 @@ export function DotScene() {
     <group>
       {/*  */}
       <Light></Light>
-      <SceneEffects></SceneEffects>
+      {/* <SceneEffects></SceneEffects> */}
       <BridgeControl></BridgeControl>
       {/* <EditableCamera makeDefault theatreKey='EditableCamera'></EditableCamera> */}
 
