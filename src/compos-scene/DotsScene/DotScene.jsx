@@ -14,6 +14,7 @@ import { Light } from './Light'
 import { SceneEffects } from './SceneEffects'
 
 import { editable as e, SheetProvider } from '@theatre/r3f'
+import { BridgeControl } from './BridgeControl'
 const EditableCamera = e(PerspectiveCamera, 'perspectiveCamera')
 
 export function DotScene() {
@@ -22,8 +23,8 @@ export function DotScene() {
       {/*  */}
       <Light></Light>
       <SceneEffects></SceneEffects>
-      {/* <BridgeControl></BridgeControl> */}
-      <EditableCamera makeDefault theatreKey='EditableCamera'></EditableCamera>
+      <BridgeControl></BridgeControl>
+      {/* <EditableCamera makeDefault theatreKey='EditableCamera'></EditableCamera> */}
 
       <WayOut></WayOut>
 
