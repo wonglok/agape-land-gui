@@ -11,7 +11,7 @@ import { PerspectiveCamera } from '@react-three/drei'
 //   Text3D,
 // } from '@react-three/drei'
 import { Light } from './Light'
-import { SceneEffects } from './SceneEffects'
+// import { SceneEffects } from './SceneEffects'
 
 import { editable as e, SheetProvider } from '@theatre/r3f'
 import { BridgeControl } from './BridgeControl'
@@ -22,8 +22,11 @@ export function DotScene() {
     <group>
       {/*  */}
       <Light></Light>
+
       {/* <SceneEffects></SceneEffects> */}
+
       <BridgeControl></BridgeControl>
+
       {/* <EditableCamera makeDefault theatreKey='EditableCamera'></EditableCamera> */}
 
       <WayOut></WayOut>
