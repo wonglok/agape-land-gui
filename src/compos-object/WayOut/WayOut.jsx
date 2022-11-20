@@ -6,13 +6,10 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 // import { BridgeControl } from './BridgeControl'
 
-export function WayOut() {
-  const [gScene, setGS] = useState(null)
-  const scene = useThree((s) => s.scene)
-
-  useEffect(() => {
+let fetcher = async ({ url }) => {
+  return new Promise((resolve) => {
     // public
-    const arrayBufferProm = fetch(`/scene/2022-11-18-way/v0003-v1.glb`)
+    const arrayBufferProm = fetch(url)
       // const arrayBufferProm = fetch(`/3d/prototypes/bridge/tMobileBridgeV2-v1.glb`)
       .then((r) => r.arrayBuffer())
     const loader = new GLTFLoader()
@@ -57,10 +54,22 @@ export function WayOut() {
           })
         }
 
-        setGS(<primitive object={glb.scene}></primitive>)
+        resolve(glb)
       })
     })
-  }, [])
+  })
+}
+
+export function WayOut() {
+  // const [gScene, setGS] = useState(null)
+  const scene = useThree((s) => s.scene)
+
+  let { data: glb } = useSWR(
+    { url: `/scene/2022-11-18-way/v0003-v1.glb` },
+    fetcher
+  )
+
+  useEffect(() => {}, [])
 
   return (
     <group>
@@ -72,7 +81,7 @@ export function WayOut() {
         position={[0, 1.67, -1]}
       ></directionalLight> */}
       <group position={[0, 0, 0]} scale={1}>
-        {gScene}
+        {(glb?.scene && <primitive object={glb?.scene}></primitive>) || null}
       </group>
     </group>
   )

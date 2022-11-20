@@ -76,6 +76,7 @@ export function useComputeEnvMap(
   let { gl } = useThree()
 
   let { envMap, compute, cubeRtt } = useMemo(() => {
+    console.log('compile shader')
     let scene = new Scene()
 
     let shader = {
