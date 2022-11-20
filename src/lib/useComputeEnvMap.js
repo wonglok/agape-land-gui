@@ -26,6 +26,7 @@ import { SphereBufferGeometry } from 'three140'
 // import * as dat from '';
 
 let DefaultCode = `
+
 const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
 
 float noise( in vec2 p ) {
@@ -52,18 +53,56 @@ float fbm6( vec2 p ) {
     return f/0.96875;
 }
 
-float pattern (vec2 p) {
+float pattern (vec2 p, float time) {
   float vout = fbm4( p + time + fbm6(  p + fbm4( p + time )) );
   return abs(vout);
 }
 
-vec4 mainImage (vec2 uv, vec3 direction, vec3 pos)  {
-  return vec4(vec3(
-    0.35 + pattern(uv * 1.70123 + -0.17 * cos(time * 0.05)),
-    0.35 + pattern(uv * 1.70123 +  0.0 * cos(time * 0.05)),
-    0.35 + pattern(uv * 1.70123 +  0.17 * cos(time * 0.05))
-  ), 1.0);
+uniform sampler2D hdrTexture;
+uniform float envLightIntensity;
+varying vec3 vWorldDirection;
+varying vec3 vPos;
+#define RECIPROCAL_PI 0.31830988618
+#define RECIPROCAL_PI2 0.15915494
+
+uniform float time;
+uniform float rotY;
+
+mat3 rotateY(float rad) {
+    float c = cos(rad);
+    float s = sin(rad);
+    return mat3(
+        c, 0.0, -s,
+        0.0, 1.0, 0.0,
+        s, 0.0, c
+    );
 }
+
+vec4 mainImage ()  {
+  vec3 direction = normalize( vWorldDirection * rotateY(rotY));
+  vec2 uv;
+  uv.y = asin( clamp( direction.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
+  uv.x = atan( direction.z, direction.x ) * RECIPROCAL_PI2 + 0.5;
+
+  vec4 hdrTextureC4 = texture2D(hdrTexture, uv);
+
+  vec4 outColor;
+  outColor.a = 1.0;
+
+  // outColor.rgb = vec3(
+  //   pattern(vPos.zy * 2.0 + 0.1, time * 0.1),
+  //   pattern(vPos.zy * 2.0 + 0.0, time * 0.1),
+  //   pattern(vPos.zy * 2.0 + -0.1, time * 0.1)
+  // );
+
+
+  outColor += hdrTextureC4;
+
+  outColor *= envLightIntensity;
+
+  return outColor;
+}
+
 `
 
 export function useComputeEnvMap(

@@ -146,7 +146,7 @@ vec4 mainImage ()  {
 `,
     uniforms,
     64,
-    false
+    true
   )
 
   let scene = useThree((s) => s.scene)
