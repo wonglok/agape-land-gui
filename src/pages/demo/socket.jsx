@@ -49,7 +49,6 @@ export default function Socket() {
 }
 
 const backend = {
-  //
   bucketDomain: `amaze-lok-sst-nova-mystack-ugcdatabucket4f0ed9ca-d3oir61lmzxc.s3.amazonaws.com`,
   bucketName: `amaze-lok-sst-nova-mystack-ugcdatabucket4f0ed9ca-d3oir61lmzxc`,
   cdnDomain: `d8p25ehiz3ivn.cloudfront.net`,
@@ -62,10 +61,11 @@ class OSSocket {
   constructor({ roomID = 'myRoom' }) {
     //
     this.roomID = roomID
+    this.connectionString = `${backend.socket}/?roomID=${encodeURIComponent(
+      roomID
+    )}`
     //
-    this.ws = new WebSocket(
-      `${backend.socket}/?roomID=${encodeURIComponent(roomID)}`
-    )
+    this.ws = new WebSocket(this.connectionString)
     this.autoReconnect = -1
 
     this.ws.addEventListener('message', (ev) => {
@@ -77,9 +77,7 @@ class OSSocket {
       clearInterval(this.autoReconnectInterval)
       this.autoReconnectInterval = setInterval(() => {
         if (this.ws.readyState === this.ws.CLOSED) {
-          this.ws = new WebSocket(
-            `${backend.socket}/?roomID=${encodeURIComponent(roomID)}`
-          )
+          this.ws = new WebSocket(this.connectionString)
         }
       }, 10 * 1000)
 
