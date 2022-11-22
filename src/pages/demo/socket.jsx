@@ -66,11 +66,24 @@ class OSSocket {
     this.ws = new WebSocket(
       `${backend.socket}/?roomID=${encodeURIComponent(roomID)}`
     )
+    this.autoReconnect = -1
+
     this.ws.addEventListener('message', (ev) => {
       console.log(JSON.parse(ev.data))
     })
     this.ws.addEventListener('open', (ev) => {
       console.log(ev)
+
+      clearInterval(this.autoReconnectInterval)
+      this.autoReconnectInterval = setInterval(() => {
+        if (this.ws.readyState === this.ws.CLOSED) {
+          this.ws = new WebSocket(
+            `${backend.socket}/?roomID=${encodeURIComponent(roomID)}`
+          )
+        }
+      }, 10 * 1000)
+
+      //
       // this.send({ roomID: this.roomID, data: { yyaya: 11 } })
     })
     this.ws.addEventListener('error', (ev) => {
@@ -95,6 +108,7 @@ class OSSocket {
     })
   }
   clean() {
+    clearInterval(this.autoReconnectInterval)
     let ttt = setInterval(() => {
       if (this.ws.readyState === this.ws.OPEN) {
         clearInterval(ttt)
