@@ -4,6 +4,28 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense, useEffect } from 'react'
 import { SheetProvider } from '@theatre/r3f'
 
+///
+///
+///
+///
+import studio from '@theatre/studio'
+import extension from '@theatre/r3f/dist/extension'
+
+// create-react-app
+if (
+  process.env.NODE_ENV === 'development' &&
+  typeof localStorage !== 'undefined'
+) {
+  try {
+    studio.initialize()
+    studio.extend(extension)
+  } catch (e) {}
+}
+///
+///
+///
+///
+
 export default function Index() {
   //
   return (

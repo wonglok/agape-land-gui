@@ -8,6 +8,7 @@ import { useMemo } from 'react'
 import { Perlin } from '@/lib/Perlin'
 // import { BlobMat } from './BlobMat'
 import { getID } from '@/lib/getID'
+import { SphereBufferGeometry } from 'three140'
 // import {
 //   BoxBufferGeometry,
 //   PlaneBufferGeometry,
@@ -16,7 +17,7 @@ import { getID } from '@/lib/getID'
 
 export function BlobOuter({ radius = 13, children }) {
   let { geo } = useMemo(() => {
-    let buffGeoSphere = new IcosahedronGeometry(32, 20)
+    let buffGeoSphere = new SphereBufferGeometry(23, 64, 64)
 
     let geo = buffGeoSphere
 
