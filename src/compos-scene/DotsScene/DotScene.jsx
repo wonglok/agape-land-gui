@@ -32,7 +32,7 @@ export function DotScene() {
 
       {/* <EditableCamera makeDefault theatreKey='EditableCamera'></EditableCamera> */}
 
-      <group scale={0.1}>
+      {/* <group scale={0.1}>
         <BlobOuter radius={13}>
           <BlobMat
             envMapIntensity={5}
@@ -61,9 +61,9 @@ export function DotScene() {
             />
           </Text3D>
         </Center>
-      </group>
+      </group> */}
 
-      {/* <WayOut></WayOut> */}
+      <WayOut></WayOut>
 
       {/* <Environment preset='night' background></Environment> */}
       {/*  */}
