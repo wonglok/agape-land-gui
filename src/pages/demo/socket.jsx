@@ -74,22 +74,28 @@ class OSSocket {
     this.ws.addEventListener('open', (ev) => {
       console.log(ev)
 
-      clearInterval(this.autoReconnectInterval)
-      this.autoReconnectInterval = setInterval(() => {
-        if (this.ws.readyState === this.ws.CLOSED) {
-          this.ws = new WebSocket(this.connectionString)
-        }
-      }, 10 * 1000)
-
+      this.ensurReconnect()
       //
       // this.send({ roomID: this.roomID, data: { yyaya: 11 } })
     })
     this.ws.addEventListener('error', (ev) => {
       console.log(ev)
+
+      this.ensurReconnect()
     })
     this.ws.addEventListener('close', (ev) => {
       console.log(ev)
     })
+  }
+
+  ensurReconnect() {
+    clearInterval(this.autoReconnectInterval)
+    this.autoReconnectInterval = setInterval(() => {
+      if (this.ws.readyState === this.ws.CLOSED) {
+        clearInterval(this.autoReconnectInterval)
+        this.ws = new WebSocket(this.connectionString)
+      }
+    }, 15 * 1000)
   }
 
   sendJSON({ roomID, data = Math.random() }) {

@@ -49,6 +49,7 @@
     "deep-equal": "^2.1.0",
     "draco3d": "^1.5.3",
     "draco3dgltf": "^1.5.3",
+    "ethers": "^5.7.2",
     "fflate": "^0.7.4",
     "firebase-admin": "^11.0.0",
     "firebase-v8": "npm:firebase@8.6.8",
