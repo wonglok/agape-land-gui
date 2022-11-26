@@ -1,8 +1,8 @@
-export default function Login() {
+export default function Connect() {
   return (
     <div>
       {/*  */}
-      11
+      {/*  */}
       {/*  */}
     </div>
   )
