@@ -1,3 +1,5 @@
+import { GoogleContent } from './auth/google'
+
 export default function Yo() {
   return (
     <div>
@@ -6,6 +8,7 @@ export default function Yo() {
       <div>
         {/*  */}
         {/*  */}
+        <GoogleContent></GoogleContent>
 
         {/*  */}
         {/*  */}
