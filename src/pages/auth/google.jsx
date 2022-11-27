@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 
 export function GoogleContent() {
   let myEndPoints = {
-    development: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
+    development: `https://82xi9xvuu6.execute-api.ap-southeast-1.amazonaws.com`,
     production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
-    test: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
+    test: `https://xulbvrr82m.execute-api.ap-southeast-1.amazonaws.com/`,
   }
 
   const SESSION_ACCESS_KEY = `session-access-key`
