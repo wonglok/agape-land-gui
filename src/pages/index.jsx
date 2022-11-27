@@ -3,10 +3,6 @@ export default function Yo() {
     <div>
       <div>Welcome to our Site</div>
 
-      <iframe
-        style={{ width: '500px', height: '500px' }}
-        src={`/auth/google`}
-      ></iframe>
       <div>
         {/*  */}
         {/*  */}

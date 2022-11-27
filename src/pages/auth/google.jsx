@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-function GoogleContent() {
+export function GoogleContent() {
   let myEndPoints = {
     development: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
     production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
@@ -13,7 +13,7 @@ function GoogleContent() {
   const [loading, setLoading] = useState(false)
 
   const getSession = async () => {
-    const sToken = localStorage.getItem('session')
+    const sToken = localStorage.getItem('session-access-key')
     if (sToken) {
       setLoading(true)
       const user = await getUserInfo(sToken)
@@ -53,7 +53,7 @@ function GoogleContent() {
     const params = new URLSearchParams(search)
     const sTokenInURL = params.get('token')
     if (sTokenInURL) {
-      localStorage.setItem('session', sTokenInURL)
+      localStorage.setItem('session-access-key', sTokenInURL)
       window.location.replace(window.location.origin)
     }
   }, [])
