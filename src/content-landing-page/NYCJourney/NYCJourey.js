@@ -90,20 +90,20 @@ export function NYCJourney() {
     // if (!'ontouchstart' in window) {
 
     // } else {
-    //   myTime.current = MathUtils.damp(
-    //     myTime.current,
-    //     clock.getElapsedTime() % max,
-    //     3,
-    //     dt
-    //   )
-    // }
-
     myTime.current = MathUtils.damp(
       myTime.current,
-      (mouse.x * 0.5 + 0.5) * max,
+      clock.getElapsedTime() % max,
       3,
       dt
     )
+    // }
+
+    // myTime.current = MathUtils.damp(
+    //   myTime.current,
+    //   (mouse.x * 0.5 + 0.5) * max,
+    //   3,
+    //   dt
+    // )
 
     mixer.setTime(myTime.current)
 
