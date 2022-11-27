@@ -128,6 +128,8 @@ export function GoogleContent() {
                   }
 
                   if (provider) {
+                    await provider.send('eth_requestAccounts', [])
+
                     const signer = await provider.getSigner()
                     const providerAddress = await signer.getAddress()
 
