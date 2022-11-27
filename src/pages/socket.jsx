@@ -1,12 +1,14 @@
 import { useEffect, useMemo } from 'react'
 let myEndPoints = {
-  development: `https://lspr7w8538.execute-api.ap-southeast-1.amazonaws.com`,
-  production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
-  test: `https://xulbvrr82m.execute-api.ap-southeast-1.amazonaws.com`,
+  development: `wss://r1gdl0aeoj.execute-api.ap-southeast-1.amazonaws.com/sst-nova`,
+  production: `wss://sj684x8rvj.execute-api.ap-southeast-1.amazonaws.com/prod`,
+  test: `wss://fz4wozcmkk.execute-api.ap-southeast-1.amazonaws.com/stage`,
 }
 const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
 export default function Socket() {
+  //
+
   let { oss } = useMemo(() => {
     if (typeof window === 'undefined') {
       return { oss: false }
@@ -14,6 +16,8 @@ export default function Socket() {
     let oss = new OSSocket({ room: 'yoyo' })
     return { oss }
   }, [])
+
+  //
   useEffect(() => {
     return () => {
       if (oss) {
@@ -21,6 +25,8 @@ export default function Socket() {
       }
     }
   }, [oss])
+
+  //
   return (
     <div>
       <div>!</div>
@@ -34,6 +40,8 @@ export default function Socket() {
         <button
           onClick={() => {
             oss.sendJSON({
+              type: 'toRoom',
+              room: 'yoyo',
               data: {
                 ya:
                   document.querySelector(`#ta`).value +
@@ -65,6 +73,7 @@ class OSSocket {
     this.ws = false
     this.connect()
   }
+
   connect() {
     this.ws = new WebSocket(this.connectionString)
     this.ws.addEventListener('message', (ev) => {
@@ -79,21 +88,21 @@ class OSSocket {
         data: JSON.stringify({ random: Math.random() }),
       })
 
-      this.autoReconnect()
+      this.autoRecover()
       //
       // this.send({ room: this.room, data: { yyaya: 11 } })
     })
     this.ws.addEventListener('error', (ev) => {
       console.log(ev)
 
-      this.autoReconnect()
+      this.autoRecover()
     })
     this.ws.addEventListener('close', (ev) => {
       console.log(ev)
     })
   }
 
-  autoReconnect() {
+  autoRecover() {
     clearInterval(this.autoReconnectInterval)
     this.autoReconnectInterval = setInterval(() => {
       if (this.ws.readyState === this.ws.CLOSED) {
