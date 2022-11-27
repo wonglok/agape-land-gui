@@ -19,12 +19,13 @@ export default function Connect() {
 
       <div>
         <button
+          className='text-blue-500 underline'
           onClick={async () => {
             let yo = await Auth.generateKeyPair()
             console.log(yo)
           }}
         >
-          Generate:
+          Generate: (in console)
         </button>
         {/* Cert 1 -> issue jwt random ->  */}
         {/* Cert 1 -> issue jwt random ->  */}
@@ -45,10 +46,6 @@ export default function Connect() {
 // hosting
 
 ///
-
-//!SECTION
-
-//!SECTION
 
 //
 

@@ -12,7 +12,7 @@ export class Auth {
   //
   static async generateKeyPair() {
     let jose = await import('jose').then((e) => e)
-    const { publicKey, privateKey } = await jose.generateKeyPair('ES512', {
+    const { publicKey, privateKey } = await jose.generateKeyPair('ES256', {
       extractable: true,
     })
     const publicJwk = await jose.exportJWK(publicKey)
@@ -43,8 +43,8 @@ export class Auth {
   }
 
   static async signUserJWT({
-    serverSideID = '',
-    clientSideID = '',
+    serverSideContent = '',
+    clientSideContent = '',
     privateKeyB64,
   }) {
     //
@@ -52,14 +52,14 @@ export class Auth {
 
     const privateKeyObj = await jose.importJWK(
       JSON.parse(Buffer.from(privateKeyB64, 'base64')),
-      'ES512'
+      'ES256'
     )
 
     const jwt = await new jose.SignJWT({
-      clientSideID: `${clientSideID}`,
-      serverSideID: `${serverSideID}`,
+      clientSideContent: `${clientSideContent}`,
+      serverSideContent: `${serverSideContent}`,
     })
-      .setProtectedHeader({ alg: 'ES512' })
+      .setProtectedHeader({ alg: 'ES256' })
       .setIssuer('urn:metaverse:issuer')
       .setAudience('urn:metaverse:audience')
       .sign(privateKeyObj)
@@ -72,7 +72,7 @@ export class Auth {
 
     const publicKeyObj = await jose.importJWK(
       JSON.parse(Buffer.from(publicKeyB64, 'base64')),
-      'ES512'
+      'ES256'
     )
 
     const { payload, protectedHeader } = await jose.jwtVerify(
@@ -92,3 +92,5 @@ export class Auth {
 }
 
 //
+
+//!SECTION

@@ -11,7 +11,6 @@ import { SheetProvider } from '@theatre/r3f'
 import studio from '@theatre/studio'
 import extension from '@theatre/r3f/dist/extension'
 
-// create-react-app
 if (
   process.env.NODE_ENV === 'development' &&
   typeof localStorage !== 'undefined'
@@ -30,7 +29,6 @@ export default function Index() {
   //
   return (
     <div className='w-full h-full'>
-      {/* {`<OpenMetaverse usingYour={glb.scene} />`} */}
       <Canvas gl={{ preserveDrawingBuffer: true }}>
         <SheetProvider sheet={AgapeSheet}>
           <Suspense fallback={null}>
