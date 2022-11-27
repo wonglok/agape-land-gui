@@ -1,10 +1,12 @@
-import { Stats, useGLTF } from '@react-three/drei'
+import { Box, Center, Html, Stats, Text3D, useGLTF } from '@react-three/drei'
 // import { useReady, useScrollStore } from '../Core/useScrollStore'
 import { useEffect, useMemo, useRef } from 'react'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { AnimationMixer, BufferAttribute, Vector3 } from 'three'
 import { TheVortex } from '../TheVortex/TheVortex'
 import { MathUtils } from 'three'
+import { Vector2 } from 'three140'
+import { UIContent } from '@/lib/UIContent'
 // import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 // import { Octree } from './Octree'
 // import { StaticGeometryGenerator } from 'three-mesh-bvh'
@@ -45,6 +47,7 @@ let order = [
 ]
 
 export function NYCJourney() {
+  let progressHTMLRef = useRef()
   let rot = useRef()
   let rot2 = useRef()
 
@@ -86,26 +89,48 @@ export function NYCJourney() {
     }
   })
 
+  let barRes1 = false
+  let barRes2 = false
+
   useFrame(({ camera, size, mouse, clock }, dt) => {
     // if (!'ontouchstart' in window) {
 
     // } else {
-    myTime.current = MathUtils.damp(
-      myTime.current,
-      clock.getElapsedTime() % max,
-      3,
-      dt
-    )
-    // }
-
     // myTime.current = MathUtils.damp(
     //   myTime.current,
-    //   (mouse.x * 0.5 + 0.5) * max,
+    //   clock.getElapsedTime() % max,
     //   3,
     //   dt
     // )
+    // // }
+
+    if (mouse.y == 0.0 && mouse.x == 0.0) {
+      myTime.current = MathUtils.damp(
+        myTime.current,
+        (clock.getElapsedTime() * 0.2) % max,
+        3,
+        dt
+      )
+    } else {
+      myTime.current = MathUtils.damp(
+        myTime.current,
+        ((-mouse.y * 0.5 + 0.5) * max) % max,
+        3,
+        dt
+      )
+    }
 
     mixer.setTime(myTime.current)
+
+    barRes1 = barRes1 || document.querySelector('#progressHTML1')
+    if (barRes1) {
+      barRes1.style.height = `${((myTime.current / max) * 100.0).toFixed(3)}%`
+    }
+
+    barRes2 = barRes2 || document.querySelector('#progressHTML2')
+    if (barRes2) {
+      barRes2.style.height = `${((myTime.current / max) * 100.0).toFixed(3)}%`
+    }
 
     let sorted = glb.cameras
 
@@ -162,7 +187,7 @@ export function NYCJourney() {
 
           camera.fov = 40 + adder
           camera.near = 1
-          camera.far = 300
+          camera.far = 350
           camera.updateProjectionMatrix()
         }
       }
@@ -174,7 +199,21 @@ export function NYCJourney() {
 
   return (
     <group>
-      <Stats></Stats>
+      <UIContent>
+        <div
+          className='fixed top-0 right-0 z-100'
+          id='progressHTML1'
+          style={{ width: '3px', backgroundColor: `#00ffff` }}
+        ></div>
+        {/* <div
+          className='fixed top-0 left-0 z-100'
+          id='progressHTML2'
+          style={{ width: '3px', backgroundColor: `#00ffff` }}
+        ></div> */}
+      </UIContent>
+
+      {process.env.NODE_ENV === 'development' && <Stats></Stats>}
+
       {createPortal(
         <group ref={rot}>
           <group ref={rot2}>
@@ -196,9 +235,3 @@ export function NYCJourney() {
     </group>
   )
 }
-
-/*
-
-
-
-*/

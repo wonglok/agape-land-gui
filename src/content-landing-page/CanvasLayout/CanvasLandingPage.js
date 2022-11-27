@@ -1,4 +1,4 @@
-import { Environment } from '@react-three/drei'
+import { Center, Environment, Text, Text3D } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import {
   Bloom,
@@ -25,7 +25,7 @@ export function CanvasPage({}) {
         onCreated: (st) => {
           st.events.connect(document.body)
 
-          st.scene.background = new Color('#ffffff')
+          st.scene.background = new Color('#00ffff')
           st.gl.physicallyCorrectLights = true
           st.gl.outputEncoding = sRGBEncoding
           st.gl.shadowMap.enabled = false
@@ -40,23 +40,26 @@ export function CanvasPage({}) {
     >
       <Suspense
         fallback={
-          <group scale={0.13} position={[0, 0, -10]}>
-            <theVortex key={TheVortex.key}></theVortex>
+          <group position={[0, 0, -10]}>
+            <Text fontSize={2} color='#ff00ff'>
+              AGAPE Town
+            </Text>
           </group>
         }
       >
         <Environment
           files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
-          background
         ></Environment>
         <NYCJourney></NYCJourney>
       </Suspense>
 
-      <EffectComposer disableNormalPass multisampling={3}>
+      <EffectComposer resolutionScale={0.1} disableNormalPass multisampling={4}>
         <Bloom
           mipmapBlur
           radius={0.5}
           intensity={2}
+          width={256}
+          height={256}
           luminanceThreshold={0.3}
         ></Bloom>
       </EffectComposer>

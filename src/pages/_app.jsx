@@ -16,7 +16,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
       <span
         style={{
-          display: 'inline-block',
+          display: 'block',
           position: 'absolute',
           zIndex: 10,
         }}
