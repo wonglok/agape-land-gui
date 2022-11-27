@@ -29,11 +29,6 @@ export default function Socket() {
   //
   return (
     <div>
-      <div>!</div>
-      <div>!</div>
-      <div>!</div>
-      <div>!</div>
-
       <div>Socket</div>
       <div>
         <textarea id='ta'></textarea>
@@ -130,6 +125,7 @@ class OSSocket {
       }
     })
   }
+
   clean() {
     clearInterval(this.autoReconnectInterval)
     let ttt = setInterval(() => {
