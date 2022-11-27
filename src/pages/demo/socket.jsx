@@ -1,4 +1,10 @@
 import { useEffect, useMemo } from 'react'
+let myEndPoints = {
+  development: `https://lspr7w8538.execute-api.ap-southeast-1.amazonaws.com`,
+  production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
+  test: `https://xulbvrr82m.execute-api.ap-southeast-1.amazonaws.com`,
+}
+const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
 export default function Socket() {
   let { oss } = useMemo(() => {
@@ -48,20 +54,12 @@ export default function Socket() {
   )
 }
 
-const backend = {
-  bucketDomain: `amaze-lok-sst-nova-mystack-ugcdatabucket4f0ed9ca-d3oir61lmzxc.s3.amazonaws.com`,
-  bucketName: `amaze-lok-sst-nova-mystack-ugcdatabucket4f0ed9ca-d3oir61lmzxc`,
-  cdnDomain: `d8p25ehiz3ivn.cloudfront.net`,
-  rest: `https://fl7bsdl89f.execute-api.us-east-1.amazonaws.com`,
-  socket: `wss://0tehxmpe2m.execute-api.us-east-1.amazonaws.com/amaze-lok`,
-}
-
 // dont support JSON
 class OSSocket {
   constructor({ room = 'myRoom' }) {
     //
     this.room = room
-    this.connectionString = `${backend.socket}`
+    this.connectionString = `${myAPIEndPoint}`
     //
     this.autoReconnectInterval = -1
     this.ws = false

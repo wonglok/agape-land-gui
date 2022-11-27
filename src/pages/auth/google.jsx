@@ -8,10 +8,9 @@ export function GoogleContent() {
     production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
     test: `https://xulbvrr82m.execute-api.ap-southeast-1.amazonaws.com`,
   }
+  const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
   const SESSION_ACCESS_KEY = `session-access-key`
-
-  const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(false)
