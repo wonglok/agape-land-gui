@@ -5,7 +5,7 @@ export default function Socket() {
     if (typeof window === 'undefined') {
       return { oss: false }
     }
-    let oss = new OSSocket({ roomID: 'yoyo' })
+    let oss = new OSSocket({ room: 'yoyo' })
     return { oss }
   }, [])
   useEffect(() => {
@@ -58,54 +58,66 @@ const backend = {
 
 // dont support JSON
 class OSSocket {
-  constructor({ roomID = 'myRoom' }) {
+  constructor({ room = 'myRoom' }) {
     //
-    this.roomID = roomID
-    this.connectionString = `${backend.socket}/?roomID=${encodeURIComponent(
-      roomID
-    )}`
+    this.room = room
+    this.connectionString = `${backend.socket}`
     //
+    this.autoReconnectInterval = -1
+    this.ws = false
+    this.connect()
+  }
+  connect() {
     this.ws = new WebSocket(this.connectionString)
-    this.autoReconnect = -1
-
     this.ws.addEventListener('message', (ev) => {
       console.log(JSON.parse(ev.data))
     })
     this.ws.addEventListener('open', (ev) => {
       console.log(ev)
 
-      this.ensurReconnect()
+      this.sendJSON({
+        room: this.room,
+        type: 'join',
+        data: JSON.stringify({ random: Math.random() }),
+      })
+
+      this.autoReconnect()
       //
-      // this.send({ roomID: this.roomID, data: { yyaya: 11 } })
+      // this.send({ room: this.room, data: { yyaya: 11 } })
     })
     this.ws.addEventListener('error', (ev) => {
       console.log(ev)
 
-      this.ensurReconnect()
+      this.autoReconnect()
     })
     this.ws.addEventListener('close', (ev) => {
       console.log(ev)
     })
   }
 
-  ensurReconnect() {
+  autoReconnect() {
     clearInterval(this.autoReconnectInterval)
     this.autoReconnectInterval = setInterval(() => {
       if (this.ws.readyState === this.ws.CLOSED) {
         clearInterval(this.autoReconnectInterval)
-        this.ws = new WebSocket(this.connectionString)
+        this.connect()
       }
     }, 15 * 1000)
   }
 
-  sendJSON({ roomID, data = Math.random() }) {
+  sendJSON({
+    room,
+    type = 'toRoom',
+    data = JSON.stringify({ random: Math.random() }),
+  }) {
     let ttt = setInterval(() => {
       if (this.ws.readyState === this.ws.OPEN) {
         clearInterval(ttt)
         this.ws.send(
           JSON.stringify({
             data: data,
-            roomID: roomID || this.roomID,
+            type: type,
+            room: room || this.room,
           })
         )
       }
