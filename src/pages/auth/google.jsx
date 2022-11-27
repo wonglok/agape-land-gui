@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { ethers } from 'ethers'
+import { getID } from '@/lib/getID'
 
 export function GoogleContent() {
   let myEndPoints = {
     development: `https://82xi9xvuu6.execute-api.ap-southeast-1.amazonaws.com`,
     production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
-    test: `https://xulbvrr82m.execute-api.ap-southeast-1.amazonaws.com/`,
+    test: `https://xulbvrr82m.execute-api.ap-southeast-1.amazonaws.com`,
   }
 
   const SESSION_ACCESS_KEY = `session-access-key`
@@ -75,14 +77,16 @@ export function GoogleContent() {
           <div>
             <div className='profile'>
               <p>Welcome {session.name}!</p>
-              <img
-                src={session.picture}
-                style={{ borderRadius: '50%' }}
-                width={100}
-                height={100}
-                alt=''
-              />
-              <p>{session.email}</p>
+              {session.picture && (
+                <img
+                  src={session.picture}
+                  style={{ borderRadius: '50%' }}
+                  width={100}
+                  height={100}
+                  alt=''
+                />
+              )}
+              {session.email && <p>{session.email}</p>}
               <button onClick={signOut}>Sign out</button>
             </div>
           </div>
@@ -97,6 +101,60 @@ export function GoogleContent() {
               rel='noreferrer'
             >
               <>Sign in with Google</>
+            </button>
+
+            <button
+              onClick={async () => {
+                try {
+                  let provider
+                  if (typeof window !== 'undefined' && window.ethereum) {
+                    provider = new ethers.providers.Web3Provider(
+                      window.ethereum,
+                      'any'
+                    )
+                  } else {
+                    provider = null
+                  }
+
+                  if (provider) {
+                    const providerAddress = await provider
+                      .getSigner()
+                      .getAddress()
+
+                    const signer = provider.getSigner()
+                    let json = {
+                      domain: window.location.host,
+                      address: providerAddress, //connetorData.account,
+                      statement: 'Ethereum Sign In',
+                      origin: window.location.origin,
+                      version: '1',
+                      // chainId: connetorData.chain.id,
+                      nonce: getID() + getID() + getID() + getID(),
+                    }
+                    let message = `Welcome to Agape!
+Let's sign you in...
+domain : ${json.domain}
+origin : ${json.origin}
+addresss : ${json.address}
+nonce : ${json.nonce}
+`
+                    const originalSignature = await signer.signMessage(message)
+
+                    let signature = originalSignature
+                    let raw = message
+
+                    window.top.location.assign(
+                      `${myAPIEndPoint}/auth/wallet/authorize?signature=${encodeURIComponent(
+                        signature
+                      )}&raw=${encodeURIComponent(raw)}`
+                    )
+                  }
+                } catch (e) {
+                  console.log(e)
+                }
+              }}
+            >
+              Sign in with Metamask
             </button>
           </div>
         )}
