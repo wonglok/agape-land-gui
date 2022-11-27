@@ -48,6 +48,9 @@ function GoogleContent() {
   }
 
   const getUserInfo = async (session) => {
+    if (!session) {
+      return false
+    }
     try {
       const response = await fetch(`${myAPIEndPoint}/session`, {
         method: 'GET',
