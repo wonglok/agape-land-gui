@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 let myEndPoints = {
   development: `wss://r1gdl0aeoj.execute-api.ap-southeast-1.amazonaws.com/sst-nova`,
   production: `wss://sj684x8rvj.execute-api.ap-southeast-1.amazonaws.com/prod`,
-  test: `wss://mu46hxv22d.execute-api.ap-southeast-1.amazonaws.com/test`, // needs update
+  test: `wss://mu46hxv22d.execute-api.ap-southeast-1.amazonaws.com/test`,
 }
 const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
