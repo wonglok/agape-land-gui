@@ -34,10 +34,10 @@ function GoogleContent() {
   const [loading, setLoading] = useState(false)
 
   const getSession = async () => {
-    const token = localStorage.getItem('session')
-    if (token) {
+    const sToken = localStorage.getItem('session')
+    if (sToken) {
       setLoading(true)
-      const user = await getUserInfo(token)
+      const user = await getUserInfo(sToken)
       if (user) {
         setSession(user)
       } else {
@@ -47,15 +47,15 @@ function GoogleContent() {
     }
   }
 
-  const getUserInfo = async (session) => {
-    if (!session) {
+  const getUserInfo = async (sToken) => {
+    if (!sToken) {
       return false
     }
     try {
       const response = await fetch(`${myAPIEndPoint}/session`, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${session}`,
+          Authorization: `Bearer ${sToken}`,
         },
       })
       return response.json()
@@ -72,9 +72,9 @@ function GoogleContent() {
   useEffect(() => {
     const search = window.location.search
     const params = new URLSearchParams(search)
-    const token = params.get('token')
-    if (token) {
-      localStorage.setItem('session', token)
+    const sTokenInURL = params.get('token')
+    if (sTokenInURL) {
+      localStorage.setItem('session', sTokenInURL)
       window.location.replace(window.location.origin)
     }
   }, [])
