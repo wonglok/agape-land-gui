@@ -57,7 +57,7 @@ function GoogleContent() {
       })
       return response.json()
     } catch (error) {
-      alert(error)
+      console.log(error)
     }
   }
 
