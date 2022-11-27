@@ -44,7 +44,7 @@ export function GoogleContent() {
   }
 
   const signOut = async () => {
-    localStorage.clear('session')
+    localStorage.clear('session-access-key')
     setSession(null)
   }
 
