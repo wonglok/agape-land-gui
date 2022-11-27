@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-const titleDefault = 'Agape Land'
+const titleDefault = 'Agape Town'
 const url = 'https://agape.land/'
 const description = 'The land of the living that you create.'
 const author = 'Agape Metaverse'
@@ -32,8 +32,8 @@ const Header = ({ title = titleDefault }) => {
           color='#5bbad5'
         />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
-        <meta name='apple-mobile-web-app-title' content='Agape Land' />
-        <meta name='application-name' content='Agape Land' />
+        <meta name='apple-mobile-web-app-title' content='Agape Town' />
+        <meta name='application-name' content='Agape Town' />
         <meta name='msapplication-TileColor' content='#00aba9' />
         <meta name='msapplication-config' content='/icons/browserconfig.xml' />
         <meta name='theme-color' content='#ffffff'></meta>

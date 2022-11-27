@@ -52,7 +52,7 @@ export function DotScene() {
       <group position={[0, 0, -25]}>
         <Center>
           <Text3D scale={3.5} font={`/fonts/Days/Days_Regular.json`} {...{}}>
-            Agape Land
+            Agape Town
             <meshPhysicalMaterial
               metalness={0.1}
               emissive={'#00ffff'}

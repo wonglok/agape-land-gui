@@ -64,7 +64,7 @@ function Play() {
 export async function getStaticProps(context) {
   return {
     props: {
-      title: 'Agape Land',
+      title: 'Agape Town',
     }, // will be passed to the page component as props
   }
 }
