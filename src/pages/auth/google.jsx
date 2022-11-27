@@ -128,11 +128,9 @@ export function GoogleContent() {
                   }
 
                   if (provider) {
-                    const providerAddress = await provider
-                      .getSigner()
-                      .getAddress()
+                    const signer = await provider.getSigner()
+                    const providerAddress = await signer.getAddress()
 
-                    const signer = provider.getSigner()
                     let json = {
                       domain: window.location.host,
                       address: providerAddress, //connetorData.account,
