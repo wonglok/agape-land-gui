@@ -7,13 +7,15 @@ export function GoogleContent() {
     test: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
   }
 
+  const SESSION_ACCESS_KEY = `session-access-key`
+
   const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const getSession = async () => {
-    const sToken = localStorage.getItem('session-access-key')
+    const sToken = localStorage.getItem(SESSION_ACCESS_KEY)
     if (sToken) {
       setLoading(true)
       const user = await getUserInfo(sToken)
@@ -44,7 +46,7 @@ export function GoogleContent() {
   }
 
   const signOut = async () => {
-    localStorage.clear('session-access-key')
+    localStorage.clear(SESSION_ACCESS_KEY)
     setSession(null)
   }
 
@@ -53,7 +55,7 @@ export function GoogleContent() {
     const params = new URLSearchParams(search)
     const sTokenInURL = params.get('token')
     if (sTokenInURL) {
-      localStorage.setItem('session-access-key', sTokenInURL)
+      localStorage.setItem(SESSION_ACCESS_KEY, sTokenInURL)
       window.location.replace(window.location.origin)
     }
   }, [])
