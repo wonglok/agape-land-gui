@@ -103,6 +103,17 @@ export function GoogleContent() {
               <>Sign in with Google</>
             </button>
 
+            {/* <button
+              onClick={() => {
+                window.top.location.assign(
+                  `${myAPIEndPoint}/auth/guest/authorize`
+                )
+              }}
+              rel='noreferrer'
+            >
+              <>Sign in as Guest</>
+            </button> */}
+
             <button
               onClick={async () => {
                 try {
