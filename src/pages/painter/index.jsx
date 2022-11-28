@@ -54,7 +54,7 @@ function Content() {
   return (
     <group>
       {glb1.scene && glb2.scene && (
-        <Cylinder args={[3, 3, 5, 64, 5]}>
+        <Cylinder rotation={[0, Math.PI, 0]} args={[3, 3, 5, 64, 5]}>
           <MixMat attach='material' mat1={mat1} mat2={mat2}></MixMat>
         </Cylinder>
       )}
