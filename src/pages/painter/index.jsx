@@ -4,6 +4,7 @@ import {
   Environment,
   OrbitControls,
   Plane,
+  Sphere,
   useGLTF,
 } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
@@ -48,9 +49,9 @@ function Content() {
   return (
     <group>
       {glb1.scene && glb2.scene && (
-        <Plane args={[10, 10, 1, 1]}>
+        <Sphere args={[10, 64, 64]}>
           <MixMat attach='material' mat1={mat1} mat2={mat2}></MixMat>
-        </Plane>
+        </Sphere>
       )}
     </group>
   )
