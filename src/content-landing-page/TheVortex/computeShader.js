@@ -389,7 +389,6 @@ void main ()	{
       float scaler = 1.0 / 350.0 * 3.14159264 * 2.0;
       vec3 mpos = pos.xyz * scaler;
 
-
       vec3 reso = vec3(1.0, 1.0, 1.0);
       float radius = 20.0;
       float angle = 12.0;
