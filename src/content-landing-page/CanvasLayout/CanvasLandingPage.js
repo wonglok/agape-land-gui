@@ -1,17 +1,11 @@
 import { UIContent } from '@/lib/UIContent'
 import { Center, Environment, Text, Text3D } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import {
-  Bloom,
-  EffectComposer,
-  SelectiveBloom,
-} from '@react-three/postprocessing'
-import Image from 'next/image'
-import { Suspense, useEffect } from 'react'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { Suspense } from 'react'
 import { Color, sRGBEncoding } from 'three'
 import { Core } from '../Core/Core'
 import { NYCJourney } from '../NYCJourney/NYCJourey'
-import { TheVortex } from '../TheVortex/TheVortex'
 
 export function CanvasPage({}) {
   return (
@@ -21,14 +15,14 @@ export function CanvasPage({}) {
         position: 'fixed',
         top: 0,
         left: 0,
-        backgroundColor: 'cyan',
+        backgroundColor: '#F08BDC',
       }}
       {...{
         gl: { antialias: false, logarithmicDepthBuffer: false },
         onCreated: (st) => {
           // st.events.connect(document.body)
 
-          st.scene.background = new Color('#00ffff')
+          st.scene.background = new Color('#F08BDC')
           st.gl.physicallyCorrectLights = true
           st.gl.outputEncoding = sRGBEncoding
           st.gl.shadowMap.enabled = false
@@ -60,6 +54,20 @@ export function CanvasPage({}) {
         ></Environment>
         <NYCJourney></NYCJourney>
       </Suspense>
+
+      <UIContent>
+        <div className='fixed top-0 right-0 mt-2 mr-2 z-100'>
+          <img
+            onClick={(ev) => {
+              ///
+              console.log(ev)
+            }}
+            className='h-8 lg:h-12'
+            src={`/brand/agape-2.png`}
+            alt={'agape town - here we go!'}
+          ></img>
+        </div>
+      </UIContent>
 
       <EffectComposer resolutionScale={0.1} disableNormalPass multisampling={4}>
         <Bloom
