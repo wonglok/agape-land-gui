@@ -38,17 +38,3 @@ export default function Connect() {
     </div>
   )
 }
-
-//
-
-// s3
-
-// hosting
-
-///
-
-//
-
-//
-
-//

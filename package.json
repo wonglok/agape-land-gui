@@ -33,6 +33,7 @@
     "@react-three/fiber": "^8.0.27",
     "@react-three/postprocessing": "2.6.1",
     "@react-three/xr": "^4.0.0",
+    "@squoosh/lib": "^0.4.0",
     "@theatre/core": "0.5",
     "@theatre/r3f": "0.5",
     "@theatre/studio": "0.5",
