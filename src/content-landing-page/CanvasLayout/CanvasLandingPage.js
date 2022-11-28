@@ -1,3 +1,4 @@
+import { UIContent } from '@/lib/UIContent'
 import { Center, Environment, Text, Text3D } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import {
@@ -5,7 +6,8 @@ import {
   EffectComposer,
   SelectiveBloom,
 } from '@react-three/postprocessing'
-import { Suspense } from 'react'
+import Image from 'next/image'
+import { Suspense, useEffect } from 'react'
 import { Color, sRGBEncoding } from 'three'
 import { Core } from '../Core/Core'
 import { NYCJourney } from '../NYCJourney/NYCJourey'
@@ -19,6 +21,7 @@ export function CanvasPage({}) {
         position: 'fixed',
         top: 0,
         left: 0,
+        backgroundColor: 'cyan',
       }}
       {...{
         gl: { antialias: false, logarithmicDepthBuffer: false },
@@ -40,11 +43,16 @@ export function CanvasPage({}) {
     >
       <Suspense
         fallback={
-          <group position={[0, 0, -10]}>
-            <Text fontSize={2} color='#ff00ff'>
-              AGAPE Town
-            </Text>
-          </group>
+          <UIContent>
+            <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
+              <img
+                className='w-6/12'
+                layout={'responsive'}
+                src={`/brand/agape-2.png`}
+                alt={'agape town - here we go!'}
+              ></img>
+            </div>
+          </UIContent>
         }
       >
         <Environment
