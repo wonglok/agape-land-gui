@@ -2,6 +2,7 @@ import { MixMat } from '@/substance-painter/MixMat/MixMat'
 import {
   Box,
   Environment,
+  Loader,
   OrbitControls,
   Plane,
   Sphere,
@@ -19,9 +20,11 @@ export default function Material() {
           <Environment preset='apartment'></Environment>
           <OrbitControls></OrbitControls>
         </Suspense>
+
         {/*  */}
         {/*  */}
       </Canvas>
+      <Loader></Loader>
     </div>
   )
 }
@@ -49,7 +52,7 @@ function Content() {
   return (
     <group>
       {glb1.scene && glb2.scene && (
-        <Sphere args={[10, 64, 64]}>
+        <Sphere args={[2.5, 64, 64]}>
           <MixMat attach='material' mat1={mat1} mat2={mat2}></MixMat>
         </Sphere>
       )}
