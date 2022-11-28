@@ -185,7 +185,7 @@ export function NYCJourney() {
           cam.getWorldPosition(camera.position)
           cam.getWorldQuaternion(camera.quaternion)
 
-          camera.fov = 40 + adder
+          camera.fov = 42 + adder
           camera.near = 1
           camera.far = 350
           camera.updateProjectionMatrix()
