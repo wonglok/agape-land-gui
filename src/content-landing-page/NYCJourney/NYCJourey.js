@@ -208,7 +208,7 @@ export function NYCJourney() {
     <group>
       <UIContent>
         <div
-          className='fixed top-0 right-0 z-100'
+          className='fixed top-0 right-0 z-10'
           id='progressHTML1'
           style={{ width: '2px', height: '100%', backgroundColor: `#00ffff` }}
         ></div>
