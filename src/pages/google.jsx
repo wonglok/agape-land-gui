@@ -41,9 +41,11 @@ export function GoogleContent() {
           Authorization: `Bearer ${sToken}`,
         },
       })
-      return response.json()
+      if (response.ok) {
+        return await response.json()
+      }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
