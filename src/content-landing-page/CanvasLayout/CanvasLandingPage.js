@@ -46,7 +46,7 @@ export function CanvasPage({}) {
           <UIContent>
             <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
               <img
-                className='w-6/12'
+                className='w-6/12 lg:w-64'
                 layout={'responsive'}
                 src={`/brand/agape-2.png`}
                 alt={'agape town - here we go!'}
