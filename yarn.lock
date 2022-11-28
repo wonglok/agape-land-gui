@@ -2717,14 +2717,6 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
 
-"@squoosh/lib@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@squoosh/lib/-/lib-0.4.0.tgz#31d18cb082c69e404589e2e281414d10f91e1668"
-  integrity sha512-O1LyugWLZjMI4JZeZMA5vzfhfPjfMZXH5/HmVkRagP8B70wH3uoR7tjxfGNdSavey357MwL8YJDxbGwBBdHp7Q==
-  dependencies:
-    wasm-feature-detect "^1.2.11"
-    web-streams-polyfill "^3.0.3"
-
 "@stitches/react@1.2.8":
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/@stitches/react/-/react-1.2.8.tgz#954f8008be8d9c65c4e58efa0937f32388ce3a38"
@@ -9163,20 +9155,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-wasm-feature-detect@^1.2.11:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/wasm-feature-detect/-/wasm-feature-detect-1.3.0.tgz#fb3fc5dd4a1ba950a429be843daad67fe048bc42"
-  integrity sha512-w9datO3OReMouWgKOelvu1CozmLK/VbkXOtlzNTanBJpR0uBHyUwS3EYdXf5vBPoHKYS0lpuYo91rpqMNIZM9g==
-
 weak-map@^1.0.5:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/weak-map/-/weak-map-1.0.8.tgz#394c18a9e8262e790544ed8b55c6a4ddad1cb1a3"
   integrity sha512-lNR9aAefbGPpHO7AEnY0hCFjz1eTkWCXYvkTRrTHs9qv8zJp+SkVYpzfLIFXQQiG3tVvbNFQgVg2bQS8YGgxyw==
-
-web-streams-polyfill@^3.0.3:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.2.1.tgz#71c2718c52b45fd49dbeee88634b3a60ceab42a6"
-  integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
 
 webgl-constants@^1.1.1:
   version "1.1.1"
