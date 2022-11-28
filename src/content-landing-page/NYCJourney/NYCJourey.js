@@ -7,6 +7,7 @@ import { TheVortex } from '../TheVortex/TheVortex'
 import { MathUtils } from 'three'
 import { Vector2 } from 'three140'
 import { UIContent } from '@/lib/UIContent'
+import { useLandingPageStore } from '../CanvasLayout/LandingPageStore'
 // import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 // import { Octree } from './Octree'
 // import { StaticGeometryGenerator } from 'three-mesh-bvh'
@@ -47,7 +48,7 @@ let order = [
 ]
 
 export function NYCJourney() {
-  let progressHTMLRef = useRef()
+  let gui = useLandingPageStore((s) => s.gui)
   let rot = useRef()
   let rot2 = useRef()
 
@@ -104,10 +105,10 @@ export function NYCJourney() {
     // )
     // // }
 
-    if (mouse.y == 0.0 && mouse.x == 0.0) {
+    if ((mouse.y == 0.0 && mouse.x == 0.0) || gui) {
       myTime.current = MathUtils.damp(
         myTime.current,
-        (clock.getElapsedTime() * 0.2) % max,
+        (clock.getElapsedTime() * 0.5) % max,
         3,
         dt
       )
