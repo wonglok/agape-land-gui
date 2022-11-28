@@ -115,7 +115,7 @@ export function NYCJourney() {
       myTime.current = MathUtils.damp(
         myTime.current,
         ((-mouse.y * 0.5 + 0.5) * max) % max,
-        0.5,
+        1,
         dt
       )
     }
@@ -124,12 +124,18 @@ export function NYCJourney() {
 
     barRes1 = barRes1 || document.querySelector('#progressHTML1')
     if (barRes1) {
-      barRes1.style.height = `${((myTime.current / max) * 100.0).toFixed(3)}%`
+      barRes1.style.transform = `translateY(-50vh) scale(${(
+        (myTime.current / max) *
+        2.0
+      ).toFixed(3)})`
     }
 
     barRes2 = barRes2 || document.querySelector('#progressHTML2')
     if (barRes2) {
-      barRes2.style.height = `${((myTime.current / max) * 100.0).toFixed(3)}%`
+      barRes2.style.transform = `translateY(-50vh) scale(${(
+        (myTime.current / max) *
+        2.0
+      ).toFixed(3)})`
     }
 
     let sorted = glb.cameras
@@ -203,7 +209,7 @@ export function NYCJourney() {
         <div
           className='fixed top-0 right-0 z-100'
           id='progressHTML1'
-          style={{ width: '3px', backgroundColor: `#00ffff` }}
+          style={{ width: '2px', height: '100%', backgroundColor: `#00ffff` }}
         ></div>
         {/* <div
           className='fixed top-0 left-0 z-100'
