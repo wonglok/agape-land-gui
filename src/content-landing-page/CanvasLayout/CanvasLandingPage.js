@@ -23,7 +23,7 @@ export function CanvasPage({}) {
       {...{
         gl: { antialias: false, logarithmicDepthBuffer: false },
         onCreated: (st) => {
-          st.events.connect(document.body)
+          // st.events.connect(document.body)
 
           st.scene.background = new Color('#00ffff')
           st.gl.physicallyCorrectLights = true

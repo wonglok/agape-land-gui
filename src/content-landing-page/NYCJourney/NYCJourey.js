@@ -210,6 +210,14 @@ export function NYCJourney() {
           id='progressHTML2'
           style={{ width: '3px', backgroundColor: `#00ffff` }}
         ></div> */}
+
+        <div className='fixed top-0 right-0 mt-2 mr-2 z-100'>
+          <img
+            className='h-8 lg:h-12'
+            src={`/brand/agape-2.png`}
+            alt={'agape town - here we go!'}
+          ></img>
+        </div>
       </UIContent>
 
       {process.env.NODE_ENV === 'development' && <Stats></Stats>}
