@@ -1,6 +1,8 @@
 import { MixMat } from '@/substance-painter/MixMat/MixMat'
 import {
   Box,
+  Cone,
+  Cylinder,
   Environment,
   Loader,
   OrbitControls,
@@ -52,9 +54,9 @@ function Content() {
   return (
     <group>
       {glb1.scene && glb2.scene && (
-        <Sphere args={[2.5, 64, 64]}>
+        <Cylinder args={[2, 2, 5, 64, 5]}>
           <MixMat attach='material' mat1={mat1} mat2={mat2}></MixMat>
-        </Sphere>
+        </Cylinder>
       )}
     </group>
   )
