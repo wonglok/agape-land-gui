@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { getID } from '@/lib/getID'
 
+export const SESSION_ACCESS_KEY = `session-access-key`
+
 export function GoogleContent() {
   const myUserEndPoints = {
     development: `https://lspr7w8538.execute-api.ap-southeast-1.amazonaws.com`,
@@ -10,8 +12,6 @@ export function GoogleContent() {
   }
 
   const myAPIEndPoint = myUserEndPoints[process.env.NODE_ENV]
-
-  const SESSION_ACCESS_KEY = `session-access-key`
 
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(false)

@@ -1,5 +1,7 @@
 import Header from '@/config'
 import '@/styles/index.css'
+import { useEffect } from 'react'
+import { SESSION_ACCESS_KEY } from './google'
 // import dynamic from 'next/dynamic'
 
 // const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
@@ -7,6 +9,16 @@ import '@/styles/index.css'
 // })
 
 function App({ Component, pageProps = { title: 'index' } }) {
+  useEffect(() => {
+    const search = window.location.search
+    const params = new URLSearchParams(search)
+    const sTokenInURL = params.get('token')
+    if (sTokenInURL) {
+      localStorage.setItem(SESSION_ACCESS_KEY, sTokenInURL)
+      window.location.assign(window.location.origin)
+    }
+  }, [])
+
   return (
     <>
       <Header title={pageProps.title} />
