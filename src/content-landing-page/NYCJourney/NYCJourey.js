@@ -115,7 +115,7 @@ export function NYCJourney() {
       myTime.current = MathUtils.damp(
         myTime.current,
         ((-mouse.y * 0.5 + 0.5) * max) % max,
-        3,
+        0.5,
         dt
       )
     }
