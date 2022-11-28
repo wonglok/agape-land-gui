@@ -12,6 +12,7 @@ import { useLandingPageStore } from '../CanvasLayout/LandingPageStore'
 // import { Octree } from './Octree'
 // import { StaticGeometryGenerator } from 'three-mesh-bvh'
 // import md5 from 'md5'
+import { Gesture, WheelGesture } from '@use-gesture/vanilla'
 
 let max = 45.156355645706554
 let scheduleStartTime = {
@@ -48,7 +49,7 @@ let order = [
 ]
 
 export function NYCJourney() {
-  let gui = useLandingPageStore((s) => s.gui)
+  // let gui = useLandingPageStore((s) => s.gui)
   let rot = useRef()
   let rot2 = useRef()
 
@@ -92,34 +93,37 @@ export function NYCJourney() {
 
   let barRes1 = false
   let barRes2 = false
+  let accu = useRef(0)
 
   useFrame(({ camera, size, mouse, clock }, dt) => {
+    if (accu.current <= 0) {
+      accu.current = 0
+    }
+    myTime.current = MathUtils.damp(myTime.current, accu.current, 3, dt)
+
     // if (!'ontouchstart' in window) {
 
     // } else {
-    // myTime.current = MathUtils.damp(
-    //   myTime.current,
-    //   clock.getElapsedTime() % max,
-    //   3,
-    //   dt
-    // )
+
     // // }
 
-    if ((mouse.y == 0.0 && mouse.x == 0.0) || gui) {
-      myTime.current = MathUtils.damp(
-        myTime.current,
-        (clock.getElapsedTime() * 0.5) % max,
-        3,
-        dt
-      )
-    } else {
-      myTime.current = MathUtils.damp(
-        myTime.current,
-        ((-mouse.y * 0.5 + 0.5) * max) % max,
-        1,
-        dt
-      )
-    }
+    // if ((mouse.y == 0.0 && mouse.x == 0.0) || gui) {
+    //   myTime.current = MathUtils.damp(
+    //     myTime.current,
+    //     (clock.getElapsedTime() * 0.5) % max,
+    //     3,
+    //     dt
+    //   )
+    // } else {
+    //   // if (isDown) {
+    //   //   // myTime.current = MathUtils.damp(
+    //   //   //   myTime.current,
+    //   //   //   ((-mouse.y * 0.5 + 0.5) * max) % max,
+    //   //   //   1,
+    //   //   //   dt
+    //   //   // )
+    //   // }
+    // }
 
     mixer.setTime(myTime.current)
 
@@ -200,7 +204,43 @@ export function NYCJourney() {
       }
     }
   })
+  useEffect(() => {
+    let isDown = false
+    document.body.style.touchAction = 'none'
+    let h = new Gesture(document.body, {
+      onDragEnd: () => {
+        isDown = false
+      },
+      onDragStart: () => {
+        isDown = true
+      },
+      onDrag: (ev) => {
+        //
+        if (isDown) {
+          accu.current += -ev.delta[1] / 50.0
+        }
+      },
+    })
 
+    return () => {
+      h.destroy()
+    }
+  }, [])
+
+  useEffect(() => {
+    document.body.style.touchAction = 'none'
+    let h = new WheelGesture(document.body, (ev) => {
+      accu.current += ev.delta[1] / 250.0
+
+      if (accu.current >= max) {
+        accu.current = max
+      }
+    })
+
+    return () => {
+      h.destroy()
+    }
+  }, [])
   let scene = useThree((s) => s.scene)
   // let camera = useThree((s) => s.camera)
 
@@ -229,6 +269,8 @@ export function NYCJourney() {
         </group>,
         scene
       )}
+
+      {/* <primitive object={camera}></primitive> */}
 
       <primitive object={glb.scene}></primitive>
 
