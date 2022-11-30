@@ -68,7 +68,8 @@ CanvasDrawTexture.prototype = {
 
     // Yellow cross.
     this._context2D.lineWidth = this._crossThickness * 3
-    this._context2D.strokeStyle = 'rgba(255,255,255,0.03)'
+    this._context2D.strokeStyle = 'rgba(100,100,100,0.05)'
+    this._context2D.globalCompositeOperation = 'lighter'
 
     this._context2D.beginPath()
     this._context2D.moveTo(
