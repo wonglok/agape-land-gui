@@ -57,6 +57,7 @@ export function CanvasPage({}) {
         <Environment
           files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
         ></Environment>
+
         <NYCJourney></NYCJourney>
 
         <UIContent>
@@ -105,6 +106,8 @@ export function CanvasPage({}) {
           luminanceThreshold={0.3}
         ></Bloom>
       </EffectComposer>
+      {/*  */}
+
       {/*  */}
     </Canvas>
   )
