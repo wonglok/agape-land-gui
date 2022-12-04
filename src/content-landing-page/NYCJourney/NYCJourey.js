@@ -102,9 +102,7 @@ export function NYCJourney() {
     myTime.current = MathUtils.damp(myTime.current, accu.current, 3, dt)
 
     // if (!'ontouchstart' in window) {
-
     // } else {
-
     // // }
 
     // if ((mouse.y == 0.0 && mouse.x == 0.0) || gui) {
@@ -130,11 +128,13 @@ export function NYCJourney() {
     barRes1 = barRes1 || document.querySelector('#progressHTML1')
     if (barRes1) {
       barRes1.style.transform = `translateY(-50vh) scale(${(
-        (myTime.current / max) *
-        2.0
+        (myTime.current / max) * 2.0 +
+        0.1
       ).toFixed(3)})`
+      // barRes1.style.backgroundColor = `hsl(${
+      //   (myTime.current / max) * 30 + 180
+      // }deg 80% 60% / 90%)`
     }
-
     barRes2 = barRes2 || document.querySelector('#progressHTML2')
     if (barRes2) {
       barRes2.style.transform = `translateY(-50vh) scale(${(
@@ -252,6 +252,7 @@ export function NYCJourney() {
           id='progressHTML1'
           style={{ width: '2px', height: '100%', backgroundColor: `#00ffff` }}
         ></div>
+
         {/* <div
           className='fixed top-0 left-0 z-100'
           id='progressHTML2'

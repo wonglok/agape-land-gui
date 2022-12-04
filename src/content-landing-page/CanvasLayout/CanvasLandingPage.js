@@ -23,7 +23,9 @@ export function CanvasPage({}) {
       {...{
         gl: { antialias: false, logarithmicDepthBuffer: false },
         onCreated: (st) => {
+          //
           // st.events.connect(document.body)
+          //
 
           st.scene.background = new Color('#F08BDC')
           st.gl.physicallyCorrectLights = true
@@ -61,7 +63,6 @@ export function CanvasPage({}) {
           <div className='fixed top-0 right-0 z-20 mt-2 mr-2'>
             <img
               onClick={(ev) => {
-                ///
                 console.log(ev)
                 useLandingPageStore.setState({ gui: 'login' })
               }}

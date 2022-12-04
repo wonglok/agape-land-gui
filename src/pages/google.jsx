@@ -101,6 +101,7 @@ export function GoogleContent() {
         ) : (
           <div>
             <button
+              className='p-2 mb-2 mr-2 bg-gray-200 rounded-xl'
               onClick={() => {
                 window.top.location.assign(
                   `${myAPIEndPoint}/auth/google/authorize`
@@ -109,6 +110,18 @@ export function GoogleContent() {
               rel='noreferrer'
             >
               <>Sign in with Google</>
+            </button>
+
+            <button
+              className='p-2 mb-2 mr-2 bg-gray-200 rounded-xl'
+              onClick={() => {
+                window.top.location.assign(
+                  `${myAPIEndPoint}/auth/guest/authorize`
+                )
+              }}
+              rel='noreferrer'
+            >
+              <>Sign in as Guest</>
             </button>
 
             {/* <button
@@ -124,6 +137,7 @@ export function GoogleContent() {
 
             {display && (
               <button
+                className='p-2 mb-2 mr-2 bg-gray-200 rounded-xl'
                 onClick={async () => {
                   try {
                     let provider

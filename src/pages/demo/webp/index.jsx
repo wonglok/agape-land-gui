@@ -28,12 +28,9 @@ export default function Page() {
         WebP
       </button>
       {/*  */}
+      {/*  */}
+      {/*  */}
       {bb && <img width={500} height={500} src={bb}></img>}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
     </div>
   )
 }
