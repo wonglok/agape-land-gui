@@ -76,7 +76,9 @@ export function CanvasPage({}) {
           {gui === 'login' && (
             <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
               <div className='relative w-full max-w-sm p-2 px-4 bg-white lg:max-w-lg rounded-xl -translate-y-28'>
-                <div>AGAPE TOWN</div>
+                <div className='m-3 text-2xl font-bold'>
+                  Welcome to AGAPE TOWN
+                </div>
                 <div>
                   <GoogleContent></GoogleContent>
                 </div>
@@ -86,7 +88,7 @@ export function CanvasPage({}) {
                     //
                     useLandingPageStore.setState({ gui: '' })
                   }}
-                  className='absolute right-0 p-2 px-4 text-white bg-pink-500 -top-12 rounded-xl'
+                  className='absolute right-0 p-2 px-4 text-white bg-pink-500 cursor-pointer -top-12 rounded-xl'
                 >
                   Close
                 </div>
