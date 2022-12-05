@@ -275,7 +275,6 @@ export class TheVortex extends Object3D {
     // renderable2.frustumCulled = false
     // renderable2.userData.enableBloom = true
     // Core.now.canvas.now.scene.add(renderable2)
-    //
 
     renderable.visible = true
     this.add(renderable)
@@ -286,6 +285,7 @@ export class TheVortex extends Object3D {
     let current = {
       texture: gpuCompute.getCurrentRenderTarget(posVar).texture,
     }
+
     this.core.onLoop((dt) => {
       let time = window.performance.now() / 1000
       posVar.material.uniforms.iTime.value = time
