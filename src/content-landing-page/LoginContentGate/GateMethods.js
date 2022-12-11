@@ -1,3 +1,4 @@
+import { getID } from '@/lib/getID'
 import { ethers } from 'ethers'
 import { SESSION_ACCESS_KEY, UserEndPoints } from './GateConst'
 import { GateState } from './GateState'
