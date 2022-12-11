@@ -1,6 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { UIContent } from '@/lib/UIContent'
-import { Box, Center, Environment, Text, Text3D } from '@react-three/drei'
+import {
+  Box,
+  Center,
+  Environment,
+  Image,
+  PerspectiveCamera,
+  Text,
+  Text3D,
+} from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense } from 'react'
@@ -15,10 +23,13 @@ import {
   signOut,
 } from '../LoginContentGate/GateMethods'
 import { GateState } from '../LoginContentGate/GateState'
+import { LoadingHTML } from '../LoginContentGate/LoadingHTML'
+import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
 import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { NYCJourney } from '../NYCJourney/NYCJourey'
-import { TheVortex } from '../TheVortex/TheVortex'
-import { useLandingPageStore } from './LandingPageStore'
+import { LandingContent } from './LandingContent'
+import { Hud as HUD } from '@react-three/drei'
+import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
 
 export function CanvasPage({}) {
   let gs = useSnapshot(GateState)
@@ -50,78 +61,27 @@ export function CanvasPage({}) {
       }}
     >
       <Gate
-        loadingContent={
-          <UIContent>
-            <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
-              <img
-                className='w-6/12 lg:w-64'
-                src={`/brand/agape-2.png`}
-                alt={'agape town - here we go!'}
-              ></img>
-            </div>
-          </UIContent>
-        }
+        loadingContent={<LoadingHTML></LoadingHTML>}
         loggedInContent={
           <>
             <group>
-              <group scale={0.075}>
-                <theVortex key={TheVortex.key}></theVortex>
-              </group>
-
-              <BackgroundColor color='#000000'></BackgroundColor>
-
-              <Box></Box>
+              <MetaverseWelcome></MetaverseWelcome>
             </group>
           </>
         }
         landingContent={
           <>
-            <Suspense
-              fallback={
-                <UIContent>
-                  <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
-                    <img
-                      className='w-6/12 lg:w-64'
-                      src={`/brand/agape-2.png`}
-                      alt={'agape town - here we go!'}
-                    ></img>
-                  </div>
-                </UIContent>
-              }
-            >
-              <Environment
-                files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
-              ></Environment>
-
-              <BackgroundColor color='#F08BDC'></BackgroundColor>
-
-              <NYCJourney></NYCJourney>
-
-              <EffectComposer
-                resolutionScale={0.1}
-                disableNormalPass
-                multisampling={4}
-              >
-                <Bloom
-                  mipmapBlur
-                  radius={0.5}
-                  intensity={2}
-                  width={256}
-                  height={256}
-                  luminanceThreshold={0.3}
-                ></Bloom>
-              </EffectComposer>
-            </Suspense>
+            <LandingContent></LandingContent>
           </>
         }
       ></Gate>
-      <></>
 
+      <MetaverseMenu></MetaverseMenu>
       <UIContent>
         <div className='fixed top-0 right-0 z-20 mt-2 mr-2'>
           <img
             onClick={(ev) => {
-              console.log(ev)
+              // console.log(ev)
               GateState.menuOverlay = true
             }}
             className='h-8 lg:h-12'
