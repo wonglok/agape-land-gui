@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { UIContent } from '@/lib/UIContent'
 import { Box, Center, Environment, Text, Text3D } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
@@ -14,7 +15,9 @@ import {
   signOut,
 } from '../LoginContentGate/GateMethods'
 import { GateState } from '../LoginContentGate/GateState'
+import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { NYCJourney } from '../NYCJourney/NYCJourey'
+import { TheVortex } from '../TheVortex/TheVortex'
 import { useLandingPageStore } from './LandingPageStore'
 
 export function CanvasPage({}) {
@@ -33,12 +36,9 @@ export function CanvasPage({}) {
         onCreated: (st) => {
           // st.events.connect(document.body)
 
-          st.scene.background = new Color('#F08BDC').convertLinearToSRGB(
-            '#F08BDC'
-          )
-
           st.gl.physicallyCorrectLights = true
           st.gl.outputEncoding = sRGBEncoding
+
           st.gl.shadowMap.enabled = false
 
           Core.now.canvas = Core.makeAutoNode('canvas')
@@ -50,9 +50,26 @@ export function CanvasPage({}) {
       }}
     >
       <Gate
+        loadingContent={
+          <UIContent>
+            <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
+              <img
+                className='w-6/12 lg:w-64'
+                src={`/brand/agape-2.png`}
+                alt={'agape town - here we go!'}
+              ></img>
+            </div>
+          </UIContent>
+        }
         loggedInContent={
           <>
             <group>
+              <group scale={0.075}>
+                <theVortex key={TheVortex.key}></theVortex>
+              </group>
+
+              <BackgroundColor color='#000000'></BackgroundColor>
+
               <Box></Box>
             </group>
           </>
@@ -65,7 +82,6 @@ export function CanvasPage({}) {
                   <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
                     <img
                       className='w-6/12 lg:w-64'
-                      layout={'responsive'}
                       src={`/brand/agape-2.png`}
                       alt={'agape town - here we go!'}
                     ></img>
@@ -76,6 +92,8 @@ export function CanvasPage({}) {
               <Environment
                 files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
               ></Environment>
+
+              <BackgroundColor color='#F08BDC'></BackgroundColor>
 
               <NYCJourney></NYCJourney>
 
