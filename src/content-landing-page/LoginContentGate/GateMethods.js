@@ -110,7 +110,7 @@ nonce : ${json.nonce}
       let signature = originalSignature
       let raw = message
 
-      window.top.location.assign(
+      window.open(
         `${getEndPointURL()}/auth/wallet/authorize?signature=${encodeURIComponent(
           signature
         )}&raw=${encodeURIComponent(raw)}`
@@ -122,9 +122,9 @@ nonce : ${json.nonce}
 }
 
 export const loginGoogle = () => {
-  window.top.location.assign(`${getEndPointURL()}/auth/google/authorize`)
+  window.open(`${getEndPointURL()}/auth/google/authorize`)
 }
 
 export const loginGuest = () => {
-  window.top.location.assign(`${getEndPointURL()}/auth/guest/authorize`)
+  window.open(`${getEndPointURL()}/auth/guest/authorize`)
 }

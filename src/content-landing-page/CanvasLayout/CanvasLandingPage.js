@@ -31,9 +31,7 @@ export function CanvasPage({}) {
       {...{
         gl: { antialias: false, logarithmicDepthBuffer: false },
         onCreated: (st) => {
-          //
           // st.events.connect(document.body)
-          //
 
           st.scene.background = new Color('#F08BDC').convertLinearToSRGB(
             '#F08BDC'
@@ -154,7 +152,7 @@ export function CanvasPage({}) {
                 </div>
               ) : (
                 <>
-                  {gs && (
+                  {
                     <div>
                       <div className='profile'>
                         <p>Welcome {gs.session.name}!</p>
@@ -177,7 +175,7 @@ export function CanvasPage({}) {
                         </button>
                       </div>
                     </div>
-                  )}
+                  }
                 </>
               )}
 
