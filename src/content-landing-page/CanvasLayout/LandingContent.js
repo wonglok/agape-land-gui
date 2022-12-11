@@ -27,8 +27,6 @@ export function LandingContent() {
           resolutionScale={0.1}
           disableNormalPass
           multisampling={4}
-          //
-          renderPriority={3}
         >
           <Bloom
             mipmapBlur

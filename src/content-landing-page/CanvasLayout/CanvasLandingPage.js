@@ -1,34 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { UIContent } from '@/lib/UIContent'
-import {
-  Box,
-  Center,
-  Environment,
-  Image,
-  PerspectiveCamera,
-  Text,
-  Text3D,
-} from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { Suspense } from 'react'
-import { Color, sRGBEncoding } from 'three'
-import { useSnapshot } from 'valtio'
+import { sRGBEncoding } from 'three'
 import { Core } from '../Core/Core'
 import { Gate } from '../LoginContentGate/Gate'
-import {
-  loginEth,
-  loginGoogle,
-  loginGuest,
-  signOut,
-} from '../LoginContentGate/GateMethods'
-import { GateState } from '../LoginContentGate/GateState'
-import { LoadingHTML } from '../LoginContentGate/LoadingHTML'
 import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
-import { BackgroundColor } from '../NYCJourney/BackgroundColor'
-import { NYCJourney } from '../NYCJourney/NYCJourey'
 import { LandingContent } from './LandingContent'
-import { Hud as HUD } from '@react-three/drei'
 import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 
@@ -45,8 +21,6 @@ export function CanvasPage({}) {
       {...{
         gl: { antialias: false, logarithmicDepthBuffer: false },
         onCreated: (st) => {
-          // st.events.connect(document.body)
-
           st.gl.physicallyCorrectLights = true
           st.gl.outputEncoding = sRGBEncoding
 
@@ -60,17 +34,19 @@ export function CanvasPage({}) {
         },
       }}
     >
-      <MetaverseMenu></MetaverseMenu>
-
       <Gate
         loadingContent={<LoadingGroup />}
         loggedInContent={
           <>
+            <MetaverseMenu></MetaverseMenu>
+
             <MetaverseWelcome></MetaverseWelcome>
           </>
         }
         landingContent={
           <>
+            <MetaverseMenu></MetaverseMenu>
+
             <LandingContent></LandingContent>
           </>
         }

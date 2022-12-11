@@ -23,7 +23,6 @@ export function MetaverseWelcome() {
         <EffectComposer
           resolutionScale={0.1}
           disableNormalPass
-          renderPriority={3}
           multisampling={2}
         >
           <Bloom
