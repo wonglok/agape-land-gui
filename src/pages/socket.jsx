@@ -49,12 +49,9 @@ export default function Socket() {
             //
             oss.sendJSON({
               // type: 'toRoom',
-              // room: 'yoyo',
+              // room: 'yoyo2w2',
               data: {
-                ya:
-                  document.querySelector(`#ta`).value +
-                  '_' +
-                  Math.floor(Math.random() * 1000000),
+                content: document.querySelector(`#ta`).value,
               },
             })
           }}
