@@ -46,6 +46,7 @@ export default function Socket() {
         <textarea id='ta'></textarea>
         <button
           onClick={() => {
+            //
             oss.sendJSON({
               // type: 'toRoom',
               // room: 'yoyo',
