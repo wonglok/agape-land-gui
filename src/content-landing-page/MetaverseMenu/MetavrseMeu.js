@@ -35,7 +35,7 @@ export function MetaverseMenu() {
           scale={[0.3, 0.3]}
           onClick={(ev) => {
             //
-            GateState.menuOverlay = true
+            GateState.menuOverlay = !GateState.menuOverlay
           }}
         ></Image>
 

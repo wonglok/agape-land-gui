@@ -60,7 +60,7 @@ export function CanvasPage({}) {
       }}
     >
       <Gate
-        loadingContent={<LoadingHTML></LoadingHTML>}
+        loadingContent={null}
         loggedInContent={
           <>
             <group>
