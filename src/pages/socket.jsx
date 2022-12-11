@@ -112,7 +112,6 @@ class OSSocket {
     this.ws = new WebSocket(this.connectionString)
     this.ws.addEventListener('message', (ev) => {
       let response = JSON.parse(ev.data)
-      // console.log('debug', response)
 
       if (response.type === 'clients') {
         this.myConnectionID = response.myConnectionID
@@ -156,11 +155,8 @@ class OSSocket {
         this.connect()
       }
     }, 15 * 1000)
-    console.log(
-      'scheduled auto reconnect',
-      'timerID',
-      this.autoReconnectInterval
-    )
+
+    console.log('scheduled auto reconnect')
   }
 
   sendJSON({
