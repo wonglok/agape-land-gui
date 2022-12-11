@@ -26,6 +26,18 @@ export default function Socket() {
     }
   }, [oss])
 
+  useEffect(() => {
+    return oss.on('clients', (ev) => {
+      console.log(ev)
+    })
+  }, [oss])
+
+  useEffect(() => {
+    return oss.on('toRoom', (ev) => {
+      console.log(ev)
+    })
+  }, [oss])
+
   //
   return (
     <div>
@@ -35,8 +47,8 @@ export default function Socket() {
         <button
           onClick={() => {
             oss.sendJSON({
-              type: 'toRoom',
-              room: 'yoyo',
+              // type: 'toRoom',
+              // room: 'yoyo',
               data: {
                 ya:
                   document.querySelector(`#ta`).value +
@@ -75,6 +87,19 @@ class OSSocket {
     this.connect()
   }
 
+  on(ev, h) {
+    this.handlers[ev] = this.handlers[ev] || []
+    this.handlers[ev].push(h)
+    return () => {
+      this.off(ev, h)
+    }
+  }
+
+  off(ev, h) {
+    this.handlers[ev] = this.handlers[ev] || []
+    this.handlers[ev] = this.handlers[ev].filter((e) => e !== h)
+  }
+
   getID() {
     return (
       '_' +
@@ -86,18 +111,16 @@ class OSSocket {
   connect() {
     this.ws = new WebSocket(this.connectionString)
     this.ws.addEventListener('message', (ev) => {
-      let wsReply = JSON.parse(ev.data)
-      console.log(wsReply)
+      let response = JSON.parse(ev.data)
+      // console.log('debug', response)
 
-      if (wsReply.type === 'clients') {
-        this.myConnectionID = wsReply.myConnectionID
+      if (response.type === 'clients') {
+        this.myConnectionID = response.myConnectionID
       }
 
-      this.handlers[ev.type] = this.handlers[ev.type] || []
-      this.handlers[ev.type].forEach((h) => {
-        h({
-          event: wsReply,
-        })
+      this.handlers[response.type] = this.handlers[response.type] || []
+      this.handlers[response.type].forEach((h) => {
+        h(response)
       })
     })
 
