@@ -1,14 +1,20 @@
 import { Environment } from '@react-three/drei'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense } from 'react'
-import { LoadingHTML } from '../LoginContentGate/LoadingHTML'
+import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { NYCJourney } from '../NYCJourney/NYCJourey'
 
 export function LandingContent() {
   return (
     <>
-      <Suspense fallback={<LoadingHTML></LoadingHTML>}>
+      <Suspense
+        fallback={
+          <>
+            <LoadingGroup />
+          </>
+        }
+      >
         <Environment
           files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
         ></Environment>
@@ -21,6 +27,8 @@ export function LandingContent() {
           resolutionScale={0.1}
           disableNormalPass
           multisampling={4}
+          //
+          renderPriority={3}
         >
           <Bloom
             mipmapBlur

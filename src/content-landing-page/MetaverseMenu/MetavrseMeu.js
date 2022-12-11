@@ -8,7 +8,7 @@ import {
   Text,
   Text3D,
 } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
+import { createPortal, useThree } from '@react-three/fiber'
 import { useSnapshot } from 'valtio'
 import {
   loginEth,
@@ -22,8 +22,7 @@ export function MetaverseMenu() {
   let viewport = useThree((s) => s.viewport)
   return (
     <>
-      <Hud renderPriority={2}>
-        <PerspectiveCamera makeDefault position={[0, 0, 10]} />
+      <MyHUD renderPriority={12}>
         <Image
           position={[
             viewport.getCurrentViewport().width * 0.5,
@@ -58,7 +57,7 @@ export function MetaverseMenu() {
             )}
             {!gate.session && (
               <>
-                {GateState.supportEth && (
+                {
                   <Image
                     position={[0, 0.61 * 1.1, 0]}
                     scale={[2.39, 0.61]}
@@ -70,18 +69,20 @@ export function MetaverseMenu() {
                       //
                     }}
                   ></Image>
+                }
+                {GateState.supportEth && (
+                  <Image
+                    position={[0, 0.0, 0]}
+                    scale={[2.39, 0.61]}
+                    transparent={true}
+                    url={`/hud/login-metamask.png`}
+                    onPointerDown={() => {
+                      //
+                      loginEth()
+                      //
+                    }}
+                  ></Image>
                 )}
-                <Image
-                  position={[0, 0.0, 0]}
-                  scale={[2.39, 0.61]}
-                  transparent={true}
-                  url={`/hud/login-metamask.png`}
-                  onPointerDown={() => {
-                    //
-                    loginEth()
-                    //
-                  }}
-                ></Image>
                 <Image
                   position={[0, -0.61 * 1.1, 0]}
                   scale={[2.39, 0.61]}
@@ -97,7 +98,17 @@ export function MetaverseMenu() {
             )}
           </group>
         )}
-      </Hud>
+      </MyHUD>
     </>
+  )
+}
+
+function MyHUD({ children }) {
+  let camera = useThree((s) => s.camera)
+  return (
+    <group>
+      {createPortal(children, camera)}
+      <primitive object={camera}></primitive>
+    </group>
   )
 }

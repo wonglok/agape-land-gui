@@ -30,6 +30,7 @@ import { NYCJourney } from '../NYCJourney/NYCJourey'
 import { LandingContent } from './LandingContent'
 import { Hud as HUD } from '@react-three/drei'
 import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
+import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 
 export function CanvasPage({}) {
   return (
@@ -59,13 +60,13 @@ export function CanvasPage({}) {
         },
       }}
     >
+      <MetaverseMenu></MetaverseMenu>
+
       <Gate
-        loadingContent={null}
+        loadingContent={<LoadingGroup />}
         loggedInContent={
           <>
-            <group>
-              <MetaverseWelcome></MetaverseWelcome>
-            </group>
+            <MetaverseWelcome></MetaverseWelcome>
           </>
         }
         landingContent={
@@ -75,7 +76,6 @@ export function CanvasPage({}) {
         }
       ></Gate>
 
-      <MetaverseMenu></MetaverseMenu>
       {/* <UIContent>
         <div className='fixed top-0 right-0 z-20 mt-2 mr-2'>
           <img
