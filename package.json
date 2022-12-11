@@ -85,6 +85,7 @@
     "twilio": "^3.80.0",
     "twilio-video": "^2.23.0",
     "use-tweaks": "^0.3.1",
+    "valtio": "^1.7.6",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {

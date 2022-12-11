@@ -1,7 +1,13 @@
 import { useEffect } from 'react'
 import Header from '@/config'
 import '@/styles/index.css'
-import { SESSION_ACCESS_KEY } from '@/content-landing-page/LoginContentGate/LoginContentGate'
+import {
+  // loadSession,
+  restoreTokenFromURL,
+} from '@/content-landing-page/LoginContentGate/GateMethods'
+// import { useSnapshot } from 'valtio'
+// import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
+// import { SESSION_ACCESS_KEY } from '@/content-landing-page/LoginContentGate/LoginContentGate'
 // import { SESSION_ACCESS_KEY } from './google'
 // import dynamic from 'next/dynamic'
 
@@ -11,13 +17,7 @@ import { SESSION_ACCESS_KEY } from '@/content-landing-page/LoginContentGate/Logi
 
 function App({ Component, pageProps = { title: 'index' } }) {
   useEffect(() => {
-    const search = window.location.search
-    const params = new URLSearchParams(search)
-    const sTokenInURL = params.get('token')
-    if (sTokenInURL) {
-      localStorage.setItem(SESSION_ACCESS_KEY, sTokenInURL)
-      window.location.assign(window.location.origin)
-    }
+    restoreTokenFromURL()
   }, [])
 
   return (

@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { getID } from '@/lib/getID'
+import { SESSION_ACCESS_KEY, UserEndPoints } from './GateConst'
 
-export const SESSION_ACCESS_KEY = `session-access-key`
+const myUserEndPoints = UserEndPoints
 
 export function LoginContentGate() {
-  const myUserEndPoints = {
-    development: `https://lspr7w8538.execute-api.ap-southeast-1.amazonaws.com`,
-    production: `https://via39ii0sd.execute-api.ap-southeast-1.amazonaws.com`,
-    test: `https://l286uh2hkj.execute-api.ap-southeast-1.amazonaws.com`,
-  }
-
   const myAPIEndPoint = myUserEndPoints[process.env.NODE_ENV]
 
   const [session, setSession] = useState(null)
@@ -68,7 +63,7 @@ export function LoginContentGate() {
     getSession()
   }, [])
 
-  let [display, setDisplayMetamask] = useState(true)
+  let [displayMetaMask, setDisplayMetamask] = useState(true)
 
   useEffect(() => {
     setDisplayMetamask(typeof window !== 'undefined' && window.ethereum)
@@ -135,7 +130,7 @@ export function LoginContentGate() {
               <>Sign in as Guest</>
             </button> */}
 
-            {display && (
+            {displayMetaMask && (
               <button
                 className='p-2 px-5 mb-2 mr-2 bg-gray-200 rounded-xl'
                 onClick={async () => {
@@ -198,8 +193,4 @@ nonce : ${json.nonce}
       </div>
     </>
   )
-}
-
-export default function LoginFrame() {
-  return <GoogleContent></GoogleContent>
 }

@@ -3,6 +3,8 @@ import { CanvasPage } from '@/content-landing-page/CanvasLayout/CanvasLandingPag
 export default CanvasPage
 
 export async function getStaticProps(context) {
+  //
+
   return {
     props: {
       title: 'Agape Town - Here we go!',
