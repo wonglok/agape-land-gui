@@ -132,6 +132,11 @@ class OSSocket {
         this.connect()
       }
     }, 15 * 1000)
+    console.log(
+      'scheduled auto reconnect',
+      'timerID',
+      this.autoReconnectInterval
+    )
   }
 
   sendJSON({
