@@ -57,7 +57,7 @@ export default function Socket() {
   )
 }
 
-// dont support JSON
+// aws dont support binary
 class OSSocket {
   constructor({ room = 'myRoom' }) {
     //
@@ -66,25 +66,52 @@ class OSSocket {
     //
     this.autoReconnectInterval = -1
     this.ws = false
+    this.myConnectionID = false
+
+    this.handlers = {
+      toRoom: [],
+      clients: [],
+    }
     this.connect()
+  }
+
+  getID() {
+    return (
+      '_' +
+      Math.random().toString(36).substr(2, 9) +
+      Math.random().toString(36).substr(2, 9)
+    )
   }
 
   connect() {
     this.ws = new WebSocket(this.connectionString)
     this.ws.addEventListener('message', (ev) => {
-      console.log(JSON.parse(ev.data))
+      let wsReply = JSON.parse(ev.data)
+      console.log(wsReply)
+
+      if (wsReply.type === 'clients') {
+        this.myConnectionID = wsReply.myConnectionID
+      }
+
+      this.handlers[ev.type] = this.handlers[ev.type] || []
+      this.handlers[ev.type].forEach((h) => {
+        h({
+          event: wsReply,
+        })
+      })
     })
+
     this.ws.addEventListener('open', (ev) => {
-      console.log(ev)
+      console.log('socket event:', ev.type, this.ws)
 
       this.sendJSON({
         room: this.room,
         type: 'join',
-        data: JSON.stringify({ random: Math.random() }),
+        data: JSON.stringify({}),
       })
 
       this.autoRecover()
-      //
+
       // this.send({ room: this.room, data: { yyaya: 11 } })
     })
     this.ws.addEventListener('error', (ev) => {

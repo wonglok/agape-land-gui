@@ -1,7 +1,8 @@
+import { useEffect } from 'react'
 import Header from '@/config'
 import '@/styles/index.css'
-import { useEffect } from 'react'
-import { SESSION_ACCESS_KEY } from './google'
+import { SESSION_ACCESS_KEY } from '@/content-landing-page/LoginContentGate/LoginContentGate'
+// import { SESSION_ACCESS_KEY } from './google'
 // import dynamic from 'next/dynamic'
 
 // const LCanvas = dynamic(() => import('@/components/layout/canvas'), {

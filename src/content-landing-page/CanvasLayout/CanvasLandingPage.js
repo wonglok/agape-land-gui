@@ -1,11 +1,11 @@
 import { UIContent } from '@/lib/UIContent'
-import { GoogleContent } from '@/pages/google'
 import { Center, Environment, Text, Text3D } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import { Color, sRGBEncoding } from 'three'
 import { Core } from '../Core/Core'
+import { LoginContentGate } from '../LoginContentGate/LoginContentGate'
 import { NYCJourney } from '../NYCJourney/NYCJourey'
 import { useLandingPageStore } from './LandingPageStore'
 
@@ -80,7 +80,7 @@ export function CanvasPage({}) {
                   Welcome to AGAPE TOWN
                 </div>
                 <div>
-                  <GoogleContent></GoogleContent>
+                  <LoginContentGate></LoginContentGate>
                 </div>
 
                 <div
