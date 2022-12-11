@@ -78,6 +78,7 @@ class OSSocket {
     this.autoReconnectInterval = -1
     this.ws = false
     this.myConnectionID = false
+    this.onlineList = []
 
     this.handlers = {
       toRoom: [],
@@ -115,6 +116,7 @@ class OSSocket {
 
       if (response.type === 'clients') {
         this.myConnectionID = response.myConnectionID
+        this.onlineList = response.data
       }
 
       this.handlers[response.type] = this.handlers[response.type] || []
