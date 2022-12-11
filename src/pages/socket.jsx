@@ -1,10 +1,4 @@
 import { useEffect, useMemo } from 'react'
-let myEndPoints = {
-  development: `wss://r1gdl0aeoj.execute-api.ap-southeast-1.amazonaws.com/sst-nova`,
-  production: `wss://sj684x8rvj.execute-api.ap-southeast-1.amazonaws.com/prod`,
-  test: `wss://mu46hxv22d.execute-api.ap-southeast-1.amazonaws.com/test`,
-}
-const myAPIEndPoint = myEndPoints[process.env.NODE_ENV]
 
 export default function Socket() {
   //
@@ -66,6 +60,13 @@ export default function Socket() {
     </div>
   )
 }
+
+const EndPointProfiles = {
+  development: `wss://r1gdl0aeoj.execute-api.ap-southeast-1.amazonaws.com/sst-nova`,
+  production: `wss://sj684x8rvj.execute-api.ap-southeast-1.amazonaws.com/prod`,
+  test: `wss://mu46hxv22d.execute-api.ap-southeast-1.amazonaws.com/test`,
+}
+const myAPIEndPoint = EndPointProfiles[process.env.NODE_ENV]
 
 // aws dont support binary
 class OSSocket {
