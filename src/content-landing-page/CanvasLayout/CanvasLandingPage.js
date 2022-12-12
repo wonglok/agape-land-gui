@@ -34,19 +34,17 @@ export function CanvasPage({}) {
         },
       }}
     >
+      <MetaverseMenu></MetaverseMenu>
+
       <Gate
         loadingContent={<LoadingGroup />}
         loggedInContent={
           <>
-            <MetaverseMenu></MetaverseMenu>
-
             <MetaverseWelcome></MetaverseWelcome>
           </>
         }
         landingContent={
           <>
-            <MetaverseMenu></MetaverseMenu>
-
             <LandingContent></LandingContent>
           </>
         }

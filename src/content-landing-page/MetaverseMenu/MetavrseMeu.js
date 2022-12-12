@@ -39,7 +39,7 @@ export function MetaverseMenu() {
   let viewport = useThree((s) => s.viewport)
 
   let camera = useMemo(() => {
-    let pc = new PerspectiveCamera(65, viewport.aspect)
+    let pc = new PerspectiveCamera(65, viewport.aspect, 0.1, 1000)
     pc.updateProjectionMatrix()
     return pc
   }, [viewport.aspect])
@@ -61,7 +61,7 @@ export function MetaverseMenu() {
               url={`/brand/metaverse-menu.png`}
               transparent={true}
               scale={[0.5, 0.5]}
-              onClick={() => {
+              onPointerDown={() => {
                 GateState.menuOverlay = !GateState.menuOverlay
               }}
             ></Image>
@@ -76,7 +76,7 @@ export function MetaverseMenu() {
                     scale={[2.39, 0.61]}
                     transparent={true}
                     url={`/hud/login-logout.png`}
-                    onClick={() => {
+                    onPointerDown={() => {
                       //
                       signOut()
                       //
@@ -91,7 +91,7 @@ export function MetaverseMenu() {
                     scale={[2.39, 0.61]}
                     transparent={true}
                     url={`/hud/login-google.png`}
-                    onClick={() => {
+                    onPointerDown={() => {
                       //
                       loginGoogle()
                       //
@@ -104,7 +104,7 @@ export function MetaverseMenu() {
                       scale={[2.39, 0.61]}
                       transparent={true}
                       url={`/hud/login-metamask.png`}
-                      onClick={() => {
+                      onPointerDown={() => {
                         //
                         loginEth()
                         //
@@ -117,7 +117,7 @@ export function MetaverseMenu() {
                     scale={[2.39, 0.61]}
                     transparent={true}
                     url={`/hud/login-guest.png`}
-                    onClick={() => {
+                    onPointerDown={() => {
                       //
                       loginGuest()
                       //
