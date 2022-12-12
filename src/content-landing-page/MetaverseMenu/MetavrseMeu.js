@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Hud, Image, PerspectiveCamera as DPC } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
+import { VRButton } from '@react-three/xr'
 import { Suspense, useMemo, useRef } from 'react'
 import { PerspectiveCamera } from 'three'
 import { useSnapshot } from 'valtio'
@@ -52,16 +53,16 @@ export function MetaverseMenu() {
 
           <group
             position={[
-              visibleWidthAtZDepth(10, camera) / 2 + -0.5,
-              visibleHeightAtZDepth(10, camera) / 2 + -0.5,
+              visibleWidthAtZDepth(10, camera) / 2 + -0.7,
+              visibleHeightAtZDepth(10, camera) / 2 + -0.7,
               0,
             ]}
           >
             <Image
-              url={`/brand/metaverse-menu.png`}
+              url={`/hud/menu.png`}
               transparent={true}
-              scale={[0.5, 0.5]}
-              onPointerDown={() => {
+              scale={[0.7, 0.7]}
+              onPointerDown={async () => {
                 GateState.menuOverlay = !GateState.menuOverlay
               }}
             ></Image>

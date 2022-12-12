@@ -7,50 +7,58 @@ import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
 import { LandingContent } from './LandingContent'
 import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
+import { XR, Controllers, VRButton } from '@react-three/xr'
+import { useSnapshot } from 'valtio'
+import { GateState } from '../LoginContentGate/GateState'
 
 export function CanvasPage({}) {
+  let gs = useSnapshot(GateState)
   return (
-    <Canvas
-      //
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        backgroundColor: '#F08BDC',
-      }}
-      {...{
-        gl: { antialias: false, logarithmicDepthBuffer: false },
-        onCreated: (st) => {
-          st.gl.physicallyCorrectLights = true
-          st.gl.outputEncoding = sRGBEncoding
+    <>
+      <Canvas
+        //
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          backgroundColor: '#F08BDC',
+        }}
+        {...{
+          gl: { antialias: false, logarithmicDepthBuffer: false },
+          onCreated: (st) => {
+            st.gl.physicallyCorrectLights = true
+            st.gl.outputEncoding = sRGBEncoding
 
-          st.gl.shadowMap.enabled = false
+            st.gl.shadowMap.enabled = false
 
-          Core.now.canvas = Core.makeAutoNode('canvas')
-          for (let kn in st) {
-            Core.now.canvas.now[kn] = st[kn]
-          }
-          st.gl.setAnimationLoop(Core.work)
-        },
-      }}
-    >
-      <MetaverseMenu></MetaverseMenu>
+            Core.now.canvas = Core.makeAutoNode('canvas')
+            for (let kn in st) {
+              Core.now.canvas.now[kn] = st[kn]
+            }
+            st.gl.setAnimationLoop(Core.work)
+          },
+        }}
+      >
+        <XR>
+          <Controllers />
+          <MetaverseMenu></MetaverseMenu>
 
-      <Gate
-        loadingContent={<LoadingGroup />}
-        loggedInContent={
-          <>
-            <MetaverseWelcome></MetaverseWelcome>
-          </>
-        }
-        landingContent={
-          <>
-            <LandingContent></LandingContent>
-          </>
-        }
-      ></Gate>
+          <Gate
+            loadingContent={<LoadingGroup />}
+            loggedInContent={
+              <>
+                <MetaverseWelcome></MetaverseWelcome>
+              </>
+            }
+            landingContent={
+              <>
+                <LandingContent></LandingContent>
+              </>
+            }
+          ></Gate>
+        </XR>
 
-      {/* <UIContent>
+        {/* <UIContent>
         <div className='fixed top-0 right-0 z-20 mt-2 mr-2'>
           <img
             onClick={(ev) => {
@@ -143,9 +151,11 @@ export function CanvasPage({}) {
           </div>
         )}
       </UIContent> */}
-      {/*  */}
+        {/*  */}
 
-      {/*  */}
-    </Canvas>
+        {/*  */}
+      </Canvas>
+      {gs.supportVR && <VRButton></VRButton>}
+    </>
   )
 }

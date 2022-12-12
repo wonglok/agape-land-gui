@@ -33,6 +33,9 @@ export function MetaverseWelcome() {
             height={256}
             luminanceThreshold={0.3}
           ></Bloom>
+          {/*  */}
+
+          {/*  */}
         </EffectComposer>
 
         <BackgroundColor color='#000000'></BackgroundColor>

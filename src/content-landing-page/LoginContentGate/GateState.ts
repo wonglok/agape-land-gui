@@ -18,11 +18,14 @@ export const GateState = proxy<{
   readyStatus: ReadyStatus
   supportEth: boolean
   menuOverlay: boolean
+  supportVR: boolean
 }>({
   // filter: 'all',
   // todos: [],
 
   menuOverlay: false,
+  //
+  supportVR: false,
   //
   supportEth: false,
   readyStatus: 'init',

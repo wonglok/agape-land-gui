@@ -5,6 +5,7 @@ import {
   // loadSession,
   restoreTokenFromURL,
 } from '@/content-landing-page/LoginContentGate/GateMethods'
+import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 // import { useSnapshot } from 'valtio'
 // import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 // import { SESSION_ACCESS_KEY } from '@/content-landing-page/LoginContentGate/LoginContentGate'
@@ -16,6 +17,19 @@ import {
 // })
 
 function App({ Component, pageProps = { title: 'index' } }) {
+  useEffect(() => {
+    if ('xr' in window.navigator) {
+      window.navigator.xr.isSessionSupported('immersive-vr').then(
+        (v) => {
+          GateState.supportVR = v
+        },
+        () => {
+          GateState.supportVR = false
+        }
+      )
+    }
+  }, [])
+
   useEffect(() => {
     restoreTokenFromURL()
   }, [])

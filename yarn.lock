@@ -2676,10 +2676,10 @@
     screen-space-reflections "2.1.1"
     three-stdlib "^2.8.11"
 
-"@react-three/xr@^4.0.0":
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/@react-three/xr/-/xr-4.1.8.tgz#56a79b6ac62d41392549da869b622301154de3cd"
-  integrity sha512-H98mP6dfH1KTjQEoo62AYolI/XRNNR+0NoTkmLkrhMQZMKdLylQagCYd2yuGm3etw9hmARYvlTWsUe5on20TXw==
+"@react-three/xr@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@react-three/xr/-/xr-5.1.1.tgz#68bd37c91b0d6e7bb31fe96b380f3e2d5521b412"
+  integrity sha512-NeP51MHyQbxgA4Ed6bBXMfwQp/hdIiypy2KBWl7m6J4BpdyvMhE5L1oOSHtuBQnbhCh5UvA3JFoUkesHpVp7tg==
   dependencies:
     three-stdlib "^2.12.1"
     zustand "^3.7.1"
