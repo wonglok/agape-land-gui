@@ -39,6 +39,9 @@ export function CanvasPage({}) {
           },
         }}
       >
+        {/*  */}
+        {/*  */}
+        {/*  */}
         <XR>
           <Controllers />
           <MetaverseMenu></MetaverseMenu>
@@ -57,6 +60,10 @@ export function CanvasPage({}) {
             }
           ></Gate>
         </XR>
+
+        {/*  */}
+        {/*  */}
+        {/*  */}
 
         {/* <UIContent>
         <div className='fixed top-0 right-0 z-20 mt-2 mr-2'>

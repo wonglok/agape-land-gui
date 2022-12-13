@@ -75,7 +75,7 @@
     "screen-space-reflections": "2.5.0",
     "slugify": "^1.6.5",
     "swr": "^1.3.0",
-    "three": "^0.146.0",
+    "three": "^0.147.0",
     "three-mesh-bvh": "^0.5.17",
     "three-stdlib": "^2.12.1",
     "three140": "npm:three@^0.140.0",

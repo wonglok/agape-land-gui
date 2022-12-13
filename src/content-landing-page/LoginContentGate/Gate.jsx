@@ -1,4 +1,5 @@
 import { UIContent } from '@/lib/UIContent'
+import { Suspense } from 'react'
 import { useSnapshot } from 'valtio'
 import { GateState } from './GateState'
 
@@ -16,8 +17,8 @@ export function Gate({
   }
 
   if (snap.readyStatus === 'loggedin' && snap.session) {
-    return loggedInContent
+    return <Suspense fallback={loadingContent}>{loggedInContent}</Suspense>
   } else {
-    return landingContent
+    return <Suspense fallback={loadingContent}>{landingContent}</Suspense>
   }
 }
