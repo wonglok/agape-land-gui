@@ -41,6 +41,7 @@ const visibleWidthAtZDepth = (depth, camera) => {
 }
 
 export function MetaverseMenu() {
+  //
   let gate = useSnapshot(GateState)
   let camera = useThree((s) => s.camera)
   let gps = useRef()
@@ -48,9 +49,9 @@ export function MetaverseMenu() {
     if (gps.current) {
       gps.current.position.fromArray([
         //
-        (visibleWidthAtZDepth(5, camera) / 2) * 1.0 - 0.35,
-        (visibleHeightAtZDepth(5, camera) / 2) * 1.0 - 0.35,
-        // visibleHeightAtZDepth(10, camera) / 2,
+        (visibleWidthAtZDepth(7, camera) / 2) * 1.0 - 0.35,
+        (visibleHeightAtZDepth(7, camera) / 2) * 1.0 - 0.35,
+        // visibleHeightAtZDepth(7, camera) / 2,
         0,
       ])
     }
@@ -58,10 +59,12 @@ export function MetaverseMenu() {
       scene.add(camera)
     }
   })
+
+  //
   return (
     <>
       {createPortal(
-        <group position={[0, 0, -5]}>
+        <group position={[0, 0, -7]}>
           <group ref={gps}>
             <Image
               url={`/hud/menu.png`}
