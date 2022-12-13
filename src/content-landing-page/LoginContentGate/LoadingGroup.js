@@ -21,7 +21,6 @@ export function LoadingGroup() {
           </group>,
           camera
         )}
-
         <primitive object={camera}></primitive>
       </Suspense>
     </group>

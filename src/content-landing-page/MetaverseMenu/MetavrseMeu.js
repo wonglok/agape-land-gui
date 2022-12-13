@@ -1,6 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Hud, Image, PerspectiveCamera as DPC } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
+import { WalkerState } from '@/lib/walker/WalkerState'
+import {
+  Hud,
+  Image,
+  PerspectiveCamera as DPC,
+  useAspect,
+} from '@react-three/drei'
+import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { VRButton } from '@react-three/xr'
 import { Suspense, useMemo, useRef } from 'react'
 import { PerspectiveCamera } from 'three'
@@ -18,9 +24,9 @@ import { GateState } from '../LoginContentGate/GateState'
 // import { PerspectiveCamera } from 'three'
 const visibleHeightAtZDepth = (depth, camera) => {
   // compensate for cameras not positioned at z=0
-  const cameraOffset = camera.position.z
-  if (depth < cameraOffset) depth -= cameraOffset
-  else depth += cameraOffset
+  // const cameraOffset = depth // camera.position.z * 0.0
+  // if (depth < cameraOffset) depth -= cameraOffset
+  // else depth += cameraOffset
 
   // vertical fov in radians
   const vFOV = (camera.fov * Math.PI) / 180
@@ -36,32 +42,31 @@ const visibleWidthAtZDepth = (depth, camera) => {
 
 export function MetaverseMenu() {
   let gate = useSnapshot(GateState)
-
-  let viewport = useThree((s) => s.viewport)
-
-  let camera = useMemo(() => {
-    let pc = new PerspectiveCamera(65, viewport.aspect, 0.1, 1000)
-    pc.updateProjectionMatrix()
-    return pc
-  }, [viewport.aspect])
-
+  let camera = useThree((s) => s.camera)
+  let gps = useRef()
+  useFrame(({ scene }) => {
+    if (gps.current) {
+      gps.current.position.fromArray([
+        //
+        (visibleWidthAtZDepth(5, camera) / 2) * 1.0 - 0.35,
+        (visibleHeightAtZDepth(5, camera) / 2) * 1.0 - 0.35,
+        // visibleHeightAtZDepth(10, camera) / 2,
+        0,
+      ])
+    }
+    if (!scene.children.includes(camera)) {
+      scene.add(camera)
+    }
+  })
   return (
     <>
-      <Hud renderPriority={5}>
-        <Suspense fallback={null}>
-          <DPC makeDefault fov={65} position={[0, 0, 10]}></DPC>
-
-          <group
-            position={[
-              visibleWidthAtZDepth(10, camera) / 2 + -0.7,
-              visibleHeightAtZDepth(10, camera) / 2 + -0.7,
-              0,
-            ]}
-          >
+      {createPortal(
+        <group position={[0, 0, -5]}>
+          <group ref={gps}>
             <Image
               url={`/hud/menu.png`}
               transparent={true}
-              scale={[0.7, 0.7]}
+              scale={[0.5, 0.5]}
               onPointerDown={async () => {
                 GateState.menuOverlay = !GateState.menuOverlay
               }}
@@ -80,6 +85,7 @@ export function MetaverseMenu() {
                     onPointerDown={() => {
                       //
                       signOut()
+                      console.log('out')
                       //
                     }}
                   ></Image>
@@ -128,8 +134,9 @@ export function MetaverseMenu() {
               )}
             </group>
           )}
-        </Suspense>
-      </Hud>
+        </group>,
+        camera
+      )}
     </>
   )
 }
