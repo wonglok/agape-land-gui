@@ -2,7 +2,12 @@ import { Collider } from '@/lib/collider/Collider'
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 import { UIContent } from '@/lib/UIContent'
 import { Walker } from '@/lib/walker/Walker'
-import { Box, Environment, OrbitControls } from '@react-three/drei'
+import {
+  Box,
+  Environment,
+  OrbitControls,
+  PerspectiveCamera,
+} from '@react-three/drei'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
@@ -11,6 +16,7 @@ import { TheVortex } from '../TheVortex/TheVortex'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
+
   return (
     <group>
       {/* <LoadingGroup></LoadingGroup> */}
@@ -39,7 +45,11 @@ export function MetaverseWelcome() {
                 name={'NYC'}
                 glb={glb}
                 collider={collider}
+                onGameReady={({ game }) => {
+                  //
+                }}
               ></Walker>
+
               <primitive object={glb.scene}></primitive>
             </group>
           )

@@ -268,7 +268,7 @@ export class TheVortex extends Object3D {
     // }
 
     let renderable = new Mesh(geo, material)
-    renderable.frustumCulled = true
+    renderable.frustumCulled = false
     renderable.scale.setScalar((1 / 350) * 50)
 
     // let renderable2 = new Mesh(geo, material2)

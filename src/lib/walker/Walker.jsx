@@ -5,15 +5,20 @@ import { useCore } from '../useCore'
 import { Game } from './Game'
 import { WalkerState } from './WalkerState'
 
-export function Walker({ startAt = [0, 3, 0], name, collider }) {
+export function Walker({
+  onGameReady = () => {},
+  startAt = [0, 3, 0],
+  name,
+  collider,
+}) {
   let core = useCore()
 
   let game = useMemo(() => {
     let game = new Game({ startAt, name, core, collider })
     WalkerState[name] = game
-
+    onGameReady({ game })
     return game
-  }, [name, startAt, core, collider])
+  }, [name, onGameReady, startAt, core, collider])
 
   useFrame((st, dt) => {
     if (game) {
