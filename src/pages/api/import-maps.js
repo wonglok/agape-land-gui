@@ -1,5 +1,3 @@
-import { NextResponse } from 'next/server'
-
 import { Generator } from '@jspm/generator'
 
 export default async function handler(req, res) {
@@ -14,9 +12,5 @@ export default async function handler(req, res) {
     await generator.install(bodyData.packages[packID])
   }
 
-  return NextResponse.json(generator.getMap())
-}
-
-export const config = {
-  runtime: 'experimental-edge',
+  return res.status(200).json(generator.getMap())
 }
