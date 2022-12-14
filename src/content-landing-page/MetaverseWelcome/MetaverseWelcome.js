@@ -1,26 +1,37 @@
 import { Collider } from '@/lib/collider/Collider'
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
-import { UIContent } from '@/lib/UIContent'
+// import { UIContent } from '@/lib/UIContent'
 import { Walker } from '@/lib/walker/Walker'
 import {
   Box,
+  // Box,
   Environment,
   OrbitControls,
-  PerspectiveCamera,
+  // PerspectiveCamera,
 } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { Suspense } from 'react'
-import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
+import { useXR } from '@react-three/xr'
+import { useEffect } from 'react'
+// import { Suspense } from 'react'
+// import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { TheVortex } from '../TheVortex/TheVortex'
+import { XRUserControls } from './XRUserControls'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
 
+  let session = useXR((s) => s.session)
+
   return (
     <group>
-      {/* <LoadingGroup></LoadingGroup> */}
-
+      <Box args={[100, 100, 100, 100, 100, 100]}>
+        <meshStandardMaterial
+          emissive={'#ff0000'}
+          wireframe={true}
+        ></meshStandardMaterial>
+      </Box>
       <Collider
         scene={glb.scene}
         onReady={(collider) => {

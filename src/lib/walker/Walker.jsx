@@ -16,6 +16,7 @@ export function Walker({
   let game = useMemo(() => {
     let game = new Game({ startAt, name, core, collider })
     WalkerState[name] = game
+    WalkerState.current = game
     onGameReady({ game })
     return game
   }, [name, onGameReady, startAt, core, collider])

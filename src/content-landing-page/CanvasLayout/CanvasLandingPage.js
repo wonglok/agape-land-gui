@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { sRGBEncoding } from 'three'
 import { Core } from '../Core/Core'
 import { Gate } from '../LoginContentGate/Gate'
@@ -7,11 +7,23 @@ import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
 import { LandingContent } from './LandingContent'
 import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
-import { XR, Controllers, VRButton } from '@react-three/xr'
+import { XR, Controllers, VRButton, useXR } from '@react-three/xr'
 import { useSnapshot } from 'valtio'
 import { GateState } from '../LoginContentGate/GateState'
 
-export function CanvasPage({}) {
+function Loop() {
+  useFrame((st, dt) => {
+    Core.work(st, dt)
+  })
+
+  return <group></group>
+}
+
+export function CanvasPage(
+  {
+    //
+  }
+) {
   let gs = useSnapshot(GateState)
   return (
     <>
@@ -35,14 +47,18 @@ export function CanvasPage({}) {
             for (let kn in st) {
               Core.now.canvas.now[kn] = st[kn]
             }
-            st.gl.setAnimationLoop(Core.work)
+
+            //
+            // st.gl.setAnimationLoop(Core.work)
           },
         }}
       >
         {/*  */}
         {/*  */}
+
         {/*  */}
         <XR>
+          <Loop></Loop>
           <Controllers />
           <MetaverseMenu></MetaverseMenu>
 

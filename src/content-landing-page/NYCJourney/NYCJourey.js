@@ -2,7 +2,7 @@ import { Box, Center, Html, Stats, Text3D, useGLTF } from '@react-three/drei'
 // import { useReady, useScrollStore } from '../Core/useScrollStore'
 import { useEffect, useMemo, useRef } from 'react'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
-import { AnimationMixer, BufferAttribute, Vector3 } from 'three'
+import { AnimationMixer, BufferAttribute, Object3D, Vector3 } from 'three'
 import { TheVortex } from '../TheVortex/TheVortex'
 import { MathUtils } from 'three'
 import { UIContent } from '@/lib/UIContent'
@@ -191,8 +191,8 @@ export function NYCJourney() {
         }
 
         if (getRun(cam)) {
-          cam.getWorldPosition(camera.position)
-          cam.getWorldQuaternion(camera.quaternion)
+          cam.getWorldPosition(proxy.position)
+          cam.getWorldQuaternion(proxy.quaternion)
 
           camera.fov = 42 + adder
           camera.near = 1
@@ -239,9 +239,16 @@ export function NYCJourney() {
       h.destroy()
     }
   }, [])
+  let proxy = useMemo(() => {
+    return new Object3D()
+  }, [])
   let scene = useThree((s) => s.scene)
   // let camera = useThree((s) => s.camera)
 
+  useFrame(() => {
+    proxy.getWorldPosition(camera.position)
+    proxy.getWorldQuaternion(camera.quaternion)
+  })
   return (
     <group>
       <UIContent>
@@ -263,13 +270,11 @@ export function NYCJourney() {
       {createPortal(
         <group ref={rot}>
           <group ref={rot2}>
-            <primitive object={camera}></primitive>
+            <primitive object={proxy}></primitive>
           </group>
         </group>,
         scene
       )}
-
-      {/* <primitive object={camera}></primitive> */}
 
       <primitive object={glb.scene}></primitive>
 

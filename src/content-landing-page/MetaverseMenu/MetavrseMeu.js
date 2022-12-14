@@ -46,20 +46,29 @@ export function MetaverseMenu() {
   let camera = useThree((s) => s.camera)
   let gps = useRef()
   useFrame(({ scene }) => {
+    //
+
+    if (gate.session) {
+      camera.fov = 70
+      camera.updateProjectionMatrix()
+    }
+
     if (gps.current) {
       gps.current.position.fromArray([
         //
-        (visibleWidthAtZDepth(7, camera) / 2) * 1.0 - 0.35,
-        (visibleHeightAtZDepth(7, camera) / 2) * 1.0 - 0.35,
-        // visibleHeightAtZDepth(7, camera) / 2,
-        0,
+        (visibleWidthAtZDepth(2, camera) / 2) * 1.0 - 0.23,
+        (visibleHeightAtZDepth(2, camera) / 2) * 1.0 - 0.23,
+        5,
       ])
     }
+
+    //
     if (!scene.children.includes(camera)) {
       scene.add(camera)
     }
   })
 
+  //
   //
   return (
     <>
@@ -69,7 +78,7 @@ export function MetaverseMenu() {
             <Image
               url={`/hud/menu.png`}
               transparent={true}
-              scale={[0.5, 0.5]}
+              scale={[0.4, 0.4]}
               onPointerDown={async () => {
                 GateState.menuOverlay = !GateState.menuOverlay
               }}
