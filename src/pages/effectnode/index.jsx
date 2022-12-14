@@ -27,19 +27,19 @@ export default function EffectNode() {
           }
         })
       }
-      /*
 
-      <script type="esms-options">
-      {
-        "shimMode": true
-      }
-      </script>
-
-      */
-      let installImportMap = async () => {
+      let installImportMapOnce = async () => {
         let res = document.body.querySelector('#importmap')
 
         if (!res) {
+          document.body.appendChild(
+            Object.assign(document.createElement('script'), {
+              id: 'importmap',
+              type: 'importmap-shim',
+              innerHTML: JSON.stringify({ imports: {} }),
+            })
+          )
+
           document.body.appendChild(
             Object.assign(document.createElement('script'), {
               id: 'esms-options',
@@ -50,19 +50,12 @@ export default function EffectNode() {
             })
           )
 
-          document.body.appendChild(
-            Object.assign(document.createElement('script'), {
-              id: 'importmap',
-              type: 'importmap-shim',
-              innerHTML: JSON.stringify({ imports: {} }),
-            })
-          )
           await import('es-module-shims')
         }
       }
       //
       let packageImport = async (myPackages = []) => {
-        await installImportMap()
+        await installImportMapOnce()
 
         return getImportMap(myPackages).then((v) => {
           window.importShim.addImportMap(v)
@@ -78,7 +71,7 @@ export default function EffectNode() {
         })
       }
 
-      packageImport(['react-dom']).then((result) => {
+      packageImport(['three', 'react-dom']).then((result) => {
         console.log(result)
       })
 
