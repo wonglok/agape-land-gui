@@ -54,24 +54,35 @@ export default function EffectNode() {
         }
       }
       //
-      let packageImport = async (myPackages = []) => {
+      let importPackages = async (myPackages = []) => {
+        //
         await installImportMapOnce()
 
-        return getImportMap(myPackages).then((v) => {
-          window.importShim.addImportMap(v)
+        return getImportMap(myPackages)
+          .then((v) => {
+            window.importShim.addImportMap(v)
 
-          return Promise.all(
-            myPackages.map((pack) => {
-              return window.importShim(pack)
+            return Promise.all(
+              myPackages.map((it) => {
+                return window.importShim(it)
+              })
+            ).then((result) => {
+              //
+              // console.log(result)
+              //
+              return result
             })
-          ).then((result) => {
-            // console.log(result)
-            return result
           })
-        })
+          .catch((e) => {
+            console.warn(e)
+          })
       }
 
-      packageImport(['three', 'react-dom']).then((result) => {
+      importPackages([
+        'three',
+        'three/examples/jsm/utils/SkeletonUtils.js',
+      ]).then((result) => {
+        //
         console.log(result)
       })
 
