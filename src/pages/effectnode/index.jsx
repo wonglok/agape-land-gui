@@ -1,5 +1,6 @@
 // import importShim from
 
+import { UserEndPoints } from '@/content-landing-page/LoginContentGate/GateConst'
 import { useEffect } from 'react'
 //
 export default function EffectNode() {
@@ -8,10 +9,10 @@ export default function EffectNode() {
       // import('@jspm/generator').then(({ Generator }) => {
       //   console.log()
       // })
-
+      let myEndPoint = UserEndPoints[process.env.NODE_ENV]
       //
       let getImportMap = async (myPackages) => {
-        return fetch(`/api/import-maps`, {
+        return fetch(`${myEndPoint}/import-map`, {
           method: 'POST',
           body: JSON.stringify({
             packages: myPackages,
