@@ -9,17 +9,15 @@ export default function EffectNode() {
       //   console.log()
       // })
 
+      //
       let getImportMap = async (myPackages) => {
-        return fetch(
-          `https://lspr7w8538.execute-api.ap-southeast-1.amazonaws.com/import-map`,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              packages: myPackages,
-            }),
-            mode: 'cors',
-          }
-        ).then((r) => {
+        return fetch(`/api/import-maps`, {
+          method: 'POST',
+          body: JSON.stringify({
+            packages: myPackages,
+          }),
+          mode: 'cors',
+        }).then((r) => {
           if (r.ok) {
             return r.json()
           } else {
@@ -28,6 +26,7 @@ export default function EffectNode() {
         })
       }
 
+      //
       let installImportMapOnce = async () => {
         let res = document.body.querySelector('#importmap')
 
@@ -53,6 +52,7 @@ export default function EffectNode() {
           await import('es-module-shims')
         }
       }
+
       //
       let importPackages = async (myPackages = []) => {
         //
