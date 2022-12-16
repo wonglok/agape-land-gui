@@ -8,6 +8,7 @@ export default function EffectNode() {
   useEffect(() => {
     let run = async () => {
       importPackages([
+        'react-dom',
         'three',
         'three/examples/jsm/utils/SkeletonUtils.js',
       ]).then((result) => {

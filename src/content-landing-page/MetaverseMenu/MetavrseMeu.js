@@ -45,13 +45,16 @@ export function MetaverseMenu() {
   let gate = useSnapshot(GateState)
   let camera = useThree((s) => s.camera)
   let gps = useRef()
+  let size = useThree((s) => s.size)
   useFrame(({ scene }) => {
     //
 
-    if (gate.session) {
-      camera.fov = 70
-      camera.updateProjectionMatrix()
+    let adder = 0
+    if (size.width < size.height) {
+      adder += 15
     }
+    camera.fov = 60 + adder
+    camera.updateProjectionMatrix()
 
     if (gps.current) {
       gps.current.position.fromArray([

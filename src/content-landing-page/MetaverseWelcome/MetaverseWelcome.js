@@ -1,3 +1,4 @@
+import { usePlayAllAnim } from '@/hooks/use-play-all-anim'
 import { Collider } from '@/lib/collider/Collider'
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 // import { UIContent } from '@/lib/UIContent'
@@ -9,29 +10,32 @@ import {
   OrbitControls,
   // PerspectiveCamera,
 } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+// import { useFrame } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { useXR } from '@react-three/xr'
-import { useEffect } from 'react'
+import { XR } from '@react-three/xr'
+// import { useXR } from '@react-three/xr'
+// import { useEffect, useMemo } from 'react'
+// import { AnimationMixer } from 'three140'
+import { useSnapshot } from 'valtio'
+import { GateState } from '../LoginContentGate/GateState'
 // import { Suspense } from 'react'
 // import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { TheVortex } from '../TheVortex/TheVortex'
-import { XRUserControls } from './XRUserControls'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
+  usePlayAllAnim(glb)
 
-  let session = useXR((s) => s.session)
-
+  let gs = useSnapshot(GateState)
   return (
     <group>
-      <Box args={[100, 100, 100, 100, 100, 100]}>
+      {/* <Box args={[100, 100, 100, 100, 100, 100]}>
         <meshStandardMaterial
           emissive={'#ff0000'}
           wireframe={true}
         ></meshStandardMaterial>
-      </Box>
+      </Box> */}
       <Collider
         scene={glb.scene}
         onReady={(collider) => {
@@ -71,17 +75,9 @@ export function MetaverseWelcome() {
         files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
       ></Environment>
 
-      <EffectComposer resolutionScale={0.1} disableNormalPass multisampling={2}>
-        <Bloom
-          mipmapBlur
-          radius={0.5}
-          intensity={2}
-          width={256}
-          height={256}
-          luminanceThreshold={0.3}
-        ></Bloom>
-      </EffectComposer>
+      {/* {!gs.supportVR && (
 
+      )} */}
       <BackgroundColor color='#000000'></BackgroundColor>
 
       {/* <Box></Box> */}

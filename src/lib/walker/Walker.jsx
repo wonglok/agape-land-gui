@@ -1,5 +1,6 @@
 import { OrbitControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { useXR } from '@react-three/xr'
 import { useMemo } from 'react'
 import { useCore } from '../useCore'
 import { Game } from './Game'
@@ -10,16 +11,16 @@ export function Walker({
   startAt = [0, 3, 0],
   name,
   collider,
+  xrPlayer,
 }) {
   let core = useCore()
-
   let game = useMemo(() => {
-    let game = new Game({ startAt, name, core, collider })
+    let game = new Game({ xrPlayer, startAt, name, core, collider })
     WalkerState[name] = game
     WalkerState.current = game
     onGameReady({ game })
     return game
-  }, [name, onGameReady, startAt, core, collider])
+  }, [name, onGameReady, startAt, xrPlayer, core, collider])
 
   useFrame((st, dt) => {
     if (game) {

@@ -15,13 +15,18 @@ export const GateState = proxy<{
   // filter: Filter
   // todos: Todo[]
   session: Session
+  xrSession: any
   readyStatus: ReadyStatus
   supportEth: boolean
   menuOverlay: boolean
   supportVR: boolean
+  xrPlayer: any
 }>({
   // filter: 'all',
   // todos: [],
+
+  xrPlayer: false,
+  xrSession: false,
 
   menuOverlay: false,
   //

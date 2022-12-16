@@ -7,17 +7,11 @@ import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
 import { LandingContent } from './LandingContent'
 import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
-import { XR, Controllers, VRButton, useXR } from '@react-three/xr'
+// import { XR, Controllers, VRButton, useXR } from '@react-three/xr'
 import { useSnapshot } from 'valtio'
 import { GateState } from '../LoginContentGate/GateState'
-
-function Loop() {
-  useFrame((st, dt) => {
-    Core.work(st, dt)
-  })
-
-  return <group></group>
-}
+// import { SupplyXR } from '@/lib/walker/SupplyXR'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 export function CanvasPage(
   {
@@ -48,137 +42,53 @@ export function CanvasPage(
               Core.now.canvas.now[kn] = st[kn]
             }
 
-            //
             // st.gl.setAnimationLoop(Core.work)
           },
         }}
       >
         {/*  */}
-        {/*  */}
+        {/* {gs.supportVR && <SupplyXR></SupplyXR>} */}
 
         {/*  */}
-        <XR>
-          <Loop></Loop>
-          <Controllers />
-          <MetaverseMenu></MetaverseMenu>
-
-          <Gate
-            loadingContent={<LoadingGroup />}
-            loggedInContent={
-              <>
-                <MetaverseWelcome></MetaverseWelcome>
-              </>
-            }
-            landingContent={
-              <>
-                <LandingContent></LandingContent>
-              </>
-            }
-          ></Gate>
-        </XR>
 
         {/*  */}
-        {/*  */}
-        {/*  */}
+        <MetaverseMenu></MetaverseMenu>
 
-        {/* <UIContent>
-        <div className='fixed top-0 right-0 z-20 mt-2 mr-2'>
-          <img
-            onClick={(ev) => {
-              // console.log(ev)
-              GateState.menuOverlay = true
-            }}
-            className='h-8 lg:h-12'
-            src={`/brand/agape-3.png`}
-            alt={'agape town - here we go!'}
-          ></img>
-        </div>
+        <Gate
+          loadingContent={
+            <>
+              <LoadingGroup />
+            </>
+          }
+          loggedInContent={
+            <>
+              <MetaverseWelcome></MetaverseWelcome>
+            </>
+          }
+          landingContent={
+            <>
+              <LandingContent></LandingContent>
+            </>
+          }
+        ></Gate>
 
-        {gs.menuOverlay && (
-          <div className='fixed top-0 left-0 flex items-center justify-center w-full h-full z-100'>
-            <div className='relative w-full max-w-sm p-2 px-4 bg-white lg:max-w-lg rounded-xl -translate-y-28'>
-              <div className='m-3 text-2xl font-bold'>
-                Welcome to AGAPE TOWN
-              </div>
-              {!gs.session ? (
-                <div>
-                  <button
-                    className='p-2 px-5 mb-2 mr-2 bg-gray-200 rounded-xl'
-                    onClick={() => {
-                      loginGuest()
-                    }}
-                    rel='noreferrer'
-                  >
-                    <>Sign in as Guest</>
-                  </button>
-
-                  <button
-                    className='p-2 px-5 mb-2 mr-2 text-white  bg-blue-500 rounded-xl'
-                    onClick={() => {
-                      loginGoogle()
-                    }}
-                    rel='noreferrer'
-                  >
-                    <>Sign in as Google</>
-                  </button>
-
-                  <button
-                    className='p-2 px-5 mb-2 mr-2 bg-orange-400 rounded-xl'
-                    onClick={() => {
-                      loginEth()
-                    }}
-                    rel='noreferrer'
-                  >
-                    <>Sign in as Metamask</>
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {
-                    <div>
-                      <div className='profile'>
-                        <p>Welcome {gs.session.name}!</p>
-                        {gs.session.picture && (
-                          <img
-                            src={gs.session.picture}
-                            style={{ borderRadius: '50%' }}
-                            width={100}
-                            height={100}
-                            alt=''
-                          />
-                        )}
-                        {gs.session.email && <p>{gs.session.email}</p>}
-                        <button
-                          onClick={() => {
-                            signOut()
-                          }}
-                        >
-                          Sign out
-                        </button>
-                      </div>
-                    </div>
-                  }
-                </>
-              )}
-
-              <div
-                onClick={() => {
-                  //
-                  GateState.menuOverlay = false
-                }}
-                className='absolute right-0 p-2 px-4 text-white bg-pink-500 cursor-pointer -top-12 rounded-xl'
-              >
-                Close
-              </div>
-            </div>
-          </div>
-        )}
-      </UIContent> */}
-        {/*  */}
+        <EffectComposer
+          disableNormalPass
+          resolutionScale={0.1}
+          multisampling={2}
+        >
+          <Bloom
+            mipmapBlur
+            radius={0.7}
+            intensity={1.5}
+            luminanceThreshold={0.2}
+          ></Bloom>
+        </EffectComposer>
 
         {/*  */}
       </Canvas>
-      {gs.supportVR && <VRButton></VRButton>}
+
+      {/* {gs.xrSession && gs.supportVR && <VRButton></VRButton>} */}
     </>
   )
 }

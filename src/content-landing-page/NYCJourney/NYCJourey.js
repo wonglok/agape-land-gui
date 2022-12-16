@@ -175,10 +175,10 @@ export function NYCJourney() {
 
       cam.getWorldPosition(cam.userData.oldPos)
 
-      let adder = 0
-      if (size.width < size.height) {
-        adder += 15
-      }
+      // let adder = 0
+      // if (size.width < size.height) {
+      //   adder += 15
+      // }
 
       if (diff > 0.0001) {
         if (lastCam === false) {
@@ -194,7 +194,7 @@ export function NYCJourney() {
           cam.getWorldPosition(proxy.position)
           cam.getWorldQuaternion(proxy.quaternion)
 
-          camera.fov = 42 + adder
+          // camera.fov = 42 + adder
           camera.near = 1
           camera.far = 350
           camera.updateProjectionMatrix()

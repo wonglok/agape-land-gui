@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { Box3, Matrix4, Mesh, MeshStandardMaterial, Vector3 } from 'three'
 import { Line3 } from 'three'
+import { Object3D } from 'three140'
+import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 
 export class Game {
   constructor({ startAt = [0, 3, 0], core = false, name = false, collider }) {
@@ -213,6 +215,10 @@ export class Game {
     // if the player has fallen too far below the level reset their position to the start
     if (this.player.position.y < -25) {
       this.reset()
+    }
+
+    if (GateState.xrSession && GateState.xrPlayer) {
+      this.player.getWorldPosition(GateState.xrPlayer.position)
     }
   }
 

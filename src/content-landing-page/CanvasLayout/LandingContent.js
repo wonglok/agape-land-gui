@@ -16,7 +16,7 @@ export function LandingContent() {
 
       <NYCJourney></NYCJourney>
 
-      <EffectComposer resolutionScale={0.1} disableNormalPass multisampling={4}>
+      {/* <EffectComposer resolutionScale={0.1} disableNormalPass multisampling={4}>
         <Bloom
           mipmapBlur
           radius={0.5}
@@ -25,7 +25,7 @@ export function LandingContent() {
           height={256}
           luminanceThreshold={0.3}
         ></Bloom>
-      </EffectComposer>
+      </EffectComposer> */}
     </>
   )
 }

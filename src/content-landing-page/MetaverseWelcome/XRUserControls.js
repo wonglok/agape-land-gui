@@ -8,7 +8,7 @@ import {
   XR,
 } from '@react-three/xr'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { DoubleSide, Vector3 } from 'three'
+import { Vector3 } from 'three'
 
 export function XRContent({ children }) {
   return (
@@ -21,11 +21,14 @@ export function XRContent({ children }) {
 }
 
 function Walker({ children }) {
-  let camera = useThree((s) => s.camera)
+  //
   const xrPlayer = useXR((s) => s.player)
   const session = useXR((s) => s.session)
+
+  //
   const rightController = useController('right')
   const lefctController = useController('left')
+  let camera = useThree((s) => s.camera)
 
   let [ctrler, setCtrler] = useState(false)
   let targetPosition = useMemo(() => {
@@ -40,6 +43,7 @@ function Walker({ children }) {
   useEffect(() => {
     xrPlayer.position.copy(targetPosition)
   }, [session, xrPlayer, targetPosition])
+
   useFrame(({ camera }) => {
     camera.position.lerp(xrPlayer.position, 0.1)
   })
