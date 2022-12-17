@@ -2,7 +2,7 @@ import { Center, Image, Text3D } from '@react-three/drei'
 import { createPortal, useThree } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { BackgroundColor } from '../NYCJourney/BackgroundColor'
-import fontJSON from '../../../public/fonts/Days/Days_Regular.json'
+
 export function LoadingGroup() {
   let camera = useThree((s) => s.camera)
   return (

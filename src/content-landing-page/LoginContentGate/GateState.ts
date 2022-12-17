@@ -9,12 +9,12 @@ import { proxy, useSnapshot } from 'valtio'
 // }
 type Session = boolean | any
 
-type ReadyStatus = 'loggedin' | 'loading' | 'landing' | 'init'
+type ReadyStatus = 'loading' | 'done'
 
 export const GateState = proxy<{
   // filter: Filter
   // todos: Todo[]
-  session: Session
+  userSession: Session
   xrSession: any
   readyStatus: ReadyStatus
   supportEth: boolean
@@ -33,7 +33,9 @@ export const GateState = proxy<{
   supportVR: false,
   //
   supportEth: false,
-  readyStatus: 'init',
-  session: false,
+
+  //
+  readyStatus: 'loading',
+  userSession: false,
 })
 //

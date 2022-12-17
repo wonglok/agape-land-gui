@@ -1,4 +1,5 @@
 import md5 from 'md5'
+import { useEffect } from 'react'
 // import { useEffect, useMemo, useState } from 'react'
 
 class TJCore {
@@ -378,3 +379,17 @@ class TJCore {
 }
 
 export const Core = new TJCore({ name: 'thank you jesus' })
+
+export function CoreReady() {
+  let st = useThree()
+
+  useEffect(() => {
+    if (!Core.now.canvas) {
+      Core.now.canvas = Core.makeAutoNode('canvas')
+      for (let kn in st) {
+        Core.now.canvas.now[kn] = st[kn]
+      }
+    }
+  }, [st])
+  return null
+}

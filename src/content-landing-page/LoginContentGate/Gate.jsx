@@ -12,13 +12,9 @@ export function Gate({
 
   let snap = useSnapshot(GateState)
 
-  if (snap.readyStatus === 'init' || snap.readyStatus === 'loading') {
+  if (snap.readyStatus === 'loading') {
     return loadingContent
-  }
-
-  if (snap.readyStatus === 'loggedin' && snap.session) {
-    return <Suspense fallback={loadingContent}>{loggedInContent}</Suspense>
   } else {
-    return <Suspense fallback={loadingContent}>{landingContent}</Suspense>
+    return <group>{snap.session ? loggedInContent : landingContent}</group>
   }
 }

@@ -18,7 +18,6 @@ export function CanvasPage(
     //
   }
 ) {
-  let gs = useSnapshot(GateState)
   return (
     <>
       <Canvas
@@ -36,21 +35,10 @@ export function CanvasPage(
             st.gl.outputEncoding = sRGBEncoding
 
             st.gl.shadowMap.enabled = false
-
-            Core.now.canvas = Core.makeAutoNode('canvas')
-            for (let kn in st) {
-              Core.now.canvas.now[kn] = st[kn]
-            }
-
-            // st.gl.setAnimationLoop(Core.work)
           },
         }}
       >
         {/*  */}
-        {/* {gs.supportVR && <SupplyXR></SupplyXR>} */}
-
-        {/*  */}
-
         {/*  */}
         <MetaverseMenu></MetaverseMenu>
 

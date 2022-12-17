@@ -23,12 +23,11 @@ export function XRContent({ children }) {
 function Walker({ children }) {
   //
   const xrPlayer = useXR((s) => s.player)
-  const session = useXR((s) => s.session)
+  const xrSession = useXR((s) => s.session)
 
   //
   const rightController = useController('right')
   const lefctController = useController('left')
-  let camera = useThree((s) => s.camera)
 
   let [ctrler, setCtrler] = useState(false)
   let targetPosition = useMemo(() => {
@@ -42,14 +41,14 @@ function Walker({ children }) {
 
   useEffect(() => {
     xrPlayer.position.copy(targetPosition)
-  }, [session, xrPlayer, targetPosition])
+  }, [xrPlayer, targetPosition])
 
   useFrame(({ camera }) => {
     camera.position.lerp(xrPlayer.position, 0.1)
   })
 
   useFrame(({ camera }, dt) => {
-    if (session) {
+    if (xrSession) {
       xrPlayer.position.lerp(targetPosition, 0.1)
     } else {
     }
