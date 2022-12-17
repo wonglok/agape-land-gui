@@ -37,7 +37,7 @@
     "@theatre/core": "0.5",
     "@theatre/r3f": "0.5",
     "@theatre/studio": "0.5",
-    "@use-gesture/react": "^10.2.22",
+    "@use-gesture/react": "^10.2.23",
     "@use-gesture/vanilla": "^10.2.22",
     "@zip.js/zip.js": "^2.6.52",
     "animejs": "^3.2.1",
