@@ -16,7 +16,9 @@ import { BackgroundColor } from '@/content-landing-page/NYCJourney/BackgroundCol
 import { useCallback, useEffect } from 'react'
 import { ServantState } from './ServantState'
 import { Vector2 } from 'three140'
-import { Plane, Vector3 } from 'three'
+import { Color, Plane, Vector3 } from 'three'
+import { LogicNode, onCancel, onPointerMove } from '../logic-node/LogicNode'
+import { LogicBoard } from '../logic-node/LogicBoard'
 
 export function ServantsCanvas(
   {
@@ -27,11 +29,7 @@ export function ServantsCanvas(
     <>
       <Canvas
         //
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-        }}
+
         onCreated={(st) => {}}
       >
         {/*  */}
@@ -46,6 +44,8 @@ export function ServantsCanvas(
           //
           loggedInContent={
             <>
+              <LogicBoard></LogicBoard>
+
               <ControlsContent></ControlsContent>
             </>
           }
@@ -60,13 +60,21 @@ export function ServantsCanvas(
         {/*  */}
       </Canvas>
 
+      <div className=' fixed top-0 right-0 z-10 w-96 h-60'>
+        <Canvas onCreated={(st) => {}}>
+          <LogicBoard></LogicBoard>
+
+          <ControlsContent></ControlsContent>
+        </Canvas>
+      </div>
+
       {/* {gs.xrSession && gs.supportVR && <VRButton></VRButton>} */}
     </>
   )
 }
 
 // LET THERE BE LIGHT of GOD's love
-// LET's SERVE ONE ANOTHER WITH CHRIST JESUS IN AGAPE.
+// LET's SERVE ONE ANOTHER WITH CHRIST JESUS IN AGAPE
 
 function ControlsContent() {
   // let ss = useSnapshot(ServantState)
@@ -89,73 +97,9 @@ function ControlsContent() {
     }
   }, [reset, camera, controls])
 
-  let restoreControls = () => {
-    if (controls) {
-      controls.enabled = true
-    }
-  }
-  let disableControls = () => {
-    if (controls) {
-      controls.enabled = false
-    }
-  }
-  let onCancel = () => {
-    ServantState.hand = false
-    restoreControls()
-  }
+  //
   return (
     <>
-      <Box
-        onPointerMove={(ev) => {
-          //
-          if (ServantState.hand) {
-            ServantState.hand.ds.copy(ev.point).sub(ServantState.hand.ts)
-            ServantState.hand.ts.copy(ev.point)
-            ServantState.hand.mesh.position.add(ServantState.hand.ds)
-            console.log(ServantState.hand)
-            // ServantState.hand.ds.copy(ev.)
-          }
-        }}
-        onPointerUp={() => {
-          //
-          onCancel()
-        }}
-        onPointerCancel={() => {
-          onCancel()
-          //
-        }}
-        onBlur={() => {
-          onCancel()
-          //
-        }}
-        args={[1000, 0.1, 1000]}
-        visible={false}
-      ></Box>
-
-      <BackgroundColor color='#00ffff' />
-      {/*  */}
-
-      <Box
-        onPointerUp={() => {
-          //
-          onCancel()
-        }}
-        onPointerDown={(ev) => {
-          //
-          disableControls()
-          ServantState.hand = {
-            mesh: ev.object,
-            data: {
-              myData: 1123,
-            },
-            ts: new Vector3(ev.point.x, 0, ev.point.z),
-            ds: new Vector3(0, 0, 0),
-          }
-        }}
-        args={[1, 0.1, 1]}
-      ></Box>
-
-      {/*  */}
       <MapControls
         panSpeed={1.1}
         enableDamping={false}
@@ -164,16 +108,7 @@ function ControlsContent() {
         makeDefault
       ></MapControls>
 
-      <gridHelper args={[100, 100, 0xffffff, 0xffff00]}></gridHelper>
-
-      <EffectComposer disableNormalPass resolutionScale={0.1} multisampling={2}>
-        <Bloom
-          mipmapBlur
-          radius={0.7}
-          intensity={1.5}
-          luminanceThreshold={0.2}
-        ></Bloom>
-      </EffectComposer>
+      {/*  */}
     </>
   )
 }

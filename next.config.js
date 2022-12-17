@@ -1,6 +1,15 @@
 const nextConfig = {
   webpack(config, { isServer }) {
     // audio support
+
+    config.experiments = { asyncWebAssembly: true }
+    config.performance = {
+      // we dont want the wasm blob to generate warnings
+      hints: false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000,
+    }
+
     config.module.rules.push({
       test: /\.(ogg|mp3|wav|mpe?g)$/i,
       exclude: config.exclude,
@@ -28,6 +37,7 @@ const nextConfig = {
 
     return config
   },
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig
