@@ -14,13 +14,15 @@ import {
 import { Box, MapControls, OrbitControls } from '@react-three/drei'
 import { BackgroundColor } from '@/content-landing-page/NYCJourney/BackgroundColor'
 import { useCallback, useEffect } from 'react'
+import { ServantState } from './ServantState'
+import { Vector2 } from 'three140'
+import { Plane, Vector3 } from 'three'
 
 export function ServantsCanvas(
   {
     //
   }
 ) {
-  let gs = useSnapshot(GateState)
   return (
     <>
       <Canvas
@@ -30,7 +32,6 @@ export function ServantsCanvas(
           top: 0,
           left: 0,
         }}
-        //
         onCreated={(st) => {}}
       >
         {/*  */}
@@ -68,14 +69,17 @@ export function ServantsCanvas(
 // LET's SERVE ONE ANOTHER WITH CHRIST JESUS IN AGAPE.
 
 function ControlsContent() {
+  // let ss = useSnapshot(ServantState)
+
   let controls = useThree((s) => s.controls)
   let camera = useThree((s) => s.camera)
   let reset = useCallback(() => {
     if (!controls) {
       return
     }
-    controls.object.position.set(0, 50, 0)
+    controls.object.position.set(0, 20, 0)
     controls.object.lookAt(0, 0, 0)
+    controls.object.rotation.set(0, 0, 0, 'XYZ')
   }, [controls])
 
   useEffect(() => {
@@ -85,11 +89,70 @@ function ControlsContent() {
     }
   }, [reset, camera, controls])
 
+  let restoreControls = () => {
+    if (controls) {
+      controls.enabled = false
+    }
+  }
+  let onCancel = () => {
+    ServantState.hand = false
+    restoreControls()
+  }
   return (
     <>
-      <BackgroundColor color='#00ffff' />
+      <Box
+        onPointerMove={(ev) => {
+          //
+          if (ServantState.hand) {
+            ServantState.hand.ds.copy(ev.point).sub(ServantState.hand.ts)
+            ServantState.hand.ts.copy(ev.point)
+            ServantState.hand.mesh.position.add(ServantState.hand.ds)
+            console.log(ServantState.hand)
+            // ServantState.hand.ds.copy(ev.)
+          }
+        }}
+        onPointerUp={() => {
+          //
+          onCancel()
+        }}
+        onPointerCancel={() => {
+          onCancel()
+          //
+        }}
+        onBlur={() => {
+          onCancel()
+          //
+        }}
+        args={[1000, 0.1, 1000]}
+        visible={false}
+      ></Box>
 
-      <Box args={[1, 0.1, 1]}></Box>
+      <BackgroundColor color='#00ffff' />
+      {/*  */}
+
+      <Box
+        onPointerUp={() => {
+          //
+          onCancel()
+        }}
+        onPointerDown={(ev) => {
+          //
+          ServantState.hand = {
+            mesh: ev.object,
+            data: {
+              myData: 1123,
+            },
+            ts: new Vector3(ev.point.x, 0, ev.point.z),
+            ds: new Vector3(0, 0, 0),
+          }
+          if (controls) {
+            controls.enabled = false
+          }
+        }}
+        args={[1, 0.1, 1]}
+      ></Box>
+
+      {/*  */}
       <MapControls
         panSpeed={1.1}
         enableDamping={false}
