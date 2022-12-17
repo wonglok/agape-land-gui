@@ -77,9 +77,9 @@ function ControlsContent() {
     if (!controls) {
       return
     }
-    controls.object.position.set(0, 20, 0)
-    controls.object.lookAt(0, 0, 0)
-    controls.object.rotation.set(0, 0, 0, 'XYZ')
+    controls.object.position.set(0, 20, 0.0)
+    controls.target.set(0, 0, 0)
+    controls.update()
   }, [controls])
 
   useEffect(() => {
@@ -90,6 +90,11 @@ function ControlsContent() {
   }, [reset, camera, controls])
 
   let restoreControls = () => {
+    if (controls) {
+      controls.enabled = true
+    }
+  }
+  let disableControls = () => {
     if (controls) {
       controls.enabled = false
     }
@@ -137,6 +142,7 @@ function ControlsContent() {
         }}
         onPointerDown={(ev) => {
           //
+          disableControls()
           ServantState.hand = {
             mesh: ev.object,
             data: {
@@ -144,9 +150,6 @@ function ControlsContent() {
             },
             ts: new Vector3(ev.point.x, 0, ev.point.z),
             ds: new Vector3(0, 0, 0),
-          }
-          if (controls) {
-            controls.enabled = false
           }
         }}
         args={[1, 0.1, 1]}
