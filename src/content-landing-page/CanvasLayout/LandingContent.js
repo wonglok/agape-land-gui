@@ -9,8 +9,6 @@ export function LandingContent() {
         files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
       ></Environment>
 
-      <BackgroundColor color='#F08BDC'></BackgroundColor>
-
       <NYCJourney></NYCJourney>
     </>
   )

@@ -38,8 +38,6 @@ export function CanvasPage(
           },
         }}
       >
-        {/*  */}
-        {/*  */}
         <MetaverseMenu></MetaverseMenu>
 
         <Gate

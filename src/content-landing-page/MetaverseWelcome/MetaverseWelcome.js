@@ -14,10 +14,6 @@ import {
 // import { useXR } from '@react-three/xr'
 // import { useEffect, useMemo } from 'react'
 // import { AnimationMixer } from 'three140'
-import { useSnapshot } from 'valtio'
-import { GateState } from '../LoginContentGate/GateState'
-// import { Suspense } from 'react'
-import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
 
@@ -66,8 +62,6 @@ export function MetaverseWelcome() {
       <Environment
         files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
       ></Environment>
-
-      <BackgroundColor color='#000000'></BackgroundColor>
     </group>
   )
 }

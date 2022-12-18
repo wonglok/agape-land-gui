@@ -9,7 +9,7 @@ import {
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { VRButton } from '@react-three/xr'
 import { Suspense, useMemo, useRef } from 'react'
-import { PerspectiveCamera } from 'three'
+import { PerspectiveCamera, Quaternion } from 'three'
 import { useSnapshot } from 'valtio'
 import {
   loginEth,
@@ -18,6 +18,7 @@ import {
   signOut,
 } from '../LoginContentGate/GateMethods'
 import { GateState } from '../LoginContentGate/GateState'
+import { Vector3 } from 'three140'
 
 //  createPortal, useFrame,
 // import { useThree } from '@react-three/fiber'
@@ -48,16 +49,16 @@ export function MetaverseMenu() {
       <MenuLayout
         topRight={
           <Suspense fallback={null}>
-            {gs.readyStatus === 'done' && (
+            {
               <Image
                 url={`/hud/menu.png`}
                 transparent={true}
-                scale={[0.4, 0.4]}
-                onPointerDown={async () => {
+                scale={[0.3, 0.3]}
+                onPointerDown={() => {
                   GateState.menuOverlay = !GateState.menuOverlay
                 }}
               ></Image>
-            )}
+            }
           </Suspense>
         }
         center={
@@ -76,10 +77,10 @@ export function MenuLayout({ center, topRight }) {
   let camera = useThree((s) => s.camera)
   let gps = useRef()
   let size = useThree((s) => s.size)
-
+  let cameraProxy = camera.clone()
+  let wp = new Vector3()
+  let wq = new Quaternion()
   useFrame(({ scene }) => {
-    //
-
     let adder = 0
     if (size.width < size.height) {
       adder += 15
@@ -96,10 +97,11 @@ export function MenuLayout({ center, topRight }) {
       ])
     }
 
-    //
-    if (!scene.children.includes(camera)) {
-      scene.add(camera)
-    }
+    camera.getWorldPosition(wp)
+    camera.getWorldQuaternion(wq)
+
+    cameraProxy.position.lerp(wp, 0.1)
+    cameraProxy.quaternion.slerp(wq, 0.1)
   })
 
   return (
@@ -109,8 +111,9 @@ export function MenuLayout({ center, topRight }) {
           <group ref={gps}>{topRight}</group>
           {center}
         </group>,
-        camera
+        cameraProxy
       )}
+      <primitive object={cameraProxy}></primitive>
     </>
   )
 }
@@ -119,68 +122,70 @@ export function LogintButtons() {
   let gate = useSnapshot(GateState)
   return (
     <>
-      <Suspense fallback={null}>
-        {gate.menuOverlay && (
-          <>
-            {gate.userSession && (
-              <>
-                <Image
-                  position={[0, 0.0, 0]}
-                  scale={[2.39, 0.61]}
-                  transparent={true}
-                  url={`/hud/login-logout.png`}
-                  onPointerDown={() => {
-                    //
-                    signOut()
-                  }}
-                ></Image>
-              </>
-            )}
-
-            {!gate.userSession && (
-              <>
-                <Image
-                  position={[0, 0.61 * 1.1, 0]}
-                  scale={[2.39, 0.61]}
-                  transparent={true}
-                  url={`/hud/login-google.png`}
-                  onPointerDown={() => {
-                    //
-                    loginGoogle()
-                    //
-                  }}
-                ></Image>
-
-                {GateState.supportEth && (
+      {gate.menuOverlay && (
+        <Suspense fallback={null}>
+          {
+            <>
+              {gate.userSession && (
+                <>
                   <Image
                     position={[0, 0.0, 0]}
                     scale={[2.39, 0.61]}
                     transparent={true}
-                    url={`/hud/login-metamask.png`}
+                    url={`/hud/login-logout.png`}
                     onPointerDown={() => {
                       //
-                      loginEth()
+                      signOut()
+                    }}
+                  ></Image>
+                </>
+              )}
+
+              {!gate.userSession && (
+                <>
+                  <Image
+                    position={[0, 0.61 * 1.1, 0]}
+                    scale={[2.39, 0.61]}
+                    transparent={true}
+                    url={`/hud/login-google.png`}
+                    onPointerDown={() => {
+                      //
+                      loginGoogle()
                       //
                     }}
                   ></Image>
-                )}
 
-                <Image
-                  position={[0, -0.61 * 1.1, 0]}
-                  scale={[2.39, 0.61]}
-                  transparent={true}
-                  url={`/hud/login-guest.png`}
-                  onPointerDown={() => {
-                    //
-                    loginGuest()
-                    //
-                  }}
-                ></Image>
-              </>
-            )}
-          </>
-        )}
-      </Suspense>
+                  {gate.supportEth && (
+                    <Image
+                      position={[0, 0.0, 0]}
+                      scale={[2.39, 0.61]}
+                      transparent={true}
+                      url={`/hud/login-metamask.png`}
+                      onPointerDown={() => {
+                        //
+                        loginEth()
+                        //
+                      }}
+                    ></Image>
+                  )}
+
+                  <Image
+                    position={[0, -0.61 * 1.1, 0]}
+                    scale={[2.39, 0.61]}
+                    transparent={true}
+                    url={`/hud/login-guest.png`}
+                    onPointerDown={() => {
+                      //
+                      loginGuest()
+                      //
+                    }}
+                  ></Image>
+                </>
+              )}
+            </>
+          }
+        </Suspense>
+      )}
     </>
   )
 }

@@ -15,6 +15,6 @@ export function Gate({
   if (snap.readyStatus === 'loading') {
     return loadingContent
   } else {
-    return <group>{snap.session ? loggedInContent : landingContent}</group>
+    return <group>{snap.userSession ? loggedInContent : landingContent}</group>
   }
 }

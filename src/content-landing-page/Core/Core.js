@@ -1,3 +1,4 @@
+import { useThree } from '@react-three/fiber'
 import md5 from 'md5'
 import { useEffect } from 'react'
 // import { useEffect, useMemo, useState } from 'react'

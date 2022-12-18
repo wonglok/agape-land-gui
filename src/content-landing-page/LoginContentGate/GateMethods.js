@@ -27,24 +27,21 @@ export const restoreTokenFromURL = async () => {
       window.localStorage.setItem(SESSION_ACCESS_KEY, sTokenInURL)
       window.location.assign('/')
     } else {
-      // GateState.readyStatus = 'landing'
     }
 
     await loadSession()
+    GateState.readyStatus = 'done'
   }
 }
 
 export const loadSession = async () => {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (sToken) {
-    // GateState.readyStatus = 'loading'
     const user = await getUserInfo(sToken)
     if (user) {
       GateState.userSession = user
-      // GateState.readyStatus = 'loggedin'
     } else {
       GateState.userSession = false
-      // GateState.readyStatus = 'landing'
     }
   }
 
@@ -76,7 +73,11 @@ export const signOut = async () => {
   localStorage.clear(SESSION_ACCESS_KEY)
   GateState.userSession = false
   GateState.menuOverlay = false
-  // GateState.readyStatus = 'landing'
+  GateState.readyStatus = 'loading'
+
+  setTimeout(() => {
+    GateState.readyStatus = 'done'
+  }, 1000)
 }
 
 export const getEndPointURL = () => {
