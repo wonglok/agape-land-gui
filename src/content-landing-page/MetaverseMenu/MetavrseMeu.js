@@ -77,7 +77,7 @@ export function MetaverseMenu() {
                     onPointerDown={() => {
                       GateState.menuOverlay = !GateState.menuOverlay
                     }}
-                    args={[0.1, 2]}
+                    args={[0.11, 3]}
                   >
                     <meshPhysicalMaterial
                       metalness={0}
