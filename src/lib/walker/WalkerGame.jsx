@@ -35,6 +35,9 @@ export function WalkerGame({
   return (
     <group>
       {/*  */}
+      <group>
+        <primitive visible={false} object={game.player}></primitive>
+      </group>
       {/*  */}
       {/*  */}
     </group>

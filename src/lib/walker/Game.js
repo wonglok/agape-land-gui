@@ -59,6 +59,8 @@ export class Game {
       radius: 0.5,
       segment: new Line3(new Vector3(), new Vector3(0, -1.0, 0.0)),
     }
+    this.player.name = 'chaseme'
+
     ////////!SECTION
 
     // player.castShadow = true

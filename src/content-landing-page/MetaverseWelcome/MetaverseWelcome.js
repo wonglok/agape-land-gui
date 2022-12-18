@@ -57,7 +57,6 @@ export function MetaverseWelcome() {
                 collider={collider}
                 onGameReady={({ game, core }) => {
                   //
-                  //
                 }}
               ></WalkerGame>
             </group>
