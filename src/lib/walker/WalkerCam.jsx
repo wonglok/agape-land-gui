@@ -32,22 +32,28 @@ export function WalkerCam({ collider }) {
 
         if (hit) {
           if (hit.distance <= controls.getDistance()) {
-            //
+            controls.deltaDir = controls.deltaDir || 0
 
-            controls.restoreDistance = hit.distance
-
-            let restore = controls.maxDistance
-            controls.maxDistance = hit.distance
-            controls.update()
-            controls.maxDistance = restore
+            controls.deltaDir = MathUtils.lerp(
+              controls.deltaDir,
+              hit.distance - controls.getDistance(),
+              0.4
+            )
           }
         }
 
-        if (controls.restoreDistance && controls.restoreDistance >= 0.0) {
+        if (Math.abs(controls.deltaDir) > 0) {
           let dir = camera.position.clone().sub(controls.target).normalize()
-          camera.position.addScaledVector(dir, dt * 25)
-          controls.restoreDistance -= dt * 25
+          camera.position.addScaledVector(dir, dt * 25 * controls.deltaDir)
+          controls.deltaDir -= dt * 25 * controls.deltaDir
         }
+
+        // if (controls.tick > 0) {
+        //   let dir = camera.position.clone().sub(controls.target).normalize()
+        //   camera.position.addScaledVector(dir, dt * 25 * controls.deltaDir)
+        //   controls.deltaDir -= dt * 25 * controls.deltaDir
+        //   controls.tick--
+        // }
 
         // if (hit) {
         //   if (currentDiff - hit.distance >= 0) {
