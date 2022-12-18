@@ -177,6 +177,7 @@ uniform float enterCirlce;
     return a + w*(b-a);
   }
 
+
 void main ()	{
 
   float time = iTime;
@@ -195,12 +196,17 @@ void main ()	{
     rand(uv.xy + 0.2) * 2.0 - 1.0,
     rand(uv.xy + 0.3) * 2.0 - 1.0
   );
-  toBall(noiser * vec3(35.0, 1.5, 35.0), az, el);
+  toBall(noiser * vec3(35.0, 35.0, 35.0), az, el);
 
-  az += sin(time) * sin(time + uv.x * 3.14);
-  el += 1.0 * cos(time + uv.x * 3.14);
+  az += sin(time * 3.1415) * sin(time * 3.1415);
+  el += sin(time * 3.1415) * cos(time * 3.1415);
 
-  pos.xyz = trackerPos + rotateY(time) * fromBall(0.6, az, el);
+
+  vec3 ball = fromBall(1.0, az, el);
+
+  pos.xyz = trackerPos + ball;
+
+
   gl_FragColor.rgb = pos.rgb;
   gl_FragColor.w = 1.0;
 
