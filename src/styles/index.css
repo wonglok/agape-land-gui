@@ -30,3 +30,11 @@
   max-height: 90vh;
   overflow: scroll;
 }
+
+.nipple {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50px;
+  left: 50px;
+}

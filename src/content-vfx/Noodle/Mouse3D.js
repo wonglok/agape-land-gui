@@ -8,7 +8,7 @@ export function Mouse3D({ collider }) {
   let ref = useRef()
 
   let tv = useMemo(() => new Vector3(), [])
-  useFrame(({ raycaster, mouse, camera }) => {
+  useFrame(({ raycaster, mouse, camera, controls }) => {
     //
     if (collider.geometry) {
       if ('ontouchstart' in window) {

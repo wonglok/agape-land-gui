@@ -17,10 +17,14 @@ import {
 import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
+import { useThree } from '@react-three/fiber'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
   usePlayAllAnim(glb)
+
+  let camera = useThree((s) => s.camera)
+  let gl = useThree((s) => s.gl)
 
   return (
     <group>
@@ -40,7 +44,10 @@ export function MetaverseWelcome() {
                 </group>
               </group>
 
-              <OrbitControls makeDefault></OrbitControls>
+              <OrbitControls
+                args={[camera, gl.domElement]}
+                makeDefault
+              ></OrbitControls>
 
               <WalkerGame
                 startAt={[
@@ -51,15 +58,13 @@ export function MetaverseWelcome() {
                 name={'NYC'}
                 glb={glb}
                 collider={collider}
-                onGameReadys={({ game, core }) => {
+                onGameReady={({ game, core }) => {
                   //
                 }}
               ></WalkerGame>
 
               <group>
-                {/*  */}
                 <Mouse3D collider={collider}></Mouse3D>
-                {/*  */}
               </group>
             </group>
           )

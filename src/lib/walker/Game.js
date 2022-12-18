@@ -1,12 +1,16 @@
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import { Box3, Matrix4, Mesh, MeshStandardMaterial, Vector3 } from 'three'
+import {
+  Box3,
+  Matrix4,
+  Mesh,
+  MeshStandardMaterial,
+  Spherical,
+  Vector3,
+} from 'three'
 import { Line3 } from 'three'
-import { Object3D } from 'three140'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 
+export const gameKey = Math.random()
 export class Game {
   constructor({ startAt = [0, 3, 0], core = false, name = false, collider }) {
     console.log('init game:', name)
@@ -27,6 +31,10 @@ export class Game {
       bkdPressed: false,
       lftPressed: false,
       rgtPressed: false,
+      joyStickDown: false,
+      joyStickAngle: 0,
+      joyStickPressure: 0,
+      joyStickSide: 0,
     }
 
     /////////!SECTION
@@ -36,6 +44,71 @@ export class Game {
     this.playerIsOnGround = true
 
     //////////
+
+    import('nipplejs')
+      .then((s) => {
+        return s.default
+      })
+      .then(async (nip) => {
+        let zone = document.createElement('div')
+        document.body.appendChild(zone)
+
+        // zone.style.cssText = `
+        //   display: flex;
+        //   justify-content: center;
+        //   align-items:center;
+        //   position: absolute;
+        //   z-index: 200;
+        //   bottom: calc(100px / 2);
+        //   left: calc(50% - 100px / 2);
+        //   width: 100px;
+        //   height: 100px;
+        // `
+        zone.style.zIndex = '100'
+        zone.style.position = 'absolute'
+        zone.style.display = 'flex'
+        zone.style.justifyContent = 'center'
+        zone.style.alignItems = 'center'
+        zone.style.left = 'calc(50% - 100px / 2)'
+        zone.style.bottom = 'calc(100px / 2)'
+        zone.style.width = 'calc(100px)'
+        zone.style.height = 'calc(100px)'
+        zone.style.borderRadius = 'calc(100px)'
+        zone.style.backgroundColor = 'rgba(255,255,255,0.5)'
+
+        this.dynamic = nip.create({
+          color: 'white',
+          zone: zone,
+          mode: 'dynamic',
+        })
+
+        this.dynamic.on('added', (evt, nipple) => {
+          this.dynamic.on('start move end dir plain', (evta, data) => {
+            if (evta.type === 'start') {
+              this.keyState.joyStickDown = true
+            }
+
+            if (data?.angle?.radian) {
+              this.keyState.joyStickSide = Math.PI * 0.5 - data.angle.radian
+              this.keyState.joyStickAngle = data.angle.radian + Math.PI * 1.5
+              this.keyState.joyStickPressure =
+                Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
+            }
+
+            if (evta.type === 'end') {
+              this.keyState.joyStickDown = false
+            }
+          })
+          nipple.on('removed', () => {
+            nipple.off('start move end dir plain')
+          })
+
+          this.core.onClean(() => {
+            nipple.destroy()
+            zone.remove()
+          })
+        })
+      })
 
     this.changeView = ({ far }) => {
       let { camera, controls } = this.core.now
@@ -129,6 +202,40 @@ export class Game {
       this.player.position.addScaledVector(
         this.tempVector,
         this.playerSpeed * delta
+      )
+    }
+
+    if (this.keyState.joyStickDown) {
+      this.tempVector
+        .set(0, 0, -1)
+        .applyAxisAngle(this.upVector, angle + this.keyState.joyStickAngle)
+
+      this.globalCameraPos = new Vector3()
+      this.spherical = new Spherical()
+
+      controls.object.getWorldPosition(this.globalCameraPos)
+      this.globalCameraPos.y = controls.target.y
+      let dist = controls.target.distanceTo(this.globalCameraPos)
+
+      this.deltaRot = new Vector3()
+      this.deltaRot.setFromCylindricalCoords(
+        dist,
+        controls.getAzimuthalAngle() +
+          0.2 *
+            delta *
+            this.keyState.joyStickSide *
+            -10.0 *
+            this.keyState.joyStickPressure
+      )
+      let y = camera.position.y
+      camera.position.sub(controls.target)
+      camera.position.copy(this.deltaRot)
+      camera.position.add(controls.target)
+      camera.position.y = y
+
+      this.player.position.addScaledVector(
+        this.tempVector,
+        this.playerSpeed * delta * this.keyState.joyStickPressure
       )
     }
 

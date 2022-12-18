@@ -1,7 +1,7 @@
 import { useFrame } from '@react-three/fiber'
 import { useMemo } from 'react'
 import { useCore } from '../useCore'
-import { Game } from './Game'
+import { Game, gameKey } from './Game'
 import { WalkerState } from './WalkerState'
 import { Object3D } from 'three140'
 
@@ -15,7 +15,14 @@ export function WalkerGame({
   let core = useCore()
 
   let game = useMemo(() => {
-    let game = new Game({ xrPlayer, startAt, name, core, collider })
+    let game = new Game({
+      gameKey: gameKey,
+      xrPlayer,
+      startAt,
+      name,
+      core,
+      collider,
+    })
     WalkerState[name] = game
     WalkerState.current = game
     onGameReady({ game, core })
