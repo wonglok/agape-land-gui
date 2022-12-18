@@ -187,9 +187,10 @@ export class NoodleSegmentCompute {
 
           positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb,  0.7);
 
-          // positionChain.x += (rand(vec2(currentLine + 0.1)) * 2.0 - 1.0) * 2.0;
-          // positionChain.y += (rand(vec2(currentLine + 0.2)) * 2.0 - 1.0) * 2.0;
-          // positionChain.z += (rand(vec2(currentLine + 0.3)) * 2.0 - 1.0) * 2.0;
+
+          positionChain.x += (rand(vec2(currentLine + 0.1)) * 2.0 - 1.0) * 0.001;
+          positionChain.y += (rand(vec2(currentLine + 0.2)) * 2.0 - 1.0) * 0.001;
+          positionChain.z += (rand(vec2(currentLine + 0.3)) * 2.0 - 1.0) * 0.001;
 
 
           // positionChain.xyz *= 1.0 + sin(time) * 0.25 * 0.0135;

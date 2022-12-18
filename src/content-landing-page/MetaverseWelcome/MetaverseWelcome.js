@@ -43,7 +43,7 @@ export function MetaverseWelcome() {
               <OrbitControls makeDefault></OrbitControls>
 
               <group>
-                <Noodle chaseName='chaseme'></Noodle>
+                <Noodle chaseName='bb00'></Noodle>
               </group>
 
               <WalkerGame

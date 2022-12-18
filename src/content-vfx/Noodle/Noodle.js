@@ -25,8 +25,8 @@ export function Noodle({ chaseName }) {
     })
 
     let mini = core
-    let howManyTracker = 128
-    let howLongTail = 64
+    let howManyTracker = 64
+    let howLongTail = 32
 
     let renderConfig = {
       color: new Color('#ffffff'),

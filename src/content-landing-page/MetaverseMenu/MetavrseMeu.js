@@ -77,7 +77,8 @@ export function MetaverseMenu() {
                     onPointerDown={() => {
                       GateState.menuOverlay = !GateState.menuOverlay
                     }}
-                    args={[0.1, 0]}
+                    args={[0.15, 0]}
+                    visible={false}
                   >
                     <meshStandardMaterial
                       metalness={0}
@@ -85,6 +86,11 @@ export function MetaverseMenu() {
                       emissive={`#DD8556`}
                     ></meshStandardMaterial>
                   </Icosahedron>
+                  {/* <group scale={0.003}>
+                    <theVortex key={TheVortex.key}></theVortex>
+                  </group> */}
+
+                  <group name='bb00'></group>
 
                   {/* <theVortex key={TheVortex.key}></theVortex> */}
                 </group>
