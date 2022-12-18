@@ -86,11 +86,11 @@ export function MetaverseMenu() {
                       emissive={`#DD8556`}
                     ></meshStandardMaterial>
                   </Icosahedron>
+
+                  <group name='bb00'></group>
                   {/* <group scale={0.003}>
                     <theVortex key={TheVortex.key}></theVortex>
                   </group> */}
-
-                  <group name='bb00'></group>
 
                   {/* <theVortex key={TheVortex.key}></theVortex> */}
                 </group>
@@ -165,8 +165,10 @@ export function MenuLayout({ center, topRight }) {
   let gps = useRef()
   let size = useThree((s) => s.size)
   let cameraProxy = camera.clone()
-  let wp = new Vector3()
+  let wp = new Vector3().copy(camera.position)
   let wq = new Quaternion()
+
+  //
 
   //
   useFrame(({ scene }) => {
