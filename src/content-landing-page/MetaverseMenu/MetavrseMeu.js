@@ -84,8 +84,8 @@ export function MetaverseMenu() {
                       roughness={0}
                       attenuationColor={`#DD8556`}
                       transmission={1}
-                      thickness={0.1}
-                      ior={1.4}
+                      thickness={0.11}
+                      ior={1.1}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
 
