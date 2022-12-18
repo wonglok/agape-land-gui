@@ -69,13 +69,15 @@ export class Game {
         zone.style.display = 'flex'
         zone.style.justifyContent = 'center'
         zone.style.alignItems = 'center'
-        zone.style.left = 'calc(50% - 100px / 2)'
-        zone.style.bottom = 'calc(100px / 2)'
-        zone.style.width = 'calc(100px)'
-        zone.style.height = 'calc(100px)'
-        zone.style.borderRadius = 'calc(100px)'
-        zone.style.backgroundColor = 'rgba(255,255,255,0.5)'
-
+        zone.style.left = 'calc(50% - 125px / 2)'
+        zone.style.bottom = 'calc(125px / 2)'
+        zone.style.width = 'calc(125px)'
+        zone.style.height = 'calc(125px)'
+        zone.style.borderRadius = 'calc(125px)'
+        zone.style.userSelect = 'none'
+        // zone.style.backgroundColor = 'rgba(0,0,0,1)'
+        zone.style.backgroundImage = `url(/hud/walk.png)`
+        zone.style.backgroundSize = `cover`
         this.dynamic = nip.create({
           color: 'white',
           zone: zone,
@@ -94,10 +96,10 @@ export class Game {
                 this.keyState.joyStickPressure =
                   Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
               } else if (data?.direction?.angle === 'right') {
-                this.keyState.joyStickSide = -0.25 * Math.PI
+                this.keyState.joyStickSide = -0.15 * Math.PI * 0.5
                 this.keyState.joyStickPressure = 0
               } else if (data?.direction?.angle === 'left') {
-                this.keyState.joyStickSide = 0.25 * Math.PI
+                this.keyState.joyStickSide = 0.15 * Math.PI * 0.5
                 this.keyState.joyStickPressure = 0
               } else {
                 this.keyState.joyStickSide = 0.0
@@ -163,6 +165,11 @@ export class Game {
 
     this.keyboardCtrls = new KeyboardControls({ core: this.core, parent: this })
     //
+
+    //
+    this.globalCameraPos = new Vector3()
+    this.spherical = new Spherical()
+    this.deltaRot = new Vector3()
   }
 
   updatePlayer(delta) {
@@ -222,14 +229,10 @@ export class Game {
         .set(0, 0, -1)
         .applyAxisAngle(this.upVector, angle + this.keyState.joyStickAngle)
 
-      this.globalCameraPos = new Vector3()
-      this.spherical = new Spherical()
-
       controls.object.getWorldPosition(this.globalCameraPos)
       this.globalCameraPos.y = controls.target.y
       let dist = controls.target.distanceTo(this.globalCameraPos)
 
-      this.deltaRot = new Vector3()
       this.deltaRot.setFromCylindricalCoords(
         dist,
         controls.getAzimuthalAngle() +
