@@ -18,6 +18,7 @@ import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { useThree } from '@react-three/fiber'
+import { EXR } from '@/lib/gl/EXR'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
@@ -71,8 +72,11 @@ export function MetaverseWelcome() {
         }}
       ></Collider>
 
+      {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
+
       <Environment
         files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
+        // files={}
       ></Environment>
     </group>
   )
