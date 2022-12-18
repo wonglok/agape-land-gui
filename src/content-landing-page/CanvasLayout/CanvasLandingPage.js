@@ -11,7 +11,7 @@ import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 import { useSnapshot } from 'valtio'
 import { GateState } from '../LoginContentGate/GateState'
 // import { SupplyXR } from '@/lib/walker/SupplyXR'
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 
 export function CanvasPage(
   {
@@ -29,7 +29,7 @@ export function CanvasPage(
           backgroundColor: '#F08BDC',
         }}
         {...{
-          gl: { antialias: false, logarithmicDepthBuffer: false },
+          gl: { antialias: true, logarithmicDepthBuffer: false },
           onCreated: (st) => {
             st.gl.physicallyCorrectLights = true
             st.gl.outputEncoding = sRGBEncoding
@@ -61,7 +61,7 @@ export function CanvasPage(
         <EffectComposer
           disableNormalPass
           resolutionScale={0.1}
-          multisampling={2}
+          multisampling={0}
         >
           <Bloom
             mipmapBlur
@@ -70,8 +70,6 @@ export function CanvasPage(
             luminanceThreshold={0.2}
           ></Bloom>
         </EffectComposer>
-
-        {/*  */}
       </Canvas>
 
       {/* {gs.xrSession && gs.supportVR && <VRButton></VRButton>} */}

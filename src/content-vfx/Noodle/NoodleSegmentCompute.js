@@ -172,7 +172,7 @@ export class NoodleSegmentCompute {
           vec4 texColor = texture2D(headList, uvv);
 
           // // yolines
-          vec3 xyz = lerp(positionHead.rgb, texColor.rgb, 1.0);
+          vec3 xyz = lerp(positionHead.rgb, texColor.rgb, 0.75);
 
 
           gl_FragColor = vec4(xyz.rgb, 1.0);
@@ -185,7 +185,7 @@ export class NoodleSegmentCompute {
 
 
 
-          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb,  0.7);
+          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, (1.0 - uvCursor.x) * 0.7 + 0.3);
 
 
           // positionChain.x += (rand(vec2(currentLine + 0.1)) * 2.0 - 1.0) * 0.001;

@@ -8,9 +8,12 @@ import { Color, FrontSide } from 'three'
 import { useCore } from '@/lib/useCore'
 import { useFrame, useThree } from '@react-three/fiber'
 
-export function Noodle({ chaseName }) {
+export function Noodle({}) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
+
+  let howManyTracker = 64
+  let howLongTail = 32
 
   let { group } = useMemo(() => {
     let group = new Object3D()
@@ -18,21 +21,18 @@ export function Noodle({ chaseName }) {
     let chaser = new Object3D()
 
     core.onLoop(() => {
-      let target = core.now.scene.getObjectByName(chaseName)
-      if (target) {
-        target.getWorldPosition(chaser.position)
+      let mouse3d = core.now.scene.getObjectByName('mouse3d')
+      if (mouse3d) {
+        chaser.position.lerp(mouse3d.position, 1.0)
       }
     })
 
     let mini = core
-    let howManyTracker = 64
-    let howLongTail = 32
-
     let renderConfig = {
       color: new Color('#ffffff'),
       emissive: new Color('#DD8556'),
       transparent: false,
-      roughness: 0.0,
+      roughness: 1.0,
       metalness: 0.0,
       side: FrontSide,
       // reflectivity: 1,
@@ -93,7 +93,7 @@ export function Noodle({ chaseName }) {
       chaser,
       group: group,
     }
-  }, [core, gl])
+  }, [core, gl, howLongTail, howManyTracker])
 
   useFrame(() => {})
 

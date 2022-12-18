@@ -16,7 +16,7 @@ import {
 // import { AnimationMixer } from 'three140'
 import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
-import { Noodle } from '@/content-vfx/Noodle/Noodle'
+import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
@@ -51,10 +51,16 @@ export function MetaverseWelcome() {
                 name={'NYC'}
                 glb={glb}
                 collider={collider}
-                onGameReady={({ game, core }) => {
+                onGameReadys={({ game, core }) => {
                   //
                 }}
               ></WalkerGame>
+
+              <group>
+                {/*  */}
+                <Mouse3D collider={collider}></Mouse3D>
+                {/*  */}
+              </group>
             </group>
           )
         }}

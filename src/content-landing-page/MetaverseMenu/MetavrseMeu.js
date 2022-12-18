@@ -58,6 +58,7 @@ export function MetaverseMenu() {
       <group>
         <Noodle chaseName='bb00'></Noodle>
       </group>
+
       <MenuLayout
         topRight={
           <Suspense fallback={null}>
@@ -78,6 +79,7 @@ export function MetaverseMenu() {
                 <group scale={1}>
                   <Icosahedron
                     onPointerDown={() => {
+                      //
                       GateState.menuOverlay = !GateState.menuOverlay
                     }}
                     args={[0.11, 3]}
@@ -92,7 +94,6 @@ export function MetaverseMenu() {
                     ></meshPhysicalMaterial>
                   </Icosahedron>
 
-                  <group name='bb00'></group>
                   {/* <group scale={0.003}>
                     <theVortex key={TheVortex.key}></theVortex>
                   </group> */}
@@ -169,14 +170,27 @@ export function MenuLayout({ center, topRight }) {
   let camera = useThree((s) => s.camera)
   let gps = useRef()
   let size = useThree((s) => s.size)
-  let cameraProxy = camera.clone()
-  let wp = new Vector3().copy(camera.position)
-  let wq = new Quaternion()
+  let cameraProxy = useMemo(() => {
+    return new PerspectiveCamera(45, 1, 0.1, 100)
+  }, [])
 
-  //
+  let { wp, wq } = useMemo(() => {
+    let wp = new Vector3().copy(camera.position)
+    let wq = new Quaternion()
 
-  //
-  useFrame(({ scene }) => {
+    return {
+      wp,
+      wq,
+    }
+  }, [camera])
+
+  useFrame(() => {
+    camera.getWorldPosition(wp)
+    camera.getWorldQuaternion(wq)
+
+    cameraProxy.position.lerp(wp, 0.07)
+    cameraProxy.quaternion.slerp(wq, 0.07)
+
     let adder = 0
     if (size.width < size.height) {
       adder += 15
@@ -187,17 +201,13 @@ export function MenuLayout({ center, topRight }) {
     if (gps.current) {
       gps.current.position.fromArray([
         //
-        (visibleWidthAtZDepth(2, camera) / 2) * 1.0 - 0.25,
-        (visibleHeightAtZDepth(2, camera) / 2) * 1.0 - 0.25,
+        (visibleWidthAtZDepth(2, camera) / 2) * 1.0 - 0.3,
+        (visibleHeightAtZDepth(2, camera) / 2) * 1.0 - 0.3,
         5,
       ])
+      gps.current.lookAt(cameraProxy.position)
     }
-
-    camera.getWorldPosition(wp)
-    camera.getWorldQuaternion(wq)
-
-    cameraProxy.position.lerp(wp, 0.1)
-    cameraProxy.quaternion.slerp(wq, 0.1)
+    //
   })
 
   return (
@@ -205,6 +215,7 @@ export function MenuLayout({ center, topRight }) {
       {createPortal(
         <group position={[0, 0, -7]}>
           <group name='chaser-menu' ref={gps}>
+            <group name='bb00'></group>
             {topRight}
           </group>
           {center}
