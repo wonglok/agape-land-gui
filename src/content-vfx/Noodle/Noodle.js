@@ -28,6 +28,7 @@ export function Noodle({}) {
     })
 
     let mini = core
+
     let renderConfig = {
       color: new Color('#ffffff'),
       emissive: new Color('#DD8556'),
