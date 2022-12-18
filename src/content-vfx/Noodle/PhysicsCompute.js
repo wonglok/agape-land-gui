@@ -203,11 +203,11 @@ void main ()	{
   // el += sin(time * 3.1415) * cos(time * 3.1415);
   // az *= 0.1;
 
-  vec3 ball = fromBall(0.15, az, el);
+  vec3 ball = fromBall(0.16, az, el);
 
   ball = ball * rotateY(time * 4.0);
 
-  ball = ball * rotateX(3.141592 * 0.5);
+  // ball = ball * rotateX(3.141592 * 0.5);
 
   pos.xyz = trackerPos + ball;
 
