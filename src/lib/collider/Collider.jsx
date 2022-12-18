@@ -18,20 +18,20 @@ export function Collider({ scene, onReady = () => null }) {
   }, [scene])
 
   let [st, setST] = useState(null)
-
   useEffect(() => {
     colldierProm.then((v) => {
-      setST(v)
-      return
+      if (!st) {
+        setST(onReady(v))
+      }
     })
-  }, [colldierProm, onReady])
+  }, [colldierProm, onReady, st])
 
   return (
     <group>
       {/*  */}
-      {st && onReady(st)}
 
       {/*  */}
+      {st}
 
       {/*  */}
     </group>

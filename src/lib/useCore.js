@@ -5,17 +5,17 @@ export let useCore = () => {
   let core = useMemo(() => {
     let loops = []
     let cleans = []
-    let state = {}
+    let resources = {}
     return {
       loops,
       cleans,
-      state,
-      now: state,
-      ready: new Proxy(state, {
+      resources,
+      now: resources,
+      ready: new Proxy(resources, {
         get: (o, k) => {
           return new Promise((resolve) => {
             let tt = setInterval(() => {
-              let res = state[k]
+              let res = resources[k]
               if (res) {
                 clearInterval(tt)
                 resolve(res)
@@ -48,7 +48,7 @@ export let useCore = () => {
 
   useFrame((st, dt) => {
     for (let key in st) {
-      core.state[key] = st[key]
+      core.resources[key] = st[key]
     }
     core.work(st, dt)
   })
