@@ -55,6 +55,9 @@ export function MetaverseMenu() {
     <>
       <CoreReady></CoreReady>
 
+      <group>
+        <Noodle chaseName='bb00'></Noodle>
+      </group>
       <MenuLayout
         topRight={
           <Suspense fallback={null}>
