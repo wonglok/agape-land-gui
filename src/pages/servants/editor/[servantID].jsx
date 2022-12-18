@@ -2,12 +2,12 @@ import { ServantsCanvas } from '@/content-servants-bot/servants-canvas/ServantsC
 
 export default ServantsCanvas
 
-export async function getStaticPaths(context) {
-  //
+// export async function getStaticPaths(context) {
+//   //
 
-  return {
-    props: {
-      title: 'Agape - Servants',
-    }, // will be passed to the page component as props
-  }
-}
+//   return {
+//     props: {
+//       title: 'Agape - Servants',
+//     }, // will be passed to the page component as props
+//   }
+// }
