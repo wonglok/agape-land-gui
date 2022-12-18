@@ -196,13 +196,15 @@ void main ()	{
     rand(uv.xy + 0.2) * 2.0 - 1.0,
     rand(uv.xy + 0.3) * 2.0 - 1.0
   );
+
   toBall(noiser * vec3(35.0, 35.0, 35.0), az, el);
 
-  az += sin(time * 3.1415) * sin(time * 3.1415);
-  el += sin(time * 3.1415) * cos(time * 3.1415);
-
+  // az += sin(time * 3.1415) * sin(time * 3.1415);
+  // el += sin(time * 3.1415) * cos(time * 3.1415);
 
   vec3 ball = fromBall(1.0, az, el);
+
+  ball = ball * rotateY(time);
 
   pos.xyz = trackerPos + ball;
 
