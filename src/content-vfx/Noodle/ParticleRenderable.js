@@ -23,7 +23,7 @@ export class ParticleRenderable extends Object3D {
     this.core = core
     let SIZE_X = sizeX
     let SIZE_Y = sizeY
-    let boxGeo = new IcosahedronBufferGeometry(0.005, 2)
+    let boxGeo = new IcosahedronBufferGeometry(0.02, 2)
 
     let geo = new InstancedBufferGeometry()
     geo.copy(boxGeo)
@@ -137,6 +137,11 @@ export class ParticleRenderable extends Object3D {
           return mat3(uu, vv, ww);
         }
 
+        vec3 lerp(vec3 a, vec3 b, float w)
+        {
+          return a + w*(b-a);
+        }
+
 
         void main() {`
         )
@@ -147,14 +152,21 @@ export class ParticleRenderable extends Object3D {
           /* glsl */ `
           //
           vec4 tt = texture2D(tPos, uvinfo.xy);
+
+          vec3 tt0 = tt.rgb;
+          tt0 = lerp(tt0, tt.rgb, 0.01);
+
           vec3 tn = normalize(tt.rgb);
+
+
           vec3 pos = position;
+
           pos *= rotateX(tn.r * 3.1415);
           pos *= rotateY(tn.g * 3.1415);
           pos *= rotateZ(tn.b * 3.1415);
 
           //
-          vec3 transformed = vec3( tt.rgb + pos );
+          vec3 transformed = vec3( tt0.rgb + pos );
         `
         )
 

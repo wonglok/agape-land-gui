@@ -173,10 +173,9 @@ uniform vec3 mousePos;
 uniform vec3 screen;
 uniform float enterCirlce;
 
-  vec3 lerp(vec3 a, vec3 b, float w)
-      {
-        return a + w*(b-a);
-      }
+  vec3 lerp(vec3 a, vec3 b, float w) {
+    return a + w*(b-a);
+  }
 
 void main ()	{
 
@@ -201,7 +200,7 @@ void main ()	{
   az += sin(time) * sin(time + uv.x * 3.14);
   el += 1.0 * cos(time + uv.x * 3.14);
 
-  pos.xyz = trackerPos + rotateY(time) * fromBall(0.15, az, el);
+  pos.xyz = trackerPos + rotateY(time) * fromBall(0.6, az, el);
   gl_FragColor.rgb = pos.rgb;
   gl_FragColor.w = 1.0;
 

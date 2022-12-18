@@ -186,7 +186,7 @@ export class NoodleSegmentCompute {
 
           // positionChain.xyz = positionChain.xyz - trackerPos;
 
-          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb,  min(nextUV.y, 0.5) + 0.5);
+          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb,  0.85);
 
           // positionChain.x += (rand(vec2(currentLine + 0.1)) * 2.0 - 1.0) * 2.0;
           // positionChain.y += (rand(vec2(currentLine + 0.2)) * 2.0 - 1.0) * 2.0;
