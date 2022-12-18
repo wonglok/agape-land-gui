@@ -5,7 +5,7 @@ import {
   SquooshOptions,
 } from '@gltf-transform/functions'
 import { Document, TextureChannel, Transform } from '@gltf-transform/core'
-import type { SquooshLib } from './types/squoosh-lib'
+// import type { SquooshLib } from './types/squoosh-lib'
 import { formatBytes } from './utils'
 import { encode } from '../webp/webp'
 
@@ -51,10 +51,7 @@ const SUPPORTED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 let pool = null
 let poolUsers = 0
 
-const requestImagePool = (
-  squoosh: typeof SquooshLib,
-  jobs: number
-): SquooshLib.ImagePool => {
+const requestImagePool = (squoosh: any, jobs: number) => {
   if (!pool) {
     pool = new squoosh.ImagePool(jobs)
   }

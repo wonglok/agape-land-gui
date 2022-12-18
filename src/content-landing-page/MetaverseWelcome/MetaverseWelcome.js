@@ -16,6 +16,7 @@ import {
 // import { AnimationMixer } from 'three140'
 import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
+import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
@@ -41,6 +42,10 @@ export function MetaverseWelcome() {
 
               <OrbitControls makeDefault></OrbitControls>
 
+              <group>
+                <Noodle chaseName='chaseme'></Noodle>
+              </group>
+
               <WalkerGame
                 startAt={[
                   2.563503709126706,
@@ -50,7 +55,8 @@ export function MetaverseWelcome() {
                 name={'NYC'}
                 glb={glb}
                 collider={collider}
-                onGameReady={({ game }) => {
+                onGameReady={({ game, core }) => {
+                  //
                   //
                 }}
               ></WalkerGame>

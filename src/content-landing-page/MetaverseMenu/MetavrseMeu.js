@@ -54,9 +54,6 @@ export function MetaverseMenu() {
   return (
     <>
       <CoreReady></CoreReady>
-      <group>
-        <Noodle chaseName='b000'></Noodle>
-      </group>
 
       <MenuLayout
         topRight={
@@ -76,24 +73,18 @@ export function MetaverseMenu() {
                 </group> */}
                 {/* <Servant></Servant> */}
                 <group scale={1}>
-                  <group name='b000'>
-                    <Icosahedron
-                      visible={false}
-                      onPointerDown={() => {
-                        GateState.menuOverlay = !GateState.menuOverlay
-                      }}
-                      args={[0.075, 0]}
-                    >
-                      <meshPhysicalMaterial
-                        metalness={0}
-                        roughness={0}
-                        transmission={1}
-                        thickness={1.1}
-                        ior={1.3}
-                        emissive={`#DD8556`}
-                      ></meshPhysicalMaterial>
-                    </Icosahedron>
-                  </group>
+                  <Icosahedron
+                    onPointerDown={() => {
+                      GateState.menuOverlay = !GateState.menuOverlay
+                    }}
+                    args={[0.1, 0]}
+                  >
+                    <meshStandardMaterial
+                      metalness={0}
+                      roughness={1}
+                      emissive={`#DD8556`}
+                    ></meshStandardMaterial>
+                  </Icosahedron>
 
                   {/* <theVortex key={TheVortex.key}></theVortex> */}
                 </group>

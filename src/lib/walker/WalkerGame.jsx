@@ -18,7 +18,7 @@ export function WalkerGame({
     let game = new Game({ xrPlayer, startAt, name, core, collider })
     WalkerState[name] = game
     WalkerState.current = game
-    onGameReady({ game })
+    onGameReady({ game, core })
 
     return game
   }, [name, onGameReady, startAt, xrPlayer, core, collider])
