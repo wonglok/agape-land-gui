@@ -4,6 +4,7 @@ import { useCore } from '../useCore'
 import { Game, gameKey } from './Game'
 import { WalkerState } from './WalkerState'
 import { Object3D } from 'three140'
+import { WalkerCam } from './WalkerCam'
 
 export function WalkerGame({
   onGameReady = () => {},
@@ -43,6 +44,7 @@ export function WalkerGame({
     <group>
       {/*  */}
       <group>
+        {collider && <WalkerCam collider={collider}></WalkerCam>}
         <primitive visible={false} object={game.player}></primitive>
       </group>
       {/*  */}

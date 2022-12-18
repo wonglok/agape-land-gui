@@ -89,10 +89,22 @@ export class Game {
             }
 
             if (data?.angle?.radian) {
-              this.keyState.joyStickSide = Math.PI * 0.5 - data.angle.radian
+              if (data?.direction?.angle === 'up') {
+                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+                this.keyState.joyStickPressure =
+                  Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
+              } else if (data?.direction?.angle === 'right') {
+                this.keyState.joyStickSide = -0.25 * Math.PI
+                this.keyState.joyStickPressure = 0
+              } else if (data?.direction?.angle === 'left') {
+                this.keyState.joyStickSide = 0.25 * Math.PI
+                this.keyState.joyStickPressure = 0
+              } else {
+                this.keyState.joyStickSide = 0.0
+                this.keyState.joyStickPressure = 1
+              }
+
               this.keyState.joyStickAngle = data.angle.radian + Math.PI * 1.5
-              this.keyState.joyStickPressure =
-                Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
             }
 
             if (evta.type === 'end') {
@@ -221,11 +233,7 @@ export class Game {
       this.deltaRot.setFromCylindricalCoords(
         dist,
         controls.getAzimuthalAngle() +
-          0.2 *
-            delta *
-            this.keyState.joyStickSide *
-            -10.0 *
-            this.keyState.joyStickPressure
+          0.2 * delta * this.keyState.joyStickSide * 15.0
       )
       let y = camera.position.y
       camera.position.sub(controls.target)

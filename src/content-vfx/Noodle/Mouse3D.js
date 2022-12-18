@@ -1,14 +1,14 @@
 import { Icosahedron } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
-import { Object3D, Vector3 } from 'three'
+import { MathUtils, Object3D, Vector3 } from 'three'
 import { MeshBVH } from 'three-mesh-bvh'
-
 export function Mouse3D({ collider }) {
   let ref = useRef()
 
   let tv = useMemo(() => new Vector3(), [])
-  useFrame(({ raycaster, mouse, camera, controls }) => {
+  let gp = useMemo(() => new Vector3(), [])
+  useFrame(({ raycaster, mouse, camera, controls }, dt) => {
     //
     if (collider.geometry) {
       if ('ontouchstart' in window) {
@@ -25,7 +25,6 @@ export function Mouse3D({ collider }) {
         tv.copy(res.point)
         tv.addScaledVector(res.face.normal, 0.6)
       }
-
       ref.current.position.lerp(tv, 0.15)
     }
 
