@@ -78,6 +78,7 @@ export function MetaverseMenu() {
                 <group scale={1}>
                   <group name='b000'>
                     <Icosahedron
+                      visible={false}
                       onPointerDown={() => {
                         GateState.menuOverlay = !GateState.menuOverlay
                       }}
