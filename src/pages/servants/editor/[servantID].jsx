@@ -2,7 +2,7 @@ import { ServantsCanvas } from '@/content-servants-bot/servants-canvas/ServantsC
 
 export default ServantsCanvas
 
-export async function getStaticProps(context) {
+export async function getStaticPaths(context) {
   //
 
   return {
