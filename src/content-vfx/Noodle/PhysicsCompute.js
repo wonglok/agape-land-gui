@@ -179,7 +179,6 @@ uniform float enterCirlce;
 
 
 void main ()	{
-
   float time = iTime;
   vec2 cellSize = 1.0 / resolution.xy;
   vec2 newCell = gl_FragCoord.xy;

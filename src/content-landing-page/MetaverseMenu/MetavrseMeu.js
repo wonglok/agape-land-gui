@@ -77,14 +77,16 @@ export function MetaverseMenu() {
                     onPointerDown={() => {
                       GateState.menuOverlay = !GateState.menuOverlay
                     }}
-                    args={[0.15, 0]}
-                    visible={false}
+                    args={[0.1, 2]}
                   >
-                    <meshStandardMaterial
+                    <meshPhysicalMaterial
                       metalness={0}
-                      roughness={1}
-                      emissive={`#DD8556`}
-                    ></meshStandardMaterial>
+                      roughness={0}
+                      attenuationColor={`#DD8556`}
+                      transmission={1}
+                      thickness={0.1}
+                      ior={1.4}
+                    ></meshPhysicalMaterial>
                   </Icosahedron>
 
                   <group name='bb00'></group>
