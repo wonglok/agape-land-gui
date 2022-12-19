@@ -30,23 +30,5 @@ export function Mouse3D({ collider }) {
 
     //
   })
-  return (
-    <group name={'mouse3d'} ref={ref}>
-      <Icosahedron
-        onPointerDown={() => {
-          //
-        }}
-        args={[0.4, 3]}
-      >
-        <meshPhysicalMaterial
-          metalness={0}
-          roughness={0}
-          attenuationColor={`#DD8556`}
-          transmission={1}
-          thickness={0.4 * 2.0 + 1.0}
-          ior={1.1}
-        ></meshPhysicalMaterial>
-      </Icosahedron>
-    </group>
-  )
+  return <group name={'mouse3d'} ref={ref}></group>
 }

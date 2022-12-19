@@ -4,12 +4,14 @@ import { NoodleSegmentCompute } from './NoodleSegmentCompute'
 import { Object3D } from 'three140'
 import { NoodleRenderable } from './NoodleRenderable'
 import { ParticleRenderable } from './ParticleRenderable'
-import { Color, FrontSide } from 'three'
+import { Color, DoubleSide, FrontSide } from 'three'
 import { useCore } from '@/lib/useCore'
-import { useFrame, useThree } from '@react-three/fiber'
+import { createPortal, useFrame, useThree } from '@react-three/fiber'
+import { Icosahedron } from '@react-three/drei'
 
 export function Noodle({}) {
   let core = useCore()
+  let ref = useRef()
   let gl = useThree((s) => s.gl)
 
   let howManyTracker = 64
@@ -21,16 +23,13 @@ export function Noodle({}) {
     let chaser = new Object3D()
 
     core.onLoop(() => {
-      if ('ontouchstart' in window) {
-        let mouse3d = core.now.scene.getObjectByName('myself-player')
-        if (mouse3d) {
-          chaser.position.lerp(mouse3d.position, 1.0)
-        }
-      } else {
-        let mouse3d = core.now.scene.getObjectByName('mouse3d')
-        if (mouse3d) {
-          chaser.position.lerp(mouse3d.position, 1.0)
-        }
+      let mouse3d = core.now.scene.getObjectByName('mouse3d')
+      if (mouse3d) {
+        chaser.position.lerp(mouse3d.position, 0.5)
+      }
+
+      if (ref.current) {
+        ref.current.position.lerp(mouse3d.position, 0.5)
       }
     })
 
@@ -109,6 +108,23 @@ export function Noodle({}) {
   return (
     <group position={[0, 0, 0]}>
       <primitive object={group}></primitive>
+      <Icosahedron
+        ref={ref}
+        onPointerDown={() => {
+          //
+        }}
+        args={[0.45, 3]}
+      >
+        <meshPhysicalMaterial
+          metalness={0}
+          roughness={0}
+          attenuationColor={`#DD8556`}
+          transmission={1}
+          thickness={0.35 * 2.0 + 1.0}
+          ior={1.1}
+          side={DoubleSide}
+        ></meshPhysicalMaterial>
+      </Icosahedron>
     </group>
   )
 }
