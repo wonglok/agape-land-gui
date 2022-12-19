@@ -132,11 +132,29 @@ export class Game {
                   -1.0
               }
 
-              if (this.keyState.joyStickSide >= Math.PI * 0.1) {
-                this.keyState.joyStickSide = Math.PI * 0.1
+              if (data?.direction?.y == 'up') {
+                this.keyState.joyStickPressure =
+                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+                  speed *
+                  1.0
+              } else if (data?.direction?.y == 'down') {
+                this.keyState.joyStickPressure =
+                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+                  speed *
+                  -1.0
               }
-              if (this.keyState.joyStickSide <= -Math.PI * 0.1) {
-                this.keyState.joyStickSide = -Math.PI * 0.1
+
+              // if (this.keyState.joyStickPressure <= -0.6) {
+              //   this.keyState.joyStickPressure = -0.6
+              // }
+              // if (this.keyState.joyStickPressure >= 0.6) {
+              //   this.keyState.joyStickPressure = 0.6
+              // }
+              if (this.keyState.joyStickSide >= Math.PI * 0.15) {
+                this.keyState.joyStickSide = Math.PI * 0.15
+              }
+              if (this.keyState.joyStickSide <= -Math.PI * 0.15) {
+                this.keyState.joyStickSide = -Math.PI * 0.15
               }
 
               //
