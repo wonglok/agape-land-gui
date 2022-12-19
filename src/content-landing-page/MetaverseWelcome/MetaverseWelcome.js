@@ -18,7 +18,11 @@ import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { useThree } from '@react-three/fiber'
+import { useSnapshot } from 'valtio'
+import { WalkerState } from '@/lib/walker/WalkerState'
+import { Avatar } from '../Avatar/Avatar'
 
+const GameName = 'NYC'
 export function MetaverseWelcome() {
   let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
   //
@@ -26,6 +30,8 @@ export function MetaverseWelcome() {
 
   let camera = useThree((s) => s.camera)
   let gl = useThree((s) => s.gl)
+
+  let walk = useSnapshot(WalkerState)
 
   return (
     <group>
@@ -56,13 +62,17 @@ export function MetaverseWelcome() {
                   1.595614002597168 + 3,
                   45.14220988974003,
                 ]}
-                name={'NYC'}
+                name={GameName}
                 glb={glb}
                 collider={collider}
                 onGameReady={({ game, core }) => {
                   //
                 }}
               ></WalkerGame>
+
+              {WalkerState[GameName]?.player && (
+                <Avatar me={WalkerState[GameName].player}></Avatar>
+              )}
 
               <group>
                 <Mouse3D collider={collider}></Mouse3D>

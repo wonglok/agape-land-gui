@@ -10,6 +10,9 @@ import {
 import { Line3 } from 'three'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 
+const moduloWrapAround = (offset, capacity) =>
+  ((offset % capacity) + capacity) % capacity
+
 export const gameKey = Math.random()
 export class Game {
   constructor({ startAt = [0, 3, 0], core = false, name = false, collider }) {
@@ -91,12 +94,22 @@ export class Game {
             }
 
             if (data?.angle?.radian) {
+              //
+              //
               if (data?.direction?.angle === 'up') {
                 this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
                 this.keyState.joyStickPressure =
                   Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
+
+                //
               } else if (data?.direction?.angle === 'right') {
-                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+                if (data.direction.y == 'up') {
+                  this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+                } else {
+                  this.keyState.joyStickSide =
+                    data.angle.radian - Math.PI * 2.0 - Math.PI * 0.5
+                }
+
                 this.keyState.joyStickPressure =
                   Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
 
@@ -104,6 +117,7 @@ export class Game {
                 // this.keyState.joyStickPressure = 0
               } else if (data?.direction?.angle === 'left') {
                 this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+
                 this.keyState.joyStickPressure =
                   Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
                 // this.keyState.joyStickSide = 0.15 * Math.PI * 0.5
