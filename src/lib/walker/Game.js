@@ -98,59 +98,61 @@ export class Game {
 
             if (data?.angle?.radian) {
               //
-              //
-              if (data?.direction?.angle === 'up') {
-                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              // //
+              // if (data?.direction?.angle === 'up') {
+              //   this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
 
-                this.keyState.joyStickPressure =
-                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
-                  speed
+              //   this.keyState.joyStickPressure =
+              //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+              //     speed
 
-                //
-              } else if (data?.direction?.angle === 'right') {
-                if (data.direction.y == 'up') {
-                  this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
-                } else {
-                  this.keyState.joyStickSide =
-                    data.angle.radian - Math.PI * 2.0 - Math.PI * 0.5
-                }
+              //   //
+              // } else if (data?.direction?.angle === 'right') {
+              //   if (data.direction.y == 'up') {
+              //     this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //   } else {
+              //     this.keyState.joyStickSide =
+              //       data.angle.radian - Math.PI * 2.0 - Math.PI * 0.5
+              //   }
 
-                this.keyState.joyStickPressure =
-                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
-                  speed
-              } else if (data?.direction?.angle === 'left') {
-                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //   this.keyState.joyStickPressure =
+              //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+              //     speed
+              // } else if (data?.direction?.angle === 'left') {
+              //   this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
 
-                this.keyState.joyStickPressure =
-                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
-                  speed
-              } else {
-                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
-                this.keyState.joyStickPressure =
-                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
-                  speed *
-                  -1.0
-              }
-
-              console.log(data.vector.y)
-              if (data?.direction?.y == 'up') {
-                this.keyState.joyStickPressure = data.vector.y
-              } else if (data?.direction?.y == 'down') {
-                this.keyState.joyStickPressure = data.vector.y
-              }
-
-              // if (this.keyState.joyStickPressure <= -0.6) {
-              //   this.keyState.joyStickPressure = -0.6
-              // }
-              // if (this.keyState.joyStickPressure >= 0.6) {
-              //   this.keyState.joyStickPressure = 0.6
+              //   this.keyState.joyStickPressure =
+              //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+              //     speed
+              // } else {
+              //   this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //   this.keyState.joyStickPressure =
+              //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+              //     speed *
+              //     -1.0
               // }
 
-              if (this.keyState.joyStickSide >= Math.PI * 0.15) {
-                this.keyState.joyStickSide = Math.PI * 0.15
+              // console.log(data.vector.y)
+              // if (data?.direction?.y == 'up') {
+              //   this.keyState.joyStickPressure = data.vector.y
+              // } else if (data?.direction?.y == 'down') {
+              // }
+
+              this.keyState.joyStickPressure = data.vector.y
+              this.keyState.joyStickSide = -data.vector.x * 0.8
+
+              if (this.keyState.joyStickPressure <= -1) {
+                this.keyState.joyStickPressure = -1
               }
-              if (this.keyState.joyStickSide <= -Math.PI * 0.15) {
-                this.keyState.joyStickSide = -Math.PI * 0.15
+              if (this.keyState.joyStickPressure >= 1) {
+                this.keyState.joyStickPressure = 1
+              }
+
+              if (this.keyState.joyStickSide >= Math.PI * 0.5) {
+                this.keyState.joyStickSide = Math.PI * 0.5
+              }
+              if (this.keyState.joyStickSide <= -Math.PI * 0.5) {
+                this.keyState.joyStickSide = -Math.PI * 0.5
               }
 
               //
