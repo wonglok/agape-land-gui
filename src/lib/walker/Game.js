@@ -132,16 +132,11 @@ export class Game {
                   -1.0
               }
 
+              console.log(data.vector.y)
               if (data?.direction?.y == 'up') {
-                this.keyState.joyStickPressure =
-                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
-                  speed *
-                  1.0
+                this.keyState.joyStickPressure = data.vector.y
               } else if (data?.direction?.y == 'down') {
-                this.keyState.joyStickPressure =
-                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
-                  speed *
-                  -1.0
+                this.keyState.joyStickPressure = data.vector.y
               }
 
               // if (this.keyState.joyStickPressure <= -0.6) {
@@ -150,6 +145,7 @@ export class Game {
               // if (this.keyState.joyStickPressure >= 0.6) {
               //   this.keyState.joyStickPressure = 0.6
               // }
+
               if (this.keyState.joyStickSide >= Math.PI * 0.15) {
                 this.keyState.joyStickSide = Math.PI * 0.15
               }
