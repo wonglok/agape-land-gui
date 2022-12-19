@@ -56,7 +56,6 @@ function Servant({ me = new Object3D() }) {
 }
 
 export function Avatar({ me }) {
-  console.log(me)
   return (
     <group>
       <Suspense fallback={null}>
