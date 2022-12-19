@@ -5,6 +5,7 @@ import { Suspense, useMemo, useRef } from 'react'
 import { AnimationMixer, Object3D } from 'three'
 
 function Servant({ me = new Object3D() }) {
+  console.log(me)
   let ref = useRef()
   let glb = useGLBLoader(`/servant/lok/lok-compressed.glb`)
   let {

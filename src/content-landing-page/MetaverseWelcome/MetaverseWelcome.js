@@ -67,12 +67,14 @@ export function MetaverseWelcome() {
                 collider={collider}
                 onGameReady={({ game, core }) => {
                   //
+                  WalkerState[GameName] = game
+                  WalkerState.current = game
                 }}
               ></WalkerGame>
 
-              {WalkerState[GameName]?.player && (
-                <Avatar me={WalkerState[GameName].player}></Avatar>
-              )}
+              {/*  */}
+              {/*  */}
+              {walk.current && <Avatar me={walk.current.player}></Avatar>}
 
               <group>
                 <Mouse3D collider={collider}></Mouse3D>

@@ -24,8 +24,6 @@ export function WalkerGame({
       core,
       collider,
     })
-    WalkerState[name] = game
-    WalkerState.current = game
     onGameReady({ game, core })
 
     return game

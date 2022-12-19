@@ -53,18 +53,6 @@ export function MetaverseMenu() {
           <Suspense fallback={<LoadingGroup />}>
             {
               <>
-                {/* <Image
-                  url={`/hud/menu.png`}
-                  transparent={true}
-                  scale={[0.3, 0.3]}
-                  onPointerDown={() => {
-                    GateState.menuOverlay = !GateState.menuOverlay
-                  }}
-                ></Image> */}
-                {/* <group scale={0.3}>
-                  <Servant></Servant>
-                </group> */}
-                {/* <Servant></Servant> */}
                 <group scale={1}>
                   <Icosahedron
                     onPointerDown={() => {
@@ -84,12 +72,6 @@ export function MetaverseMenu() {
                       ior={1.4}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
-
-                  {/* <group scale={0.003}>
-                    <theVortex key={TheVortex.key}></theVortex>
-                  </group> */}
-
-                  {/* <theVortex key={TheVortex.key}></theVortex> */}
                 </group>
               </>
             }
@@ -106,56 +88,6 @@ export function MetaverseMenu() {
     </>
   )
 }
-
-// function Servant() {
-//   let ref = useRef()
-//   let glb = useGLBLoader(`/servant/lok/lok-compressed.glb`)
-//   let {
-//     animations: [hiClip],
-//   } = useFBX(`/servant/rpm-motion/sit-floor.fbx`)
-
-//   let mixer = useMemo(() => {
-//     return new AnimationMixer(glb.scene)
-//   }, [glb])
-//   useFrame(({ clock }) => {
-//     let t = clock.getElapsedTime()
-//     mixer.setTime(t)
-//   })
-
-//   let hiAct = mixer.clipAction(hiClip)
-//   hiAct.play()
-//   return (
-//     <group ref={ref} position={[-0.25, 0.25, 0]}>
-//       <Box
-//         visible={false}
-//         args={[0.3, 1, 0.3]}
-//         onPointerDown={() => {
-//           GateState.menuOverlay = !GateState.menuOverlay
-//         }}
-//       ></Box>
-
-//       <pointLight power={3.5} position={[-0.3, 0.5, 0.3]}></pointLight>
-//       <pointLight
-//         power={3.5}
-//         color='hotpink'
-//         position={[-0.3, 0.5, -0.3]}
-//       ></pointLight>
-//       <group scale={[0.3, 0.3, 0.3]} rotation={[0, -0.5, 0]}>
-//         <primitive object={glb.scene}></primitive>
-
-//         <Cylinder args={[1, 1, 0.15, 6, 6]} position={[0, -0.125, 0]}>
-//           <meshPhysicalMaterial
-//             transmission={1}
-//             thickness={10}
-//             roughness={0}
-//             reflectivity={1}
-//             metalness={0.3}
-//           ></meshPhysicalMaterial>
-//         </Cylinder>
-//       </group>
-//     </group>
-//   )
-// }
 
 export function MenuLayout({ center, topRight }) {
   let camera = useThree((s) => s.camera)
