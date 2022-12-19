@@ -21,6 +21,20 @@ export function CanvasPage(
 ) {
   return (
     <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .r3f-perf {
+          display: none !important;
+        }
+        @media (min-width: 1400px) {
+          .r3f-perf {
+            display: block !important;
+          }
+        }
+      `,
+        }}
+      ></style>
       <Canvas
         //
         style={{
