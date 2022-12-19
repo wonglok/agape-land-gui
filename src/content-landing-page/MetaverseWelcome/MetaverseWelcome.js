@@ -74,7 +74,7 @@ export function MetaverseWelcome() {
 
               {/*  */}
               {/*  */}
-              {walk.current && <Avatar me={walk.current.player}></Avatar>}
+              <Avatar></Avatar>
 
               <group>
                 <Mouse3D collider={collider}></Mouse3D>

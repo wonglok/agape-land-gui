@@ -2,7 +2,7 @@ import { proxy } from 'valtio'
 import { Game } from './Game'
 
 export const WalkerState = proxy<{
-  NYC: Game | null
+  current: Game | null
 }>({
-  NYC: null,
+  current: null,
 })

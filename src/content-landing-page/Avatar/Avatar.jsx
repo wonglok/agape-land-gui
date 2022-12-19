@@ -1,11 +1,10 @@
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
-import { Box, Cylinder, useFBX } from '@react-three/drei'
+import { useFBX } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { Suspense, useMemo, useRef } from 'react'
-import { AnimationMixer, Object3D } from 'three'
+import { AnimationMixer } from 'three'
 
-function Servant({ me = new Object3D() }) {
-  console.log(me)
+function Servant({}) {
   let ref = useRef()
   let glb = useGLBLoader(`/servant/lok/lok-compressed.glb`)
   let {
@@ -17,14 +16,14 @@ function Servant({ me = new Object3D() }) {
     return new AnimationMixer(glb.scene)
   }, [glb])
 
-  useFrame(({ clock }) => {
+  let me = false
+  useFrame(({ clock, scene }) => {
     let t = clock.getElapsedTime()
+
     mixer.setTime(t)
-
-    //!SECTION
-
+    me = me || scene.getObjectByName('player-myself')
     if (me) {
-      ref.current.position.lerp(me.position)
+      ref.current.position.lerp(me.position, 0.1)
     }
   })
 
@@ -39,11 +38,11 @@ function Servant({ me = new Object3D() }) {
   )
 }
 
-export function Avatar({ me }) {
+export function Avatar() {
   return (
     <group>
       <Suspense fallback={null}>
-        <Servant me={me}></Servant>
+        <Servant></Servant>
       </Suspense>
     </group>
   )

@@ -28,7 +28,7 @@ export function Noodle({}) {
         chaser.position.lerp(mouse3d.position, 0.5)
       }
 
-      if (ref.current) {
+      if (ref.current && mouse3d) {
         ref.current.position.lerp(mouse3d.position, 0.5)
       }
     })
