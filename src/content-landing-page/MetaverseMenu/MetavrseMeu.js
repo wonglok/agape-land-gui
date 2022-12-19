@@ -1,20 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { WalkerState } from '@/lib/walker/WalkerState'
-import {
-  Hud,
-  Image,
-  PerspectiveCamera as DPC,
-  useAspect,
-  Box,
-  useFBX,
-  Cylinder,
-  Sphere,
-  Icosahedron,
-} from '@react-three/drei'
+import { Image, PerspectiveCamera as DPC, Icosahedron } from '@react-three/drei'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
-import { VRButton } from '@react-three/xr'
-import { Suspense, useEffect, useMemo, useRef } from 'react'
-import { AnimationMixer, Color, PerspectiveCamera, Quaternion } from 'three'
+import { Suspense, useMemo, useRef } from 'react'
+import { PerspectiveCamera, Quaternion } from 'three'
 import { useSnapshot } from 'valtio'
 import {
   loginEth,
@@ -23,11 +12,11 @@ import {
   signOut,
 } from '../LoginContentGate/GateMethods'
 import { GateState } from '../LoginContentGate/GateState'
-import { Object3D, Vector3 } from 'three140'
-import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
-import { TheVortex } from '../TheVortex/TheVortex'
+import { Vector3 } from 'three140'
 import { CoreReady } from '../Core/Core'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
+import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
+import { Perf } from 'r3f-perf'
 
 //  createPortal, useFrame,
 // import { useThree } from '@react-three/fiber'
@@ -61,7 +50,7 @@ export function MetaverseMenu() {
 
       <MenuLayout
         topRight={
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingGroup />}>
             {
               <>
                 {/* <Image
@@ -87,10 +76,12 @@ export function MetaverseMenu() {
                     <meshPhysicalMaterial
                       metalness={0}
                       roughness={0}
-                      attenuationColor={`#DD8556`}
+                      emissive={`#DD8556`}
+                      emissiveIntensity={0.2}
+                      attenuationColor={`#ffffff`}
                       transmission={1}
                       thickness={0.11}
-                      ior={1.1}
+                      ior={1.4}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
 

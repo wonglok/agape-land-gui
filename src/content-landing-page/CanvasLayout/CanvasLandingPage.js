@@ -12,6 +12,7 @@ import { useSnapshot } from 'valtio'
 import { GateState } from '../LoginContentGate/GateState'
 // import { SupplyXR } from '@/lib/walker/SupplyXR'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
+import { Perf } from 'r3f-perf'
 
 export function CanvasPage(
   {
@@ -38,6 +39,21 @@ export function CanvasPage(
           },
         }}
       >
+        {process.env.NODE_ENV === 'development' && (
+          <Perf
+            showGraph={false}
+            minimal={false}
+            className='r3f-perf'
+            style={{
+              right: 'auto',
+              top: 'auto',
+              left: 0,
+              top: 250,
+              zIndex: 2000,
+            }}
+          />
+        )}
+
         <MetaverseMenu></MetaverseMenu>
 
         <Gate
