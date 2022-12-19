@@ -96,11 +96,18 @@ export class Game {
                 this.keyState.joyStickPressure =
                   Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
               } else if (data?.direction?.angle === 'right') {
-                this.keyState.joyStickSide = -0.15 * Math.PI * 0.5
-                this.keyState.joyStickPressure = 0
+                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+                this.keyState.joyStickPressure =
+                  Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
+
+                // this.keyState.joyStickSide = -0.15 * Math.PI * 0.5
+                // this.keyState.joyStickPressure = 0
               } else if (data?.direction?.angle === 'left') {
-                this.keyState.joyStickSide = 0.15 * Math.PI * 0.5
-                this.keyState.joyStickPressure = 0
+                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+                this.keyState.joyStickPressure =
+                  Math.min(Math.abs(data.distance / 50.0) * 5, 5) / 5.0
+                // this.keyState.joyStickSide = 0.15 * Math.PI * 0.5
+                // this.keyState.joyStickPressure = 0
               } else {
                 this.keyState.joyStickSide = 0.0
                 this.keyState.joyStickPressure = 1
@@ -146,7 +153,7 @@ export class Game {
       radius: 0.5,
       segment: new Line3(new Vector3(), new Vector3(0, -1.0, 0.0)),
     }
-    this.player.name = 'chaseme'
+    this.player.name = 'myself-player'
 
     ////////!SECTION
 

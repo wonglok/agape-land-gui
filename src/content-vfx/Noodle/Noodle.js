@@ -21,9 +21,16 @@ export function Noodle({}) {
     let chaser = new Object3D()
 
     core.onLoop(() => {
-      let mouse3d = core.now.scene.getObjectByName('mouse3d')
-      if (mouse3d) {
-        chaser.position.lerp(mouse3d.position, 1.0)
+      if ('ontouchstart' in window) {
+        let mouse3d = core.now.scene.getObjectByName('myself-player')
+        if (mouse3d) {
+          chaser.position.lerp(mouse3d.position, 1.0)
+        }
+      } else {
+        let mouse3d = core.now.scene.getObjectByName('mouse3d')
+        if (mouse3d) {
+          chaser.position.lerp(mouse3d.position, 1.0)
+        }
       }
     })
 
