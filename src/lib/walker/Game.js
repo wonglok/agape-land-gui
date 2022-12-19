@@ -93,13 +93,18 @@ export class Game {
               this.keyState.joyStickDown = true
             }
 
+            let distance = this.core.now.controls.getDistance()
+            let speed = 1
+
             if (data?.angle?.radian) {
               //
               //
               if (data?.direction?.angle === 'up') {
                 this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+
                 this.keyState.joyStickPressure =
-                  Math.min(Math.abs(data.distance / 50.0) * 2, 5) / 5.0
+                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+                  speed
 
                 //
               } else if (data?.direction?.angle === 'right') {
@@ -111,23 +116,31 @@ export class Game {
                 }
 
                 this.keyState.joyStickPressure =
-                  Math.min(Math.abs(data.distance / 50.0) * 2, 5) / 5.0
-
-                // this.keyState.joyStickSide = -0.15 * Math.PI * 0.5
-                // this.keyState.joyStickPressure = 0
+                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+                  speed
               } else if (data?.direction?.angle === 'left') {
                 this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
 
                 this.keyState.joyStickPressure =
-                  Math.min(Math.abs(data.distance / 50.0) * 2, 5) / 5.0
-                // this.keyState.joyStickSide = 0.15 * Math.PI * 0.5
-                // this.keyState.joyStickPressure = 0
+                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+                  speed
               } else {
-                this.keyState.joyStickSide = 0.0
-                this.keyState.joyStickPressure = 1
+                this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+                this.keyState.joyStickPressure =
+                  (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
+                  speed *
+                  -1.0
               }
 
-              this.keyState.joyStickAngle = data.angle.radian + Math.PI * 1.5
+              if (this.keyState.joyStickSide >= Math.PI * 0.1) {
+                this.keyState.joyStickSide = Math.PI * 0.1
+              }
+              if (this.keyState.joyStickSide <= -Math.PI * 0.1) {
+                this.keyState.joyStickSide = -Math.PI * 0.1
+              }
+
+              //
+              // this.keyState.joyStickAngle = data.angle.radian + Math.PI * 1.5
             }
 
             if (evta.type === 'end') {
@@ -267,7 +280,7 @@ export class Game {
 
       this.player.position.addScaledVector(
         this.tempVector,
-        this.playerSpeed * delta * this.keyState.joyStickPressure
+        this.playerSpeed * delta * this.keyState.joyStickPressure * 0.75
       )
     }
 

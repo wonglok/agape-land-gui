@@ -9,8 +9,9 @@ function Servant({ me = new Object3D() }) {
   let glb = useGLBLoader(`/servant/lok/lok-compressed.glb`)
   let {
     animations: [hiClip],
-  } = useFBX(`/servant/rpm-motion/float.fbx`)
+  } = useFBX(`/servant/rpm-motion/swim.fbx`)
 
+  //
   let mixer = useMemo(() => {
     return new AnimationMixer(glb.scene)
   }, [glb])
@@ -30,26 +31,8 @@ function Servant({ me = new Object3D() }) {
   hiAct.play()
   return (
     <group ref={ref} position={[0, 0, 0]}>
-      <Box visible={false} args={[0.3, 1, 0.3]} onPointerDown={() => {}}></Box>
-
-      <pointLight power={3.5} position={[-0.3, 0.5, 0.3]}></pointLight>
-      <pointLight
-        power={3.5}
-        color='hotpink'
-        position={[-0.3, 0.5, -0.3]}
-      ></pointLight>
       <group rotation={[0, 0.0, 0]}>
         <primitive object={glb.scene}></primitive>
-
-        <Cylinder args={[1, 1, 0.15, 6, 6]} position={[0, -0.125, 0]}>
-          <meshPhysicalMaterial
-            transmission={1}
-            thickness={10}
-            roughness={0}
-            reflectivity={1}
-            metalness={0.3}
-          ></meshPhysicalMaterial>
-        </Cylinder>
       </group>
     </group>
   )
@@ -61,7 +44,6 @@ export function Avatar({ me }) {
       <Suspense fallback={null}>
         <Servant me={me}></Servant>
       </Suspense>
-      {/*  */}
     </group>
   )
 }
