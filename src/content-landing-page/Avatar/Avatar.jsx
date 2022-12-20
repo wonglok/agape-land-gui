@@ -60,6 +60,7 @@ function Servant({}) {
       }
     })
   }, [core, glb.scene])
+
   let last = false
   useFrame(({ clock, scene, controls }) => {
     let t = clock.getElapsedTime()
@@ -80,10 +81,10 @@ function Servant({}) {
 
         if (last) {
           if (idleAct !== last) {
-            last.stop()
+            last.fadeOut(0.5).play()
+            idleAct.reset().play()
           }
         }
-        idleAct.play()
         last = idleAct
       } else {
         looker.position.y = me.position.y
@@ -91,17 +92,18 @@ function Servant({}) {
 
         if (last) {
           if (movingAct !== last) {
-            last.stop()
+            last.fadeOut(0.5).play()
+            movingAct.reset().play()
           }
         }
-        movingAct.play()
         last = movingAct
       }
 
       looker.position.copy(ref.current.position)
       ref.current.position.lerp(me.position, 0.2)
+
       if (ref.current) {
-        ref.current.quaternion.slerp(looker.quaternion, 0.2)
+        ref.current.quaternion.slerp(looker.quaternion, 0.16)
       }
     }
   })
