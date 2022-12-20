@@ -1,3 +1,5 @@
+import { applyGlass } from '@/content-vfx/GlassShader/applyGlass'
+import { useCore } from '@/hooks/use-core'
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 import { useFBX } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
@@ -28,6 +30,7 @@ function Servant({}) {
 
   let movingAct = mixer.clipAction(movingClip)
 
+  let core = useCore()
   useEffect(() => {
     glb.scene.traverse((it) => {
       //!SECTION
@@ -36,20 +39,27 @@ function Servant({}) {
           map: it.material.map,
           emissive: new Color('#ffffff'),
           emissiveMap: it.material.map,
-          emissiveIntensity: 0.15,
+          emissiveIntensity: 0.2,
           normalMap: it.material.normalMap,
           roughnessMap: null,
           metalnessMap: null,
-          envMapIntensity: 1,
+          envMapIntensity: 0.1,
           ior: 1.3,
-          transmission: 1,
-          thickness: 2,
-          roughness: 0.3,
-          metalness: 0.1,
+          transmission: 25,
+          thickness: 1.5,
+          roughness: 0.4,
+          metalness: 0.0,
         })
+        applyGlass({ core, it })
+        // it.material = new MeshPhysicalMaterial({
+        //   transmission: 1,
+        //   roughness: 0,
+        //   ior: 1.4,
+        //   thickness: 3.0,
+        // })
       }
     })
-  })
+  }, [core, glb.scene])
   let last = false
   useFrame(({ clock, scene, controls }) => {
     let t = clock.getElapsedTime()
