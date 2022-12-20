@@ -1,15 +1,13 @@
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 import { useFBX } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { useEffect } from 'react'
 import { Suspense, useMemo, useRef } from 'react'
-import { AnimationMixer } from 'three'
+import { AnimationMixer, Color, MeshPhysicalMaterial, Object3D } from 'three'
 
 function Servant({}) {
   let ref = useRef()
   let glb = useGLBLoader(`/servant/lok/lok-compressed.glb`)
-  let {
-    animations: [hiClip],
-  } = useFBX(`/servant/rpm-motion/swim.fbx`)
 
   //
   let mixer = useMemo(() => {
@@ -17,21 +15,90 @@ function Servant({}) {
   }, [glb])
 
   let me = false
-  useFrame(({ clock, scene }) => {
+
+  let looker = new Object3D()
+  let {
+    animations: [idleClip],
+  } = useFBX(`/rpm/rpm-actions-locomotion/standing.fbx`)
+  let {
+    animations: [movingClip],
+  } = useFBX(`/rpm/rpm-actions-locomotion/running.fbx`)
+
+  let idleAct = mixer.clipAction(idleClip)
+
+  let movingAct = mixer.clipAction(movingClip)
+
+  useEffect(() => {
+    glb.scene.traverse((it) => {
+      //!SECTION
+      if (it.material) {
+        it.material = new MeshPhysicalMaterial({
+          map: it.material.map,
+          emissive: new Color('#ffffff'),
+          emissiveMap: it.material.map,
+          emissiveIntensity: 0.15,
+          normalMap: it.material.normalMap,
+          roughnessMap: null,
+          metalnessMap: null,
+          envMapIntensity: 1,
+          ior: 1.3,
+          transmission: 1,
+          thickness: 2,
+          roughness: 0.3,
+          metalness: 0.1,
+        })
+      }
+    })
+  })
+  let last = false
+  useFrame(({ clock, scene, controls }) => {
     let t = clock.getElapsedTime()
 
     mixer.setTime(t)
-    me = me || scene.getObjectByName('player-myself')
-    if (me) {
-      ref.current.position.lerp(me.position, 0.1)
+    me = me || scene.getObjectByName('myself-player')
+
+    if (me && ref.current) {
+      if (controls) {
+        if (controls.getDistance() <= 0.45) {
+          ref.current.visible = false
+        } else {
+          ref.current.visible = true
+        }
+      }
+      if (ref.current.position.distanceTo(me.position) <= 0.1) {
+        // looker.lookAt(camera.position)
+
+        if (last) {
+          if (idleAct !== last) {
+            last.stop()
+          }
+        }
+        idleAct.play()
+        last = idleAct
+      } else {
+        looker.position.y = me.position.y
+        looker.lookAt(me.position)
+
+        if (last) {
+          if (movingAct !== last) {
+            last.stop()
+          }
+        }
+        movingAct.play()
+        last = movingAct
+      }
+
+      looker.position.copy(ref.current.position)
+      ref.current.position.lerp(me.position, 0.2)
+      if (ref.current) {
+        ref.current.quaternion.slerp(looker.quaternion, 0.2)
+      }
     }
   })
 
-  let hiAct = mixer.clipAction(hiClip)
-  hiAct.play()
   return (
-    <group ref={ref} position={[0, 0, 0]}>
-      <group rotation={[0, 0.0, 0]}>
+    <group ref={ref}>
+      <group position={[0, -1.52, 0]}>
         <primitive object={glb.scene}></primitive>
       </group>
     </group>
