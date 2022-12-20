@@ -59,17 +59,19 @@ export function MetaverseMenu() {
                       //
                       GateState.menuOverlay = !GateState.menuOverlay
                     }}
-                    args={[0.11, 3]}
+                    args={[0.13, 1]}
                   >
                     <meshPhysicalMaterial
                       metalness={0}
                       roughness={0}
                       emissive={`#DD8556`}
-                      emissiveIntensity={0.2}
-                      attenuationColor={`#ffffff`}
-                      transmission={1}
-                      thickness={0.11}
+                      emissiveIntensity={0.0}
+                      envMapIntensity={0}
+                      attenuationColor={`#DD8556`}
+                      transmission={8}
+                      thickness={0.11 * 5}
                       ior={1.4}
+                      flatShading={true}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
                 </group>
