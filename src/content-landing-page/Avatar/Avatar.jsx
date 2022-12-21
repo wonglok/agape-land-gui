@@ -44,6 +44,8 @@ function Servant({}) {
         if (!it.userData.oMat) {
           it.userData.oMat = it.material.clone()
         }
+        it.material = it.userData.oMat.clone()
+        it.material.envMapIntensity = 3
 
         // it.material = new MeshPhysicalMaterial({
         //   map: it.userData.oMat.map,
@@ -70,7 +72,7 @@ function Servant({}) {
         // })
       }
     })
-  }, [core, glb.scene])
+  })
 
   let last = idleAct
   useFrame(({ clock, scene, controls }) => {
