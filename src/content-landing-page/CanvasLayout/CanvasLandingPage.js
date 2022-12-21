@@ -84,12 +84,13 @@ export function CanvasPage(
           }
           loggedInContent={
             <>
-              <MetaverseWelcome></MetaverseWelcome>
+              <MetaverseWelcome online={true}></MetaverseWelcome>
             </>
           }
           landingContent={
             <>
-              <LandingContent></LandingContent>
+              <MetaverseWelcome online={false}></MetaverseWelcome>
+              {/* <LandingContent></LandingContent> */}
             </>
           }
         ></Gate>

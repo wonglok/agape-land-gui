@@ -8,6 +8,7 @@ import {
   // Box,
   Environment,
   OrbitControls,
+  useTexture,
   // PerspectiveCamera,
 } from '@react-three/drei'
 // import { useFrame } from '@react-three/fiber'
@@ -24,10 +25,11 @@ import { Avatar } from '../Avatar/Avatar'
 import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { useRouter } from 'next/router'
+import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
 
 const GameName = 'NYC'
 
-export function MetaverseWelcome() {
+export function MetaverseWelcome({ online = false }) {
   //public
   let router = useRouter()
   let query = router.query
@@ -40,6 +42,17 @@ export function MetaverseWelcome() {
   // let glb = useGLBLoader(`/places/t-mobile/r6-t-mobile--1636713668.glb`)
 
   //
+
+  let texture = useTexture(`/hdr/studio_hdri_bright.png`)
+  let scene = useThree((s) => s.scene)
+
+  if (query.t) {
+    texture.mapping = EquirectangularReflectionMapping
+    texture.encoding = sRGBEncoding
+    scene.environment = texture
+    scene.background = texture
+  }
+
   usePlayAllAnim(glb)
 
   let camera = useThree((s) => s.camera)
@@ -105,13 +118,18 @@ export function MetaverseWelcome() {
         <Noodle chaseName='bb00'></Noodle>
       </group>
 
+      {!query.t && (
+        <Environment
+          files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
+        ></Environment>
+      )}
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 
-      <Environment
-        preset='apartment'
+      {/* <Environment
+        // files={`/hdr/studio_hdri_bright.png`}
         // files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
         // files={}
-      ></Environment>
+      ></Environment> */}
     </group>
   )
 }

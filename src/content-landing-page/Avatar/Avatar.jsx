@@ -101,6 +101,7 @@ function Servant({}) {
             idleAct.reset().play()
           }
         }
+
         last = idleAct
       } else {
         looker.position.y = me.position.y
