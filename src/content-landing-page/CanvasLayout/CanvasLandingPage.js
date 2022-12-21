@@ -48,6 +48,8 @@ export function CanvasPage(
         {...{
           gl: { antialias: true, logarithmicDepthBuffer: false },
           onCreated: (st) => {
+            //
+
             st.gl.physicallyCorrectLights = true
             st.gl.outputEncoding = sRGBEncoding
 

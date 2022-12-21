@@ -11,8 +11,8 @@ import {
 import { Line3 } from 'three'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 
-const moduloWrapAround = (offset, capacity) =>
-  ((offset % capacity) + capacity) % capacity
+// const moduloWrapAround = (offset, capacity) =>
+//   ((offset % capacity) + capacity) % capacity
 
 export const gameKey = Math.random()
 export class Game {
@@ -25,6 +25,8 @@ export class Game {
     if (!name) {
       throw new Error('need a name')
     }
+
+    //
     this.startAt = startAt
     this.core = core
     this.name = name

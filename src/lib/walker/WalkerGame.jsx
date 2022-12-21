@@ -15,6 +15,7 @@ export function WalkerGame({
 }) {
   let core = useCore()
 
+  //
   let game = useMemo(() => {
     let game = new Game({
       gameKey: gameKey,
