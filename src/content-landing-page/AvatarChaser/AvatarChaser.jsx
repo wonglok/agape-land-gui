@@ -153,9 +153,9 @@ export class AvatarChaserCore extends Object3D {
           }
 
           it.material = new MeshPhysicalMaterial({
-            // map: it.userData.oMat.map,
-            // emissive: new Color('#ffffff'),
-            // emissiveMap: it.userData.oMat.map,
+            map: it.userData.oMat.map,
+            emissive: new Color('#ffffff'),
+            emissiveMap: it.userData.oMat.map,
             emissiveIntensity: 0.15,
             normalMap: it.userData.oMat.normalMap,
             roughnessMap: null,

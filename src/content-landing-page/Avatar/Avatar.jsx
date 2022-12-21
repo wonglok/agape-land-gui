@@ -47,28 +47,29 @@ function Servant({}) {
         it.material = it.userData.oMat.clone()
         it.material.envMapIntensity = 2.5
 
+        it.material = new MeshPhysicalMaterial({
+          map: it.userData.oMat.map,
+          emissive: new Color('#ffffff'),
+          emissiveMap: it.userData.oMat.map,
+          emissiveIntensity: 0.15,
+          normalMap: it.userData.oMat.normalMap,
+          roughnessMap: null,
+          metalnessMap: null,
+          envMapIntensity: 0.0,
+          ior: 1.3,
+          transmission: 1.5,
+          reflectivity: 0.1,
+          thickness: 30,
+          roughness: 0.8,
+          metalness: 0.0,
+        })
+        applyGlass({ core, it })
+
         // it.material = new MeshPhysicalMaterial({
-        //   map: it.userData.oMat.map,
-        //   emissive: new Color('#ffffff'),
-        //   emissiveMap: it.userData.oMat.map,
-        //   emissiveIntensity: 0.15,
-        //   normalMap: it.userData.oMat.normalMap,
-        //   roughnessMap: null,
-        //   metalnessMap: null,
-        //   envMapIntensity: 0.0,
-        //   ior: 1.3,
-        //   transmission: 1.5,
-        //   reflectivity: 0.1,
-        //   thickness: 30,
-        //   roughness: 0.8,
-        //   metalness: 0.0,
-        // })
-        // applyGlass({ core, it })
-        // it.material = new MeshPhysicalMaterial({
-        //   transmission: 1,
+        //   transmission: 1.3,
         //   roughness: 0,
-        //   ior: 1.4,
-        //   thickness: 3.0,
+        //   ior: 1.1,
+        //   thickness: 5.0,
         // })
       }
     })
