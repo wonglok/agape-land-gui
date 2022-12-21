@@ -1,19 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import { Canvas, useFrame } from '@react-three/fiber'
 import { sRGBEncoding } from 'three'
-import { Core } from '../Core/Core'
+// import { Core } from '../Core/Core'
 import { Gate } from '../LoginContentGate/Gate'
 import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
 import { LandingContent } from './LandingContent'
 import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 // import { XR, Controllers, VRButton, useXR } from '@react-three/xr'
-import { useSnapshot } from 'valtio'
-import { GateState } from '../LoginContentGate/GateState'
+// import { useSnapshot } from 'valtio'
+// import { GateState } from '../LoginContentGate/GateState'
 // import { SupplyXR } from '@/lib/walker/SupplyXR'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
-import { Noodle } from '@/content-vfx/Noodle/Noodle'
+// import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasPage(
   {
