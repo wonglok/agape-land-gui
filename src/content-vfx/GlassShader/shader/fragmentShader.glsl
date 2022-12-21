@@ -137,17 +137,19 @@ varying vec3 vViewPosition;
     // Sample framebuffer to get pixel the refracted ray hits.
 
 		vec4 transmittedLight = getTransmissionSample( refractionCoords, roughness, ior );
-    // transmittedLight.rgb *= 0.0;
-    transmittedLight.r = 1.0 * getTransmissionSample( refractionCoords + vec2(-0.01 * sin(time), 0.01 * sin(time)), roughness, ior ).r;
-    transmittedLight.g = 1.0 * getTransmissionSample( refractionCoords + vec2(0.0 * sin(time), 0.0 * sin(time)), roughness, ior ).g;
-    transmittedLight.b = 1.0 * getTransmissionSample( refractionCoords + vec2(0.01 * sin(time), -0.01 * sin(time)), roughness, ior ).b;
 
-    vec3 oc = transmittedLight.rgb;
-    transmittedLight.rgb = vec3(
-      pow(transmittedLight.r, 5.2) * 7.0,
-      pow(transmittedLight.g, 5.2) * 7.0,
-      pow(transmittedLight.b, 5.2) * 7.0
-    ) + oc * 0.5;
+    // transmittedLight.rgb *= 0.0;
+    // transmittedLight.r = getTransmissionSample( refractionCoords + vec2(-0.001 * sin(time), 0.001 * sin(time)), roughness, ior ).r;
+    // transmittedLight.g = getTransmissionSample( refractionCoords + vec2(0.0 * sin(time), 0.0 * sin(time)), roughness, ior ).g;
+    // transmittedLight.b = getTransmissionSample( refractionCoords + vec2(0.001 * sin(time), -0.001 * sin(time)), roughness, ior ).b;
+
+    // vec3 oc = transmittedLight.rgb;
+
+    // transmittedLight.rgb = vec3(
+    //   pow(transmittedLight.r, 5.2) * 7.0,
+    //   pow(transmittedLight.g, 5.2) * 7.0,
+    //   pow(transmittedLight.b, 5.2) * 7.0
+    // ) + oc * 0.5;
 
 		vec3 attenuatedColor = applyVolumeAttenuation( transmittedLight.rgb, length( transmissionRay ), attenuationColor, attenuationDistance );
 		// Get the specular component.

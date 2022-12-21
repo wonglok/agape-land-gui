@@ -57,19 +57,21 @@ export function MetaverseMenu() {
                       //
                       GateState.menuOverlay = !GateState.menuOverlay
                     }}
-                    args={[0.13, 1]}
+                    args={[0.13, 4]}
+                    renderOrder={-1}
                   >
                     <meshPhysicalMaterial
                       metalness={0}
                       roughness={0}
                       emissive={`#DD8556`}
-                      emissiveIntensity={0.0}
+                      emissiveIntensity={0}
                       envMapIntensity={0}
-                      attenuationColor={`#DD8556`}
-                      transmission={8}
-                      thickness={0.11 * 5}
-                      ior={1.4}
-                      flatShading={true}
+                      transmission={4}
+                      reflectivity={1}
+                      thickness={1.3}
+                      ior={0.95}
+                      flatShading={false}
+                      depthTest={false}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
                 </group>
@@ -91,6 +93,7 @@ export function MetaverseMenu() {
 
 export function MenuLayout({ center, topRight }) {
   let camera = useThree((s) => s.camera)
+  let topRightRef = useRef()
   let gps = useRef()
   let size = useThree((s) => s.size)
   let cameraProxy = useMemo(() => {
@@ -107,7 +110,8 @@ export function MenuLayout({ center, topRight }) {
     }
   }, [camera])
 
-  useFrame(() => {
+  useFrame((st, dt) => {
+    let t = st.clock.getElapsedTime()
     camera.getWorldPosition(wp)
     camera.getWorldQuaternion(wq)
 
@@ -130,6 +134,10 @@ export function MenuLayout({ center, topRight }) {
       ])
       gps.current.lookAt(cameraProxy.position)
     }
+    if (topRightRef.current) {
+      topRightRef.current.position.y = Math.sin(t * 8) * 0.05
+      topRightRef.current.rotation.y += dt * 3
+    }
     //
   })
 
@@ -139,7 +147,7 @@ export function MenuLayout({ center, topRight }) {
         <group position={[0, 0, -7]}>
           <group name='chaser-menu' ref={gps}>
             <group name='bb00'></group>
-            {topRight}
+            <group ref={topRightRef}>{topRight}</group>
           </group>
           {center}
         </group>,
@@ -215,17 +223,19 @@ export function LogintButtons() {
                   ></Image>
 
                   {/* local */}
-                  <Image
-                    position={[0, -0.61 * 1.1, 0]}
-                    scale={[2.39, 0.61]}
-                    transparent={true}
-                    url={`/hud/login-guest.png`}
-                    onPointerDown={() => {
-                      //
-                      loginGuestLocal()
-                      //
-                    }}
-                  ></Image>
+                  {process.env.NODE_ENV === 'development' && (
+                    <Image
+                      position={[0, -0.61 * 2.3, 0]}
+                      scale={[2.39, 0.61]}
+                      transparent={true}
+                      url={`/hud/login-guest.png`}
+                      onPointerDown={() => {
+                        //
+                        loginGuestLocal()
+                        //
+                      }}
+                    ></Image>
+                  )}
                 </>
               )}
             </>

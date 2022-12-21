@@ -22,6 +22,7 @@ import { useSnapshot } from 'valtio'
 import { WalkerState } from '@/lib/walker/WalkerState'
 import { Avatar } from '../Avatar/Avatar'
 import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
+import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 const GameName = 'NYC'
 export function MetaverseWelcome() {
@@ -86,6 +87,10 @@ export function MetaverseWelcome() {
           )
         }}
       ></Collider>
+
+      <group>
+        <Noodle chaseName='bb00'></Noodle>
+      </group>
 
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 

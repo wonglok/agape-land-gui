@@ -71,10 +71,6 @@ export function CanvasPage(
 
         <MetaverseMenu></MetaverseMenu>
 
-        <group>
-          <Noodle chaseName='bb00'></Noodle>
-        </group>
-
         <Gate
           loadingContent={
             <>
