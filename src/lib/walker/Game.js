@@ -4,6 +4,7 @@ import {
   Matrix4,
   Mesh,
   MeshStandardMaterial,
+  Object3D,
   Spherical,
   Vector3,
 } from 'three'
@@ -196,7 +197,19 @@ export class Game {
       radius: 0.5,
       segment: new Line3(new Vector3(), new Vector3(0, -1.0, 0.0)),
     }
+
+    //
     this.player.name = 'myself-player'
+
+    this.frontArmy = new Object3D()
+    this.frontArmy.position.z += -1
+    this.frontArmy.name = 'myself-front-army'
+    this.player.add(this.frontArmy)
+
+    this.backArmy = new Object3D()
+    this.backArmy.position.z += 1
+    this.backArmy.name = 'myself-back-army'
+    this.player.add(this.backArmy)
 
     ////////!SECTION
 

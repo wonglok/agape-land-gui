@@ -21,6 +21,7 @@ import { useThree } from '@react-three/fiber'
 import { useSnapshot } from 'valtio'
 import { WalkerState } from '@/lib/walker/WalkerState'
 import { Avatar } from '../Avatar/Avatar'
+import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 
 const GameName = 'NYC'
 export function MetaverseWelcome() {
@@ -75,6 +76,8 @@ export function MetaverseWelcome() {
               {/*  */}
               {/*  */}
               <Avatar></Avatar>
+
+              <AvatarChaser collider={collider}></AvatarChaser>
 
               <group>
                 <Mouse3D collider={collider}></Mouse3D>

@@ -61,7 +61,7 @@ function Servant({}) {
     })
   }, [core, glb.scene])
 
-  let last = false
+  let last = idleAct
   useFrame(({ clock, scene, controls }) => {
     let t = clock.getElapsedTime()
 

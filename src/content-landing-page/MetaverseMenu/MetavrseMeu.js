@@ -9,6 +9,7 @@ import {
   loginEth,
   loginGoogle,
   loginGuest,
+  loginGuestLocal,
   signOut,
 } from '../LoginContentGate/GateMethods'
 import { GateState } from '../LoginContentGate/GateState'
@@ -16,7 +17,8 @@ import { Vector3 } from 'three140'
 import { CoreReady } from '../Core/Core'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
-import { Perf } from 'r3f-perf'
+// import { Perf } from 'r3f-perf'
+// import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 
 //  createPortal, useFrame,
 // import { useThree } from '@react-three/fiber'
@@ -43,10 +45,6 @@ export function MetaverseMenu() {
   return (
     <>
       <CoreReady></CoreReady>
-
-      <group>
-        <Noodle chaseName='bb00'></Noodle>
-      </group>
 
       <MenuLayout
         topRight={
@@ -212,6 +210,19 @@ export function LogintButtons() {
                     onPointerDown={() => {
                       //
                       loginGuest()
+                      //
+                    }}
+                  ></Image>
+
+                  {/* local */}
+                  <Image
+                    position={[0, -0.61 * 1.1, 0]}
+                    scale={[2.39, 0.61]}
+                    transparent={true}
+                    url={`/hud/login-guest.png`}
+                    onPointerDown={() => {
+                      //
+                      loginGuestLocal()
                       //
                     }}
                   ></Image>

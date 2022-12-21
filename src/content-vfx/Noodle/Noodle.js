@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { PhysicsCompute } from './PhysicsCompute'
 import { NoodleSegmentCompute } from './NoodleSegmentCompute'
-import { Object3D } from 'three140'
+import { Object3D, Vector3 } from 'three140'
 import { NoodleRenderable } from './NoodleRenderable'
 import { ParticleRenderable } from './ParticleRenderable'
 import { Color, DoubleSide, FrontSide } from 'three'
@@ -11,25 +11,31 @@ import { Icosahedron } from '@react-three/drei'
 
 export function Noodle({}) {
   let core = useCore()
-  let ref = useRef()
   let gl = useThree((s) => s.gl)
 
   let howManyTracker = 64
   let howLongTail = 32
 
-  let { group } = useMemo(() => {
+  let { chaser, group } = useMemo(() => {
     let group = new Object3D()
 
     let chaser = new Object3D()
 
-    core.onLoop(() => {
-      let mouse3d = core.now.scene.getObjectByName('mouse3d')
-      if (mouse3d) {
-        chaser.position.lerp(mouse3d.position, 0.5)
-      }
+    let mouse3d = false
+    let up = new Vector3(0, 1, 0)
+    let delta = new Vector3(0, 0, 1)
+    let adder = new Vector3(0, 0, 0)
 
-      if (ref.current && mouse3d) {
-        ref.current.position.lerp(mouse3d.position, 0.5)
+    core.onLoop(({ clock }) => {
+      mouse3d = mouse3d || core.now.scene.getObjectByName('myself-player')
+
+      if (mouse3d) {
+        adder.copy(mouse3d.position)
+        delta.set(0, 0, 1)
+        delta.applyAxisAngle(up, clock.getElapsedTime() * 6.0)
+        adder.add(delta)
+        adder.y += -0.3
+        chaser.position.lerp(adder, 0.5)
       }
     })
 
@@ -102,29 +108,27 @@ export function Noodle({}) {
     }
   }, [core, gl, howLongTail, howManyTracker])
 
-  useFrame(() => {})
-
   //
   return (
     <group position={[0, 0, 0]}>
       <primitive object={group}></primitive>
-      <Icosahedron
-        ref={ref}
-        onPointerDown={() => {
-          //
-        }}
-        args={[0.45, 3]}
-      >
-        <meshPhysicalMaterial
-          metalness={0}
-          roughness={0}
-          attenuationColor={`#DD8556`}
-          transmission={1}
-          thickness={0.35 * 2.0 + 1.0}
-          ior={1.1}
-          side={DoubleSide}
-        ></meshPhysicalMaterial>
-      </Icosahedron>
+
+      {createPortal(
+        <Icosahedron args={[0.45, 4]}>
+          <meshPhysicalMaterial
+            metalness={0}
+            roughness={0}
+            attenuationColor={`#DD8556`}
+            transmission={1.5}
+            thickness={0.35 * 2.0 + 2.0}
+            ior={1.1}
+            side={DoubleSide}
+            envMapIntensity={0}
+          ></meshPhysicalMaterial>
+        </Icosahedron>,
+        chaser
+      )}
+      <primitive object={chaser}></primitive>
     </group>
   )
 }

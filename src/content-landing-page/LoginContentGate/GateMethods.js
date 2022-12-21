@@ -139,3 +139,7 @@ export const loginGoogle = () => {
 export const loginGuest = () => {
   window.location.assign(`${getEndPointURL()}/auth/guest/authorize`)
 }
+
+export const loginGuestLocal = () => {
+  window.location.assign(`${getEndPointURL()}/auth/local/authorize`)
+}

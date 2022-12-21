@@ -13,6 +13,7 @@ import { GateState } from '../LoginContentGate/GateState'
 // import { SupplyXR } from '@/lib/walker/SupplyXR'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
+import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasPage(
   {
@@ -69,6 +70,10 @@ export function CanvasPage(
         )}
 
         <MetaverseMenu></MetaverseMenu>
+
+        <group>
+          <Noodle chaseName='bb00'></Noodle>
+        </group>
 
         <Gate
           loadingContent={
