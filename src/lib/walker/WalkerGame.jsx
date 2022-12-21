@@ -17,6 +17,10 @@ export function WalkerGame({
 
   //
   let game = useMemo(() => {
+    if (!collider) {
+      return
+    }
+
     let game = new Game({
       gameKey: gameKey,
       xrPlayer,
@@ -29,12 +33,6 @@ export function WalkerGame({
 
     return game
   }, [name, onGameReady, startAt, xrPlayer, core, collider])
-
-  useEffect(() => {
-    return () => {
-      game.core.clean()
-    }
-  }, [game])
 
   useFrame((st, dt) => {
     if (game) {
