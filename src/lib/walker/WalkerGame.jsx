@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useCore } from '../useCore'
 import { Game, gameKey } from './Game'
 import { WalkerState } from './WalkerState'
@@ -28,6 +28,12 @@ export function WalkerGame({
 
     return game
   }, [name, onGameReady, startAt, xrPlayer, core, collider])
+
+  useEffect(() => {
+    return () => {
+      game.core.clean()
+    }
+  }, [game])
 
   useFrame((st, dt) => {
     if (game) {

@@ -64,11 +64,13 @@ export function CanvasPage(
               right: 'auto',
               top: 'auto',
               left: 0,
-              top: 250,
+              top: 0,
               zIndex: 2000,
             }}
           />
         )}
+
+        {/*  */}
 
         <MetaverseMenu></MetaverseMenu>
 

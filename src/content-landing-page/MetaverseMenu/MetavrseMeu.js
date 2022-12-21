@@ -182,6 +182,10 @@ export function LogintButtons() {
                         //
                         signOut()
                       }}
+                      // onClick={() => {
+                      //   //
+                      //   signOut()
+                      // }}
                     ></Image>
                   </>
                 )}
