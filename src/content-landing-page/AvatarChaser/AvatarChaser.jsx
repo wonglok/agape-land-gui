@@ -305,7 +305,7 @@ export class AvatarChaserCore extends Object3D {
     //   // this.avatarContainer.position.y -= -1.5
 
     if (this.canRun()) {
-      let speed = 0.7
+      let speed = 0.5
 
       this.tempVector.set(0, 0, 1)
       this.tempVector.applyQuaternion(this.player.quaternion)

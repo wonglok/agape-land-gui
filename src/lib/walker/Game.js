@@ -45,7 +45,7 @@ export class Game {
 
     /////////!SECTION
     this.gravity = -30
-    this.playerSpeed = 10
+    this.playerSpeed = 13
     this.physicsSteps = 3
     this.playerIsOnGround = true
 
@@ -168,12 +168,10 @@ export class Game {
           })
           nipple.on('removed', () => {
             nipple.off('start move end dir plain')
-            zone.remove()
           })
 
           this.core.onClean(() => {
             nipple.destroy()
-            zone.remove()
           })
         })
       })
