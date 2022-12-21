@@ -36,6 +36,7 @@ export function CanvasPage(
       `,
         }}
       ></style>
+      {/*  */}
       <Canvas
         //
         style={{
