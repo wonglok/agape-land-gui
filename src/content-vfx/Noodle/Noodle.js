@@ -7,11 +7,12 @@ import { ParticleRenderable } from './ParticleRenderable'
 import { Color, DoubleSide, FrontSide } from 'three'
 import { useCore } from '@/lib/useCore'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
-import { Icosahedron } from '@react-three/drei'
+import { Icosahedron, Sphere, useTexture } from '@react-three/drei'
 
 export function Noodle({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
+  let frost = useTexture(`/texture/frost/frost-roughness.png`)
 
   let howManyTracker = 64
   let howLongTail = 32
@@ -21,6 +22,9 @@ export function Noodle({ nameToChase = `myself-player` }) {
 
     let chaser = new Object3D()
 
+    core.onLoop((st, dt) => {
+      chaser.rotation.y += dt * 2
+    })
     let mouse3d = false
     let up = new Vector3(0, 1, 0)
     let delta = new Vector3(0, 0, 1)
@@ -32,8 +36,8 @@ export function Noodle({ nameToChase = `myself-player` }) {
       mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
-        let radius = 3
-        let speed = 2
+        let radius = 1
+        let speed = 0.6
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)
         delta.applyAxisAngle(up, t * speed)
@@ -118,18 +122,23 @@ export function Noodle({ nameToChase = `myself-player` }) {
       <primitive object={group}></primitive>
 
       {createPortal(
-        <Icosahedron args={[0.45, 4]}>
+        <Sphere args={[0.45, 35, 35]}>
           <meshPhysicalMaterial
-            metalness={0}
-            roughness={0}
-            attenuationColor={`#DD8556`}
-            transmission={1.5}
-            thickness={0.35 * 2.0 + 2.0}
-            ior={1.1}
+            metalness={0.0}
+            roughness={1}
+            // attenuationColor={`#DD8556`}
+            transmission={1.3}
+            thickness={2}
+            ior={1.3}
             side={DoubleSide}
-            envMapIntensity={0}
+            envMapIntensity={1}
+            // emissive={`#ffffff`}
+            roughnessMap={frost}
+            metalnessMap={frost}
+            normalMap={frost}
+            normalScale={[-0.5, -0.5]}
           ></meshPhysicalMaterial>
-        </Icosahedron>,
+        </Sphere>,
         chaser
       )}
       <primitive object={chaser}></primitive>
