@@ -5,7 +5,13 @@ import { useFBX } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect } from 'react'
 import { Suspense, useMemo, useRef } from 'react'
-import { AnimationMixer, Color, MeshPhysicalMaterial, Object3D } from 'three'
+import {
+  AnimationMixer,
+  Color,
+  MeshPhysicalMaterial,
+  Object3D,
+  Vector2,
+} from 'three'
 
 function Servant({}) {
   let ref = useRef()
@@ -35,22 +41,27 @@ function Servant({}) {
     glb.scene.traverse((it) => {
       //!SECTION
       if (it.material) {
+        if (!it.userData.oMat) {
+          it.userData.oMat = it.material.clone()
+        }
+
         it.material = new MeshPhysicalMaterial({
-          map: it.material.map,
+          map: it.userData.oMat.map,
           emissive: new Color('#ffffff'),
-          emissiveMap: it.material.map,
-          emissiveIntensity: 0.2,
-          normalMap: it.material.normalMap,
+          emissiveMap: it.userData.oMat.map,
+          emissiveIntensity: 0.1,
+          normalMap: it.userData.oMat.normalMap,
           roughnessMap: null,
           metalnessMap: null,
-          envMapIntensity: 0.1,
+          envMapIntensity: 0.0,
           ior: 1.3,
-          transmission: 25,
-          thickness: 1.5,
-          roughness: 0.4,
+          transmission: 1.5,
+          reflectivity: 0.1,
+          thickness: 30,
+          roughness: 0.8,
           metalness: 0.0,
         })
-        applyGlass({ core, it })
+        // applyGlass({ core, it })
         // it.material = new MeshPhysicalMaterial({
         //   transmission: 1,
         //   roughness: 0,
