@@ -4,7 +4,14 @@ import { NoodleSegmentCompute } from './NoodleSegmentCompute'
 import { Object3D, Vector3 } from 'three140'
 import { NoodleRenderable } from './NoodleRenderable'
 import { ParticleRenderable } from './ParticleRenderable'
-import { Color, DoubleSide, FrontSide } from 'three'
+import {
+  Color,
+  DoubleSide,
+  EquirectangularRefractionMapping,
+  FrontSide,
+  RepeatWrapping,
+  sRGBEncoding,
+} from 'three'
 import { useCore } from '@/lib/useCore'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Icosahedron, Sphere, useTexture } from '@react-three/drei'
@@ -12,10 +19,9 @@ import { Icosahedron, Sphere, useTexture } from '@react-three/drei'
 export function Noodle({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
-  let frost = useTexture(`/texture/frost/frost-roughness.png`)
 
   let howManyTracker = 64
-  let howLongTail = 32
+  let howLongTail = 64
 
   let { chaser, group } = useMemo(() => {
     let group = new Object3D()
@@ -37,7 +43,7 @@ export function Noodle({ nameToChase = `myself-player` }) {
 
       if (mouse3d) {
         let radius = 1
-        let speed = 0.6
+        let speed = 1.5
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)
         delta.applyAxisAngle(up, t * speed)
@@ -51,9 +57,10 @@ export function Noodle({ nameToChase = `myself-player` }) {
 
     let renderConfig = {
       color: new Color('#ffffff'),
-      emissive: new Color('#DD8556'),
+      // emissive: new Color('#E2E58D'),
+      emissiveIntensity: 1,
       transparent: false,
-      roughness: 1.0,
+      roughness: 0.0,
       metalness: 0.0,
       side: FrontSide,
       // reflectivity: 1,
@@ -117,26 +124,60 @@ export function Noodle({ nameToChase = `myself-player` }) {
   }, [core, gl, howLongTail, howManyTracker])
 
   //
+  // let normalMapTex = useTexture(`/texture/snow/pattern.jpeg`)
+  let roughnessMapTex = useTexture(`/texture/snow/pattern.jpeg`)
+  roughnessMapTex.encoding = sRGBEncoding
+  roughnessMapTex.wrapS = roughnessMapTex.wrapT = RepeatWrapping
+  roughnessMapTex.repeat.y = 2 / 1.5
+  roughnessMapTex.repeat.x = 3.4 / 1.5
+  roughnessMapTex.needsUpdate = true
+
+  core.onLoop((st, dt) => {
+    roughnessMapTex.offset.x += dt * 0.2
+  })
+
+  let t = 0
+  let ptl = useRef()
+  useFrame((st, dt) => {
+    t += dt
+    //sin(time * 3.14)
+
+    ptl.current.intensity = 3 + 1.5 * Math.sin(t * 3.1415)
+  })
+  //
   return (
     <group position={[0, 0, 0]}>
       <primitive object={group}></primitive>
 
       {createPortal(
         <Sphere args={[0.45, 35, 35]}>
+          <pointLight
+            ref={ptl}
+            position={[0, 0.5, 0]}
+            intensity={3}
+          ></pointLight>
           <meshPhysicalMaterial
             metalness={0.0}
-            roughness={1}
+            roughness={0}
+            reflectivity={3}
             // attenuationColor={`#DD8556`}
-            transmission={1.3}
-            thickness={2}
-            ior={1.3}
+            transmission={1}
+            thickness={0.45 * 2}
+            ior={1.15}
             side={DoubleSide}
-            envMapIntensity={1}
-            // emissive={`#ffffff`}
-            roughnessMap={frost}
-            metalnessMap={frost}
-            normalMap={frost}
-            normalScale={[-0.5, -0.5]}
+            envMapIntensity={0}
+            emissive={'#ffffff'}
+            color={'#ffffff'}
+            // attenuationColor={'#E20074'}
+            // transmissionMap={roughnessMapTex}
+            attenuationDistance={30}
+            emissiveMap={roughnessMapTex}
+            emissiveIntensity={1.4}
+            roughnessMap={roughnessMapTex}
+            metalnessMap={roughnessMapTex}
+            alphaMap={roughnessMapTex}
+            // normalMap={normalMapTex}
+            // envMap={snowNormal}
           ></meshPhysicalMaterial>
         </Sphere>,
         chaser

@@ -9,6 +9,7 @@ import { sRGBEncoding } from 'three'
 // import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
 import { MetaverseTMobile } from './MetaverseTMobile'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function TMobile(
@@ -74,18 +75,18 @@ export function TMobile(
           online={true}
         ></MetaverseTMobile>
 
-        {/* <EffectComposer
+        <EffectComposer
           disableNormalPass
           resolutionScale={0.1}
           multisampling={0}
         >
           <Bloom
             mipmapBlur
-            radius={0.7}
-            intensity={1.5}
-            luminanceThreshold={0.8}
+            radius={1}
+            intensity={1.0}
+            luminanceThreshold={0.48}
           ></Bloom>
-        </EffectComposer> */}
+        </EffectComposer>
       </Canvas>
 
       {/* {gs.xrSession && gs.supportVR && <VRButton></VRButton>} */}

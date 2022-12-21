@@ -147,7 +147,7 @@ export class NoodleRenderable {
 
       vec3 makeGeo () {
         float t = (tubeInfo) + 0.5;
-        float thickness = 0.01 * 0.25 * (1.0 - t);
+        float thickness = 0.01 * 0.25 * 0.5 * (1.0 - t);
 
         vT = t;
 

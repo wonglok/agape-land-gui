@@ -189,6 +189,7 @@ export class NoodleSegmentCompute {
 
           // positionChain.xz *= (1.0 - gl_FragCoord.x / resolution.x * 0.03);
           // positionChain.y += cnoise(vec3(positionChain.xyz * 1.333)) * 0.1;
+          // positionChain.xyz *= 1.9;
 
           positionChain.xyz = positionChain.xyz + trackerPos;
 
