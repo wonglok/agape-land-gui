@@ -33,12 +33,13 @@ export function Noodle({ nameToChase = `myself-player` }) {
 
       if (mouse3d) {
         let radius = 3
+        let speed = 2
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)
-        delta.applyAxisAngle(up, t * 8.0)
+        delta.applyAxisAngle(up, t * speed)
         adder.add(delta)
         adder.y += -0.3
-        chaser.position.lerp(adder, 0.5)
+        chaser.position.lerp(adder, 0.4)
       }
     })
 
