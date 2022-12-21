@@ -196,26 +196,20 @@ void main ()	{
     rand(uv.xy + 0.3) * 2.0 - 1.0
   );
 
-  toBall(noiser * vec3(35.0, 35.0, 35.0), az, el);
+  toBall(noiser * vec3(10.0, 10.0, 10.0), az, el);
 
   // az += cos(time * 3.1415) * sin(time * 3.1415);
   // el += sin(time * 3.1415) * cos(time * 3.1415);
-  // az *= 0.1;
 
   vec3 ball = fromBall(0.5, az, el);
 
-  ball = ball * rotateZ(time * 10.0);
-
-  // ball = ball * rotateX(3.141592 * 0.5);
+  ball = ball * rotateZ(time * 5.5);
 
   pos.xyz = trackerPos + ball;
 
 
-
   gl_FragColor.rgb = pos.rgb;
   gl_FragColor.w = 1.0;
-
-
 }
 `
 
