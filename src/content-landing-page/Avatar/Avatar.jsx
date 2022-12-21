@@ -63,6 +63,8 @@ function Servant({}) {
           roughness: 0.8,
           metalness: 0.0,
         })
+
+        //
         applyGlass({ core, it })
 
         // it.material = new MeshPhysicalMaterial({
