@@ -15,28 +15,31 @@ import {
 // import { useXR } from '@react-three/xr'
 // import { useEffect, useMemo } from 'react'
 // import { AnimationMixer } from 'three140'
-import { TheVortex } from '../TheVortex/TheVortex'
-import { CoreReady } from '../Core/Core'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { useThree } from '@react-three/fiber'
 import { useSnapshot } from 'valtio'
 import { WalkerState } from '@/lib/walker/WalkerState'
-import { Avatar } from '../Avatar/Avatar'
-import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
+import { AvatarChaser } from '@/content-landing-page/AvatarChaser/AvatarChaser.jsx'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
-import { useRouter } from 'next/router'
+import { CoreReady } from '@/content-landing-page/Core/Core'
+import { Avatar } from '@/content-landing-page/Avatar/Avatar'
 import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
 
-const GameName = 'NYC'
+const GameName = 'Tmobile'
 
-export function MetaverseWelcome({
+export function MetaverseTMobile({
   mapURL = `/scene/2022-11-28-NYC/NYC_Expo_30.glb`,
-  online = false,
 }) {
   //public
   let glb = useGLBLoader(mapURL)
 
   usePlayAllAnim(glb)
+
+  let texture = useTexture(`/hdr/studio_hdri_bright.png`)
+  let scene = useThree((s) => s.scene)
+  texture.mapping = EquirectangularReflectionMapping
+  texture.encoding = sRGBEncoding
+  scene.environment = texture
 
   let camera = useThree((s) => s.camera)
   let gl = useThree((s) => s.gl)

@@ -305,12 +305,8 @@ export class AvatarChaserCore extends Object3D {
     //   // this.avatarContainer.position.y -= -1.5
 
     if (this.canRun()) {
-      let speed =
-        this.player.position.distanceTo(this.destination.position) / 3.5
+      let speed = 0.7
 
-      if (speed >= 2) {
-        speed = 2
-      }
       this.tempVector.set(0, 0, 1)
       this.tempVector.applyQuaternion(this.player.quaternion)
       this.player.position.addScaledVector(

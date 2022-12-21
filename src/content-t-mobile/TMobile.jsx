@@ -1,21 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { sRGBEncoding } from 'three'
 // import { Core } from '../Core/Core'
-import { Gate } from '../LoginContentGate/Gate'
-import { MetaverseWelcome } from '../MetaverseWelcome/MetaverseWelcome'
-import { LandingContent } from './LandingContent'
-import { MetaverseMenu } from '../MetaverseMenu/MetavrseMeu'
-import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 // import { XR, Controllers, VRButton, useXR } from '@react-three/xr'
 // import { useSnapshot } from 'valtio'
 // import { GateState } from '../LoginContentGate/GateState'
 // import { SupplyXR } from '@/lib/walker/SupplyXR'
-import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
+// import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
+import { MetaverseTMobile } from './MetaverseTMobile'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
-export function CanvasPage(
+export function TMobile(
   {
     //
   }
@@ -48,6 +44,8 @@ export function CanvasPage(
         {...{
           gl: { antialias: true, logarithmicDepthBuffer: false },
           onCreated: (st) => {
+            //
+
             st.gl.physicallyCorrectLights = true
             st.gl.outputEncoding = sRGBEncoding
 
@@ -64,35 +62,19 @@ export function CanvasPage(
               right: 'auto',
               top: 'auto',
               left: 0,
-              top: 250,
+              top: 0,
               zIndex: 2000,
             }}
           />
         )}
 
         {/*  */}
+        <MetaverseTMobile
+          mapURL={`/places/t-mobile/r6-t-mobile--1636713668.glb`}
+          online={true}
+        ></MetaverseTMobile>
 
-        <MetaverseMenu></MetaverseMenu>
-
-        <Gate
-          loadingContent={
-            <>
-              <LoadingGroup />
-            </>
-          }
-          loggedInContent={
-            <>
-              <MetaverseWelcome></MetaverseWelcome>
-            </>
-          }
-          landingContent={
-            <>
-              <LandingContent></LandingContent>
-            </>
-          }
-        ></Gate>
-
-        <EffectComposer
+        {/* <EffectComposer
           disableNormalPass
           resolutionScale={0.1}
           multisampling={0}
@@ -101,9 +83,9 @@ export function CanvasPage(
             mipmapBlur
             radius={0.7}
             intensity={1.5}
-            luminanceThreshold={0.2}
+            luminanceThreshold={0.8}
           ></Bloom>
-        </EffectComposer>
+        </EffectComposer> */}
       </Canvas>
 
       {/* {gs.xrSession && gs.supportVR && <VRButton></VRButton>} */}
