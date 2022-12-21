@@ -23,10 +23,22 @@ import { WalkerState } from '@/lib/walker/WalkerState'
 import { Avatar } from '../Avatar/Avatar'
 import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
+import { useRouter } from 'next/router'
 
 const GameName = 'NYC'
+
 export function MetaverseWelcome() {
-  let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
+  //public
+  let router = useRouter()
+  let query = router.query
+  let glb = useGLBLoader(
+    query.t
+      ? `/places/t-mobile/r6-t-mobile--1636713668.glb`
+      : `/scene/2022-11-28-NYC/NYC_Expo_30.glb`
+  )
+  // let glb = useGLBLoader(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
+  // let glb = useGLBLoader(`/places/t-mobile/r6-t-mobile--1636713668.glb`)
+
   //
   usePlayAllAnim(glb)
 
@@ -44,14 +56,14 @@ export function MetaverseWelcome() {
           return (
             <group>
               <primitive object={glb.scene}></primitive>
-
+              {/*
               <group position={[0, 1.5, 0]}>
                 <group position={[5.523, 6.087, -14.196]}>
                   <group scale={0.075}>
                     <theVortex key={TheVortex.key}></theVortex>
                   </group>
                 </group>
-              </group>
+              </group> */}
 
               <OrbitControls
                 args={[camera, gl.domElement]}
@@ -60,9 +72,10 @@ export function MetaverseWelcome() {
 
               <WalkerGame
                 startAt={[
-                  2.563503709126706,
-                  1.595614002597168 + 3,
-                  45.14220988974003,
+                  0, 1.1, 0,
+                  // 2.563503709126706,
+                  // 1.595614002597168 + 3,
+                  // 45.14220988974003,
                 ]}
                 name={GameName}
                 glb={glb}
@@ -95,7 +108,8 @@ export function MetaverseWelcome() {
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 
       <Environment
-        files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
+        preset='apartment'
+        // files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
         // files={}
       ></Environment>
     </group>

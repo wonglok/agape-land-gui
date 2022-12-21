@@ -103,7 +103,7 @@ export function CanvasPage(
             mipmapBlur
             radius={0.7}
             intensity={1.5}
-            luminanceThreshold={0.2}
+            luminanceThreshold={0.8}
           ></Bloom>
         </EffectComposer>
       </Canvas>

@@ -6,6 +6,7 @@ import {
   SphereBufferGeometry,
   Vector3,
   MeshBasicMaterial,
+  Matrix4,
 } from 'three'
 
 import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
@@ -18,10 +19,30 @@ export async function sceneToCollider({ scene }) {
   const geometriesToBeMerged = []
   //
   gltfScene.updateMatrixWorld(true)
+  let m4 = new Matrix4()
 
   let processList = []
   gltfScene.traverse((c) => {
-    if (c.geometry) {
+    if (c.geometry && c.isInstancedMesh) {
+      let n = c.count
+      for (let i = 0; i < n; i++) {
+        let cc = new Mesh(
+          c.geometry.clone(),
+          new MeshBasicMaterial({ color: 0xffffff, wireframe: true })
+        )
+        cc.position.copy(c.position)
+        cc.scale.copy(c.scale)
+        cc.rotation.copy(c.rotation)
+
+        c.getMatrixAt(i, m4)
+        cc.geometry.applyMatrix4(m4)
+
+        cc.name = c.name + '_' + i
+
+        processList.push(cc)
+      }
+    }
+    if (c.geometry && c.isMesh && !c.isInstancedMesh) {
       processList.push(c)
     }
   })

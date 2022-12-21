@@ -181,6 +181,8 @@ export class AvatarChaserCore extends Object3D {
         this.mixer.update(dt)
         this.updatePlayer(dt)
       })
+
+      this.reset()
     })
 
     ///////////!SECTION
@@ -534,7 +536,7 @@ export class AvatarChaserCore extends Object3D {
     this.playerVelocity.set(0, 0, 0)
     this.player.position.copy(this.destination.position)
 
-    this.player.position.y += 2
+    this.player.position.y = 1.1
     this.player.position.x += 2
   }
 }
