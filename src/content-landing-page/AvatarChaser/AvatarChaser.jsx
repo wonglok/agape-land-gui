@@ -21,9 +21,6 @@ import { useFrame } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { applyGlass } from '@/content-vfx/GlassShader/applyGlass'
-// import { TiltShiftEffect } from 'postprocessing'
-// const moduloWrapAround = (offset, capacity) =>
-//   ((offset % capacity) + capacity) % capacity
 
 export const gameKey = Math.random()
 
@@ -186,8 +183,6 @@ export class AvatarChaserCore extends Object3D {
       })
     })
 
-    // this.actions.running.play()
-
     ///////////!SECTION
     this.keyState = {
       needToChase: false,
@@ -221,21 +216,8 @@ export class AvatarChaserCore extends Object3D {
     this.playerIsOnGround = true
 
     this.changeView = ({ far }) => {
-      // let { camera, controls } = this.core.now
-
       this.reset()
-      // camera.position
-      //   .sub(controls.target)
-      //   .normalize()
-      //   .multiplyScalar(far)
-      //   .add(controls.target)
     }
-
-    ////////!SECTION
-
-    // player.castShadow = true
-    // player.receiveShadow = true
-    // player.material.shadowSide = 2
 
     /////////!SECTION
     this.playerVelocity = new Vector3()
@@ -246,7 +228,7 @@ export class AvatarChaserCore extends Object3D {
     this.tempMat = new Matrix4()
     this.tempSegment = new Line3()
 
-    this.keyboardCtrls = new KeyboardControls({ core: this.core, parent: this })
+    // this.keyboardCtrls = new KeyboardControls({ core: this.core, parent: this })
     //
 
     //
@@ -554,61 +536,5 @@ export class AvatarChaserCore extends Object3D {
 
     this.player.position.y += 2
     this.player.position.x += 2
-
-    // camera.position.sub(controls.target)
-    // controls.target.copy(this.player.position)
-    // camera.position.add(this.player.position)
-    // controls.update()
-  }
-}
-
-class KeyboardControls {
-  constructor({ core, parent }) {
-    this.core = core
-    this.parent = parent
-    this.keydown = (e) => {
-      switch (e.code) {
-        case 'KeyW':
-          this.parent.keyState.fwdPressed = true
-          break
-        case 'KeyS':
-          this.parent.keyState.bkdPressed = true
-          break
-        case 'KeyD':
-          this.parent.keyState.rgtPressed = true
-          break
-        case 'KeyA':
-          this.parent.keyState.lftPressed = true
-          break
-        case 'Space':
-          this.parent.playerVelocity.y = 5.0
-
-          break
-      }
-    }
-
-    this.keyup = (e) => {
-      switch (e.code) {
-        case 'KeyW':
-          this.parent.keyState.fwdPressed = false
-          break
-        case 'KeyS':
-          this.parent.keyState.bkdPressed = false
-          break
-        case 'KeyD':
-          this.parent.keyState.rgtPressed = false
-          break
-        case 'KeyA':
-          this.parent.keyState.lftPressed = false
-          break
-      }
-    }
-    window.addEventListener('keydown', this.keydown)
-    window.addEventListener('keyup', this.keyup)
-
-    this.core.onClean(() => {
-      window.removeEventListener('keydown', this.keydown)
-      window.removeEventListener('keyup', this.keyup)
-    })
   }
 }
