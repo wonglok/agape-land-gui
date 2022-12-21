@@ -134,6 +134,9 @@ export function MenuLayout({ center, topRight }) {
       ])
       gps.current.lookAt(cameraProxy.position)
     }
+
+    //
+    //
     // if (topRightRef.current) {
     //   topRightRef.current.position.y = Math.sin(t * 8) * 0.05
     //   topRightRef.current.rotation.y += dt * 3
