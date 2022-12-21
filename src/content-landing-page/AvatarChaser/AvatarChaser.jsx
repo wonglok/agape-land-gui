@@ -3,8 +3,10 @@ import {
   AnimationMixer,
   Box3,
   Clock,
+  Color,
   Matrix4,
   Mesh,
+  MeshPhysicalMaterial,
   MeshStandardMaterial,
   Object3D,
   Spherical,
@@ -18,6 +20,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { useFrame } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+import { applyGlass } from '@/content-vfx/GlassShader/applyGlass'
 // import { TiltShiftEffect } from 'postprocessing'
 // const moduloWrapAround = (offset, capacity) =>
 //   ((offset % capacity) + capacity) % capacity
@@ -144,6 +147,30 @@ export class AvatarChaserCore extends Object3D {
       glb.scene.traverse((it) => {
         //!SECTION
         it.frustumCulled = false
+        if (it.material) {
+          if (!it.userData.oMat) {
+            it.userData.oMat = it.material.clone()
+          }
+
+          it.material = new MeshPhysicalMaterial({
+            map: it.userData.oMat.map,
+            emissive: new Color('#ffffff'),
+            emissiveMap: it.userData.oMat.map,
+            emissiveIntensity: 0.15,
+            normalMap: it.userData.oMat.normalMap,
+            roughnessMap: null,
+            metalnessMap: null,
+            envMapIntensity: 0.0,
+            ior: 1.3,
+            transmission: 1.5,
+            reflectivity: 0.1,
+            thickness: 30,
+            roughness: 0.8,
+            metalness: 0.0,
+          })
+
+          applyGlass({ it, core })
+        }
       })
       this.avatarContainer.add(glb.scene)
       glb.scene.position.y = -1.52

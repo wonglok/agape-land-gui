@@ -49,7 +49,7 @@ function Servant({}) {
           map: it.userData.oMat.map,
           emissive: new Color('#ffffff'),
           emissiveMap: it.userData.oMat.map,
-          emissiveIntensity: 0.1,
+          emissiveIntensity: 0.15,
           normalMap: it.userData.oMat.normalMap,
           roughnessMap: null,
           metalnessMap: null,
