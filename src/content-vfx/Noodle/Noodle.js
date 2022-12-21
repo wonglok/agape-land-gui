@@ -9,7 +9,7 @@ import { useCore } from '@/lib/useCore'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Icosahedron } from '@react-three/drei'
 
-export function Noodle({}) {
+export function Noodle({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
@@ -26,13 +26,16 @@ export function Noodle({}) {
     let delta = new Vector3(0, 0, 1)
     let adder = new Vector3(0, 0, 0)
 
+    // item
     core.onLoop(({ clock }) => {
-      mouse3d = mouse3d || core.now.scene.getObjectByName('myself-player')
+      let t = clock.getElapsedTime()
+      mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
+        let radius = 3
         adder.copy(mouse3d.position)
-        delta.set(0, 0, 1)
-        delta.applyAxisAngle(up, clock.getElapsedTime() * 6.0)
+        delta.set(0, 0, radius)
+        delta.applyAxisAngle(up, t * 8.0)
         adder.add(delta)
         adder.y += -0.3
         chaser.position.lerp(adder, 0.5)
