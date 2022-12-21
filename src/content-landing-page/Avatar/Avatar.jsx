@@ -45,7 +45,7 @@ function Servant({}) {
           it.userData.oMat = it.material.clone()
         }
         it.material = it.userData.oMat.clone()
-        it.material.envMapIntensity = 3
+        it.material.envMapIntensity = 2.5
 
         // it.material = new MeshPhysicalMaterial({
         //   map: it.userData.oMat.map,
