@@ -139,9 +139,9 @@ varying vec3 vViewPosition;
 		vec4 transmittedLight = getTransmissionSample( refractionCoords, roughness, ior );
 
     // transmittedLight.rgb *= 0.0;
-    // transmittedLight.r = getTransmissionSample( refractionCoords + vec2(-0.001 * sin(time), 0.001 * sin(time)), roughness, ior ).r;
-    // transmittedLight.g = getTransmissionSample( refractionCoords + vec2(0.0 * sin(time), 0.0 * sin(time)), roughness, ior ).g;
-    // transmittedLight.b = getTransmissionSample( refractionCoords + vec2(0.001 * sin(time), -0.001 * sin(time)), roughness, ior ).b;
+    transmittedLight.r = getTransmissionSample( refractionCoords + vec2(-0.01 * sin(time * 3.0), 0.01 * sin(time * 3.0)), roughness, ior ).r;
+    transmittedLight.g = getTransmissionSample( refractionCoords + vec2(0.0 * sin(time * 3.0), 0.0 * sin(time * 3.0)), roughness, ior ).g;
+    transmittedLight.b = getTransmissionSample( refractionCoords + vec2(0.01 * sin(time * 3.0), -0.01 * sin(time * 3.0)), roughness, ior ).b;
 
     // vec3 oc = transmittedLight.rgb;
 
