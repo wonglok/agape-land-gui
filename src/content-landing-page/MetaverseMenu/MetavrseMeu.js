@@ -128,23 +128,23 @@ export function MenuLayout({ center, topRight }) {
     if (gps.current) {
       gps.current.position.fromArray([
         //
-        (visibleWidthAtZDepth(2, camera) / 2) * 1.0 - 0.3,
-        (visibleHeightAtZDepth(2, camera) / 2) * 1.0 - 0.3,
-        5,
+        visibleWidthAtZDepth(2, camera) * 0.5 + -0.25,
+        visibleHeightAtZDepth(2, camera) * 0.5 + -0.25,
+        -1,
       ])
       gps.current.lookAt(cameraProxy.position)
     }
-    if (topRightRef.current) {
-      topRightRef.current.position.y = Math.sin(t * 8) * 0.05
-      topRightRef.current.rotation.y += dt * 3
-    }
+    // if (topRightRef.current) {
+    //   topRightRef.current.position.y = Math.sin(t * 8) * 0.05
+    //   topRightRef.current.rotation.y += dt * 3
+    // }
     //
   })
 
   return (
     <>
       {createPortal(
-        <group position={[0, 0, -7]}>
+        <group position={[0, 0, -1]}>
           <group name='chaser-menu' ref={gps}>
             <group name='bb00'></group>
             <group ref={topRightRef}>{topRight}</group>
@@ -163,85 +163,87 @@ export function LogintButtons() {
   let gate = useSnapshot(GateState)
   return (
     <>
-      {gate.menuOverlay && (
-        <Suspense fallback={null}>
-          {
-            <>
-              {gate.userSession && (
-                <>
-                  <Image
-                    position={[0, 0.0, 0]}
-                    scale={[2.39, 0.61]}
-                    transparent={true}
-                    url={`/hud/login-logout.png`}
-                    onPointerDown={() => {
-                      //
-                      signOut()
-                    }}
-                  ></Image>
-                </>
-              )}
-
-              {!gate.userSession && (
-                <>
-                  <Image
-                    position={[0, 0.61 * 1.1, 0]}
-                    scale={[2.39, 0.61]}
-                    transparent={true}
-                    url={`/hud/login-google.png`}
-                    onPointerDown={() => {
-                      //
-                      loginGoogle()
-                      //
-                    }}
-                  ></Image>
-
-                  {gate.supportEth && (
+      <group scale={0.1}>
+        {gate.menuOverlay && (
+          <Suspense fallback={null}>
+            {
+              <>
+                {gate.userSession && (
+                  <>
                     <Image
                       position={[0, 0.0, 0]}
                       scale={[2.39, 0.61]}
                       transparent={true}
-                      url={`/hud/login-metamask.png`}
+                      url={`/hud/login-logout.png`}
                       onPointerDown={() => {
                         //
-                        loginEth()
+                        signOut()
+                      }}
+                    ></Image>
+                  </>
+                )}
+
+                {!gate.userSession && (
+                  <>
+                    <Image
+                      position={[0, 0.61 * 1.1, 0]}
+                      scale={[2.39, 0.61]}
+                      transparent={true}
+                      url={`/hud/login-google.png`}
+                      onPointerDown={() => {
+                        //
+                        loginGoogle()
                         //
                       }}
                     ></Image>
-                  )}
 
-                  <Image
-                    position={[0, -0.61 * 1.1, 0]}
-                    scale={[2.39, 0.61]}
-                    transparent={true}
-                    url={`/hud/login-guest.png`}
-                    onPointerDown={() => {
-                      //
-                      loginGuest()
-                      //
-                    }}
-                  ></Image>
+                    {gate.supportEth && (
+                      <Image
+                        position={[0, 0.0, 0]}
+                        scale={[2.39, 0.61]}
+                        transparent={true}
+                        url={`/hud/login-metamask.png`}
+                        onPointerDown={() => {
+                          //
+                          loginEth()
+                          //
+                        }}
+                      ></Image>
+                    )}
 
-                  {/* local */}
-                  {process.env.NODE_ENV === 'development' && (
                     <Image
-                      position={[0, -0.61 * 2.3, 0]}
+                      position={[0, -0.61 * 1.1, 0]}
                       scale={[2.39, 0.61]}
                       transparent={true}
                       url={`/hud/login-guest.png`}
                       onPointerDown={() => {
                         //
-                        loginGuestLocal()
+                        loginGuest()
                         //
                       }}
                     ></Image>
-                  )}
-                </>
-              )}
-            </>
-          }
-        </Suspense>
-      )}
+
+                    {/* local */}
+                    {process.env.NODE_ENV === 'development' && (
+                      <Image
+                        position={[0, -0.61 * 2.3, 0]}
+                        scale={[2.39, 0.61]}
+                        transparent={true}
+                        url={`/hud/login-guest.png`}
+                        onPointerDown={() => {
+                          //
+                          loginGuestLocal()
+                          //
+                        }}
+                      ></Image>
+                    )}
+                  </>
+                )}
+              </>
+            }
+          </Suspense>
+        )}
+      </group>
     </>
   )
 }

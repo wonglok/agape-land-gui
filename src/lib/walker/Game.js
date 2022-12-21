@@ -166,6 +166,7 @@ export class Game {
           })
           nipple.on('removed', () => {
             nipple.off('start move end dir plain')
+            zone.remove()
           })
 
           this.core.onClean(() => {
