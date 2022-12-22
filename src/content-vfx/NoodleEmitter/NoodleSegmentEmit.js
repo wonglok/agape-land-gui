@@ -19,11 +19,12 @@ import {
 import { CustomGPU } from './CustomGPU'
 // import { Core } from '@/content-landing-page/Core/Core'
 
-export class NoodleSegmentCompute {
+export class NoodleSegmentEmit {
   constructor({
     node,
-    tracker,
-    getTextureAlpha,
+    positionHolder,
+    normalHolder,
+    progressHolder,
     howManyTracker = 10,
     howLongTail = 32,
     gl,
@@ -34,9 +35,12 @@ export class NoodleSegmentCompute {
     this.howManyTracker = howManyTracker
     this.WIDTH = howLongTail
     this.HEIGHT = howManyTracker // number of trackers
-    this.getTextureAlpha = getTextureAlpha
     this.v3v000 = new Vector3(0, 0, 0)
-    this.tracker = tracker
+
+    this.positionHolder = positionHolder
+    this.normalHolder = normalHolder
+    this.progressHolder = progressHolder
+
     this.wait = this.setup({ node })
   }
   async setup({ node }) {
@@ -66,29 +70,18 @@ export class NoodleSegmentCompute {
     ])
 
     this.positionUniforms = this.positionVariable.material.uniforms
+
     this.positionUniforms['lookup'] = { value: lookUpTexture }
-    this.positionUniforms['headList'] = {
-      value: this.getTextureAlpha(),
-    }
-    this.positionUniforms['trackerPos'] = {
-      value: new Vector3(),
-    }
-
-    this.node.onLoop(() => {
-      this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
-
-      // console.log(this.positionUniforms['trackerPos'].value)
-      this.positionUniforms['headList'] = {
-        value: this.getTextureAlpha(),
-      }
-    })
-
-    // let h = this.HEIGHT
-    // for (let ii = 0; ii < h; ii++) {
-    //   this.positionUniforms["mouse" + ii] = { value: new Vector3(0, 0, 0) };
-    // }
+    this.positionUniforms['dtPosition'] = this.positionHolder
+    this.positionUniforms['dtNormal'] = this.normalHolder
+    this.positionUniforms['dtProgress'] = this.progressHolder
 
     this.positionUniforms['time'] = { value: 0 }
+
+    this.node.onLoop((st, dt) => {
+      this.positionUniforms['time'].value += dt
+    })
+
     dtPosition.wrapS = RepeatWrapping
     dtPosition.wrapT = RepeatWrapping
 
@@ -116,11 +109,14 @@ export class NoodleSegmentCompute {
     }
 
     return /* glsl */ `
-      uniform vec3 trackerPos;
+
+    uniform sampler2D dtPosition;
+      uniform sampler2D dtNormal;
+      uniform sampler2D dtProgress;
 
 
-      uniform sampler2D headList;
       ${mouseUniforms()}
+
       uniform sampler2D lookup;
       uniform float time;
       vec3 lerp(vec3 a, vec3 b, float w)
@@ -158,45 +154,46 @@ export class NoodleSegmentCompute {
         // const float height = resolution.y;
         // float xID = floor(gl_FragCoord.x);
         // float yID = floor(gl_FragCoord.y);
+        // x how long
+        // y howManyTracker
+
         vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
-        vec4 positionHead = texture2D( texturePosition, uvCursor );
-        vec4 lookupData = texture2D(lookup, uvCursor);
-        vec2 nextUV = lookupData.xy;
+
         float currentSegment = floor(gl_FragCoord.x);
         float currentLine = floor(gl_FragCoord.y);
-        if (floor(currentSegment) == 0.0) {
 
+        // seg === 0.0
+        if (currentSegment == 0.0) {
           vec2 uvv = vec2(0.0, currentLine / ${this.howManyTracker.toFixed(1)});
 
-          float ee = uvv.y;
-          vec4 texColor = texture2D(headList, uvv);
+          vec4 posBase = texture2D(dtPosition, uvv);
+          vec4 normalBase = texture2D(dtNormal, uvv);
+          vec4 progressBase = texture2D(dtProgress, uvv);
 
-          // // yolines
-          vec3 xyz = lerp(positionHead.rgb, texColor.rgb, 0.75);
-
+          vec3 xyz = posBase.rgb + normalBase.rgb * progressBase.r * 5.0;
 
           gl_FragColor = vec4(xyz.rgb, 1.0);
-
-          ///
         } else {
-          vec3 positionChain = texture2D( texturePosition, nextUV ).xyz;
 
-          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.8);
+          // // positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.8);
 
-          // positionChain.xyz *= 1.0 + sin(time) * 0.25 * 0.0135;
+          // // positionChain.xyz *= 1.0 + sin(time) * 0.25 * 0.0135;
 
-          positionChain.xyz = positionChain.xyz - trackerPos;
+          // // positionChain.xyz = positionChain.xyz - trackerPos;
 
-          // positionChain.xz *= (1.0 - gl_FragCoord.x / resolution.x * 0.03);
-          // positionChain.y += cnoise(vec3(positionChain.xyz * 1.333)) * 0.1;
-          // positionChain.xyz *= 1.9;
+          // // positionChain.xz *= (1.0 - gl_FragCoord.x / resolution.x * 0.03);
+          // // positionChain.y += cnoise(vec3(positionChain.xyz * 1.333)) * 0.1;
+          // // positionChain.xyz *= 1.9;
 
-          positionChain.xyz = positionChain.xyz + trackerPos;
-
+          // // positionChain.xyz = positionChain.xyz + trackerPos;
 
 
+          vec4 lookupVal = texture2D(lookup, uvCursor);
+          vec3 positionChain = texture2D( texturePosition, lookupVal.xy ).xyz;
           gl_FragColor = vec4(positionChain, 1.0);
+          //
         }
+
 			}
     `
   }
@@ -228,6 +225,7 @@ export class NoodleSegmentCompute {
         theArray[i++] = lastOneInArray[1]
         theArray[i++] = this.WIDTH
         theArray[i++] = this.HEIGHT
+
         items.push([x / this.WIDTH, y / this.HEIGHT])
       }
     }

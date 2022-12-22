@@ -172,8 +172,7 @@ export class NoodleSegmentCompute {
           vec4 texColor = texture2D(headList, uvv);
 
           // // yolines
-          vec3 xyz = lerp(positionHead.rgb, texColor.rgb, 0.75);
-
+          vec3 xyz = lerp(positionHead.rgb, texColor.rgb, 1.0);
 
           gl_FragColor = vec4(xyz.rgb, 1.0);
 
@@ -181,17 +180,20 @@ export class NoodleSegmentCompute {
         } else {
           vec3 positionChain = texture2D( texturePosition, nextUV ).xyz;
 
-          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.8);
+          // positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.8);
 
           // positionChain.xyz *= 1.0 + sin(time) * 0.25 * 0.0135;
 
-          positionChain.xyz = positionChain.xyz - trackerPos;
+          // positionChain.xyz = positionChain.xyz - trackerPos;
 
-          // positionChain.xz *= (1.0 - gl_FragCoord.x / resolution.x * 0.03);
-          // positionChain.y += cnoise(vec3(positionChain.xyz * 1.333)) * 0.1;
-          // positionChain.xyz *= 1.9;
+          // // positionChain.xz *= (1.0 - gl_FragCoord.x / resolution.x * 0.03);
+          // // positionChain.xyz *= 1.9;
 
-          positionChain.xyz = positionChain.xyz + trackerPos;
+          // // positionChain.x += sin(positionChain.x);
+          // // positionChain.y += sin(positionChain.y);
+          // // positionChain.z += sin(positionChain.z);
+
+          // positionChain.xyz = positionChain.xyz + trackerPos;
 
 
 

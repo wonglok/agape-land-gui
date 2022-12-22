@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { PhysicsCompute } from './PhysicsCompute'
 import { NoodleSegmentCompute } from './NoodleSegmentCompute'
-import { Object3D, Vector3 } from 'three140'
+import { Object3D, Vector3 } from 'three'
 import { NoodleRenderable } from './NoodleRenderable'
 import { ParticleRenderable } from './ParticleRenderable'
 import {
@@ -17,11 +17,11 @@ import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Icosahedron, Sphere, useTexture } from '@react-three/drei'
 // import { MouseEmitter } from './MouseEmitter'
 
-export function Noodle({ nameToChase = `myself-player` }) {
+export function NoodleEmitter({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
-  let howManyTracker = 64
+  let howManyTracker = 128
   let howLongTail = 64
 
   let { chaser, group } = useMemo(() => {
@@ -32,6 +32,7 @@ export function Noodle({ nameToChase = `myself-player` }) {
     core.onLoop((st, dt) => {
       chaser.rotation.y += dt * 2
     })
+
     let mouse3d = false
     let up = new Vector3(0, 1, 0)
     let delta = new Vector3(0, 0, 1)
@@ -47,7 +48,7 @@ export function Noodle({ nameToChase = `myself-player` }) {
         let speed = 1.5
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)
-        delta.applyAxisAngle(up, t * speed)
+        delta.applyAxisAngle(up, 3.141592 + t * speed)
         adder.add(delta)
         adder.y += -0.3
         chaser.position.lerp(adder, 0.4)

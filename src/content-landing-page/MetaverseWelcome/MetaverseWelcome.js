@@ -24,8 +24,6 @@ import { WalkerState } from '@/lib/walker/WalkerState'
 import { Avatar } from '../Avatar/Avatar'
 import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
-import { useRouter } from 'next/router'
-import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
 
 const GameName = 'NYC'
 
@@ -98,16 +96,18 @@ export function MetaverseWelcome({
       ></Collider>
 
       <group>
-        <Noodle chaseName='bb00'></Noodle>
+        <Noodle></Noodle>
+
+        {/* <NoodleEmitter></NoodleEmitter> */}
       </group>
 
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 
-      {/* <Environment
+      <Environment
         // files={`/hdr/studio_hdri_bright.png`}
-        // files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
+        files={`/hdr/BROADWAY_LAFAYETTE_STATION_2.hdr`}
         // files={}
-      ></Environment> */}
+      ></Environment>
     </group>
   )
 }

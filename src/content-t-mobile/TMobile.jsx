@@ -82,9 +82,9 @@ export function TMobile(
         >
           <Bloom
             mipmapBlur
-            radius={1}
-            intensity={1.0}
-            luminanceThreshold={0.48}
+            radius={0.75}
+            intensity={1.2}
+            luminanceThreshold={0.7}
           ></Bloom>
         </EffectComposer>
       </Canvas>
