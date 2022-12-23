@@ -12,6 +12,7 @@ import {
   // IcosahedronBufferGeometry,
   // FrontSide,
   FloatType,
+  Clock,
 } from 'three'
 // import { Geometry } from 'three140/examples/jsm/deprecated/Geometry.js'
 // import { MeshPhysicalMaterial } from 'three'
@@ -61,7 +62,28 @@ export class NoodleSegmentCompute {
       dtPosition
     )
 
+    this.metaVariable = this.gpu.addVariable(
+      'textureMeta',
+      this.metaShader(),
+      dtPosition
+    )
+
+    this.trailVariable = this.gpu.addVariable(
+      'textureTrail',
+      this.trailShader(),
+      dtPosition
+    )
+
+    this.positionVariable.material.uniforms.dt = { value: 0 }
+
+    this.gpu.setVariableDependencies(this.trailVariable, [this.trailVariable])
+    this.gpu.setVariableDependencies(this.metaVariable, [
+      this.metaVariable,
+      this.positionVariable,
+    ])
     this.gpu.setVariableDependencies(this.positionVariable, [
+      this.trailVariable,
+      this.metaVariable,
       this.positionVariable,
     ])
 
@@ -73,24 +95,53 @@ export class NoodleSegmentCompute {
     this.positionUniforms['trackerPos'] = {
       value: new Vector3(),
     }
+    this.positionUniforms['trackerPosLast'] = {
+      value: new Vector3(),
+    }
 
+    this.positionUniforms.isDown = { value: false }
+    window.addEventListener('keydown', (ev) => {
+      if (ev.key === 'f') {
+        this.positionUniforms.isDown.value = true
+      }
+    })
+
+    window.addEventListener('keyup', (ev) => {
+      if (ev.key === 'f') {
+        this.positionUniforms.isDown.value = false
+      }
+    })
+
+    this.positionUniforms['tick'] = { value: 0 }
+    let clock = new Clock()
     this.node.onLoop(() => {
+      let dt = clock.getDelta()
+      this.positionUniforms['tick'].value += 1
+
+      this.positionUniforms['trackerPosLast'].value.copy(
+        this.positionUniforms['trackerPos'].value
+      )
+
       this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
 
       // console.log(this.positionUniforms['trackerPos'].value)
       this.positionUniforms['headList'] = {
         value: this.getTextureAlpha(),
       }
+      this.positionUniforms.dt = { value: dt }
+      this.metaVariable.material.uniforms.dt = { value: dt }
+      this.trailVariable.material.uniforms.dt = { value: dt }
     })
 
-    // let h = this.HEIGHT
-    // for (let ii = 0; ii < h; ii++) {
-    //   this.positionUniforms["mouse" + ii] = { value: new Vector3(0, 0, 0) };
-    // }
-
     this.positionUniforms['time'] = { value: 0 }
-    dtPosition.wrapS = RepeatWrapping
-    dtPosition.wrapT = RepeatWrapping
+    // dtPosition.wrapS = RepeatWrapping
+    // dtPosition.wrapT = RepeatWrapping
+
+    this.metaVariable.material.uniforms =
+      this.positionVariable.material.uniforms
+
+    this.trailVariable.material.uniforms =
+      this.positionVariable.material.uniforms
 
     //
     const error = this.gpu.init()
@@ -102,27 +153,158 @@ export class NoodleSegmentCompute {
     })
   }
 
-  positionShader() {
-    let mouseUniforms = () => {
-      let str = ``
-      let h = this.HEIGHT
-      for (let ii = 0; ii < h; ii++) {
-        str += `
-          // uniform vec3 mouse${ii.toFixed(0)};
-        `
+  metaShader() {
+    return /* glsl */ `
+
+      uniform vec3 trackerPos;
+
+      uniform sampler2D headList;
+      uniform sampler2D lookup;
+      uniform float tick;
+      uniform float time;
+      uniform float dt;
+      uniform bool isDown;
+
+      vec3 lerp(vec3 a, vec3 b, float w)
+      {
+        return a + w*(b-a);
+      }
+      mat4 rotationX( in float angle ) {
+        return mat4(	1.0,		0,			0,			0,
+                0, 	cos(angle),	-sin(angle),		0,
+                0, 	sin(angle),	 cos(angle),		0,
+                0, 			0,			  0, 		1);
+      }
+      mat4 rotationY( in float angle ) {
+        return mat4(	cos(angle),		0,		sin(angle),	0,
+                    0,		1.0,			 0,	0,
+                -sin(angle),	0,		cos(angle),	0,
+                    0, 		0,				0,	1);
+      }
+      mat4 rotationZ( in float angle ) {
+        return mat4(	cos(angle),		-sin(angle),	0,	0,
+                sin(angle),		cos(angle),		0,	0,
+                    0,				0,		1,	0,
+                    0,				0,		0,	1);
       }
 
-      return str
-    }
+      ${cNoise()}
 
+      #include <common>
+
+
+      void main()	{
+          vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
+          vec4 positionHead = texture2D( texturePosition, uvCursor );
+          vec4 metaHead = texture2D( textureMeta, uvCursor );
+          vec4 lookupData = texture2D(lookup, uvCursor);
+          vec2 nextUV = lookupData.xy;
+          float currentSegment = floor(gl_FragCoord.x);
+          float currentLine = floor(gl_FragCoord.y);
+
+        vec3 noiser = vec3(
+          rand(uvCursor.xy + 0.1) * 2.0 - 1.0,
+          rand(uvCursor.xy + 0.2) * 2.0 - 1.0,
+          rand(uvCursor.xy + 0.3) * 2.0 - 1.0
+        );
+
+        gl_FragColor = metaHead;
+
+
+        if (isDown && (mod(tick, resolution.y) == currentLine || mod(tick + 1.0, resolution.y) == currentLine)) {
+          // state , hidden or growing
+          gl_FragColor.b = 1.0;
+          gl_FragColor.g = dt * 5.0;
+        } else {
+          gl_FragColor.b *= 0.95;
+        }
+
+        if (gl_FragColor.b >= 0.1) {
+          gl_FragColor.w += dt;
+        } else {
+          gl_FragColor.w = 0.0;
+        }
+
+        gl_FragColor.r += gl_FragColor.g;
+
+        gl_FragColor.r *= 0.95;
+        gl_FragColor.g *= 0.99;
+
+      }
+
+    `
+  }
+
+  trailShader() {
+    return /* glsl */ `
+
+      uniform vec3 trackerPos;
+
+      uniform sampler2D headList;
+      uniform sampler2D lookup;
+      uniform float tick;
+      uniform float time;
+      uniform float dt;
+      uniform bool isDown;
+
+      vec3 lerp(vec3 a, vec3 b, float w)
+      {
+        return a + w*(b-a);
+      }
+      mat4 rotationX( in float angle ) {
+        return mat4(	1.0,		0,			0,			0,
+                0, 	cos(angle),	-sin(angle),		0,
+                0, 	sin(angle),	 cos(angle),		0,
+                0, 			0,			  0, 		1);
+      }
+      mat4 rotationY( in float angle ) {
+        return mat4(	cos(angle),		0,		sin(angle),	0,
+                    0,		1.0,			 0,	0,
+                -sin(angle),	0,		cos(angle),	0,
+                    0, 		0,				0,	1);
+      }
+      mat4 rotationZ( in float angle ) {
+        return mat4(	cos(angle),		-sin(angle),	0,	0,
+                sin(angle),		cos(angle),		0,	0,
+                    0,				0,		1,	0,
+                    0,				0,		0,	1);
+      }
+
+      ${cNoise()}
+
+      #include <common>
+
+
+      void main()	{
+          vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
+          vec4 trailHead = texture2D( textureTrail, uvCursor );
+          // vec4 lookupData = texture2D(lookup, uvCursor);
+          // vec2 nextUV = lookupData.xy;
+          float currentSegment = floor(gl_FragCoord.x);
+          float currentLine = floor(gl_FragCoord.y);
+
+        gl_FragColor = trailHead;
+        if (isDown && (mod(tick, resolution.y) == currentLine || mod(tick + 1.0, resolution.y) == currentLine)) {
+          // state , hidden or growing
+          gl_FragColor.rgb = (trackerPos);
+        }
+      }
+
+    `
+  }
+
+  positionShader() {
     return /* glsl */ `
       uniform vec3 trackerPos;
+      uniform vec3 trackerPosLast;
 
 
       uniform sampler2D headList;
-      ${mouseUniforms()}
       uniform sampler2D lookup;
+      uniform float tick;
       uniform float time;
+      uniform float dt;
+      uniform bool isDown;
       vec3 lerp(vec3 a, vec3 b, float w)
       {
         return a + w*(b-a);
@@ -160,45 +342,63 @@ export class NoodleSegmentCompute {
         // float yID = floor(gl_FragCoord.y);
         vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
         vec4 positionHead = texture2D( texturePosition, uvCursor );
+        vec4 metaHead = texture2D( textureMeta, uvCursor );
+        vec4 trailHead = texture2D( textureTrail, uvCursor );
         vec4 lookupData = texture2D(lookup, uvCursor);
         vec2 nextUV = lookupData.xy;
         float currentSegment = floor(gl_FragCoord.x);
         float currentLine = floor(gl_FragCoord.y);
+
+        vec3 noiser = vec3(
+          rand(uvCursor.xy + 0.1) * 2.0 - 1.0,
+          rand(uvCursor.xy + 0.2) * 2.0 - 1.0,
+          rand(uvCursor.xy + 0.3) * 2.0 - 1.0
+        );
+
+          // gl_FragColor.g
         if (floor(currentSegment) == 0.0) {
+          vec2 uvv = vec2(0.0, currentLine / ${this.howManyTracker.toFixed(1)});
+          float ee = uvv.y;
+          vec4 positionHeadClone = positionHead;
+
+          vec4 headListData = texture2D(headList, uvv);
+
+          if (metaHead.b >= 0.1) {
+            // positionHeadClone.xyz = positionHeadClone.xyz - trailHead.rgb;
+
+            positionHeadClone.rgb = trailHead.rgb * 1.0 + noiser * metaHead.w * 15.0 * vec3(
+              cnoise(normalize(trackerPos.rgb) + time + 0.1),
+              cnoise(normalize(trackerPos.rgb) + time + 0.2),
+              cnoise(normalize(trackerPos.rgb) + time + 0.3)
+            );
+
+            // positionHeadClone.xyz = positionHeadClone.xyz + trailHead.rgb;
+
+            gl_FragColor = vec4(positionHeadClone.rgb, positionHeadClone.w);
+          } else {
+            gl_FragColor = positionHead;
+          }
+
+        } else {
+          vec4 positionChain = texture2D(texturePosition, nextUV );
+
 
           vec2 uvv = vec2(0.0, currentLine / ${this.howManyTracker.toFixed(1)});
+          vec4 headListData = texture2D(headList, uvv);
 
-          float ee = uvv.y;
-          vec4 texColor = texture2D(headList, uvv);
-
-          // // yolines
-          vec3 xyz = lerp(positionHead.rgb, texColor.rgb, 1.0);
-
-          gl_FragColor = vec4(xyz.rgb, 1.0);
-
-          ///
-        } else {
-          vec3 positionChain = texture2D( texturePosition, nextUV ).xyz;
-
-          // positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.8);
-
-          // positionChain.xyz *= 1.0 + sin(time) * 0.25 * 0.0135;
+          // vec3 dir = normalize(vec3(trackerPos - trackerPosLast));
+          // positionChain.xyz += dir * 0.03;
 
           // positionChain.xyz = positionChain.xyz - trackerPos;
 
-          // // positionChain.xz *= (1.0 - gl_FragCoord.x / resolution.x * 0.03);
-          // // positionChain.xyz *= 1.9;
 
-          // // positionChain.x += sin(positionChain.x);
-          // // positionChain.y += sin(positionChain.y);
-          // // positionChain.z += sin(positionChain.z);
+          //
 
           // positionChain.xyz = positionChain.xyz + trackerPos;
 
-
-
-          gl_FragColor = vec4(positionChain, 1.0);
+          gl_FragColor = vec4(positionChain.xyz, positionChain.w);
         }
+
 			}
     `
   }

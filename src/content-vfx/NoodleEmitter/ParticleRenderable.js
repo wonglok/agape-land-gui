@@ -15,11 +15,13 @@ export class ParticleRenderable extends Object3D {
     core,
     sizeX,
     sizeY,
+    sim,
     renderConfig = {},
     getTextureAlpha = () => {},
     getTextureBeta = () => {},
   }) {
     super()
+    this.sim = sim
     this.core = core
     let SIZE_X = sizeX
     let SIZE_Y = sizeY

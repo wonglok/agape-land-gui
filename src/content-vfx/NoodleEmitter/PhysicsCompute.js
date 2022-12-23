@@ -198,6 +198,7 @@ uniform vec3 mousePos;
 uniform vec3 screen;
 uniform float enterCirlce;
 uniform bool isDown;
+uniform float tick;
 
 vec3 lerp(vec3 a, vec3 b, float w) {
   return a + w*(b-a);
@@ -228,7 +229,21 @@ void main ()	{
 
   vec4 emitD = texture2D(tEmit, uv.xy);
 
-  gl_FragColor.rgb = trackerPos.rgb + emitD.xyz;
+  if (floor(gl_FragCoord.y) == floor(0.0)) {
+
+    if (isDown){
+      gl_FragColor.rgb = 3.0 * vec3(
+        rand(time + uv.xy + 0.1) * 2.0 - 1.0,
+        rand(time + uv.xy + 0.2) * 2.0 - 1.0,
+        rand(time + uv.xy + 0.3) * 2.0 - 1.0
+      );
+    }
+
+  } else {
+    gl_FragColor.rgb = 0.0 * emitD.xyz;
+  }
+
+
 
   gl_FragColor.w = 1.0;
 }

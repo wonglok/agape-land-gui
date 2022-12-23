@@ -104,6 +104,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       sizeX: 1,
       sizeY: howManyTracker,
       core: mini,
+      sim,
       getTextureAlpha: () => {
         return physics.getHeadList()
       },

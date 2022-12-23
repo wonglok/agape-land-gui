@@ -204,7 +204,7 @@ export class Game {
 
     this.frontArmy = new Object3D()
     this.frontArmy.position.z += -1
-    this.frontArmy.name = 'myself-front-army'
+    this.frontArmy.name = 'myself-fr ont-army'
     this.player.add(this.frontArmy)
 
     this.backArmy = new Object3D()

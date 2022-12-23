@@ -46,7 +46,7 @@ void main (void) {
 
   // emit.w += dt;
 
-  emit.rgb = noiser.rgb;
+  emit.rgb = vec3(0.0);
 
 
 
