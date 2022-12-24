@@ -113,6 +113,7 @@ export class NoodleSegmentCompute {
 
     setInterval(() => {
       this.positionUniforms.isDown.value = true
+
       requestAnimationFrame(() => {
         this.positionUniforms.isDown.value = false
       })
@@ -135,6 +136,8 @@ export class NoodleSegmentCompute {
       )
 
       if (this.positionUniforms.isDown.value) {
+        //
+
         this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
       }
 
@@ -416,6 +419,7 @@ export class NoodleSegmentCompute {
               positionHeadClone.xyz = positionHeadClone.xyz + place.rgb;
 
               gl_FragColor = vec4(positionHeadClone.rgb, positionHeadClone.w);
+
             } else {
               gl_FragColor.rgb = positionHead.rgb;
               gl_FragColor.w = positionHead.w;
