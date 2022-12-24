@@ -134,7 +134,9 @@ export class NoodleSegmentCompute {
         this.positionUniforms['trackerPos'].value
       )
 
-      this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
+      if (this.positionUniforms.isDown.value) {
+        this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
+      }
 
       // console.log(this.positionUniforms['trackerPos'].value)
       this.positionUniforms['headList'] = {
@@ -248,8 +250,8 @@ export class NoodleSegmentCompute {
           gl_FragColor.b = 1.0;
         }
 
-        if (${this.useLine()}) {
-          gl_FragColor.w += dt * 3.0;
+        if (isDown && ${this.useLine()}) {
+          gl_FragColor.w = 1.0;
         }
         // radius
         gl_FragColor.w *= 0.96;
@@ -312,9 +314,11 @@ export class NoodleSegmentCompute {
 
           gl_FragColor = trailHead;
 
-        if (isDown && (${this.useLine()})) {
+        if ((${this.useLine()})) {
           // state , hidden or growing
           gl_FragColor.rgb = lerp(trailHead.rgb, trackerPos, 1.0);
+        } else {
+          gl_FragColor.rgb = trackerPos;
         }
       }
 
@@ -403,7 +407,7 @@ export class NoodleSegmentCompute {
 
               // latest += cnoise(latest.rgb + time) * metaHead.w *  0.5;
 
-              latest.xyz = ballify(latest.rgb, metaHead.w * 2.0);
+              latest.xyz = ballify(latest.rgb, sin(time) * 2.0);
 
               latest *= rotateQ(normalize(vec3(0.0, 1.0, 0.0)), time * 3.0);
 
