@@ -135,12 +135,7 @@ export class NoodleSegmentCompute {
         this.positionUniforms['trackerPos'].value
       )
 
-      if (this.positionUniforms.isDown.value) {
-        //
-
-        this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
-      }
-
+      this.positionUniforms['trackerPos'].value.copy(this.tracker.position)
       // console.log(this.positionUniforms['trackerPos'].value)
       this.positionUniforms['headList'] = {
         value: this.getTextureAlpha(),
