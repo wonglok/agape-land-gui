@@ -62,6 +62,9 @@ export const getUserInfo = async (sToken) => {
     })
     if (response.ok) {
       return await response.json()
+    } else {
+      signOut()
+      throw new Error('bad session token')
     }
   } catch (error) {
     // eslint-disable-next-line no-console

@@ -57,6 +57,7 @@ export class NoodleSegmentCompute {
     this.fillPositionTexture(dtPosition)
     this.fillLookupTexture(lookUpTexture)
 
+    //
     this.positionVariable = this.gpu.addVariable(
       'texturePosition',
       this.positionShader(),
@@ -106,6 +107,10 @@ export class NoodleSegmentCompute {
         this.positionUniforms.isDown.value = true
       }
     })
+
+    setInterval(() => {
+      this.positionUniforms.isDown.value = !this.positionUniforms.isDown.value
+    }, 1000)
 
     window.addEventListener('keyup', (ev) => {
       if (ev.key === 'f') {
@@ -212,17 +217,16 @@ export class NoodleSegmentCompute {
 
       #include <common>
 
-
       void main()	{
-          vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
-          vec4 positionHead = texture2D( texturePosition, uvCursor );
-          vec4 metaHead = texture2D( textureMeta, uvCursor );
-          vec4 lookupData = texture2D(lookup, uvCursor);
+        vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
+        vec4 positionHead = texture2D( texturePosition, uvCursor);
+        vec4 metaHead = texture2D( textureMeta, uvCursor);
+        vec4 lookupData = texture2D(lookup, uvCursor);
 
-          vec2 nextUV = lookupData.xy;
+        vec2 nextUV = lookupData.xy;
 
-          float currentSegment = floor(gl_FragCoord.x);
-          float currentLine = floor(gl_FragCoord.y);
+        float currentSegment = floor(gl_FragCoord.x);
+        float currentLine = floor(gl_FragCoord.y);
 
         // vec3 noiser = vec3(
         //   rand(uvCursor.xy + 0.1) * 2.0 - 1.0,
@@ -237,18 +241,19 @@ export class NoodleSegmentCompute {
           if (isDown) {
             // life
             gl_FragColor.b = 1.0;
-            gl_FragColor.w += dt * 2.0;
-          } else {
-            // gl_FragColor.w = 0.0;
+            gl_FragColor.w += dt * 4.0;
+
+            if (gl_FragColor.w >= 4.0) {
+              gl_FragColor.w = 4.0;
+            }
           }
         }
 
+        // radius
         gl_FragColor.w *= 0.95;
 
-        gl_FragColor.r += gl_FragColor.g;
-
-        gl_FragColor.g *= 0.2;
-        gl_FragColor.b *= 0.9;
+        // life reamins
+        gl_FragColor.b *= 0.95;
       }
 
     `
@@ -337,6 +342,21 @@ export class NoodleSegmentCompute {
 
       varying vec3 pos;
 
+      float atan2(in float y, in float x) {
+        bool xgty = (abs(x) > abs(y));
+        return mix(3.1415926535897932384626433832795 / 2.0 - atan(x,y), atan(y,x), float(xgty));
+      }
+
+      vec3 ballify (vec3 pos, float r) {
+        float az = atan2(pos.y, pos.x);
+        float el = atan2(pos.z, sqrt(pos.x * pos.x + pos.y * pos.y));
+        return vec3(
+          r * cos(el) * cos(az),
+          r * cos(el) * sin(az),
+          r * sin(el)
+        );
+      }
+
 
 			void main()	{
         // const float width = resolution.x;
@@ -368,30 +388,22 @@ export class NoodleSegmentCompute {
             // if (true) {
             //   place = lerp(place, trailHead.rgb, 0.2);
             // }
+
             if (metaHead.b >= 0.1) {
-              vec3 place = trailHead.rgb;
+              vec3 place = lerp(positionHeadClone.rgb, trackerPos, 0.9);//trailHead.rgb;
 
               positionHeadClone.xyz = positionHeadClone.xyz - place.rgb;
 
-              vec3 latest = noiser * metaHead.w * 5.1;
+              vec3 latest = noiser * 10.0;
               vec4 metaHead2 = texture2D( textureMeta, nextUV );
 
+              // latest += cnoise(latest.rgb + time) * metaHead.w *  0.5;
 
-              latest += vec3(
-                cnoise(latest.rgb + time + 0.1),
-                cnoise(latest.rgb + time + 0.2),
-                cnoise(latest.rgb + time + 0.3)
-              ) * 0.05;
+              latest.xyz = ballify(latest.rgb, metaHead.w * 2.0);
 
+              latest *= rotateQ(normalize(vec3(0.0, 1.0, 0.0)), time * 3.0);
 
-              latest *= rotateQ(normalize(vec3(0.0, 1.0, 0.0)), time * 2.0);
-
-              latest.y *= 0.03;
-
-              latest *= rotateQ(normalize(vec3(1.0, 1.0, 1.0)), time * 5.0);
-
-              positionHeadClone.xyz = latest;
-
+              positionHeadClone.xyz = latest.rgb;
 
               positionHeadClone.xyz = positionHeadClone.xyz + place.rgb;
 
@@ -415,8 +427,6 @@ export class NoodleSegmentCompute {
 
           gl_FragColor = vec4(positionChain.xyz, positionChain.w);
         }
-
-
 			}
     `
   }

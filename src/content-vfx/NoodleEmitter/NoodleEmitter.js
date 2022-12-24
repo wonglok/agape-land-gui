@@ -1,5 +1,4 @@
 import { useMemo, useRef } from 'react'
-import { PhysicsCompute } from './PhysicsCompute'
 import { NoodleSegmentCompute } from './NoodleSegmentCompute'
 import { Object3D, Vector3 } from 'three'
 import { NoodleRenderable } from './NoodleRenderable'
@@ -19,8 +18,8 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
-  let howManyTracker = 2048
-  let howLongTail = 16
+  let howManyTracker = 128
+  let howLongTail = 32
 
   let { chaser, group } = useMemo(() => {
     let group = new Object3D()
@@ -58,7 +57,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
     let renderConfig = {
       color: new Color('#ffffff'),
       emissive: new Color('#ffffff'),
-      emissiveIntensity: 1,
+      emissiveIntensity: 3,
       envMapIntensity: 0,
       transparent: true,
       roughness: 1.0,
