@@ -50,8 +50,8 @@ function YoBG() {
 
 function YoCam() {
   let camera = useThree((s) => s.camera)
-  camera.position.set(0, 1, 3)
-  camera.lookAt(0, 1.2, 0)
+  camera.position.set(0, -0.3 + 1, 3)
+  camera.lookAt(0, -0.3 + 1.2, 0)
   return null
 }
 
