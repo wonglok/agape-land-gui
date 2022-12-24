@@ -56,7 +56,12 @@ export class Game {
         return s.default
       })
       .then(async (nip) => {
+        document.querySelector('#avacontrols')?.remove()
+        core.onClean(() => {
+          document.querySelector('#avacontrols')?.remove()
+        })
         let zone = document.createElement('div')
+        zone.id = 'avacontrols'
         document.body.appendChild(zone)
 
         // zone.style.cssText = `
