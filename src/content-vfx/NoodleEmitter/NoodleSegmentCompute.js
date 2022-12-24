@@ -243,7 +243,6 @@ export class NoodleSegmentCompute {
 
         gl_FragColor = metaHead;
 
-
         if (gl_FragColor.b <= 1.0) {
           // life
           gl_FragColor.b = 1.0;
