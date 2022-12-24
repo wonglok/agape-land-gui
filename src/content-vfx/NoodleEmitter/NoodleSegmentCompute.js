@@ -78,7 +78,10 @@ export class NoodleSegmentCompute {
 
     this.positionVariable.material.uniforms.dt = { value: 0 }
 
-    this.gpu.setVariableDependencies(this.trailVariable, [this.trailVariable])
+    this.gpu.setVariableDependencies(this.trailVariable, [
+      this.metaVariable,
+      this.trailVariable,
+    ])
     this.gpu.setVariableDependencies(this.metaVariable, [
       this.metaVariable,
       this.positionVariable,
@@ -109,7 +112,10 @@ export class NoodleSegmentCompute {
     })
 
     setInterval(() => {
-      this.positionUniforms.isDown.value = !this.positionUniforms.isDown.value
+      this.positionUniforms.isDown.value = true
+      requestAnimationFrame(() => {
+        this.positionUniforms.isDown.value = false
+      })
     }, 1000)
 
     window.addEventListener('keyup', (ev) => {
@@ -162,6 +168,7 @@ export class NoodleSegmentCompute {
   useLine() {
     return /* glsl */ `(
       (
+        // metaHead.b >= 0.05
         mod(tick, floor(resolution.y)) == currentLine || true
       )
 
@@ -237,23 +244,19 @@ export class NoodleSegmentCompute {
         gl_FragColor = metaHead;
 
 
-        if (${this.useLine()}) {
-          if (isDown) {
-            // life
-            gl_FragColor.b = 1.0;
-            gl_FragColor.w += dt * 4.0;
-
-            if (gl_FragColor.w >= 4.0) {
-              gl_FragColor.w = 4.0;
-            }
-          }
+        if (gl_FragColor.b <= 1.0) {
+          // life
+          gl_FragColor.b = 1.0;
         }
 
+        if (${this.useLine()}) {
+          gl_FragColor.w += dt * 3.0;
+        }
         // radius
-        gl_FragColor.w *= 0.95;
+        gl_FragColor.w *= 0.96;
 
         // life reamins
-        gl_FragColor.b *= 0.95;
+        gl_FragColor.b *= 0.96;
       }
 
     `
@@ -301,6 +304,8 @@ export class NoodleSegmentCompute {
       void main()	{
           vec2 uvCursor = vec2(gl_FragCoord.x, gl_FragCoord.y) / resolution.xy;
           vec4 trailHead = texture2D( textureTrail, uvCursor );
+          vec4 metaHead = texture2D( textureMeta, uvCursor );
+
           // vec4 lookupData = texture2D(lookup, uvCursor);
           // vec2 nextUV = lookupData.xy;
           float currentSegment = floor(gl_FragCoord.x);
@@ -390,7 +395,7 @@ export class NoodleSegmentCompute {
             // }
 
             if (metaHead.b >= 0.1) {
-              vec3 place = lerp(positionHeadClone.rgb, trackerPos, 0.9);//trailHead.rgb;
+              vec3 place = lerp(positionHeadClone.rgb, trailHead.rgb, 0.9);//trailHead.rgb;
 
               positionHeadClone.xyz = positionHeadClone.xyz - place.rgb;
 
