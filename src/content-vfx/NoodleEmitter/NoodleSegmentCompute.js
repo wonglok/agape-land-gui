@@ -29,6 +29,7 @@ export class NoodleSegmentCompute {
     howLongTail = 32,
     gl,
   }) {
+    //
     this.gl = gl
     this.node = node
     this.howLongTail = howLongTail
@@ -153,6 +154,25 @@ export class NoodleSegmentCompute {
     })
   }
 
+  useLine() {
+    return /* glsl */ `(
+      (
+        mod(tick, floor(resolution.y)) == currentLine || true
+      )
+
+      // mod(tick, resolution.y) == currentLine ||
+      // mod(tick + 1.0, resolution.y) == currentLine ||
+      // mod(tick + 2.0, resolution.y) == currentLine ||
+      // mod(tick + 3.0, resolution.y) == currentLine ||
+      // mod(tick + 4.0, resolution.y) == currentLine ||
+      // mod(tick + 5.0, resolution.y) == currentLine ||
+      // mod(tick + 6.0, resolution.y) == currentLine ||
+      // mod(tick + 7.0, resolution.y) == currentLine ||
+      // mod(tick + 8.0, resolution.y) == currentLine ||
+      // mod(tick + 9.0, resolution.y) == currentLine
+      // mod(currentLine, 10.0) == 0.0
+    )`
+  }
   metaShader() {
     return /* glsl */ `
 
@@ -198,38 +218,37 @@ export class NoodleSegmentCompute {
           vec4 positionHead = texture2D( texturePosition, uvCursor );
           vec4 metaHead = texture2D( textureMeta, uvCursor );
           vec4 lookupData = texture2D(lookup, uvCursor);
+
           vec2 nextUV = lookupData.xy;
+
           float currentSegment = floor(gl_FragCoord.x);
           float currentLine = floor(gl_FragCoord.y);
 
-        vec3 noiser = vec3(
-          rand(uvCursor.xy + 0.1) * 2.0 - 1.0,
-          rand(uvCursor.xy + 0.2) * 2.0 - 1.0,
-          rand(uvCursor.xy + 0.3) * 2.0 - 1.0
-        );
+        // vec3 noiser = vec3(
+        //   rand(uvCursor.xy + 0.1) * 2.0 - 1.0,
+        //   rand(uvCursor.xy + 0.2) * 2.0 - 1.0,
+        //   rand(uvCursor.xy + 0.3) * 2.0 - 1.0
+        // );
 
         gl_FragColor = metaHead;
 
 
-        if (isDown && (mod(tick, resolution.y) == currentLine || mod(tick + 1.0, resolution.y) == currentLine)) {
-          // state , hidden or growing
-          gl_FragColor.b = 1.0;
-          gl_FragColor.g = dt * 5.0;
-        } else {
-          gl_FragColor.b *= 0.95;
+        if (${this.useLine()}) {
+          if (isDown) {
+            // life
+            gl_FragColor.b = 1.0;
+            gl_FragColor.w += dt * 2.0;
+          } else {
+            // gl_FragColor.w = 0.0;
+          }
         }
 
-        if (gl_FragColor.b >= 0.1) {
-          gl_FragColor.w += dt;
-        } else {
-          gl_FragColor.w = 0.0;
-        }
+        gl_FragColor.w *= 0.95;
 
         gl_FragColor.r += gl_FragColor.g;
 
-        gl_FragColor.r *= 0.95;
-        gl_FragColor.g *= 0.99;
-
+        gl_FragColor.g *= 0.2;
+        gl_FragColor.b *= 0.9;
       }
 
     `
@@ -237,7 +256,6 @@ export class NoodleSegmentCompute {
 
   trailShader() {
     return /* glsl */ `
-
       uniform vec3 trackerPos;
 
       uniform sampler2D headList;
@@ -283,10 +301,11 @@ export class NoodleSegmentCompute {
           float currentSegment = floor(gl_FragCoord.x);
           float currentLine = floor(gl_FragCoord.y);
 
-        gl_FragColor = trailHead;
-        if (isDown && (mod(tick, resolution.y) == currentLine || mod(tick + 1.0, resolution.y) == currentLine)) {
+          gl_FragColor = trailHead;
+
+        if (isDown && (${this.useLine()})) {
           // state , hidden or growing
-          gl_FragColor.rgb = (trackerPos);
+          gl_FragColor.rgb = lerp(trailHead.rgb, trackerPos, 1.0);
         }
       }
 
@@ -309,24 +328,8 @@ export class NoodleSegmentCompute {
       {
         return a + w*(b-a);
       }
-      mat4 rotationX( in float angle ) {
-        return mat4(	1.0,		0,			0,			0,
-                0, 	cos(angle),	-sin(angle),		0,
-                0, 	sin(angle),	 cos(angle),		0,
-                0, 			0,			  0, 		1);
-      }
-      mat4 rotationY( in float angle ) {
-        return mat4(	cos(angle),		0,		sin(angle),	0,
-                    0,		1.0,			 0,	0,
-                -sin(angle),	0,		cos(angle),	0,
-                    0, 		0,				0,	1);
-      }
-      mat4 rotationZ( in float angle ) {
-        return mat4(	cos(angle),		-sin(angle),	0,	0,
-                sin(angle),		cos(angle),		0,	0,
-                    0,				0,		1,	0,
-                    0,				0,		0,	1);
-      }
+
+      ${rotateStuff()}
 
       ${cNoise()}
 
@@ -355,49 +358,64 @@ export class NoodleSegmentCompute {
           rand(uvCursor.xy + 0.3) * 2.0 - 1.0
         );
 
-          // gl_FragColor.g
-        if (floor(currentSegment) == 0.0) {
+      if (floor(currentSegment) == 0.0) {
           vec2 uvv = vec2(0.0, currentLine / ${this.howManyTracker.toFixed(1)});
           float ee = uvv.y;
           vec4 positionHeadClone = positionHead;
 
-          vec4 headListData = texture2D(headList, uvv);
+            vec4 headListData = texture2D(headList, uvv);
 
-          if (metaHead.b >= 0.1) {
-            // positionHeadClone.xyz = positionHeadClone.xyz - trailHead.rgb;
+            // if (true) {
+            //   place = lerp(place, trailHead.rgb, 0.2);
+            // }
+            if (metaHead.b >= 0.1) {
+              vec3 place = trailHead.rgb;
 
-            positionHeadClone.rgb = trailHead.rgb * 1.0 + noiser * metaHead.w * 15.0 * vec3(
-              cnoise(normalize(trackerPos.rgb) + time + 0.1),
-              cnoise(normalize(trackerPos.rgb) + time + 0.2),
-              cnoise(normalize(trackerPos.rgb) + time + 0.3)
-            );
+              positionHeadClone.xyz = positionHeadClone.xyz - place.rgb;
 
-            // positionHeadClone.xyz = positionHeadClone.xyz + trailHead.rgb;
+              vec3 latest = noiser * metaHead.w * 5.1;
+              vec4 metaHead2 = texture2D( textureMeta, nextUV );
 
-            gl_FragColor = vec4(positionHeadClone.rgb, positionHeadClone.w);
-          } else {
-            gl_FragColor = positionHead;
-          }
 
+              latest += vec3(
+                cnoise(latest.rgb + time + 0.1),
+                cnoise(latest.rgb + time + 0.2),
+                cnoise(latest.rgb + time + 0.3)
+              ) * 0.05;
+
+
+              latest *= rotateQ(normalize(vec3(0.0, 1.0, 0.0)), time * 2.0);
+
+              latest.y *= 0.03;
+
+              latest *= rotateQ(normalize(vec3(1.0, 1.0, 1.0)), time * 5.0);
+
+              positionHeadClone.xyz = latest;
+
+
+              positionHeadClone.xyz = positionHeadClone.xyz + place.rgb;
+
+              gl_FragColor = vec4(positionHeadClone.rgb, positionHeadClone.w);
+            } else {
+              gl_FragColor.rgb = positionHead.rgb;
+              gl_FragColor.w = positionHead.w;
+            }
         } else {
           vec4 positionChain = texture2D(texturePosition, nextUV );
 
-
           vec2 uvv = vec2(0.0, currentLine / ${this.howManyTracker.toFixed(1)});
-          vec4 headListData = texture2D(headList, uvv);
+          // vec4 headListData = texture2D(headList, uvv);
 
           // vec3 dir = normalize(vec3(trackerPos - trackerPosLast));
           // positionChain.xyz += dir * 0.03;
 
           // positionChain.xyz = positionChain.xyz - trackerPos;
 
-
-          //
-
           // positionChain.xyz = positionChain.xyz + trackerPos;
 
           gl_FragColor = vec4(positionChain.xyz, positionChain.w);
         }
+
 
 			}
     `
@@ -524,4 +542,74 @@ export const cNoise = () => {
         float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
         return 2.2 * n_xyz;
       }`
+}
+
+export const rotateStuff = () => {
+  return /* glsl */ `
+      mat3 rotateX(float rad) {
+          float c = cos(rad);
+          float s = sin(rad);
+          return mat3(
+              1.0, 0.0, 0.0,
+              0.0, c, s,
+              0.0, -s, c
+          );
+      }
+
+      mat3 rotateY(float rad) {
+          float c = cos(rad);
+          float s = sin(rad);
+          return mat3(
+              c, 0.0, -s,
+              0.0, 1.0, 0.0,
+              s, 0.0, c
+          );
+      }
+
+      mat3 rotateZ(float rad) {
+          float c = cos(rad);
+          float s = sin(rad);
+          return mat3(
+              c, s, 0.0,
+              -s, c, 0.0,
+              0.0, 0.0, 1.0
+          );
+      }
+
+      mat3 rotateQ (vec3 axis, float rad) {
+          float hr = rad / 2.0;
+          float s = sin( hr );
+          vec4 q = vec4(axis * s, cos( hr ));
+          vec3 q2 = q.xyz + q.xyz;
+          vec3 qq2 = q.xyz * q2;
+          vec2 qx = q.xx * q2.yz;
+          float qy = q.y * q2.z;
+          vec3 qw = q.w * q2.xyz;
+
+          return mat3(
+              1.0 - (qq2.y + qq2.z),  qx.x - qw.z,            qx.y + qw.y,
+              qx.x + qw.z,            1.0 - (qq2.x + qq2.z),  qy - qw.x,
+              qx.y - qw.y,            qy + qw.x,              1.0 - (qq2.x + qq2.y)
+          );
+      }
+
+      mat4 rotationX( in float angle ) {
+        return mat4(	1.0,		0,			0,			0,
+                0, 	cos(angle),	-sin(angle),		0,
+                0, 	sin(angle),	 cos(angle),		0,
+                0, 			0,			  0, 		1);
+      }
+      mat4 rotationY( in float angle ) {
+        return mat4(	cos(angle),		0,		sin(angle),	0,
+                    0,		1.0,			 0,	0,
+                -sin(angle),	0,		cos(angle),	0,
+                    0, 		0,				0,	1);
+      }
+      mat4 rotationZ( in float angle ) {
+        return mat4(	cos(angle),		-sin(angle),	0,	0,
+                sin(angle),		cos(angle),		0,	0,
+                    0,				0,		1,	0,
+                    0,				0,		0,	1);
+      }
+`
 }

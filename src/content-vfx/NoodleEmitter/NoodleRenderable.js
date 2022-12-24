@@ -44,14 +44,14 @@ export class NoodleRenderable {
     geometry.instanceCount = count
 
     let matConfig = {
-      color: new Color('#ff0000'),
-      transparent: true,
-      roughness: 0.0,
-      metalness: 1.0,
-      side: DoubleSide,
-      reflectivity: 0.5,
-      transmission: 0.0,
-      ior: 1.25,
+      // color: new Color('#ff0000'),
+      // transparent: true,
+      // roughness: 0.0,
+      // metalness: 1.0,
+      // side: DoubleSide,
+      // reflectivity: 0.5,
+      // transmission: 0.0,
+      // ior: 1.25,
       ...this.renderConfig,
     }
 
@@ -112,7 +112,7 @@ export class NoodleRenderable {
         vec3 pt = vec3(0.0);
 
         float lineIDXER = offset.w;
-        pt += getP3OfTex(t, lineIDXER);
+        pt = getP3OfTex(t, lineIDXER);
 
         return pt;
       }
@@ -147,11 +147,11 @@ export class NoodleRenderable {
 
       vec3 makeGeo () {
         float t = (tubeInfo) + 0.5;
-        float thickness = 0.01 * (1.0 - t);
+        float thickness = 0.002 * 10.0;// * (1.0 - t) * t;
 
         vT = t;
 
-        vec2 volume = vec2(thickness);
+        vec2 volume = vec2(1.0, 1.0) * 0.005;
         vec3 transformedYo;
         vec3 objectNormal;
         createTube(t, volume, transformedYo, objectNormal);
@@ -178,13 +178,8 @@ export class NoodleRenderable {
       `
 
       let transformV3 = `
-
-
             vec3 nPos = makeGeo();
-
             vec3 transformed = vec3( nPos );
-
-
         `
 
       let transformV3Normal = `
@@ -218,8 +213,6 @@ export class NoodleRenderable {
         `#include <project_vertex>`,
         `
 
-
-
 vec4 mvPosition = vec4( transformed, 1.0 );
 #ifdef USE_INSTANCING
 	mvPosition = instanceMatrix * mvPosition;
@@ -227,7 +220,6 @@ vec4 mvPosition = vec4( transformed, 1.0 );
 mvPosition = modelViewMatrix * mvPosition;
 
 gl_Position = projectionMatrix * mvPosition;
-
 
         `
       )
@@ -244,24 +236,16 @@ gl_Position = projectionMatrix * mvPosition;
       shader.fragmentShader = shader.fragmentShader.replace(
         `#include <output_fragment>`,
         `
-        #ifdef OPAQUE
+          #ifdef OPAQUE
           diffuseColor.a = 1.0;
-        #endif
-        #ifdef USE_TRANSMISSION
-          // diffuseColor.a *= transmissionAlpha + 0.1;
-        #endif
+          #endif
+          // https://github.com/mrdoob/three.js/pull/22425
+          #ifdef USE_TRANSMISSION
+          diffuseColor.a *= material.transmissionAlpha + 0.1;
+          #endif
+          gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
-
-        float aa = diffuseColor.a * (1.0 - vT);
-
-        if (aa >= 0.01) {
-          gl_FragColor = vec4( outgoingLight, aa );
-        } else {
-          gl_FragColor.rgba *= 0.0;
-          discard;
-        }
-
-
+          gl_FragColor.a *= (1.0 - vT) * vT;
       `
       )
 

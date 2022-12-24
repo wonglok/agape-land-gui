@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { PhysicsCompute } from './PhysicsCompute'
 import { NoodleSegmentCompute } from './NoodleSegmentCompute'
 import { Object3D, Vector3 } from 'three'
@@ -7,22 +7,20 @@ import { ParticleRenderable } from './ParticleRenderable'
 import {
   Color,
   DoubleSide,
-  EquirectangularRefractionMapping,
   FrontSide,
   RepeatWrapping,
   sRGBEncoding,
 } from 'three'
 import { useCore } from '@/lib/useCore'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
-import { Icosahedron, Sphere, useTexture } from '@react-three/drei'
-// import { MouseEmitter } from './MouseEmitter'
+import { Sphere, useTexture } from '@react-three/drei'
 
 export function NoodleEmitter({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
-  let howManyTracker = 128
-  let howLongTail = 64
+  let howManyTracker = 2048
+  let howLongTail = 16
 
   let { chaser, group } = useMemo(() => {
     let group = new Object3D()
@@ -59,30 +57,32 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
 
     let renderConfig = {
       color: new Color('#ffffff'),
-      // emissive: new Color('#E2E58D'),
+      emissive: new Color('#ffffff'),
       emissiveIntensity: 1,
-      transparent: false,
-      roughness: 0.0,
+      envMapIntensity: 0,
+      transparent: true,
+      roughness: 1.0,
       metalness: 0.0,
       side: FrontSide,
+
       // reflectivity: 1,
-      // transmission: 1,
-      // ior: 1.5,
-      // thickness: 5.0,
+      transmission: 0,
+      ior: 1.2,
+      thickness: 0.1,
     }
 
-    let physics = new PhysicsCompute({
-      gl: gl,
-      sizeX: 1,
-      sizeY: howManyTracker,
-      tracker: chaser,
-    })
+    // let physics = new PhysicsCompute({
+    //   gl: gl,
+    //   sizeX: 1,
+    //   sizeY: howManyTracker,
+    //   tracker: chaser,
+    // })
 
     let sim = new NoodleSegmentCompute({
       node: mini,
       tracker: chaser,
       getTextureAlpha: () => {
-        return physics.getHeadList()
+        return null //physics.getHeadList()
       },
       howManyTracker: howManyTracker,
       howLongTail: howLongTail,
@@ -99,24 +99,24 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
 
     group.add(noodle.o3d)
 
-    let pars = new ParticleRenderable({
-      renderConfig,
-      sizeX: 1,
-      sizeY: howManyTracker,
-      core: mini,
-      sim,
-      getTextureAlpha: () => {
-        return physics.getHeadList()
-      },
-      getTextureBeta: () => {
-        return physics.getHeadList2()
-      },
-    })
+    // let pars = new ParticleRenderable({
+    //   renderConfig,
+    //   sizeX: 1,
+    //   sizeY: howManyTracker,
+    //   core: mini,
+    //   sim,
+    //   getTextureAlpha: () => {
+    //     return physics.getHeadList()
+    //   },
+    //   getTextureBeta: () => {
+    //     return physics.getHeadList2()
+    //   },
+    // })
 
-    group.add(pars)
+    // group.add(pars)
 
     mini.onClean(() => {
-      pars.removeFromParent()
+      // pars.removeFromParent()
       noodle.o3d.removeFromParent()
     })
 
