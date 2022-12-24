@@ -26,7 +26,7 @@ function Agape() {
     <group position={[0, 0.1, 1]} rotation={[-0.3, 0, 0]} scale={0.155}>
       <Center>
         <Text3D font={Front}>
-          {`Agape`}
+          {`AGAPE`}
           <meshPhysicalMaterial
             transmission={1}
             ior={1.1}
