@@ -100,8 +100,7 @@ const visibleWidthAtZDepth = (depth, camera) => {
 }
 
 export function MetaverseMenu() {
-  let gate = useSnapshot(GateState)
-
+  //
   let roughnessMapTex = useTexture(`/texture/snow/pattern.jpeg`)
   roughnessMapTex.encoding = sRGBEncoding
   roughnessMapTex.wrapS = roughnessMapTex.wrapT = RepeatWrapping
@@ -133,7 +132,7 @@ export function MetaverseMenu() {
                           GateState.menuOverlay = !GateState.menuOverlay
                         }}
                       >
-                        =MENU=
+                        * MENU *
                         <meshPhysicalMaterial
                           roughness={0.0}
                           metalness={0.0}
@@ -228,8 +227,8 @@ export function MenuLayout({ center, topRight }) {
     cameraProxy.quaternion.slerp(wq, 1.0)
 
     let adder = 0
-    if (size.width < size.height) {
-      adder += 15
+    if (size.width < size.height && size.width <= 560) {
+      adder += 25
     }
     camera.fov = 60 + adder
     camera.updateProjectionMatrix()
