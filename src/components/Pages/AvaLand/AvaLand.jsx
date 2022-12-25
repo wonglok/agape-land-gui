@@ -1,6 +1,13 @@
-import { Center, Environment, Text3D, useFBX, useGLTF } from '@react-three/drei'
+import {
+  Center,
+  Environment,
+  Text,
+  Text3D,
+  useFBX,
+  useGLTF,
+} from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Suspense } from 'react'
 import { AnimationMixer, Color, MeshStandardMaterial } from 'three'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
@@ -10,7 +17,12 @@ export function AvaLand() {
     <Canvas>
       <Suspense fallback={null}>
         <Agape></Agape>
-        <YoBB></YoBB>
+        <Suspense fallback={<Text>Loading Dance move...</Text>}>
+          <YoBB></YoBB>
+        </Suspense>
+        <Environment preset='apartment'></Environment>
+        <gridHelper args={[100, 100, 0x00ffff, 0x00ffff]} />
+
         <YoCam></YoCam>
         <YoBG></YoBG>
       </Suspense>
@@ -63,12 +75,26 @@ function YoCam() {
   return null
 }
 
+let MyDances = [
+  `/servant/yobb/motion/selected/arms-hip-hop-dance.fbx`,
+  `/servant/yobb/motion/selected/balle.fbx`,
+  `/servant/yobb/motion/selected/belly-dance.fbx`,
+  `/servant/yobb/motion/selected/hi.fbx`,
+  `/servant/yobb/motion/selected/idle-basic.fbx`,
+  `/servant/yobb/motion/selected/idle-happy.fbx`,
+  `/servant/yobb/motion/selected/idle-neutral.fbx`,
+  `/servant/yobb/motion/selected/running.fbx`,
+  `/servant/yobb/motion/selected/silly-dance.fbx`,
+  `/servant/yobb/motion/selected/twist-dance.fbx`,
+]
+
 function YoBB() {
+  let [idx, setIdx] = useState(0)
   let glb = useGLTF(`/servant/yobb/avatar/yobb.glb`)
 
   let {
     animations: [firstClipNeu],
-  } = useFBX(`/servant/yobb/motion/selected/idle-neutral.fbx`)
+  } = useFBX(MyDances[idx])
 
   let mixer = useMemo(() => {
     return new AnimationMixer(glb.scene)
@@ -78,6 +104,7 @@ function YoBB() {
     mixer.update(dt)
   })
 
+  mixer.stopAllAction()
   mixer.clipAction(firstClipNeu)?.play()
   glb.scene.traverse((it) => {
     if (it.material) {
@@ -98,12 +125,14 @@ function YoBB() {
     }
   })
   return (
-    <group>
+    <group
+      onPointerDown={() => {
+        setIdx((s) => (s + 1) % MyDances.length)
+      }}
+    >
       <group rotation={[-Math.PI * 0.5, 0, 0]}>
         <primitive object={glb.scene}></primitive>
       </group>
-      <Environment preset='apartment'></Environment>
-      <gridHelper args={[100, 100, 0x00ffff, 0x00ffff]} />
     </group>
   )
 }
