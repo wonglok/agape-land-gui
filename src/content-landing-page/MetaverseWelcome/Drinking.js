@@ -1,7 +1,6 @@
 import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import { VisualEffect } from '../Effects/VisualEffect'
-import { WalkerState } from '@/lib/walker/WalkerState'
 
 export function Drinking({ scene }) {
   let { camera, mouse, raycaster, gl } = useThree((s) => {
