@@ -1,6 +1,6 @@
 import { Box, Center, Html, Stats, Text3D, useGLTF } from '@react-three/drei'
 // import { useReady, useScrollStore } from '../Core/useScrollStore'
-import { useEffect, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { AnimationMixer, BufferAttribute, Object3D, Vector3 } from 'three'
 import { TheVortex } from '../TheVortex/TheVortex'
@@ -11,6 +11,9 @@ import { UIContent } from '@/lib/UIContent'
 // import { StaticGeometryGenerator } from 'three-mesh-bvh'
 // import md5 from 'md5'
 import { Gesture, WheelGesture } from '@use-gesture/vanilla'
+import { CardPlane } from './CardPlane'
+import { GateState } from '../LoginContentGate/GateState'
+import { useSnapshot } from 'valtio'
 
 let max = 45.156355645706554
 let scheduleStartTime = {
@@ -46,7 +49,82 @@ let order = [
   'end',
 ]
 
+let popStatus = [
+  {
+    /* */ shown: false,
+    title: 'Welcome to Agape',
+    desc: `Let's start our journey!`,
+    at: 1 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/circle_portal.png`,
+  },
+  {
+    /* */ shown: false,
+    title: 'Virtual Mall',
+    desc: `Shop in the multiverses which uses our metaverse boilerplates!`,
+    at: 152 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/Virtual_mall_05.png`,
+  },
+
+  {
+    /* */ shown: false,
+    title: 'BAR',
+    desc: `Socialize and get to know more people in the Agape Club!`,
+    at: 400 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/bar.png`,
+  },
+  {
+    /* */ shown: false,
+    title: 'Connect to Other Multiverse',
+    desc: `Get your first Mech to help you explore multiverses!`,
+    at: 750 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/agape.png`,
+  },
+
+  {
+    /* */ shown: false,
+    title: 'JUKE BOX',
+    desc: `Get your first Music NFT for tickets to concerts`,
+    at: 850 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/concert.png`,
+  },
+
+  {
+    /* */ shown: false,
+    title: 'Experience and Buy',
+    desc: `Experience commercials and buy your favorite NFTs`,
+    at: 960 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/Ex_buy_02.png`,
+  },
+
+  {
+    /* */ shown: false,
+    title: 'Enter Agape',
+    desc: `Enter the Agape Universe NOW!`,
+    at: 1050 / 24,
+    titleSize: 0.5,
+    descSize: 0.5,
+    url: `/scene/2022-11-28-NYC/coverimage/mech2.png`,
+
+    onClick: () => {
+      GateState.menuOverlay = true
+    },
+  },
+]
+
 export function NYCJourney() {
+  let gs = useSnapshot(GateState)
   // let gui = useLandingPageStore((s) => s.gui)
   let rot = useRef()
   let rot2 = useRef()
@@ -126,7 +204,7 @@ export function NYCJourney() {
     barRes1 = barRes1 || document.querySelector('#progressHTML1')
     if (barRes1) {
       barRes1.style.transform = `translateY(-50vh) scale(${(
-        (myTime.current / max) * 2.0 +
+        (mixer.time / max) * 2.0 +
         0.1
       ).toFixed(3)})`
       // barRes1.style.backgroundColor = `hsl(${
@@ -136,7 +214,7 @@ export function NYCJourney() {
     barRes2 = barRes2 || document.querySelector('#progressHTML2')
     if (barRes2) {
       barRes2.style.transform = `translateY(-50vh) scale(${(
-        (myTime.current / max) *
+        (mixer.time / max) *
         2.0
       ).toFixed(3)})`
     }
@@ -150,7 +228,7 @@ export function NYCJourney() {
 
       let info = orderTime.find((e) => e.name === cam.name)
 
-      let now = myTime.current
+      let now = mixer.time
 
       if (info) {
         if (now >= info.start && now <= info.end) {
@@ -239,16 +317,23 @@ export function NYCJourney() {
       h.destroy()
     }
   }, [])
+
   let proxy = useMemo(() => {
     return new Object3D()
   }, [])
+
   let scene = useThree((s) => s.scene)
+
   // let camera = useThree((s) => s.camera)
 
   useFrame(() => {
     proxy.getWorldPosition(camera.position)
     proxy.getWorldQuaternion(camera.quaternion)
   })
+
+  let getVisible = (a) => {
+    return a.at <= myTime.current + 0.3 && a.at >= myTime.current - 0.3
+  }
   return (
     <group>
       <UIContent>
@@ -276,6 +361,49 @@ export function NYCJourney() {
         scene
       )}
 
+      {createPortal(
+        <>
+          {!gs.menuOverlay && (
+            <>
+              {popStatus.map((a, idx) => (
+                <group key={a.url} position={[0, 0, -1.2]} scale={0.5}>
+                  <Suspense fallback={null}>
+                    <CardPlane
+                      // visible={}
+                      getVisible={() => getVisible(a)}
+                      myTime={myTime}
+                      enableRenderImage={idx === 0.0}
+                      data={a}
+                      proxy={proxy}
+                      mixer={mixer}
+                      title={a.title}
+                      desc={a.desc}
+                      imageURL={a.url}
+                      titleSize={a.titleSize}
+                      descSize={a.descSize}
+                      onNext={() => {
+                        //
+                        //
+
+                        if (getVisible(a)) {
+                          if (a.onClick) {
+                            a.onClick(a)
+                          } else {
+                            let now = accu.current
+                            let diff = (popStatus[idx + 1]?.at || now) - now
+                            accu.current += diff
+                          }
+                        }
+                      }}
+                    ></CardPlane>
+                  </Suspense>
+                </group>
+              ))}
+            </>
+          )}
+        </>,
+        proxy
+      )}
       <primitive object={glb.scene}></primitive>
 
       <group position={[0, 1.5, 0]}>
