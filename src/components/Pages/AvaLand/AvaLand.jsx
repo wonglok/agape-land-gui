@@ -2,7 +2,7 @@ import { Center, Environment, Text3D, useFBX, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useMemo } from 'react'
 import { Suspense } from 'react'
-import { AnimationMixer, Color } from 'three'
+import { AnimationMixer, Color, MeshStandardMaterial } from 'three'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import daysFont from '@/../public/fonts/Days/Days_Regular.json'
 export function AvaLand() {
@@ -15,7 +15,7 @@ export function AvaLand() {
         <YoBG></YoBG>
       </Suspense>
       <EffectComposer disableNormalPass>
-        <Bloom mipmapBlur luminanceThreshold={0.7} />
+        <Bloom mipmapBlur luminanceThreshold={0.98} />
       </EffectComposer>
     </Canvas>
   )
@@ -82,7 +82,17 @@ function YoBB() {
   glb.scene.traverse((it) => {
     if (it.material) {
       if (it.name === 'capsule_Cube') {
-        it.material.color = new Color('#F08BDC')
+        it.material = new MeshStandardMaterial({
+          transmission: 1.5,
+          ior: 1.15,
+          thickness: 5.5,
+          emissive: '#F08BDC',
+          emissiveIntensity: 1,
+          roughness: 1.0,
+          metalness: 0,
+          color: '#F08BDC',
+        })
+        // it.material.color = new Color('#F08BDC')
       }
       it.frustumCulled = false
     }
