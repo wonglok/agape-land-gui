@@ -15,17 +15,36 @@ import daysFont from '@/../public/fonts/Days/Days_Regular.json'
 export function AvaLand() {
   return (
     <Canvas>
-      <Suspense fallback={null}>
-        <Agape></Agape>
-        <Suspense fallback={<Text>Loading Dance move...</Text>}>
+      <Suspense
+        fallback={
+          <group position={[0, 0.5, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
+            <Agape text={'Loading...'}></Agape>
+          </group>
+        }
+      >
+        <Suspense
+          fallback={
+            <group
+              position={[0, 0.5, 1]}
+              rotation={[-0.35, 0, 0]}
+              scale={0.155}
+            >
+              <Agape text={'Loading...'}></Agape>
+            </group>
+          }
+        >
           <YoBB></YoBB>
+          <group position={[0, 0.5, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
+            <Agape text={`Agape`}></Agape>
+          </group>
         </Suspense>
-        <Environment preset='apartment'></Environment>
-        <gridHelper args={[100, 100, 0x00ffff, 0x00ffff]} />
 
+        <Environment preset='apartment'></Environment>
         <YoCam></YoCam>
         <YoBG></YoBG>
       </Suspense>
+
+      <gridHelper args={[100, 100, 0x00ffff, 0x00ffff]} />
       <EffectComposer disableNormalPass>
         <Bloom mipmapBlur luminanceThreshold={0.98} />
       </EffectComposer>
@@ -33,9 +52,9 @@ export function AvaLand() {
   )
 }
 
-function Agape() {
+function Agape({ text }) {
   return (
-    <group position={[0, 0.5, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
+    <group>
       <Center>
         <Text3D
           bevelEnabled
@@ -45,7 +64,7 @@ function Agape() {
           font={daysFont}
           letterSpacing={0.1}
         >
-          {`AGAPE`}
+          {`${text}`}
           <meshPhysicalMaterial
             transmission={1.5}
             ior={1.15}
