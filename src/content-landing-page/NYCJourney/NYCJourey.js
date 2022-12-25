@@ -2,7 +2,13 @@ import { Box, Center, Html, Stats, Text3D, useGLTF } from '@react-three/drei'
 // import { useReady, useScrollStore } from '../Core/useScrollStore'
 import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
-import { AnimationMixer, BufferAttribute, Object3D, Vector3 } from 'three'
+import {
+  AnimationMixer,
+  BufferAttribute,
+  Clock,
+  Object3D,
+  Vector3,
+} from 'three'
 import { TheVortex } from '../TheVortex/TheVortex'
 import { MathUtils } from 'three'
 import { UIContent } from '@/lib/UIContent'
@@ -332,7 +338,7 @@ export function NYCJourney() {
   })
 
   let getVisible = (a) => {
-    return a.at <= myTime.current + 0.3 && a.at >= myTime.current - 0.3
+    return a.at <= myTime.current + 0.5 && a.at >= myTime.current - 0.5
   }
   return (
     <group>
@@ -388,9 +394,23 @@ export function NYCJourney() {
                           if (a.onClick) {
                             a.onClick(a)
                           } else {
+                            let ck = new Clock()
                             let now = accu.current
                             let diff = (popStatus[idx + 1]?.at || now) - now
-                            accu.current += diff
+
+                            let tt = setInterval(() => {
+                              accu.current = MathUtils.damp(
+                                now,
+                                now + diff,
+                                1,
+                                ck.getDelta()
+                              )
+
+                              if (diff >= 0.1) {
+                                clearInterval(tt)
+                                accu.current = now + diff
+                              }
+                            }, 0)
                           }
                         }
                       }}

@@ -52,7 +52,7 @@ export function MetaverseMenu() {
           <Suspense fallback={<LoadingGroup />}>
             {
               <>
-                {/* <group scale={1}>
+                <group scale={1}>
                   <Icosahedron
                     onPointerDown={() => {
                       //
@@ -75,7 +75,7 @@ export function MetaverseMenu() {
                       depthTest={false}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
-                </group> */}
+                </group>
               </>
             }
           </Suspense>
