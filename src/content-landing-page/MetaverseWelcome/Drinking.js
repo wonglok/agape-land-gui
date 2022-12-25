@@ -35,6 +35,18 @@ export function Drinking({ scene }) {
         VisualEffect.drunk = true
       }
     })
+
+    gl.domElement.addEventListener('mousemove', () => {
+      //
+      raycaster.setFromCamera(mouse, camera)
+      let res = raycaster.intersectObject(FXBottle, true)
+      if (res && res.length > 0) {
+        document.body.style.cursor = 'pointer'
+      } else {
+        document.body.style.cursor = 'auto'
+      }
+    })
+    //
   }, [camera, gl.domElement, mouse, raycaster, scene])
   return null
 }
