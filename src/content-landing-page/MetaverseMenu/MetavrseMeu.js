@@ -194,8 +194,8 @@ export function MenuLayout({ center, topRight }) {
     camera.getWorldPosition(wp)
     camera.getWorldQuaternion(wq)
 
-    cameraProxy.position.lerp(wp, 0.07)
-    cameraProxy.quaternion.slerp(wq, 0.07)
+    cameraProxy.position.lerp(wp, 1.0)
+    cameraProxy.quaternion.slerp(wq, 0.5)
 
     let adder = 0
     if (size.width < size.height) {
