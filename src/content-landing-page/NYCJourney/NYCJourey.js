@@ -369,7 +369,6 @@ export function NYCJourney() {
                 <group key={a.url} position={[0, 0, -1.2]} scale={0.5}>
                   <Suspense fallback={null}>
                     <CardPlane
-                      // visible={}
                       getVisible={() => getVisible(a)}
                       myTime={myTime}
                       enableRenderImage={idx === 0.0}
