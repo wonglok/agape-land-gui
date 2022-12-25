@@ -19,7 +19,6 @@ export function Drinking({ scene }) {
         FXBottle = it
       }
     })
-    //
 
     let tt = 0
     gl.domElement.addEventListener('click', () => {
@@ -48,8 +47,16 @@ export function Drinking({ scene }) {
 
     //
   }, [camera, gl.domElement, mouse, raycaster, scene])
+
+  //
   return null
 }
+
+//
+
+//
+
+//
 
 //
 
