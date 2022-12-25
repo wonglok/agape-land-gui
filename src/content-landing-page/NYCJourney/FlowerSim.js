@@ -9,11 +9,12 @@ import {
 import { GPUComputationRenderer } from 'three/examples/jsm/misc/GPUComputationRenderer.js'
 import { Points } from 'three'
 import { Core } from '@/content-landing-page/Core/Core'
+import { extend } from '@react-three/fiber'
 
 export class FlowerSim extends Object3D {
-  constructor() {
+  constructor({ gl, core }) {
     super()
-    this.core = Core.makeDisposableNode({ name: 'flower' }).sub
+    this.core = core
     //
 
     function prepIndexer(texture, SIZE) {
@@ -32,7 +33,7 @@ export class FlowerSim extends Object3D {
     let ticker = 0
     let SIZE = 128
 
-    let renderer = Core.now.canvas.now.gl
+    let renderer = gl
 
     let gpuCompute = new GPUComputationRenderer(SIZE, SIZE, renderer)
 
@@ -591,4 +592,5 @@ swing.y = cos(time * 60.0);
   }
 }
 
+extend({ FlowerSim })
 export const VersionFlowerSim = Math.random()

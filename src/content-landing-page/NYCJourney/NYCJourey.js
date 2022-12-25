@@ -63,7 +63,8 @@ let popStatus = [
     at: 1 / 24,
     titleSize: 0.5,
     descSize: 0.5,
-    url: `/scene/2022-11-28-NYC/coverimage/circle_portal.png`,
+    url: `/scene/2022-11-28-NYC/coverimage/agape.png`,
+    // url: `/scene/2022-11-28-NYC/coverimage/circle_portal.png`,
   },
   {
     /* */ shown: false,
@@ -377,7 +378,7 @@ export function NYCJourney() {
                     <CardPlane
                       getVisible={() => getVisible(a)}
                       myTime={myTime}
-                      enableRenderImage={idx === 0.0}
+                      enableRenderImage={idx === 0}
                       data={a}
                       proxy={proxy}
                       mixer={mixer}
