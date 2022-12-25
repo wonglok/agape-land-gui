@@ -3,8 +3,8 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useMemo } from 'react'
 import { Suspense } from 'react'
 import { AnimationMixer, Color } from 'three'
-import Front from '@/../public/fonts/Days/Days_Regular.json'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import daysFont from '@/../public/fonts/Days/Days_Regular.json'
 export function AvaLand() {
   return (
     <Canvas>
@@ -30,7 +30,7 @@ function Agape() {
           bevelOffset={-0.01}
           bevelSize={0.05}
           bevelSegments={5}
-          font={Front}
+          font={daysFont}
         >
           {`AGAPE`}
           <meshPhysicalMaterial
