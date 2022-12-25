@@ -221,7 +221,7 @@ export function CardPlane({
         <group
           position={[-0.12, 1.53, -0.1]}
           rotation={[Math.PI / 2, 0, 0]}
-          scale={0.02}
+          scale={0.025}
         >
           <theVortex></theVortex>
         </group>

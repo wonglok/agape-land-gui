@@ -42,6 +42,7 @@ const visibleWidthAtZDepth = (depth, camera) => {
 }
 
 export function MetaverseMenu() {
+  let gate = useSnapshot(GateState)
   return (
     <>
       <CoreReady></CoreReady>
@@ -51,7 +52,7 @@ export function MetaverseMenu() {
           <Suspense fallback={<LoadingGroup />}>
             {
               <>
-                <group scale={1}>
+                {/* <group scale={1}>
                   <Icosahedron
                     onPointerDown={() => {
                       //
@@ -63,8 +64,8 @@ export function MetaverseMenu() {
                     <meshPhysicalMaterial
                       metalness={0}
                       roughness={0}
-                      emissive={`#DD8556`}
-                      emissiveIntensity={0}
+                      emissive={`#ff0000`}
+                      emissiveIntensity={gate.menuOverlay ? 1 : 0}
                       envMapIntensity={0}
                       transmission={4}
                       reflectivity={1}
@@ -74,7 +75,7 @@ export function MetaverseMenu() {
                       depthTest={false}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
-                </group>
+                </group> */}
               </>
             }
           </Suspense>
