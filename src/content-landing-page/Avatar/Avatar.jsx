@@ -13,10 +13,11 @@ import {
   Vector2,
 } from 'three'
 
-function Servant({}) {
+function MyselfAvatar({}) {
   let ref = useRef()
   let glb = useGLBLoader(`/servant/lok/lok-compressed.glb`)
 
+  //VisualEffect.drunk
   //
   let mixer = useMemo(() => {
     return new AnimationMixer(glb.scene)
@@ -138,7 +139,7 @@ export function Avatar() {
   return (
     <group>
       <Suspense fallback={null}>
-        <Servant></Servant>
+        <MyselfAvatar></MyselfAvatar>
       </Suspense>
     </group>
   )

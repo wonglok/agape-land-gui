@@ -15,6 +15,8 @@ import {
 // import { useXR } from '@react-three/xr'
 // import { useEffect, useMemo } from 'react'
 // import { AnimationMixer } from 'three140'
+// import { Noodle } from '@/content-vfx/Noodle/Noodle'
+
 import { TheVortex } from '../TheVortex/TheVortex'
 import { CoreReady } from '../Core/Core'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
@@ -23,8 +25,9 @@ import { useSnapshot } from 'valtio'
 import { WalkerState } from '@/lib/walker/WalkerState'
 import { Avatar } from '../Avatar/Avatar'
 import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
-import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { NoodleEmitter } from '@/content-vfx/NoodleEmitter/NoodleEmitter'
+import { useEffect } from 'react'
+import { Drinking } from './Drinking'
 
 const GameName = 'NYC'
 
@@ -45,20 +48,21 @@ export function MetaverseWelcome({
   return (
     <group>
       <CoreReady></CoreReady>
+      <Drinking scene={glb.scene}></Drinking>
       <Collider
         scene={glb.scene}
         onReady={(collider) => {
           return (
             <group>
               <primitive object={glb.scene}></primitive>
-              {/*
+
               <group position={[0, 1.5, 0]}>
                 <group position={[5.523, 6.087, -14.196]}>
                   <group scale={0.075}>
                     <theVortex key={TheVortex.key}></theVortex>
                   </group>
                 </group>
-              </group> */}
+              </group>
 
               <OrbitControls
                 args={[camera, gl.domElement]}
@@ -67,10 +71,10 @@ export function MetaverseWelcome({
 
               <WalkerGame
                 startAt={[
-                  0, 1.1, 0,
-                  // 2.563503709126706,
-                  // 1.595614002597168 + 3,
-                  // 45.14220988974003,
+                  // 0, 1.1, 0,
+                  2.563503709126706,
+                  1.595614002597168 + 1.5,
+                  45.14220988974003,
                 ]}
                 name={GameName}
                 glb={glb}

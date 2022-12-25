@@ -13,6 +13,7 @@ import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 // import { SupplyXR } from '@/lib/walker/SupplyXR'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
+import { Effect } from '../Effects/Effect'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasPage(
@@ -92,18 +93,7 @@ export function CanvasPage(
           }
         ></Gate>
 
-        <EffectComposer
-          disableNormalPass
-          resolutionScale={0.1}
-          multisampling={0}
-        >
-          <Bloom
-            mipmapBlur
-            radius={0.7}
-            intensity={1.5}
-            luminanceThreshold={0.3}
-          ></Bloom>
-        </EffectComposer>
+        <Effect></Effect>
       </Canvas>
 
       {/* {gs.xrSession && gs.supportVR && <VRButton></VRButton>} */}

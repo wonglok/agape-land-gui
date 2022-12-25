@@ -29,10 +29,12 @@ import {
 import { GateState } from '../LoginContentGate/GateState'
 import { Vector3 } from 'three140'
 import { CoreReady } from '../Core/Core'
-import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
+
+//
 // import { Perf } from 'r3f-perf'
 // import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
+//
 
 import daysFont from '@/../public/fonts/Days/Days_Regular.json'
 
@@ -132,7 +134,7 @@ export function MetaverseMenu() {
                           GateState.menuOverlay = !GateState.menuOverlay
                         }}
                       >
-                        * MENU *
+                        = MENU =
                         <meshPhysicalMaterial
                           roughness={0.0}
                           metalness={0.0}
