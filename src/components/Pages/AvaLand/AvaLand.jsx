@@ -15,7 +15,7 @@ export function AvaLand() {
         <YoBG></YoBG>
       </Suspense>
       <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.8}></Bloom>
+        <Bloom mipmapBlur luminanceThreshold={0.7} />
       </EffectComposer>
     </Canvas>
   )
@@ -25,12 +25,18 @@ function Agape() {
   return (
     <group position={[0, 0.1, 1]} rotation={[-0.3, 0, 0]} scale={0.155}>
       <Center>
-        <Text3D font={Front}>
+        <Text3D
+          bevelEnabled
+          bevelOffset={-0.01}
+          bevelSize={0.05}
+          bevelSegments={5}
+          font={Front}
+        >
           {`AGAPE`}
           <meshPhysicalMaterial
-            transmission={1}
-            ior={1.1}
-            thickness={15}
+            transmission={2}
+            ior={1.15}
+            thickness={5}
             emissive={'#F08BDC'}
             roughness={0}
             metalness={0}
