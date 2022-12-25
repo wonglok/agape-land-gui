@@ -1,6 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { WalkerState } from '@/lib/walker/WalkerState'
-import { Image, PerspectiveCamera as DPC, Icosahedron } from '@react-three/drei'
+import {
+  Image,
+  PerspectiveCamera as DPC,
+  Icosahedron,
+  Center,
+  Text3D,
+} from '@react-three/drei'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useMemo, useRef } from 'react'
 import { PerspectiveCamera, Quaternion } from 'three'
@@ -19,6 +25,50 @@ import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 // import { Perf } from 'r3f-perf'
 // import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
+
+import daysFont from '@/../public/fonts/Days/Days_Regular.json'
+
+function TextYo({ text, onPointerDown }) {
+  return (
+    <group>
+      <Center>
+        <Text3D
+          bevelEnabled
+          bevelOffset={-0.01}
+          bevelSize={0.05}
+          bevelSegments={5}
+          font={daysFont}
+          letterSpacing={0.1}
+          onPointerDown={onPointerDown}
+        >
+          {`${text}`}
+          <meshPhysicalMaterial
+            transmission={3.5}
+            ior={1.15}
+            thickness={5.5}
+            emissive={'#F08BDC'}
+            emissiveIntensity={0.0}
+            roughness={1.0}
+            metalness={0}
+            attenuationColor={'#F08BDC'}
+            attenuationDistance={5.0}
+          ></meshPhysicalMaterial>
+        </Text3D>
+      </Center>
+    </group>
+  )
+}
+function Agape() {
+  return (
+    <group
+      position={[0, 1.8, -1]}
+      rotation={[0 - 0.0 * Math.PI * 0.5, 0, 0]}
+      scale={0.5}
+    >
+      <TextYo text={`Welcome!`}></TextYo>
+    </group>
+  )
+}
 
 //  createPortal, useFrame,
 // import { useThree } from '@react-three/fiber'
@@ -193,6 +243,7 @@ export function LogintButtons() {
 
                 {!gate.userSession && (
                   <>
+                    <Agape></Agape>
                     <Image
                       position={[0, 0.61 * 1.1, 0]}
                       scale={[2.39, 0.61]}

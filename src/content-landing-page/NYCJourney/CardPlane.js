@@ -14,11 +14,45 @@ import {
 import { RGBELoader } from 'three140/examples/jsm/loaders/RGBELoader'
 import { useFrame, useThree } from '@react-three/fiber'
 // import { VersionFlowerSim } from '@/vfx-library/SharedCommons/FlowerSim'
-import daysFont from '@/../public/fonts/Days/Days_Regular.json'
 import { Core } from '../Core/Core'
 import {} from './FlowerSim'
 import { useCore } from '@/lib/useCore'
 
+/*
+import daysFont from '@/../public/fonts/Days/Days_Regular.json'
+function Agape() {
+  return (
+    <group
+      position={[0, 0.0, 0]}
+      rotation={[0 - Math.PI * 0.5, 0, 0]}
+      scale={1}
+    >
+      <Center>
+        <Text3D
+          bevelEnabled
+          bevelOffset={-0.01}
+          bevelSize={0.05}
+          bevelSegments={5}
+          font={daysFont}
+          letterSpacing={0.1}
+        >
+          {`AGAPE`}
+          <meshPhysicalMaterial
+            transmission={1.5}
+            ior={1.15}
+            thickness={5.5}
+            emissive={'#F08BDC'}
+            emissiveIntensity={1}
+            roughness={1.0}
+            metalness={0}
+            color={'#F08BDC'}
+          ></meshPhysicalMaterial>
+        </Text3D>
+      </Center>
+    </group>
+  )
+}
+*/
 export function CardBG({ envMap, ...props }) {
   // const { color } = useControls({ color: '#ffffff' })
 
@@ -31,7 +65,7 @@ export function CardBG({ envMap, ...props }) {
           <meshPhysicalMaterial
             transmission={1}
             thickness={0.1}
-            roughness={0.5}
+            roughness={0.1}
           ></meshPhysicalMaterial>
         </mesh>
         <mesh
@@ -267,36 +301,3 @@ export function CardPlane({
 }
 
 // useGLTF.preload('/yo-cards-animation1.glb')
-
-function Agape() {
-  return (
-    <group
-      position={[0, 0.0, 0]}
-      rotation={[0 - Math.PI * 0.5, 0, 0]}
-      scale={1}
-    >
-      <Center>
-        <Text3D
-          bevelEnabled
-          bevelOffset={-0.01}
-          bevelSize={0.05}
-          bevelSegments={5}
-          font={daysFont}
-          letterSpacing={0.1}
-        >
-          {`AGAPE`}
-          <meshPhysicalMaterial
-            transmission={1.5}
-            ior={1.15}
-            thickness={5.5}
-            emissive={'#F08BDC'}
-            emissiveIntensity={1}
-            roughness={1.0}
-            metalness={0}
-            color={'#F08BDC'}
-          ></meshPhysicalMaterial>
-        </Text3D>
-      </Center>
-    </group>
-  )
-}
