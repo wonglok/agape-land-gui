@@ -101,7 +101,36 @@ export function MetaverseMenu() {
           <Suspense fallback={<LoadingGroup />}>
             {
               <>
-                <group scale={1}>
+                <group
+                  rotation={[0.0, 0.0, 0]}
+                  position={[0.0, 0.0, 0.0]}
+                  scale={0.05}
+                >
+                  <group>
+                    <Center>
+                      <Text3D
+                        font={daysFont}
+                        onPointerDown={() => {
+                          //
+                          GateState.menuOverlay = !GateState.menuOverlay
+                        }}
+                      >
+                        {`Login`}
+                        <meshPhysicalMaterial
+                          transmission={0.0}
+                          thickness={1.4}
+                          ior={1.1}
+                          roughness={0.0}
+                          metalness={0.0}
+                          color={'#00ffff'}
+                          emissive={'#00ffff'}
+                          emissiveIntensity={0.8}
+                        ></meshPhysicalMaterial>
+                      </Text3D>
+                    </Center>
+                  </group>
+                </group>
+                {/* <group scale={1}>
                   <Icosahedron
                     onPointerDown={() => {
                       //
@@ -124,7 +153,7 @@ export function MetaverseMenu() {
                       depthTest={false}
                     ></meshPhysicalMaterial>
                   </Icosahedron>
-                </group>
+                </group> */}
               </>
             }
           </Suspense>
@@ -178,8 +207,8 @@ export function MenuLayout({ center, topRight }) {
     if (gps.current) {
       gps.current.position.fromArray([
         //
-        visibleWidthAtZDepth(2, camera) * 0.5 + -0.25,
-        visibleHeightAtZDepth(2, camera) * 0.5 + -0.25,
+        visibleWidthAtZDepth(2, camera) * 0.5 + -0.2,
+        visibleHeightAtZDepth(2, camera) * 0.5 + -0.1,
         -1,
       ])
       gps.current.lookAt(cameraProxy.position)
