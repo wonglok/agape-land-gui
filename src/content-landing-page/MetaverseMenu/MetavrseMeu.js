@@ -6,10 +6,18 @@ import {
   Icosahedron,
   Center,
   Text3D,
+  useTexture,
+  Sphere,
 } from '@react-three/drei'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useMemo, useRef } from 'react'
-import { PerspectiveCamera, Quaternion } from 'three'
+import {
+  DoubleSide,
+  PerspectiveCamera,
+  Quaternion,
+  RepeatWrapping,
+  sRGBEncoding,
+} from 'three'
 import { useSnapshot } from 'valtio'
 import {
   loginEth,
@@ -93,6 +101,18 @@ const visibleWidthAtZDepth = (depth, camera) => {
 
 export function MetaverseMenu() {
   let gate = useSnapshot(GateState)
+
+  let roughnessMapTex = useTexture(`/texture/snow/pattern.jpeg`)
+  roughnessMapTex.encoding = sRGBEncoding
+  roughnessMapTex.wrapS = roughnessMapTex.wrapT = RepeatWrapping
+  roughnessMapTex.repeat.y = 2 / 1.5
+  roughnessMapTex.repeat.x = 3.4 / 1.5
+  roughnessMapTex.needsUpdate = true
+
+  useFrame((st, dt) => {
+    roughnessMapTex.offset.x += dt * 0.2
+  })
+
   return (
     <>
       <CoreReady></CoreReady>
@@ -102,15 +122,11 @@ export function MetaverseMenu() {
           <Suspense fallback={<LoadingGroup />}>
             {
               <>
-                <group
-                  rotation={[0.0, 0.0, 0]}
-                  position={[0.0, 0.0, 0.0]}
-                  scale={0.05}
-                >
-                  <group>
+                <group rotation={[0.0, 0.0, 0]} position={[0.0, 0.0, 0.0]}>
+                  <group scale={0.05}>
                     <Center>
                       <Text3D
-                        height={0.05}
+                        height={0.01}
                         font={daysFont}
                         onPointerDown={() => {
                           //
@@ -127,6 +143,44 @@ export function MetaverseMenu() {
                         ></meshPhysicalMaterial>
                       </Text3D>
                     </Center>
+                  </group>
+
+                  <group
+                    position={[0, -0.15, 0]}
+                    rotation={[0.5, -Math.PI * 0.5, 0]}
+                    scale={0.2}
+                  >
+                    <Sphere
+                      onPointerDown={() => {
+                        //
+                        GateState.menuOverlay = !GateState.menuOverlay
+                      }}
+                      args={[0.45, 35, 35]}
+                    >
+                      <meshPhysicalMaterial
+                        metalness={0.0}
+                        roughness={0}
+                        reflectivity={3}
+                        // attenuationColor={`#DD8556`}
+                        transmission={1}
+                        thickness={0.45 * 2}
+                        ior={1.15}
+                        side={DoubleSide}
+                        envMapIntensity={0}
+                        emissive={'#ffffff'}
+                        color={'#ffffff'}
+                        // attenuationColor={'#E20074'}
+                        // transmissionMap={roughnessMapTex}
+                        attenuationDistance={30}
+                        emissiveMap={roughnessMapTex}
+                        emissiveIntensity={1.4}
+                        roughnessMap={roughnessMapTex}
+                        metalnessMap={roughnessMapTex}
+                        alphaMap={roughnessMapTex}
+                        // normalMap={normalMapTex}
+                        // envMap={snowNormal}
+                      ></meshPhysicalMaterial>
+                    </Sphere>
                   </group>
                 </group>
               </>
@@ -166,10 +220,11 @@ export function MenuLayout({ center, topRight }) {
 
   useFrame((st, dt) => {
     let t = st.clock.getElapsedTime()
+
     camera.getWorldPosition(wp)
     camera.getWorldQuaternion(wq)
 
-    cameraProxy.position.lerp(wp, 1.0)
+    cameraProxy.position.lerp(wp, 0.1)
     cameraProxy.quaternion.slerp(wq, 1.0)
 
     let adder = 0
@@ -220,7 +275,7 @@ export function LogintButtons() {
   let gate = useSnapshot(GateState)
   return (
     <>
-      <group position={[0, 0, -0.3]} scale={0.113}>
+      <group position={[0, 0, -0.3]} scale={0.15}>
         {gate.menuOverlay && (
           <Suspense fallback={null}>
             {
