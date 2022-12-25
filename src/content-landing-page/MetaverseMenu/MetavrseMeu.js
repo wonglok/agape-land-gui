@@ -41,17 +41,16 @@ function TextYo({ text, onPointerDown }) {
           letterSpacing={0.1}
           onPointerDown={onPointerDown}
         >
-          {`${text}`}
+          {text}
           <meshPhysicalMaterial
-            transmission={3.5}
-            ior={1.15}
-            thickness={5.5}
-            emissive={'#F08BDC'}
-            emissiveIntensity={0.0}
+            transmission={1.3}
+            thickness={1.4}
+            ior={1.1}
             roughness={1.0}
-            metalness={0}
-            attenuationColor={'#F08BDC'}
-            attenuationDistance={5.0}
+            metalness={0.0}
+            color={'#F08BDC'}
+            emissive={'#F08BDC'}
+            emissiveIntensity={0.85}
           ></meshPhysicalMaterial>
         </Text3D>
       </Center>
@@ -217,7 +216,7 @@ export function LogintButtons() {
   let gate = useSnapshot(GateState)
   return (
     <>
-      <group scale={0.1}>
+      <group position={[0, 0, -0.3]} scale={0.113}>
         {gate.menuOverlay && (
           <Suspense fallback={null}>
             {
