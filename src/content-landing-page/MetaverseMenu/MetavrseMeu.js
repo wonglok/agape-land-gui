@@ -115,7 +115,7 @@ export function MetaverseMenu() {
                           GateState.menuOverlay = !GateState.menuOverlay
                         }}
                       >
-                        {`Login`}
+                        =MENU=
                         <meshPhysicalMaterial
                           transmission={0.0}
                           thickness={1.4}

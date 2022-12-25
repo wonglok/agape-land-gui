@@ -64,8 +64,8 @@ export function CardBG({ envMap, ...props }) {
         <mesh castShadow receiveShadow geometry={nodes.Cube002_1.geometry}>
           <meshPhysicalMaterial
             transmission={1}
-            thickness={0.1}
-            roughness={0.1}
+            thickness={1.0}
+            roughness={0.54}
           ></meshPhysicalMaterial>
         </mesh>
         <mesh
