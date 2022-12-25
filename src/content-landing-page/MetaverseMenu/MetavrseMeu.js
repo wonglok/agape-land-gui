@@ -195,7 +195,7 @@ export function MenuLayout({ center, topRight }) {
     camera.getWorldQuaternion(wq)
 
     cameraProxy.position.lerp(wp, 1.0)
-    cameraProxy.quaternion.slerp(wq, 0.5)
+    cameraProxy.quaternion.slerp(wq, 1.0)
 
     let adder = 0
     if (size.width < size.height) {
@@ -211,7 +211,7 @@ export function MenuLayout({ center, topRight }) {
         visibleHeightAtZDepth(2, camera) * 0.5 + -0.1,
         -1,
       ])
-      gps.current.lookAt(cameraProxy.position)
+      // gps.current.lookAt(cameraProxy.position)
     }
 
     //
