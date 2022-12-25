@@ -23,7 +23,7 @@ export function AvaLand() {
 
 function Agape() {
   return (
-    <group position={[0, 0.1, 1]} rotation={[-0.3, 0, 0]} scale={0.155}>
+    <group position={[0, 0.5, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
       <Center>
         <Text3D
           bevelEnabled
@@ -31,14 +31,16 @@ function Agape() {
           bevelSize={0.05}
           bevelSegments={5}
           font={daysFont}
+          letterSpacing={0.1}
         >
           {`AGAPE`}
           <meshPhysicalMaterial
-            transmission={2}
+            transmission={1.5}
             ior={1.15}
-            thickness={5}
+            thickness={5.5}
             emissive={'#F08BDC'}
-            roughness={0}
+            emissiveIntensity={1}
+            roughness={1.0}
             metalness={0}
             color={'#F08BDC'}
           ></meshPhysicalMaterial>
