@@ -57,6 +57,7 @@ function TextYo({ text, onPointerDown }) {
     </group>
   )
 }
+
 function Agape() {
   return (
     <group
@@ -109,6 +110,7 @@ export function MetaverseMenu() {
                   <group>
                     <Center>
                       <Text3D
+                        height={0.05}
                         font={daysFont}
                         onPointerDown={() => {
                           //
@@ -117,43 +119,16 @@ export function MetaverseMenu() {
                       >
                         =MENU=
                         <meshPhysicalMaterial
-                          transmission={0.0}
-                          thickness={1.4}
-                          ior={1.1}
                           roughness={0.0}
                           metalness={0.0}
                           color={'#00ffff'}
                           emissive={'#00ffff'}
-                          emissiveIntensity={0.8}
+                          emissiveIntensity={0.4}
                         ></meshPhysicalMaterial>
                       </Text3D>
                     </Center>
                   </group>
                 </group>
-                {/* <group scale={1}>
-                  <Icosahedron
-                    onPointerDown={() => {
-                      //
-                      GateState.menuOverlay = !GateState.menuOverlay
-                    }}
-                    args={[0.13, 4]}
-                    renderOrder={-1}
-                  >
-                    <meshPhysicalMaterial
-                      metalness={0}
-                      roughness={0}
-                      emissive={`#ff0000`}
-                      emissiveIntensity={gate.menuOverlay ? 1 : 0}
-                      envMapIntensity={0}
-                      transmission={4}
-                      reflectivity={1}
-                      thickness={1.3}
-                      ior={0.95}
-                      flatShading={false}
-                      depthTest={false}
-                    ></meshPhysicalMaterial>
-                  </Icosahedron>
-                </group> */}
               </>
             }
           </Suspense>
