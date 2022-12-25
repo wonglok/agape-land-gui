@@ -46,7 +46,10 @@ export function Drinking({ scene }) {
         document.body.style.cursor = 'auto'
       }
     })
+
     //
   }, [camera, gl.domElement, mouse, raycaster, scene])
   return null
 }
+
+//
