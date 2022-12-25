@@ -23,15 +23,17 @@ export function CardBG({ envMap, ...props }) {
   // const { color } = useControls({ color: '#ffffff' })
 
   const { nodes, materials } = useGLTF('/scene/2022-11-28-NYC/bg-card.glb')
+  //materials['Material.001']
   return (
     <group {...props} dispose={null}>
       <group position={[-0.12, 0, -1.313]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube002_1.geometry}
-          material={materials['Material.001']}
-        />
+        <mesh castShadow receiveShadow geometry={nodes.Cube002_1.geometry}>
+          <meshPhysicalMaterial
+            transmission={1}
+            thickness={0.1}
+            roughness={0.5}
+          ></meshPhysicalMaterial>
+        </mesh>
         <mesh
           castShadow
           receiveShadow
@@ -231,7 +233,7 @@ export function CardPlane({
           rotation={[Math.PI / 2, 0, 0]}
           scale={3.02}
         >
-          <group position={[0, 0.0, 0]} scale={0.05}>
+          <group position={[0, 0, 0]} scale={[0.05, 0.0, 0.05]}>
             <flowerSim args={[{ gl, core }]}></flowerSim>
           </group>
         </group>

@@ -403,7 +403,7 @@ export function NYCJourney() {
                               accu.current = MathUtils.damp(
                                 now,
                                 now + diff,
-                                1,
+                                0.1,
                                 ck.getDelta()
                               )
 
