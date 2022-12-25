@@ -53,6 +53,8 @@ function Agape() {
   )
 }
 */
+
+//
 export function CardBG({ envMap, ...props }) {
   // const { color } = useControls({ color: '#ffffff' })
 
@@ -117,27 +119,9 @@ export function CardPlane({
 
   let tex2 = useEnvironment({ files: `/hdr/greenwich_park_02_1k.hdr` })
   // let prom = false
-
-  // if (Cache.has(`/hdr/greenwich_park_02_1k.hdr`)) {
-  //   prom = Cache.get(`/hdr/greenwich_park_02_1k.hdr`)
-  // } else {
-  //   prom = loader.loadAsync(`/hdr/greenwich_park_02_1k.hdr`)
-  //   Cache.set(`/hdr/greenwich_park_02_1k.hdr`, prom)
-  // }
-
-  // let [tex2, setTex] = useState()
-
-  // prom.then((tex) => {
-  //   // loader.loadAsync(`/hdr/studio_small_08_1k.hdr`).then((tex) => {
-  //   tex.mapping = EquirectangularReflectionMapping
-  //   // scene.background = tex
-
-  //   for (let kn in materials) {
-  //     materials[kn].envMapIntensity = 30
-  //   }
-
-  //   setTex(tex)
-  // })
+  for (let kn in materials) {
+    materials[kn].envMap = tex2
+  }
 
   let tMap = useTexture(imageURL)
   tMap.flipY = false
@@ -173,12 +157,13 @@ export function CardPlane({
         position={[0.37, -1.94, 0.11]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={2.49}
-      />
+      >
+        <meshBasicMaterial color={'#ffffff'}></meshBasicMaterial>
+      </mesh>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Text009.geometry}
-        material={materials['Material.006']}
         position={[-0.18, -1.93, 0.12]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={0.42}
@@ -186,7 +171,9 @@ export function CardPlane({
           //
           onNext()
         }}
-      />
+      >
+        <meshBasicMaterial color={'#ffffff'}></meshBasicMaterial>
+      </mesh>
 
       <CardBG envMap={tex2}></CardBG>
       {/* <mesh
