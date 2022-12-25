@@ -20,6 +20,7 @@ import { Gesture, WheelGesture } from '@use-gesture/vanilla'
 import { CardPlane } from './CardPlane'
 import { GateState } from '../LoginContentGate/GateState'
 import { useSnapshot } from 'valtio'
+import anime from 'animejs'
 
 let max = 45.156355645706554
 let scheduleStartTime = {
@@ -395,23 +396,14 @@ export function NYCJourney() {
                           if (a.onClick) {
                             a.onClick(a)
                           } else {
-                            let ck = new Clock()
                             let now = accu.current
-                            let diff = (popStatus[idx + 1]?.at || now) - now
-
-                            let tt = setInterval(() => {
-                              accu.current = MathUtils.damp(
-                                now,
-                                now + diff,
-                                0.1,
-                                ck.getDelta()
-                              )
-
-                              if (diff >= 0.1) {
-                                clearInterval(tt)
-                                accu.current = now + diff
-                              }
-                            }, 0)
+                            let diff = (popStatus[idx + 1]?.at || now + 3) - now
+                            anime({
+                              targets: [accu],
+                              current: now + diff,
+                              duration: Math.abs(diff) * 100,
+                              easing: 'linear',
+                            })
                           }
                         }
                       }}
