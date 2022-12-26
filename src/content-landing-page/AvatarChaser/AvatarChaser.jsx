@@ -47,7 +47,7 @@ export function AvatarChaser({
 
   useEffect(() => {
     return () => {
-      aCore?.core?.clean()
+      //
     }
   }, [aCore])
   //
@@ -233,7 +233,6 @@ export class AvatarChaserCore extends Object3D {
     // this.keyboardCtrls = new KeyboardControls({ core: this.core, parent: this })
     //
 
-    //
     this.globalCameraPos = new Vector3()
     this.spherical = new Spherical()
     this.deltaRot = new Vector3()

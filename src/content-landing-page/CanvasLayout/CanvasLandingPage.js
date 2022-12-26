@@ -14,6 +14,7 @@ import { LoadingGroup } from '../LoginContentGate/LoadingGroup'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
 import { Effect } from '../Effects/Effect'
+import { Core } from '../Core/Core'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasPage(
@@ -53,6 +54,10 @@ export function CanvasPage(
             st.gl.outputEncoding = sRGBEncoding
 
             st.gl.shadowMap.enabled = false
+            Core.now.canvas = Core.makeDisposableNode({ name: 'canvas' }).sub
+            for (let kn in st) {
+              Core.now.canvas.now[kn] = st[kn]
+            }
           },
         }}
       >
