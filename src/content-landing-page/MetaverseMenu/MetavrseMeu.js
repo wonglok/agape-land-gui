@@ -134,7 +134,7 @@ export function MetaverseMenu() {
                           GateState.menuOverlay = !GateState.menuOverlay
                         }}
                       >
-                        = MENU =
+                        = Menu =
                         <meshPhysicalMaterial
                           roughness={0.0}
                           metalness={0.0}

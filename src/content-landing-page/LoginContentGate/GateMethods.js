@@ -67,13 +67,14 @@ export const getUserInfo = async (sToken) => {
       throw new Error('bad session token')
     }
   } catch (error) {
+    signOut()
     // eslint-disable-next-line no-console
     console.error(error)
   }
 }
 
 export const signOut = async () => {
-  localStorage.clear(SESSION_ACCESS_KEY)
+  localStorage.removeItem(SESSION_ACCESS_KEY)
   GateState.userSession = false
   GateState.menuOverlay = false
   GateState.readyStatus = 'loading'

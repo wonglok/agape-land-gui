@@ -64,8 +64,8 @@ let popStatus = [
     at: 1 / 24,
     titleSize: 0.5,
     descSize: 0.5,
-    url: `/scene/2022-11-28-NYC/coverimage/agape.png`,
-    // url: `/scene/2022-11-28-NYC/coverimage/circle_portal.png`,
+    // url: `/scene/2022-11-28-NYC/coverimage/agape.png`,
+    url: `/scene/2022-11-28-NYC/coverimage/circle_portal.png`,
   },
   {
     /* */ shown: false,
