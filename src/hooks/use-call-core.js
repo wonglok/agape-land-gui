@@ -1,7 +1,7 @@
-import { useFrame } from '@react-three/fiber'
-import { useEffect, useMemo } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useCallback, useEffect, useMemo } from 'react'
 
-export let useCore = () => {
+export let useCallCore = (cb = () => {}) => {
   let core = useMemo(() => {
     let api = {
       loops: [],
@@ -14,13 +14,15 @@ export let useCore = () => {
       },
       clean: () => {
         api.cleans.forEach((t) => t())
-        api.cleans = []
+
         api.loops = []
+        api.cleans = []
       },
       onClean: (cl) => {
         api.cleans.push(cl)
       },
     }
+
     return api
   }, [])
 
@@ -32,7 +34,18 @@ export let useCore = () => {
     return () => {
       core.clean()
     }
-  }, [core])
+  }, [])
+
+  useEffect(() => {
+    if (!core) {
+      return
+    }
+    if (!cb) {
+      return
+    }
+
+    cb(core)
+  }, [cb, core])
 
   return core
 }

@@ -1,20 +1,28 @@
 import {
   Center,
   Environment,
+  OrbitControls,
+  Sphere,
   Text,
   Text3D,
   useFBX,
   useGLTF,
 } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useMemo, useState } from 'react'
+import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Suspense } from 'react'
 import { AnimationMixer, Color, MeshStandardMaterial } from 'three'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import daysFont from '@/../public/fonts/Days/Days_Regular.json'
+import { MeshPhysicalMaterial } from 'three140'
+import { useCallCore } from '@/hooks/use-call-core'
+import { AvaSim } from './AvaSim'
+import { Simulation } from './Simulation'
 export function AvaLand() {
   return (
     <Canvas>
+      <OrbitControls></OrbitControls>
+
       <Suspense
         fallback={
           <group position={[0, 0.5, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
@@ -107,49 +115,60 @@ let MyDances = [
   `/servant/yobb/motion/selected/twist-dance.fbx`,
 ]
 
+let idx = 0
+
 function YoBB() {
-  let [idx, setIdx] = useState(0)
+  let [motionURL, setMotion] = useState(
+    `/servant/yobb/motion/selected/arms-hip-hop-dance.fbx`
+  )
   let glb = useGLTF(`/servant/yobb/avatar/yobb.glb`)
 
   let {
     animations: [firstClipNeu],
-  } = useFBX(MyDances[idx])
+  } = useFBX(motionURL)
 
   let mixer = useMemo(() => {
     return new AnimationMixer(glb.scene)
   }, [glb.scene])
 
-  useFrame((st, dt) => {
+  useFrame((_, dt) => {
     mixer.update(dt)
   })
 
-  mixer.stopAllAction()
-  mixer.clipAction(firstClipNeu)?.play()
-  glb.scene.traverse((it) => {
-    if (it.material) {
-      if (it.name === 'capsule_Cube') {
-        it.material = new MeshStandardMaterial({
-          transmission: 1.5,
-          ior: 1.15,
-          thickness: 5.5,
-          emissive: '#F08BDC',
-          emissiveIntensity: 1,
-          roughness: 1.0,
-          metalness: 0,
-          color: '#F08BDC',
-        })
-        // it.material.color = new Color('#F08BDC')
+  useEffect(() => {
+    mixer.stopAllAction()
+    mixer.clipAction(firstClipNeu)?.play()
+    glb.scene.traverse((it) => {
+      if (it.material) {
+        if (it.name === 'capsule_Cube') {
+          it.material = new MeshPhysicalMaterial({
+            emissive: '#F08BDC',
+            emissiveIntensity: 0,
+            roughness: 0.0,
+            metalness: 1.0,
+            color: '#F08BDC',
+          })
+        }
+        it.frustumCulled = false
       }
-      it.frustumCulled = false
-    }
-  })
+    })
+  }, [firstClipNeu, glb.scene, mixer])
+
   return (
-    <group
-      onPointerDown={() => {
-        setIdx((s) => (s + 1) % MyDances.length)
-      }}
-    >
-      <group rotation={[-Math.PI * 0.5, 0, 0]}>
+    <group>
+      {glb && <Simulation glb={glb}></Simulation>}
+      {glb && <AvaSim glb={glb}></AvaSim>}
+
+      {/*  */}
+      <group
+        onClick={() => {
+          idx++
+          idx = idx % MyDances.length
+          setMotion(MyDances[idx])
+          // setIdx((s) => (s + 1) % MyDances.length)
+        }}
+        rotation={[-Math.PI * 0.5, 0, 0]}
+      >
         <primitive object={glb.scene}></primitive>
       </group>
     </group>
