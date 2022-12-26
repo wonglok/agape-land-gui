@@ -1,11 +1,12 @@
 import { useFrame, useThree } from '@react-three/fiber'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
-export let useCallCore = (cb = () => {}) => {
+export let useCore = () => {
   let core = useMemo(() => {
     let api = {
       loops: [],
       cleans: [],
+      now: {},
       onLoop: (v) => {
         api.loops.push(v)
       },
@@ -14,19 +15,25 @@ export let useCallCore = (cb = () => {}) => {
       },
       clean: () => {
         api.cleans.forEach((t) => t())
-
-        api.loops = []
         api.cleans = []
+        api.loops = []
       },
       onClean: (cl) => {
         api.cleans.push(cl)
       },
     }
-
     return api
   }, [])
 
+  let camera = useThree((s) => s.camera)
+  let controls = useThree((s) => s.controls)
+  core.now.camera = camera
+  core.now.controls = controls
+
   useFrame((st, dt) => {
+    for (let kn in st) {
+      core.now[kn] = st[kn]
+    }
     core.work(st, dt)
   })
 
@@ -34,18 +41,7 @@ export let useCallCore = (cb = () => {}) => {
     return () => {
       core.clean()
     }
-  }, [])
-
-  useEffect(() => {
-    if (!core) {
-      return
-    }
-    if (!cb) {
-      return
-    }
-
-    cb(core)
-  }, [cb, core])
+  }, [core])
 
   return core
 }

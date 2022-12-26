@@ -1,4 +1,4 @@
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo } from 'react'
 
 export let useCore = () => {
@@ -6,6 +6,7 @@ export let useCore = () => {
     let api = {
       loops: [],
       cleans: [],
+      now: {},
       onLoop: (v) => {
         api.loops.push(v)
       },
@@ -24,7 +25,17 @@ export let useCore = () => {
     return api
   }, [])
 
+  let scene = useThree((s) => s.scene)
+  let camera = useThree((s) => s.camera)
+  let controls = useThree((s) => s.controls)
+  core.now.scene = scene
+  core.now.camera = camera
+  core.now.controls = controls
+
   useFrame((st, dt) => {
+    for (let kn in st) {
+      core.now[kn] = st[kn]
+    }
     core.work(st, dt)
   })
 

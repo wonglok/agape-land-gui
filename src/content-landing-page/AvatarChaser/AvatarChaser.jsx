@@ -53,7 +53,7 @@ export function AvatarChaser({
   //
 
   useFrame(({ scene }) => {
-    let myself = scene.getObjectByName(`myself-back-army`)
+    let myself = scene.getObjectByName(`myself-player`)
     if (myself) {
       myself.getWorldPosition(destObj.position)
       myself.getWorldPosition(destObj.position)
