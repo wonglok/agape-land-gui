@@ -1,6 +1,7 @@
 import { signOut } from '@/content-landing-page/LoginContentGate/GateMethods'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { getID } from '@/lib/getID'
+import Link from 'next/link'
 import { useSnapshot } from 'valtio'
 
 export function LeftMenu() {
@@ -46,37 +47,36 @@ export function LeftMenu() {
           {[
             //
             { _id: getID(), link: '/portal', name: 'Dashboard' },
-            { _id: getID(), link: '/portal/avatar', name: 'Avatar' },
+            { _id: getID(), link: '/portal/avatars', name: 'Avatars' },
             { _id: getID(), link: '/portal/places', name: 'Places' },
           ].map((item) => {
             return (
               <li key={item._id} className='w-full mt-0.5'>
-                <a
-                  className='flex items-center px-4 mx-4 my-0 text-sm py-2.7 ease-nav-brand whitespace-nowrap transition-colors'
-                  href={item.link}
-                >
-                  <svg
-                    width='24'
-                    height='24'
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
-                    className='rounded-full shadow-xl shadow-slate-800 fill-slate-800'
-                  >
-                    <path d='M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z' />
-                  </svg>
-                  <span
-                    className={
-                      'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
-                      getClass(
-                        'text-slate-700 underline underline-offset-4',
-                        item.link
-                      )
-                    }
-                  >
-                    {item.name}
-                  </span>
-                </a>
+                <Link href={item.link}>
+                  <div className='flex items-center px-4 mx-4 my-0 text-sm py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
+                    <svg
+                      width='24'
+                      height='24'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill-rule='evenodd'
+                      clip-rule='evenodd'
+                      className='rounded-full shadow-xl shadow-slate-800 fill-slate-800'
+                    >
+                      <path d='M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z' />
+                    </svg>
+                    <span
+                      className={
+                        'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
+                        getClass(
+                          'text-slate-700 underline underline-offset-4',
+                          item.link
+                        )
+                      }
+                    >
+                      {item.name}
+                    </span>
+                  </div>
+                </Link>
               </li>
             )
           })}
