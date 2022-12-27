@@ -6,6 +6,7 @@ export function SectionHeader({
   title = 'Dashboard',
   subTitle = `Metaverse Overview`,
   bgImage = '../assets/img/curved-images/curved0.jpg',
+  bgOffsetY = '50',
 }) {
   let gs = useSnapshot(GateState)
   return (
@@ -245,7 +246,7 @@ export function SectionHeader({
           className='relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl'
           style={{
             backgroundImage: `url("${encodeURI(bgImage)}")`,
-            backgroundPositionY: '50%',
+            backgroundPositionY: bgOffsetY + '%',
           }}
         >
           {/* from-purple-700 to-pink-500 */}

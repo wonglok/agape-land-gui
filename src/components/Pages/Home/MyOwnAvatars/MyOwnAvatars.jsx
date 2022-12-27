@@ -10,7 +10,8 @@ export function MyOwnAvatars() {
       <SectionHeader
         title='Avatars'
         subTitle='Programmable Avatar Apps'
-        bgImage='../scene/2022-11-28-NYC/coverimage/mech2.png'
+        bgImage='/brand/avatar.webp'
+        bgOffsetY={15}
       ></SectionHeader>
     </div>
   )

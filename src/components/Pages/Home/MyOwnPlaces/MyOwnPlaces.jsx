@@ -10,7 +10,8 @@ export function MyOwnPlaces() {
       <SectionHeader
         title='Places'
         subTitle='Where you can hangout'
-        bgImage='../scene/2022-11-28-NYC/coverimage/mech2.png'
+        bgImage='/brand/place.webp'
+        bgOffsetY={52}
       ></SectionHeader>
     </div>
   )
