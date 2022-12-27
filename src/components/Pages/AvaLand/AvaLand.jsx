@@ -111,6 +111,19 @@ let MyDances = [
   `/servant/yobb/motion/selected/twist-dance.fbx`,
 ]
 
+let Labels = [
+  { url: `/servant/yobb/motion/selected/balle.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/belly-dance.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/arms-hip-hop-dance.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/hi.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/idle-basic.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/idle-happy.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/idle-neutral.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/running.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/silly-dance.fbx`, name: '' },
+  { url: `/servant/yobb/motion/selected/twist-dance.fbx`, name: '' },
+]
+
 let idx = 0
 
 function YoBB() {
