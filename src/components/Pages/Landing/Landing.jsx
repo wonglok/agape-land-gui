@@ -254,7 +254,7 @@ export function Connect() {
               <div className='flex flex-wrap -mx-3'>
                 <div className='flex-shrink-0 w-full max-w-full mx-auto mb-6 text-center lg:flex-0 lg:w-8/12'>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12'
                     rel='noreferrer'
@@ -263,7 +263,7 @@ export function Connect() {
                     Company{' '}
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12'
                     rel='noreferrer'
@@ -272,7 +272,7 @@ export function Connect() {
                     About Us{' '}
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12'
                     rel='noreferrer'
@@ -281,7 +281,7 @@ export function Connect() {
                     Team{' '}
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12'
                     rel='noreferrer'
@@ -290,7 +290,7 @@ export function Connect() {
                     Products{' '}
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12'
                     rel='noreferrer'
@@ -299,7 +299,7 @@ export function Connect() {
                     Blog{' '}
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12'
                     rel='noreferrer'
@@ -310,7 +310,7 @@ export function Connect() {
                 </div>
                 <div className='flex-shrink-0 w-full max-w-full mx-auto mt-2 mb-6 text-center lg:flex-0 lg:w-8/12'>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mr-6 text-slate-400'
                     rel='noreferrer'
@@ -318,7 +318,7 @@ export function Connect() {
                     <span className='text-lg fab fa-dribbble' />
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mr-6 text-slate-400'
                     rel='noreferrer'
@@ -326,7 +326,7 @@ export function Connect() {
                     <span className='text-lg fab fa-twitter' />
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mr-6 text-slate-400'
                     rel='noreferrer'
@@ -334,7 +334,7 @@ export function Connect() {
                     <span className='text-lg fab fa-instagram' />
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mr-6 text-slate-400'
                     rel='noreferrer'
@@ -342,7 +342,7 @@ export function Connect() {
                     <span className='text-lg fab fa-pinterest' />
                   </a>
                   <a
-                    href='javascript:;'
+                    data-stuff='javascript:;'
                     target='_blank'
                     className='mr-6 text-slate-400'
                     rel='noreferrer'

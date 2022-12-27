@@ -15,10 +15,7 @@ export function LeftMenu() {
   return (
     <aside className='fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 ml-4 overflow-y-auto antialiased bg-white border-0 shadow-none max-w-62.5 ease-nav-brand z-990 -translate-x-full rounded-2xl transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent'>
       <div className='h-19.5'>
-        <i
-          className='absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden'
-          sidenav-close
-        />
+        <i className='absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden' />
         <a
           className='block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
           href='../pages/dashboard.html'
@@ -58,8 +55,8 @@ export function LeftMenu() {
                       width='24'
                       height='24'
                       xmlns='http://www.w3.org/2000/svg'
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       className='rounded-full shadow-xl shadow-slate-800 fill-slate-800'
                     >
                       <path d='M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z' />
@@ -96,8 +93,8 @@ export function LeftMenu() {
                 width='24'
                 height='24'
                 xmlns='http://www.w3.org/2000/svg'
-                fill-rule='evenodd'
-                clip-rule='evenodd'
+                fillRule='evenodd'
+                clipRule='evenodd'
                 className='rounded-full shadow-xl shadow-slate-800 fill-slate-800'
               >
                 <path d='M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z' />

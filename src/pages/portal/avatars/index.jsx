@@ -10,8 +10,6 @@ export default function Avatars() {
   )
 }
 
-//
-
 export async function getServerSideProps(context) {
   //
 

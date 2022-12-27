@@ -451,7 +451,6 @@ export default function Page() {
         <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 bg-gray-50 transition-all duration-200'>
           <nav
             className='absolute z-20 flex flex-wrap items-center justify-between w-full px-6 py-2 text-white shadow-none transition-all duration-250 ease-soft-in lg:flex-nowrap lg:justify-start'
-            navbar-profile
             navbar-scroll='true'
           >
             <div className='flex items-center justify-between w-full px-6 py-1 mx-auto flex-wrap-inherit'>
@@ -459,7 +458,7 @@ export default function Page() {
                 {/* breadcrumb */}
                 <ol className='flex flex-wrap pt-1 pl-2 pr-4 mr-12 bg-transparent rounded-lg sm:mr-16'>
                   <li className='text-sm leading-normal'>
-                    <a className='opacity-50' href='javascript:;'>
+                    <a className='opacity-50' data-stuff='javascript:;'>
                       Pages
                     </a>
                   </li>
@@ -503,7 +502,7 @@ export default function Page() {
                   </li>
                   <li className='flex items-center pl-4 xl:hidden'>
                     <a
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                       className='block p-0 text-sm text-white transition-all ease-soft-in-out'
                       sidenav-trigger
                     >
@@ -516,23 +515,20 @@ export default function Page() {
                   </li>
                   <li className='flex items-center px-4'>
                     <a
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                       className='p-0 text-sm text-white transition-all ease-soft-in-out'
                     >
                       <i
-                        fixed-plugin-button-nav
                         className='cursor-pointer fa fa-cog'
                         aria-hidden='true'
                       />
-                      {/* fixed-plugin-button-nav  */}
                     </a>
                   </li>
                   {/* notifications */}
                   <li className='relative flex items-center pr-2'>
                     <p className='hidden transform-dropdown-show' />
                     <a
-                      dropdown-trigger
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                       className='block p-0 text-sm text-white transition-all ease-nav-brand'
                       aria-expanded='false'
                     >
@@ -541,15 +537,12 @@ export default function Page() {
                         aria-hidden='true'
                       />
                     </a>
-                    <ul
-                      dropdown-menu
-                      className="absolute top-0 right-0 z-50 px-2 py-4 text-sm text-left list-none bg-white border-0 border-transparent border-solid rounded-lg opacity-0 pointer-events-none transform-dropdown before:font-awesome before:leading-default before:duration-350 before:ease-soft lg:shadow-soft-3xl duration-250 min-w-44 before:sm:right-7.5 before:text-5.5 origin-top bg-clip-padding text-slate-500 transition-all before:absolute before:right-2 before:left-auto before:top-0 before:z-50 before:inline-block before:font-normal before:text-white before:antialiased before:transition-all before:content-['\f0d8'] sm:-mr-6 lg:absolute lg:right-0 lg:left-auto lg:mt-2 lg:block lg:cursor-pointer"
-                    >
+                    <ul className="absolute top-0 right-0 z-50 px-2 py-4 text-sm text-left list-none bg-white border-0 border-transparent border-solid rounded-lg opacity-0 pointer-events-none transform-dropdown before:font-awesome before:leading-default before:duration-350 before:ease-soft lg:shadow-soft-3xl duration-250 min-w-44 before:sm:right-7.5 before:text-5.5 origin-top bg-clip-padding text-slate-500 transition-all before:absolute before:right-2 before:left-auto before:top-0 before:z-50 before:inline-block before:font-normal before:text-white before:antialiased before:transition-all before:content-['\f0d8'] sm:-mr-6 lg:absolute lg:right-0 lg:left-auto lg:mt-2 lg:block lg:cursor-pointer">
                       {/* add show class on dropdown open js */}
                       <li className='relative mb-2'>
                         <a
                           className='block w-full px-4 bg-transparent rounded-lg ease-soft py-1.2 clear-both whitespace-nowrap duration-300 lg:transition-colors'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           <div className='flex py-1'>
                             <div className='my-auto'>
@@ -579,7 +572,7 @@ export default function Page() {
                       <li className='relative mb-2'>
                         <a
                           className='block w-full px-4 rounded-lg ease-soft py-1.2 clear-both whitespace-nowrap duration-300 lg:transition-colors'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           <div className='flex py-1'>
                             <div className='my-auto'>
@@ -607,7 +600,7 @@ export default function Page() {
                       <li className='relative'>
                         <a
                           className='block w-full px-4 rounded-lg ease-soft py-1.2 clear-both whitespace-nowrap duration-300 lg:transition-colors'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           <div className='flex py-1'>
                             <div className='inline-flex items-center justify-center my-auto mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out bg-gradient-to-tl from-slate-600 to-slate-300 h-9 w-9 rounded-xl'>
@@ -711,7 +704,7 @@ export default function Page() {
                           className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg transition-all ease-soft-in-out bg-inherit text-slate-700'
                           nav-link
                           active
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                           role='tab'
                           aria-selected='true'
                         >
@@ -763,7 +756,7 @@ export default function Page() {
                         <a
                           className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg transition-all ease-soft-in-out bg-inherit text-slate-700'
                           nav-link
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                           role='tab'
                           aria-selected='false'
                         >
@@ -811,7 +804,7 @@ export default function Page() {
                         <a
                           className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg transition-colors ease-soft-in-out bg-inherit text-slate-700'
                           nav-link
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                           role='tab'
                           aria-selected='false'
                         >
@@ -989,7 +982,7 @@ export default function Page() {
                       </div>
                       <div className='w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none'>
                         <a
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                           data-target='tooltip_trigger'
                           data-placement='top'
                         >
@@ -1041,19 +1034,19 @@ export default function Page() {
                         &nbsp;
                         <a
                           className='inline-block py-0 pl-1 pr-2 mb-0 text-xs font-bold text-center text-blue-800 align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in bg-none'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           <i className='fab fa-facebook fa-lg' />
                         </a>
                         <a
                           className='inline-block py-0 pl-1 pr-2 mb-0 text-xs font-bold text-center align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in bg-none text-sky-600'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           <i className='fab fa-twitter fa-lg' />
                         </a>
                         <a
                           className='inline-block py-0 pl-1 pr-2 mb-0 text-xs font-bold text-center align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in bg-none text-sky-900'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           <i className='fab fa-instagram fa-lg' />
                         </a>
@@ -1087,7 +1080,7 @@ export default function Page() {
                         </div>
                         <a
                           className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           Reply
                         </a>
@@ -1110,7 +1103,7 @@ export default function Page() {
                         </div>
                         <a
                           className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           Reply
                         </a>
@@ -1133,7 +1126,7 @@ export default function Page() {
                         </div>
                         <a
                           className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           Reply
                         </a>
@@ -1156,7 +1149,7 @@ export default function Page() {
                         </div>
                         <a
                           className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           Reply
                         </a>
@@ -1179,7 +1172,7 @@ export default function Page() {
                         </div>
                         <a
                           className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                          href='javascript:;'
+                          data-stuff='javascript:;'
                         >
                           Reply
                         </a>
@@ -1213,7 +1206,7 @@ export default function Page() {
                             <p className='relative z-10 mb-2 text-sm leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 bg-clip-text'>
                               Project #2
                             </p>
-                            <a href='javascript:;'>
+                            <a data-stuff='javascript:;'>
                               <h5>Modern</h5>
                             </a>
                             <p className='mb-6 text-sm leading-normal'>
@@ -1229,7 +1222,7 @@ export default function Page() {
                               </button>
                               <div className='mt-2'>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1252,7 +1245,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1275,7 +1268,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1298,7 +1291,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1340,7 +1333,7 @@ export default function Page() {
                             <p className='relative z-10 mb-2 text-sm leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 bg-clip-text'>
                               Project #1
                             </p>
-                            <a href='javascript:;'>
+                            <a data-stuff='javascript:;'>
                               <h5>Scandinavian</h5>
                             </a>
                             <p className='mb-6 text-sm leading-normal'>
@@ -1356,7 +1349,7 @@ export default function Page() {
                               </button>
                               <div className='mt-2'>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1379,7 +1372,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1402,7 +1395,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1425,7 +1418,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1467,7 +1460,7 @@ export default function Page() {
                             <p className='relative z-10 mb-2 text-sm leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 bg-clip-text'>
                               Project #3
                             </p>
-                            <a href='javascript:;'>
+                            <a data-stuff='javascript:;'>
                               <h5>Minimalist</h5>
                             </a>
                             <p className='mb-6 text-sm leading-normal'>
@@ -1483,7 +1476,7 @@ export default function Page() {
                               </button>
                               <div className='mt-2'>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1506,7 +1499,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1529,7 +1522,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1552,7 +1545,7 @@ export default function Page() {
                                   />
                                 </div>
                                 <a
-                                  href='javascript:;'
+                                  data-stuff='javascript:;'
                                   className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                                   data-target='tooltip_trigger'
                                   data-placement='bottom'
@@ -1582,7 +1575,7 @@ export default function Page() {
                       <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
                         <div className='relative flex flex-col h-full min-w-0 break-words bg-transparent border border-solid shadow-none rounded-2xl border-slate-100 bg-clip-border'>
                           <div className='flex flex-col justify-center flex-auto p-6 text-center'>
-                            <a href='javascript:;'>
+                            <a data-stuff='javascript:;'>
                               <i className='mb-4 fa fa-plus text-slate-400' />
                               <h5 className='text-slate-400'>New project</h5>
                             </a>

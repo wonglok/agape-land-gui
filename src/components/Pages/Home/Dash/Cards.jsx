@@ -125,7 +125,7 @@ export function Cards() {
                   </div>
                   <div className='w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none'>
                     <a
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                       data-target='tooltip_trigger'
                       data-placement='top'
                     >
@@ -177,19 +177,19 @@ export function Cards() {
                     &nbsp;
                     <a
                       className='inline-block py-0 pl-1 pr-2 mb-0 text-xs font-bold text-center text-blue-800 align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in bg-none'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       <i className='fab fa-facebook fa-lg' />
                     </a>
                     <a
                       className='inline-block py-0 pl-1 pr-2 mb-0 text-xs font-bold text-center align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in bg-none text-sky-600'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       <i className='fab fa-twitter fa-lg' />
                     </a>
                     <a
                       className='inline-block py-0 pl-1 pr-2 mb-0 text-xs font-bold text-center align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in bg-none text-sky-900'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       <i className='fab fa-instagram fa-lg' />
                     </a>
@@ -221,7 +221,7 @@ export function Cards() {
                     </div>
                     <a
                       className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       Reply
                     </a>
@@ -244,7 +244,7 @@ export function Cards() {
                     </div>
                     <a
                       className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       Reply
                     </a>
@@ -265,7 +265,7 @@ export function Cards() {
                     </div>
                     <a
                       className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       Reply
                     </a>
@@ -286,7 +286,7 @@ export function Cards() {
                     </div>
                     <a
                       className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       Reply
                     </a>
@@ -309,7 +309,7 @@ export function Cards() {
                     </div>
                     <a
                       className='inline-block py-3 pl-0 pr-4 mb-0 ml-auto text-xs font-bold text-center uppercase align-middle bg-transparent border-0 rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100'
-                      href='javascript:;'
+                      data-stuff='javascript:;'
                     >
                       Reply
                     </a>

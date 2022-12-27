@@ -13,7 +13,7 @@ export function MyAvatars() {
             <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
               <div className='relative flex flex-col h-full min-w-0 break-words bg-transparent border border-solid shadow-none rounded-2xl border-slate-100 bg-clip-border'>
                 <div className='flex flex-col justify-center flex-auto p-6 text-center'>
-                  <a href='javascript:;'>
+                  <a data-stuff='javascript:;'>
                     <i className='mb-4 fa fa-plus text-slate-400' />
                     <h5 className='text-slate-400'> + New Project +</h5>
                   </a>
@@ -38,7 +38,7 @@ export function MyAvatars() {
                   <p className='relative z-10 mb-2 text-sm leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 bg-clip-text'>
                     Avatar #2
                   </p>
-                  <a href='javascript:;'>
+                  <a data-stuff='javascript:;'>
                     <h5>Modern</h5>
                   </a>
                   <p className='mb-6 text-sm leading-normal'>
@@ -54,7 +54,7 @@ export function MyAvatars() {
                     </button>
                     <div className='mt-2'>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -77,7 +77,7 @@ export function MyAvatars() {
                         />
                       </div>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -100,7 +100,7 @@ export function MyAvatars() {
                         />
                       </div>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -123,7 +123,7 @@ export function MyAvatars() {
                         />
                       </div>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -165,7 +165,7 @@ export function MyAvatars() {
                   <p className='relative z-10 mb-2 text-sm leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 bg-clip-text'>
                     Project #1
                   </p>
-                  <a href='javascript:;'>
+                  <a data-stuff='javascript:;'>
                     <h5>Scandinavian</h5>
                   </a>
                   <p className='mb-6 text-sm leading-normal'>
@@ -181,7 +181,7 @@ export function MyAvatars() {
                     </button>
                     <div className='mt-2'>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -204,7 +204,7 @@ export function MyAvatars() {
                         />
                       </div>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -227,7 +227,7 @@ export function MyAvatars() {
                         />
                       </div>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
@@ -250,7 +250,7 @@ export function MyAvatars() {
                         />
                       </div>
                       <a
-                        href='javascript:;'
+                        data-stuff='javascript:;'
                         className='relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-xs text-white border-2 border-white border-solid transition-all duration-200 ease-soft-in-out rounded-circle hover:z-30'
                         data-target='tooltip_trigger'
                         data-placement='bottom'
