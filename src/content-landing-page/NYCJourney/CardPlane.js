@@ -112,7 +112,7 @@ export function CardPlane({
   ...props
 }) {
   const { nodes, materials } = useGLTF(
-    `/scene/2022-11-28-NYC/yo-cards-animation1.glb`
+    `/scene/2022-11-28-NYC/yo-cards-animation1-compressed.glb`
   )
   let ref = useRef()
   // public

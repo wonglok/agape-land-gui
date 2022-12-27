@@ -375,40 +375,38 @@ export function NYCJourney() {
             <>
               {popStatus.map((a, idx) => (
                 <group key={a.url} position={[0, 0, -1.2]} scale={0.5}>
-                  <Suspense fallback={null}>
-                    <CardPlane
-                      getVisible={() => getVisible(a)}
-                      myTime={myTime}
-                      enableRenderImage={idx === 0}
-                      data={a}
-                      proxy={proxy}
-                      mixer={mixer}
-                      title={a.title}
-                      desc={a.desc}
-                      imageURL={a.url}
-                      titleSize={a.titleSize}
-                      descSize={a.descSize}
-                      onNext={() => {
-                        //
-                        //
+                  <CardPlane
+                    getVisible={() => getVisible(a)}
+                    myTime={myTime}
+                    enableRenderImage={idx === 0}
+                    data={a}
+                    proxy={proxy}
+                    mixer={mixer}
+                    title={a.title}
+                    desc={a.desc}
+                    imageURL={a.url}
+                    titleSize={a.titleSize}
+                    descSize={a.descSize}
+                    onNext={() => {
+                      //
+                      //
 
-                        if (getVisible(a)) {
-                          if (a.onClick) {
-                            a.onClick(a)
-                          } else {
-                            let now = accu.current
-                            let diff = (popStatus[idx + 1]?.at || now + 3) - now
-                            anime({
-                              targets: [accu],
-                              current: now + diff,
-                              duration: Math.abs(diff) * 100,
-                              easing: 'linear',
-                            })
-                          }
+                      if (getVisible(a)) {
+                        if (a.onClick) {
+                          a.onClick(a)
+                        } else {
+                          let now = accu.current
+                          let diff = (popStatus[idx + 1]?.at || now + 3) - now
+                          anime({
+                            targets: [accu],
+                            current: now + diff,
+                            duration: Math.abs(diff) * 100,
+                            easing: 'linear',
+                          })
                         }
-                      }}
-                    ></CardPlane>
-                  </Suspense>
+                      }
+                    }}
+                  ></CardPlane>
                 </group>
               ))}
             </>

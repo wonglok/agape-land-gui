@@ -54,7 +54,6 @@ export function CanvasPage(
             st.gl.physicallyCorrectLights = true
             st.gl.outputEncoding = sRGBEncoding
 
-            st.gl.shadowMap.enabled = false
             Core.now.canvas = Core.makeDisposableNode({ name: 'canvas' }).sub
             for (let kn in st) {
               Core.now.canvas.now[kn] = st[kn]
@@ -62,6 +61,7 @@ export function CanvasPage(
           },
         }}
       >
+        {/*  */}
         {process.env.NODE_ENV === 'development' && (
           <Perf
             showGraph={false}
@@ -77,7 +77,6 @@ export function CanvasPage(
           />
         )}
 
-        <MetaverseMenu></MetaverseMenu>
         {/* <LoadingGroup /> */}
 
         <Suspense fallback={<LoadingGroup />}>
@@ -89,11 +88,15 @@ export function CanvasPage(
             // }
             loggedInContent={
               <>
+                <MetaverseMenu></MetaverseMenu>
+
                 <MetaverseWelcome></MetaverseWelcome>
               </>
             }
             landingContent={
               <>
+                <MetaverseMenu></MetaverseMenu>
+
                 <LandingContent></LandingContent>
               </>
             }

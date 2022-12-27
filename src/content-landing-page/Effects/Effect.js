@@ -1,4 +1,4 @@
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { Bloom, EffectComposer, SMAA } from '@react-three/postprocessing'
 import { GLOverlay } from './GLOverlay'
 
 export function Effect() {

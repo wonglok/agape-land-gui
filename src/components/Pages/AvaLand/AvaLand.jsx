@@ -33,7 +33,7 @@ export function AvaLand() {
         <Suspense
           fallback={
             <group
-              position={[0, 0.5, 1]}
+              position={[0, 0.6, 1]}
               rotation={[-0.35, 0, 0]}
               scale={0.155}
             >
