@@ -50,7 +50,7 @@ export function LeftMenu() {
             return (
               <li key={item._id} className='w-full mt-0.5'>
                 <Link href={item.link}>
-                  <div className='flex items-center px-4 mx-4 my-0 text-sm py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
+                  <div className='flex items-center px-4 mx-4 my-0 text-sm cursor-pointer hover:underline underline-offset-4 py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
                     <svg
                       width='24'
                       height='24'
@@ -64,10 +64,7 @@ export function LeftMenu() {
                     <span
                       className={
                         'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
-                        getClass(
-                          'text-slate-700 underline underline-offset-4',
-                          item.link
-                        )
+                        getClass('text-slate-700 underline ', item.link)
                       }
                     >
                       {item.name}
