@@ -28,18 +28,14 @@ export function AvaLand() {
 
       <Suspense
         fallback={
-          <group position={[0, 1.0, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
+          <group position={[0, 1.0, 1]} rotation={[-0.2, 0, 0]} scale={0.155}>
             <Agape text={'Loading...'}></Agape>
           </group>
         }
       >
         <Suspense
           fallback={
-            <group
-              position={[0, 1.0, 1]}
-              rotation={[-0.35, 0, 0]}
-              scale={0.155}
-            >
+            <group position={[0, 1.0, 1]} rotation={[-0.2, 0, 0]} scale={0.155}>
               <Agape text={'Loading...'}></Agape>
             </group>
           }
@@ -154,7 +150,7 @@ function YoBB() {
 
   return (
     <group>
-      <group position={[0, 1.0, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
+      <group position={[0, 1.0, 1]} rotation={[-0.2, 0, 0]} scale={0.155}>
         <Agape text={`Agape`}></Agape>
       </group>
 
