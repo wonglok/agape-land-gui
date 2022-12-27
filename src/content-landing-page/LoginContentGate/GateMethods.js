@@ -1,9 +1,13 @@
 import { getID } from '@/lib/getID'
 import { ethers } from 'ethers'
-import { SESSION_ACCESS_KEY, UserEndPoints } from './GateConst'
+import {
+  SESSION_ACCESS_KEY,
+  SESSION_REDIRECT_KEY,
+  UserEndPoints,
+} from './GateConst'
 import { GateState } from './GateState'
 
-export const restoreTokenFromURL = async () => {
+export const hydration = async () => {
   if (typeof window !== 'undefined') {
     //
 
@@ -25,7 +29,6 @@ export const restoreTokenFromURL = async () => {
       }
 
       window.localStorage.setItem(SESSION_ACCESS_KEY, sTokenInURL)
-      window.location.assign('/')
     } else {
     }
 
@@ -39,6 +42,15 @@ export const loadSession = async () => {
   if (sToken) {
     const user = await getUserInfo(sToken)
     if (user) {
+      let redir = localStorage.getItem(SESSION_REDIRECT_KEY)
+      if (!redir) {
+      } else if (redir && redir[0] !== '/') {
+        localStorage.removeItem(SESSION_REDIRECT_KEY)
+        window.location.assign('/')
+      } else if (redir && redir.length > 0 && redir[0] === '/') {
+        localStorage.removeItem(SESSION_REDIRECT_KEY)
+        window.location.assign(redir)
+      }
       GateState.userSession = user
     } else {
       GateState.userSession = false
@@ -72,6 +84,7 @@ export const getUserInfo = async (sToken) => {
 }
 
 export const signOut = async () => {
+  localStorage.removeItem(SESSION_REDIRECT_KEY)
   localStorage.removeItem(SESSION_ACCESS_KEY)
   GateState.userSession = false
   GateState.menuOverlay = false
@@ -88,6 +101,12 @@ export const getEndPointURL = () => {
 }
 
 export const loginEth = async () => {
+  let urlSearchParams = new URLSearchParams(window.location.search)
+  let redirect = urlSearchParams.get('redirect')
+  if (redirect) {
+    localStorage.setItem(SESSION_REDIRECT_KEY, redirect)
+  }
+
   try {
     let provider
     if (typeof window !== 'undefined' && window.ethereum) {
@@ -135,13 +154,28 @@ nonce : ${json.nonce}
 }
 
 export const loginGoogle = () => {
+  let urlSearchParams = new URLSearchParams(window.location.search)
+  let redirect = urlSearchParams.get('redirect')
+  if (redirect) {
+    localStorage.setItem(SESSION_REDIRECT_KEY, redirect)
+  }
   window.location.assign(`${getEndPointURL()}/auth/google/authorize`)
 }
 
 export const loginGuest = () => {
+  let urlSearchParams = new URLSearchParams(window.location.search)
+  let redirect = urlSearchParams.get('redirect')
+  if (redirect) {
+    localStorage.setItem(SESSION_REDIRECT_KEY, redirect)
+  }
   window.location.assign(`${getEndPointURL()}/auth/guest/authorize`)
 }
 
 export const loginGuestLocal = () => {
+  let urlSearchParams = new URLSearchParams(window.location.search)
+  let redirect = urlSearchParams.get('redirect')
+  if (redirect) {
+    localStorage.setItem(SESSION_REDIRECT_KEY, redirect)
+  }
   window.location.assign(`${getEndPointURL()}/auth/local/authorize`)
 }

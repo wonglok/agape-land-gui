@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import Header from '@/config'
 import '@/styles/index.css'
-import { restoreTokenFromURL } from '@/content-landing-page/LoginContentGate/GateMethods'
+import { hydration } from '@/content-landing-page/LoginContentGate/GateMethods'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { useSnapshot } from 'valtio'
 // import { useSnapshot } from 'valtio'
@@ -31,7 +31,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
   }, [])
 
   useEffect(() => {
-    restoreTokenFromURL()
+    hydration()
   }, [])
 
   let SEO = Component.SEO || (() => null)

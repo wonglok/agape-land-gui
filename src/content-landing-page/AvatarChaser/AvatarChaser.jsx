@@ -535,3 +535,5 @@ export class AvatarChaserCore extends Object3D {
     this.player.position.x += 2
   }
 }
+
+//

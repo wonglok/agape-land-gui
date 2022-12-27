@@ -29,6 +29,7 @@ function MyselfAvatar({}) {
   let {
     animations: [idleClip],
   } = useFBX(`/rpm/rpm-actions-locomotion/standing.fbx`)
+
   let {
     animations: [movingClip],
   } = useFBX(`/rpm/rpm-actions-locomotion/running.fbx`)
@@ -37,8 +38,10 @@ function MyselfAvatar({}) {
 
   let movingAct = mixer.clipAction(movingClip)
 
+  //
   let core = useCore()
   useEffect(() => {
+    //
     glb.scene.traverse((it) => {
       //!SECTION
       if (it.material) {
@@ -144,3 +147,5 @@ export function Avatar() {
     </group>
   )
 }
+
+//

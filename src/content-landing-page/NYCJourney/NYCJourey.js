@@ -374,7 +374,7 @@ export function NYCJourney() {
           {!gs.menuOverlay && (
             <>
               {popStatus.map((a, idx) => (
-                <group key={a.url} position={[0, 0, -1.2]} scale={0.5}>
+                <group key={a.url} position={[0, 0, -1.2]} scale={0.8}>
                   <CardPlane
                     getVisible={() => getVisible(a)}
                     myTime={myTime}

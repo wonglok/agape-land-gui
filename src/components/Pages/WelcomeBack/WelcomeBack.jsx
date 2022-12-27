@@ -1,4 +1,10 @@
 import { StylesDashboard } from '@/components/Shared/StylesDashboard'
+import {
+  loginEth,
+  loginGoogle,
+  loginGuest,
+  loginGuestLocal,
+} from '@/content-landing-page/LoginContentGate/GateMethods'
 
 export function WelcomeBack() {
   return (
@@ -14,9 +20,9 @@ export function WelcomeBack() {
                 <div className='flex items-center justify-between w-full p-0 pl-6 mx-auto flex-wrap-inherit'>
                   <a
                     className='ml-4 mr-4 text-sm font-bold py-2.375 whitespace-nowrap text-slate-700 lg:ml-0'
-                    href='../pages/dashboard.html'
+                    href='/'
                   >
-                    Agape.town
+                    AGAPE METAVERSE
                   </a>
                   <button
                     navbar-trigger
@@ -52,7 +58,7 @@ export function WelcomeBack() {
                           <a
                             className='flex items-center px-4 py-2 mr-2 text-sm font-normal transition-all lg-max:opacity-0 duration-250 ease-soft-in-out text-slate-700 lg:px-2'
                             aria-current='page'
-                            href='../pages/dashboard.html'
+                            href='/'
                           >
                             <i className='mr-1 fa fa-chart-pie opacity-60' />
                             Dashboard
@@ -87,6 +93,29 @@ export function WelcomeBack() {
                         </li>
                       </ul>
                     )}
+                    <ul className='flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto'>
+                      {/* <li>
+                        <a
+                          className='flex items-center px-4 py-2 mr-2 text-sm font-normal transition-all lg-max:opacity-0 duration-250 ease-soft-in-out text-slate-700 lg:px-2'
+                          aria-current='page'
+                          href='/store'
+                        >
+                          <i className='mr-1 fa fa-chart-pie opacity-60' />
+                          App Store
+                        </a>
+                      </li> */}
+                      {/* <li>
+                        <a
+                          className='flex items-center px-4 py-2 mr-2 text-sm font-normal transition-all lg-max:opacity-0 duration-250 ease-soft-in-out text-slate-700 lg:px-2'
+                          aria-current='page'
+                          href='/avatar'
+                        >
+                          <i className='mr-1 fa fa-chart-pie opacity-60' />
+                          Avatars
+                        </a>
+                      </li> */}
+                    </ul>
+
                     {/* online builder btn  */}
                     {/* <li class="flex items-center">
                   <a
@@ -99,12 +128,12 @@ export function WelcomeBack() {
                     <ul className='hidden pl-0 mb-0 list-none lg:block lg:flex-row'>
                       <li>
                         <a
-                          href='https://reunite.digital'
+                          href='/'
                           target='_blank'
                           className='inline-block px-8 py-2 mb-0 mr-1 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 cursor-pointer leading-pro hover:scale-102 hover:shadow-soft-xs active:opacity-85 ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 rounded-3.5xl transition-all'
                           rel='noreferrer'
                         >
-                          About us
+                          Home
                         </a>
                       </li>
                     </ul>
@@ -123,15 +152,31 @@ export function WelcomeBack() {
                     <div className='relative flex flex-col min-w-0 mt-32 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border'>
                       <div className='p-6 pb-0 mb-0 bg-transparent border-b-0 rounded-t-2xl'>
                         <h3 className='relative z-10 font-bold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text'>
-                          Welcome to Agape Town
+                          Welcome back!
                         </h3>
-                        <p className='mb-0'>Choose a way to connect</p>
+                        <p className='mb-0'>Please login to continue</p>
                       </div>
                       <div className='flex-auto p-6'>
                         <div>
                           <div className='text-center'>
                             <button
                               type='button'
+                              onClick={() => {
+                                //
+                                loginGoogle()
+                              }}
+                              className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-blue-600 to-cyan-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
+                            >
+                              Google
+                            </button>
+                          </div>
+                          <div className='text-center'>
+                            <button
+                              type='button'
+                              onClick={() => {
+                                //
+                                loginGuest()
+                              }}
                               className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-cyan-600 to-green-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
                             >
                               Guest
@@ -141,23 +186,24 @@ export function WelcomeBack() {
                           <div className='text-center'>
                             <button
                               type='button'
+                              onClick={() => {
+                                //
+                                loginEth()
+                              }}
                               className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-orange-600 to-yellow-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
                             >
                               Metamask
                             </button>
                           </div>
-                          <div className='text-center'>
-                            <button
-                              type='button'
-                              className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-blue-600 to-cyan-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
-                            >
-                              Google
-                            </button>
-                          </div>
+
                           {process.env.NODE_ENV === 'development' && (
                             <div className='text-center'>
                               <button
                                 type='button'
+                                onClick={() => {
+                                  //
+                                  loginGuestLocal()
+                                }}
                                 className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-blue-600 to-red-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
                               >
                                 Dev Guest

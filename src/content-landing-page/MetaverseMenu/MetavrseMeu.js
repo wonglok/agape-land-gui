@@ -117,7 +117,6 @@ export function MetaverseMenu() {
   return (
     <>
       <CoreReady></CoreReady>
-
       <MenuLayout
         topRight={
           <Suspense fallback={<LoadingGroup />}>

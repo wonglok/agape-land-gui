@@ -45,7 +45,7 @@ export class Game {
 
     /////////!SECTION
     this.gravity = -30
-    this.playerSpeed = 13
+    this.playerSpeed = 10
     this.physicsSteps = 3
     this.playerIsOnGround = true
 
