@@ -34,10 +34,13 @@ function App({ Component, pageProps = { title: 'index' } }) {
     restoreTokenFromURL()
   }, [])
 
+  let SEO = Component.SEO || (() => null)
+
   return (
     <>
       {/*  */}
       <Header title={pageProps.title} />
+      <SEO></SEO>
 
       {gs.readyStatus === 'done' ? (
         <Component {...pageProps} />
