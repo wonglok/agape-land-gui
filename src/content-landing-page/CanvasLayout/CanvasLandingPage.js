@@ -40,6 +40,7 @@ export function CanvasPage(
       `,
         }}
       ></style>
+
       {/*  */}
       <Canvas
         //
@@ -77,26 +78,19 @@ export function CanvasPage(
           />
         )}
 
-        {/* <LoadingGroup /> */}
-
         <Suspense fallback={<LoadingGroup />}>
           <Gate
-            // loadingContent={
-            //   <>
-            //     <LoadingGroup />
-            //   </>
-            // }
+            //
             loggedInContent={
               <>
                 <MetaverseMenu></MetaverseMenu>
-
                 <MetaverseWelcome></MetaverseWelcome>
               </>
             }
+            //
             landingContent={
               <>
                 <MetaverseMenu></MetaverseMenu>
-
                 <LandingContent></LandingContent>
               </>
             }
