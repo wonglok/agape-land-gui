@@ -16,6 +16,7 @@ import { Perf } from 'r3f-perf'
 import { Effect } from '../Effects/Effect'
 import { Core } from '../Core/Core'
 import { Suspense } from 'react'
+import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasPage(
@@ -46,7 +47,6 @@ export function CanvasPage(
           position: 'fixed',
           top: 0,
           left: 0,
-          backgroundColor: '#F08BDC',
         }}
         {...{
           gl: { antialias: true, logarithmicDepthBuffer: false },

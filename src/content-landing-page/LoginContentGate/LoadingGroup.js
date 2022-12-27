@@ -26,7 +26,8 @@ export function LoadingGroup() {
             alt={'agape town - here we go!'}
           ></img>
         </Html>
-        <BackgroundColor color='#F08BDC'></BackgroundColor>
+
+        {/* <BackgroundColor color='#F08BDC'></BackgroundColor> */}
 
         {createPortal(
           <group position={[0, 0, -5]}>
