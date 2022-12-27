@@ -4,7 +4,7 @@ import { useSnapshot } from 'valtio'
 import { GateState } from './GateState'
 
 export function Gate({
-  loadingContent = null,
+  // loadingContent = null,
   loggedInContent,
   landingContent,
 }) {
@@ -12,9 +12,10 @@ export function Gate({
 
   let snap = useSnapshot(GateState)
 
-  if (snap.readyStatus === 'loading') {
-    return loadingContent
-  } else {
-    return <group>{snap.userSession ? loggedInContent : landingContent}</group>
-  }
+  return <group>{snap.userSession ? loggedInContent : landingContent}</group>
+  // if (snap.readyStatus === 'loading') {
+  //   return loadingContent
+  // } else {
+  //   return
+  // }
 }

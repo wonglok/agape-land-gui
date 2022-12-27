@@ -15,6 +15,7 @@ import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
 import { Effect } from '../Effects/Effect'
 import { Core } from '../Core/Core'
+import { Suspense } from 'react'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasPage(
@@ -76,28 +77,30 @@ export function CanvasPage(
           />
         )}
 
-        {/*  */}
-
         <MetaverseMenu></MetaverseMenu>
+        {/* <LoadingGroup /> */}
 
-        <Gate
-          loadingContent={
-            <>
-              <LoadingGroup />
-            </>
-          }
-          loggedInContent={
-            <>
-              <MetaverseWelcome></MetaverseWelcome>
-            </>
-          }
-          landingContent={
-            <>
-              <LandingContent></LandingContent>
-            </>
-          }
-        ></Gate>
+        <Suspense fallback={<LoadingGroup />}>
+          <Gate
+            // loadingContent={
+            //   <>
+            //     <LoadingGroup />
+            //   </>
+            // }
+            loggedInContent={
+              <>
+                <MetaverseWelcome></MetaverseWelcome>
+              </>
+            }
+            landingContent={
+              <>
+                <LandingContent></LandingContent>
+              </>
+            }
+          ></Gate>
+        </Suspense>
 
+        {/*  */}
         <Effect></Effect>
       </Canvas>
 

@@ -1,13 +1,9 @@
 import { useEffect } from 'react'
 import Header from '@/config'
 import '@/styles/index.css'
-import {
-  // loadSession,
-  restoreTokenFromURL,
-} from '@/content-landing-page/LoginContentGate/GateMethods'
+import { restoreTokenFromURL } from '@/content-landing-page/LoginContentGate/GateMethods'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { useSnapshot } from 'valtio'
-import { SupplyXR } from '@/lib/walker/SupplyXR'
 // import { useSnapshot } from 'valtio'
 // import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 // import { SESSION_ACCESS_KEY } from '@/content-landing-page/LoginContentGate/LoginContentGate'
@@ -40,6 +36,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
   return (
     <>
+      {/*  */}
       <Header title={pageProps.title} />
 
       {gs.readyStatus === 'done' ? (
