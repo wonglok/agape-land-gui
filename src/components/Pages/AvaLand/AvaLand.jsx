@@ -21,7 +21,10 @@ import { Simulation } from './Simulation'
 export function AvaLand() {
   return (
     <Canvas>
-      <OrbitControls></OrbitControls>
+      <OrbitControls
+        target={[0, 1.2, 0]}
+        object-position={[0, 1.2, 3]}
+      ></OrbitControls>
 
       <Suspense
         fallback={
@@ -42,9 +45,6 @@ export function AvaLand() {
           }
         >
           <YoBB></YoBB>
-          <group position={[0, 1.0, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
-            <Agape text={`Agape`}></Agape>
-          </group>
         </Suspense>
 
         <Environment preset='apartment'></Environment>
@@ -103,9 +103,9 @@ function YoCam() {
 }
 
 let MyDances = [
-  `/servant/yobb/motion/selected/arms-hip-hop-dance.fbx`,
   `/servant/yobb/motion/selected/balle.fbx`,
   `/servant/yobb/motion/selected/belly-dance.fbx`,
+  `/servant/yobb/motion/selected/arms-hip-hop-dance.fbx`,
   `/servant/yobb/motion/selected/hi.fbx`,
   `/servant/yobb/motion/selected/idle-basic.fbx`,
   `/servant/yobb/motion/selected/idle-happy.fbx`,
@@ -118,9 +118,7 @@ let MyDances = [
 let idx = 0
 
 function YoBB() {
-  let [motionURL, setMotion] = useState(
-    `/servant/yobb/motion/selected/arms-hip-hop-dance.fbx`
-  )
+  let [motionURL, setMotion] = useState(MyDances[0])
   let glb = useGLTF(`/servant/yobb/avatar/yobb.glb`)
 
   let {
@@ -156,6 +154,10 @@ function YoBB() {
 
   return (
     <group>
+      <group position={[0, 1.0, 1]} rotation={[-0.35, 0, 0]} scale={0.155}>
+        <Agape text={`Agape`}></Agape>
+      </group>
+
       {glb && <Simulation glb={glb}></Simulation>}
       {glb && <AvaSim glb={glb}></AvaSim>}
 
