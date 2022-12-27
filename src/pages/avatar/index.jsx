@@ -4,10 +4,13 @@ import RedirGateHTML from '@/lib/login/RedirGateHTML'
 export default function Avatars() {
   return (
     <RedirGateHTML redirect='/avatar'>
-      <AvaLand></AvaLand>
+      {/* <AvaLand></AvaLand> */}
+      Avatar
     </RedirGateHTML>
   )
 }
+
+//
 
 //
 
