@@ -22,7 +22,7 @@ export function WelcomeBack() {
                     className='ml-4 mr-4 text-sm font-bold py-2.375 whitespace-nowrap text-slate-700 lg:ml-0'
                     href='/'
                   >
-                    AGAPE METAVERSE
+                    AGAPE METAVERSE PORTAL
                   </a>
                   <button
                     navbar-trigger

@@ -29,7 +29,7 @@ const Header = ({ title = titleDefault }) => {
         <link
           rel='mask-icon'
           href='/icons/safari-pinned-tab.svg'
-          color='#5bbad5'
+          color='#ffffff'
         />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
         <meta name='apple-mobile-web-app-title' content='Agape Town' />
@@ -93,7 +93,7 @@ const Header = ({ title = titleDefault }) => {
           name='viewport'
           content='width=device-width, minimum-scale=1, initial-scale=1.0'
         />
-        <meta name='theme-color' content='#00ffff' />
+        <meta name='theme-color' content='#ffffff' />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
 
         {/*
