@@ -14,7 +14,7 @@ export function Connect() {
                 <div className='flex items-center justify-between w-full p-0 pl-6 mx-auto flex-wrap-inherit'>
                   <a
                     className='ml-4 mr-4 text-sm font-bold py-2.375 whitespace-nowrap text-slate-700 lg:ml-0'
-                    href='../pages/dashboard.html'
+                    href='..//portal'
                   >
                     Agape.town
                   </a>
@@ -52,7 +52,7 @@ export function Connect() {
                           <a
                             className='flex items-center px-4 py-2 mr-2 text-sm font-normal transition-all lg-max:opacity-0 duration-250 ease-soft-in-out text-slate-700 lg:px-2'
                             aria-current='page'
-                            href='../pages/dashboard.html'
+                            href='..//portal'
                           >
                             <i className='mr-1 fa fa-chart-pie opacity-60' />
                             Dashboard

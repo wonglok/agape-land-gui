@@ -4,21 +4,22 @@
 import { importPackages } from '@/engine-effectnode/lib/importPackages'
 import { useEffect } from 'react'
 //
-export default function EffectNode() {
-  useEffect(() => {
-    let run = async () => {
-      importPackages([
+let yo =
+  typeof window !== 'undefined'
+    ? importPackages([
+        'nipple',
         'react-dom',
         'three',
         'three/examples/jsm/utils/SkeletonUtils.js',
-      ]).then((result) => {
-        //
-        console.log(result)
-      })
+      ])
+    : Promise.resolve([])
 
-      // importShim('react').
-    }
-    run()
+export default function EffectNode() {
+  useEffect(() => {
+    yo.then((result) => {
+      //
+      console.log(result)
+    })
     // importShim()
   }, [])
   return <div>123</div>

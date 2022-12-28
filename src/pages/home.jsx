@@ -27,7 +27,7 @@ export default function Page() {
             />
             <a
               className='block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
-              href='../pages/dashboard.html'
+              href='..//portal'
               target='_blank'
             >
               <img
@@ -47,7 +47,7 @@ export default function Page() {
               <li className='w-full mt-0.5'>
                 <a
                   className='flex items-center px-4 mx-4 my-0 text-sm py-2.7 ease-nav-brand whitespace-nowrap transition-colors'
-                  href='../pages/dashboard.html'
+                  href='..//portal'
                 >
                   <div className='flex items-center justify-center w-8 h-8 mr-2 text-center bg-white bg-center rounded-lg shadow-soft-2xl stroke-0 xl:p-2.5'>
                     <svg

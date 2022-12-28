@@ -1,11 +1,11 @@
 import { signOut } from '@/content-landing-page/LoginContentGate/GateMethods'
-import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { getID } from '@/lib/getID'
 import Link from 'next/link'
-import { useSnapshot } from 'valtio'
+// import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
+// import { useSnapshot } from 'valtio'
 
 export function LeftMenu() {
-  let gs = useSnapshot(GateState)
+  // let gs = useSnapshot(GateState)
   let getClass = (className, url) => {
     if (location) {
       return location.pathname === url ? className : ''
@@ -18,7 +18,7 @@ export function LeftMenu() {
         <i className='absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden' />
         <a
           className='block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
-          href='../pages/dashboard.html'
+          href='..//portal'
           target='_blank'
         >
           <img
@@ -29,11 +29,8 @@ export function LeftMenu() {
         </a>
       </div>
 
-      {/*  */}
-      {/*  */}
-      {/*  */}
       <hr className='h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent' />
-      {/* change h-sidenav-no-pro to h-sidenav when pro is up */}
+
       <div className='items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full'>
         <ul className='flex flex-col pl-0 mb-0'>
           <li className='w-full mt-4'>
@@ -41,6 +38,8 @@ export function LeftMenu() {
               Dashboard Pages
             </h6>
           </li>
+          {/*  */}
+          {/*  */}
           {[
             //
             { _id: getID(), link: '/portal', name: 'Dashboard' },
@@ -74,6 +73,9 @@ export function LeftMenu() {
               </li>
             )
           })}
+          {/*  */}
+          {/*  */}
+
           <li className='w-full mt-4'>
             <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
               More

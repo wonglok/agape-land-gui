@@ -5,7 +5,7 @@ const url = 'https://agape.land/'
 const description = 'The land of the living that you create.'
 const author = 'Agape Metaverse'
 const keywords = `Agape, Metaverse, WebGL, Creator`
-const Header = ({ title = titleDefault }) => {
+const Header = ({ referrer = '', host = '', title = titleDefault }) => {
   return (
     <>
       <Head>

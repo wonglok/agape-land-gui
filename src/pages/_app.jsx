@@ -39,8 +39,8 @@ function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>
       {/*  */}
-      <Header title={pageProps.title} />
-      <SEO></SEO>
+      <Header {...pageProps} />
+      <SEO {...pageProps}></SEO>
 
       {gs.readyStatus === 'done' ? (
         <Component {...pageProps} />
