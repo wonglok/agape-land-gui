@@ -5,6 +5,8 @@ import { CanvasPage } from '@/content-landing-page/CanvasLayout/CanvasLandingPag
 export default function AutoDetect({ title, host, referer }) {
   //
 
+  console.log(title, host, referer)
+
   return <CanvasPage></CanvasPage>
 }
 
@@ -29,8 +31,6 @@ export async function getServerSideProps(context) {
     }, // will be passed to the page component as props
   }
 }
-
-//
 
 //
 
