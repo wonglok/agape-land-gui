@@ -11,6 +11,7 @@ export default async function handler(req, res) {
       method: 'GET',
     }
   )
+
   const json = await response.json()
 
   // not required –> only for this demo to prevent removal of the demo's domain
