@@ -2,7 +2,7 @@
 export default function Error() {
   return (
     <>
-      <h1>404 - Not Found.... dude, let's go home</h1>
+      <h1>404 not found</h1>
     </>
   )
 }
