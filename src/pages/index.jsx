@@ -3,8 +3,6 @@
 import { CanvasPage } from '@/content-landing-page/CanvasLayout/CanvasLandingPage'
 
 export default function AutoDetect({ title, host, referer }) {
-  console.log(title, host, referer)
-
   return <CanvasPage></CanvasPage>
 }
 
@@ -19,7 +17,6 @@ export default function AutoDetect({ title, host, referer }) {
 
 export async function getServerSideProps(context) {
   //
-
   return {
     props: {
       host: context?.req?.headers?.host || '',

@@ -17,7 +17,7 @@ export function PGPlaces({ content }) {
         <LeftMenu></LeftMenu>
         <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 transition-all duration-200'>
           <SectionHeader
-            title='Places'
+            title='Domain'
             subTitle='Where you can hangout'
             bgImage='/brand/place.webp'
             bgOffsetY={52}

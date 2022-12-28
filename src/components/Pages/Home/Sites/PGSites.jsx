@@ -7,7 +7,7 @@ import { LeftMenu } from '../Compos/LeftMenu'
 import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 import { SectionHeader } from '../Compos/SectionHeader'
 
-export function PGPlaces({ content }) {
+export function PGSites({ content }) {
   let gs = useSnapshot(GateState)
 
   return (
@@ -17,10 +17,10 @@ export function PGPlaces({ content }) {
         <LeftMenu></LeftMenu>
         <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 transition-all duration-200'>
           <SectionHeader
-            title='Places'
-            subTitle='Where you can hangout'
-            bgImage='/brand/place.webp'
-            bgOffsetY={52}
+            title='Sites'
+            subTitle='Programmable Avatar Apps'
+            bgImage='/brand/avatar.webp'
+            bgOffsetY={15}
           ></SectionHeader>
         </div>
       </DesktopOnly>

@@ -43,9 +43,10 @@ export function LeftMenu() {
           {[
             //
             { _id: getID(), link: '/portal', name: 'Dashboard' },
-            { _id: getID(), link: '/portal/avatars', name: 'Avatars' },
-            { _id: getID(), link: '/portal/places', name: 'Places' },
+            // { _id: getID(), link: '/portal/avatars', name: 'Avatars' },
+            { _id: getID(), link: '/portal/sites', name: 'Sites' },
           ].map((item) => {
+            //
             return (
               <li key={item._id} className='w-full mt-0.5'>
                 <Link href={item.link}>

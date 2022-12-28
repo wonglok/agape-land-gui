@@ -1,11 +1,11 @@
-import { PGPlaces } from '@/components/Pages/Home/MyOwnPlaces/PGPlaces'
+import { PGSites } from '@/components/Pages/Home/Sites/PGSites'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
     <RedirGateHTML redirect='/portal/places'>
       {/* <AvaLand></AvaLand> */}
-      <PGPlaces></PGPlaces>
+      <PGSites></PGSites>
     </RedirGateHTML>
   )
 }

@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      title: 'Agape - Servants',
+      title: 'Agape Portal',
     },
   }
 }
