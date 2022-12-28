@@ -1,7 +1,7 @@
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { useSnapshot } from 'valtio'
 import { SectionHeader } from '../Compos/SectionHeader'
-import { Domain } from './Domain'
+// import { Domain } from './Domain'
 
 export function MyOwnPlaces() {
   let gs = useSnapshot(GateState)
@@ -14,7 +14,7 @@ export function MyOwnPlaces() {
         bgImage='/brand/place.webp'
         bgOffsetY={52}
       ></SectionHeader>
-      <Domain></Domain>
+      {/* <Domain></Domain> */}
     </div>
   )
 }

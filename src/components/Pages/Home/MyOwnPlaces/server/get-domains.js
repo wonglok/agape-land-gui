@@ -1,3 +1,5 @@
+import fetch from 'node-fetch'
+
 export default async function handler(req, res) {
   const response = await fetch(
     `https://api.vercel.com/v9/projects/${process.env.PROJECT_ID_VERCEL}/domains?teamId=${process.env.TEAM_ID_VERCEL}&limit=50`,

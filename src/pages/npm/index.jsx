@@ -3,20 +3,15 @@
 // import { UserEndPoints } from '@/content-landing-page/LoginContentGate/GateConst'
 import { importPackages } from '@/engine-effectnode/lib/importPackages'
 import { useEffect } from 'react'
-//
-let yo =
-  typeof window !== 'undefined'
-    ? importPackages([
-        'nipple',
-        'react-dom',
-        'three',
-        'three/examples/jsm/utils/SkeletonUtils.js',
-      ])
-    : Promise.resolve([])
 
 export default function EffectNode() {
   useEffect(() => {
-    yo.then((result) => {
+    importPackages([
+      'nipple',
+      'react-dom',
+      'three',
+      'three/examples/jsm/utils/SkeletonUtils.js',
+    ]).then((result) => {
       //
       console.log(result)
     })
