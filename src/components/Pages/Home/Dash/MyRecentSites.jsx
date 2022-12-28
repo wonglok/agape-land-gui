@@ -283,7 +283,10 @@ export function MyRecentSites() {
   )
 }
 
-function OneCard({ domain = 'yoursite.my.agape.land' }) {
+function OneCard({
+  title = 'Joy in the WORLD',
+  domain = 'christmastree.my.agape.land',
+}) {
   return (
     <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
       <div className='relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border'>
@@ -297,15 +300,22 @@ function OneCard({ domain = 'yoursite.my.agape.land' }) {
           </a>
         </div>
         <div className='flex-auto px-1 pt-6'>
-          <p className='relative z-10 mb-2 text-sm leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 bg-clip-text'>
-            {domain}
-          </p>
           <a data-stuff='javascript:;'>
-            <h5>Scandinavian</h5>
+            <h5>{title}</h5>
           </a>
-          <p className='mb-6 text-sm leading-normal'>
-            Music is something that every person has his or her own specific
-            opinion about.
+          <p className='flex mb-6 text-sm leading-normal'>
+            {domain}
+            <div className='inline-block scale-50'>
+              <svg
+                width='24'
+                height='24'
+                xmlns='http://www.w3.org/2000/svg'
+                fill-rule='evenodd'
+                clip-rule='evenodd'
+              >
+                <path d='M14 4h-13v18h20v-11h1v12h-22v-20h14v1zm10 5h-1v-6.293l-11.646 11.647-.708-.708 11.647-11.646h-6.293v-1h8v8z' />
+              </svg>
+            </div>
           </p>
           <div className='flex items-center justify-between'>
             <button
