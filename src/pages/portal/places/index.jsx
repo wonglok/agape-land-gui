@@ -1,4 +1,4 @@
-import { PGPlaces } from '@/components/Pages/Home/PGPlaces'
+import { PGPlaces } from '@/components/Pages/Home/MyOwnPlaces/PGPlaces'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {

@@ -3,11 +3,12 @@
 import { StylesDashboard } from '@/components/Shared/StylesDashboard'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { useSnapshot } from 'valtio'
-import { LeftMenu } from './Compos/LeftMenu'
-import { Dash } from './Dash/Dash'
+import { LeftMenu } from '../Compos/LeftMenu'
+import { Dash } from './Dash'
 import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 
 export function PGHome({ content }) {
+  //
   let gs = useSnapshot(GateState)
 
   return (

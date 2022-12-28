@@ -3,10 +3,9 @@
 import { StylesDashboard } from '@/components/Shared/StylesDashboard'
 import { GateState } from '@/content-landing-page/LoginContentGate/GateState'
 import { useSnapshot } from 'valtio'
-import { LeftMenu } from './Compos/LeftMenu'
+import { LeftMenu } from '../Compos/LeftMenu'
 import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
-import { MyOwnPlaces } from './MyOwnPlaces/MyOwnPlaces'
-import { MyOwnAvatars } from './MyOwnAvatars/MyOwnAvatars'
+import { MyOwnAvatars } from './MyOwnAvatars'
 
 export function PGAvatars({ content }) {
   let gs = useSnapshot(GateState)

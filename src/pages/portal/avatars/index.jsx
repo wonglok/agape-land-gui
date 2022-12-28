@@ -1,4 +1,4 @@
-import { PGAvatars } from '@/components/Pages/Home/PGAvatars'
+import { PGAvatars } from '@/components/Pages/Home/MyOwnAvatars/PGAvatars'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {

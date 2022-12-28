@@ -1,4 +1,4 @@
-import { PGHome } from '@/components/Pages/Home/PGHome'
+import { PGHome } from '@/components/Pages/Home/Dash/PGHome'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {

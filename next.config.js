@@ -2,7 +2,7 @@ const nextConfig = {
   webpack(config, { isServer }) {
     // audio support
 
-    config.experiments = { asyncWebAssembly: true }
+    config.experiments = { ...config.experiments, asyncWebAssembly: true }
     config.performance = {
       // we dont want the wasm blob to generate warnings
       hints: false,
