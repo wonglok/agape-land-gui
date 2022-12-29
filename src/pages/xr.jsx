@@ -39,10 +39,10 @@ function Content() {
   // let glb = useGLTF(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
   let glb = useGLTF(`/xr/querlo.glb`)
 
-  // let tex = useTexture(`/env/yoyo.jpg`)
+  let tex = useTexture(`/env/yoyo.jpg`)
   // let scene = useThree((s) => s.scene)
-  // tex.mapping = EquirectangularReflectionMapping
-  // tex.encoding = sRGBEncoding
+  tex.mapping = EquirectangularReflectionMapping
+  tex.encoding = sRGBEncoding
   // scene.environment = tex
   // scene.background = tex
 
