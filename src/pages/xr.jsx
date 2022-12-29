@@ -78,7 +78,12 @@ function Content() {
       <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter>
 
       {right &&
-        createPortal(<primitive object={ribbon}></primitive>, right.controller)}
+        createPortal(
+          <group>
+            <primitive object={ribbon}></primitive>
+          </group>,
+          right.controller
+        )}
 
       <Environment preset='sunset'></Environment>
 
