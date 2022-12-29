@@ -55,7 +55,7 @@ function Content() {
 
   glb.scene.traverse((it) => {
     if (it.material) {
-      it.material.envMapIntensity = 0.4
+      // it.material.envMapIntensity = 0.4
     }
   })
 
