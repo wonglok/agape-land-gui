@@ -77,7 +77,8 @@ function Content() {
     <group>
       <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter>
 
-      {(right && createPortal(<primitive object={ribbon}></primitive>), right)}
+      {right &&
+        createPortal(<primitive object={ribbon}></primitive>, right.controller)}
 
       <Environment preset='sunset'></Environment>
 
