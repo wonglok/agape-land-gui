@@ -9,10 +9,16 @@ import {
   useGLTF,
   useTexture,
 } from '@react-three/drei'
-import { Canvas, createPortal, useThree } from '@react-three/fiber'
+import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { VRButton, XRButton, Controllers, useController } from '@react-three/xr'
-import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
+import {
+  Color,
+  EquirectangularReflectionMapping,
+  Object3D,
+  sRGBEncoding,
+} from 'three'
+import { MeshBasicMaterial } from 'three140'
 import { useSnapshot } from 'valtio'
 
 export default function VR() {
@@ -54,24 +60,26 @@ function Content() {
 
   let right = useController('right')
 
+  let ribbon = new Object3D()
+  ribbon.name = 'rightctrl'
+  useFrame(() => {
+    if (right) {
+      right.controller.getWorldPosition(ribbon.position)
+    }
+  })
+
   return (
     <group>
       <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter>
-      {right &&
-        createPortal(
-          <>
-            <group position={[0, 1, 0]}>
-              <group name={'rightctrl'}></group>
-            </group>
-          </>,
-          right.controller
-        )}
-      {/**/}
+      <primitive object={ribbon}></primitive>
 
       <Environment preset='sunset'></Environment>
       {/* <ambientLight />
       <pointLight position={[10, 10, 10]} /> */}
-      <Controllers />
+      <Controllers
+        hideRaysOnBlur={false}
+        rayMaterial={new MeshBasicMaterial({ color: new Color('#ffffff') })}
+      />
 
       <group position={[0, -2, 0]}>
         <primitive object={glb.scene}></primitive>

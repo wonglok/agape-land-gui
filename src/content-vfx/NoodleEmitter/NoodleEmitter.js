@@ -141,6 +141,11 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   useFrame((st, dt) => {
     t += dt
 
+    let yo = st.scene.getObjectByName(nameToChase)
+    if (yo) {
+      yo.getWorldPosition(group.position)
+      yo.getWorldPosition(chaser.position)
+    }
     // ptl.current.intensity = ((3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7) / 3.0
   })
 
