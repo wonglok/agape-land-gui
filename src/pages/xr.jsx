@@ -55,7 +55,7 @@ function Content() {
 
   glb.scene.traverse((it) => {
     if (it.material) {
-      it.material.envMapIntensity = 1.0
+      it.material.envMapIntensity = 0.4
     }
   })
 
@@ -75,17 +75,17 @@ function Content() {
 
   return (
     <group>
-      <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter>
+      {/* <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter> */}
 
       {right &&
         createPortal(
-          <group position={[0, 0, -3]}>
+          <group position={[0, 0, -6]}>
             <primitive object={ribbon}></primitive>
           </group>,
           right.controller
         )}
 
-      <Environment preset='sunset'></Environment>
+      <Environment preset='apartment'></Environment>
 
       <Controllers
         hideRaysOnBlur={false}
