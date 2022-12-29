@@ -13,7 +13,7 @@ import { Vector3 } from 'three'
 export function XRContent({ children }) {
   return (
     <>
-      <XR>
+      <XR referenceSpace='local'>
         <Walker>{children}</Walker>
       </XR>
     </>

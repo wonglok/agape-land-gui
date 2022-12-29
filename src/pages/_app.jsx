@@ -18,16 +18,28 @@ function App({ Component, pageProps = { title: 'index' } }) {
   let gs = useSnapshot(GateState)
 
   useEffect(() => {
-    if ('xr' in window.navigator) {
-      window?.navigator?.xr?.isSessionSupported('immersive-vr').then(
-        (v) => {
-          GateState.supportVR = v
-        },
-        () => {
-          GateState.supportVR = false
-        }
-      )
-    }
+    // if ('xr' in window.navigator) {
+    //   window?.navigator?.xr
+    //     ?.isSessionSupported('immersive-vr')
+    //     .then(
+    //       (v) => {
+    //         GateState.supportVR = v
+    //       },
+    //       () => {
+    //         GateState.supportVR = false
+    //       }
+    //     )
+    //     .then(() => {
+    //       window?.navigator?.xr?.isSessionSupported('immersive-ar').then(
+    //         (v) => {
+    //           GateState.supportAR = v
+    //         },
+    //         () => {
+    //           GateState.supportAR = false
+    //         }
+    //       )
+    //     })
+    // }
   }, [])
 
   useEffect(() => {

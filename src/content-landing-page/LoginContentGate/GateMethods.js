@@ -66,12 +66,14 @@ export const getUserInfo = async (sToken) => {
   }
   try {
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
+    //
     const response = await fetch(`${myAPIEndPoint}/session`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${sToken}`,
       },
     })
+
     if (response.ok) {
       return await response.json()
     } else {

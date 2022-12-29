@@ -141,7 +141,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   useFrame((st, dt) => {
     t += dt
 
-    ptl.current.intensity = (3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7
+    // ptl.current.intensity = ((3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7) / 3.0
   })
 
   return (
@@ -150,12 +150,12 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       <primitive object={chaser}></primitive>
 
       {createPortal(
-        <Sphere args={[0.45, 35, 35]}>
-          <pointLight
+        <Sphere args={[0.2, 35, 35]}>
+          {/* <pointLight
             ref={ptl}
             position={[0, 0.0, 0]}
             intensity={3}
-          ></pointLight>
+          ></pointLight> */}
           <meshPhysicalMaterial
             metalness={0.0}
             roughness={0}
