@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react'
 import { NoodleSegmentCompute } from './NoodleSegmentCompute'
 import { Object3D, Vector3 } from 'three'
 import { NoodleRenderable } from './NoodleRenderable'
-import { ParticleRenderable } from './ParticleRenderable'
+// import { ParticleRenderable } from './ParticleRenderable'
 import {
   Color,
   DoubleSide,
@@ -141,7 +141,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   useFrame((st, dt) => {
     t += dt
 
-    ptl.current.intensity = (3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7
+    // ptl.current.intensity = (3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7
   })
 
   return (
@@ -151,11 +151,11 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
 
       {createPortal(
         <Sphere args={[0.45, 35, 35]}>
-          <pointLight
+          {/* <pointLight
             ref={ptl}
             position={[0, 0.0, 0]}
             intensity={3}
-          ></pointLight>
+          ></pointLight> */}
           <meshPhysicalMaterial
             metalness={0.0}
             roughness={0}

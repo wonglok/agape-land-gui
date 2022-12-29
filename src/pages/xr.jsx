@@ -80,8 +80,7 @@ function Content() {
       {(right && createPortal(<primitive object={ribbon}></primitive>), right)}
 
       <Environment preset='sunset'></Environment>
-      {/* <ambientLight />
-      <pointLight position={[10, 10, 10]} /> */}
+
       <Controllers
         hideRaysOnBlur={false}
         rayMaterial={new MeshBasicMaterial({ color: new Color('#ffffff') })}
