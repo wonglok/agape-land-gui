@@ -79,7 +79,7 @@ function Content() {
 
       {right &&
         createPortal(
-          <group>
+          <group position={[0, 0, -3]}>
             <primitive object={ribbon}></primitive>
           </group>,
           right.controller
