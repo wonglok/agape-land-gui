@@ -12,6 +12,7 @@ import {
 import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { VRButton, XRButton, Controllers, useController } from '@react-three/xr'
+import { useMemo } from 'react'
 import {
   Color,
   EquirectangularReflectionMapping,
@@ -60,8 +61,12 @@ function Content() {
 
   let right = useController('right')
 
-  let ribbon = new Object3D()
+  let ribbon = useMemo(() => {
+    return new Object3D()
+  }, [])
+
   ribbon.name = 'rightctrl'
+
   useFrame(() => {
     if (right) {
       right.controller.getWorldPosition(ribbon.position)
@@ -71,7 +76,8 @@ function Content() {
   return (
     <group>
       <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter>
-      <primitive object={ribbon}></primitive>
+
+      {(right && createPortal(<primitive object={ribbon}></primitive>), right)}
 
       <Environment preset='sunset'></Environment>
       {/* <ambientLight />
