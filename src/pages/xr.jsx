@@ -68,7 +68,6 @@ function Content() {
         )}
       {/**/}
 
-      {right && <primitive object={right.controller}></primitive>}
       <Environment preset='sunset'></Environment>
       {/* <ambientLight />
       <pointLight position={[10, 10, 10]} /> */}
