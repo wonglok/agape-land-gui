@@ -44,7 +44,7 @@ export default function VR() {
 //
 function Content() {
   // let glb = useGLTF(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
-  let glb = useGLTF(`/xr/upsacel4x/querlo-4x-2kres.glb`)
+  let glb = useGLTF(`/xr/upsacel4x/4k-querlo-webp.glb`)
 
   let tex = useTexture(`/env/yoyo.jpg`)
   // let scene = useThree((s) => s.scene)
