@@ -55,19 +55,19 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
     let mini = core
 
     let renderConfig = {
-      color: new Color('#ffffff'),
-      emissive: new Color('#ffffff'),
-      emissiveIntensity: 3,
-      envMapIntensity: 0,
+      color: new Color('#ff0000'),
+      // emissive: new Color('#ffffff'),
+      // emissiveIntensity: 3,
+      // envMapIntensity: 0,
       transparent: true,
-      roughness: 1.0,
-      metalness: 0.0,
+      roughness: 0.0,
+      metalness: 1.0,
       side: FrontSide,
 
-      // reflectivity: 1,
-      transmission: 0,
-      ior: 1.2,
-      thickness: 0.1,
+      // // reflectivity: 1,
+      // transmission: 0,
+      // ior: 1.2,
+      // thickness: 0.1,
     }
 
     // let physics = new PhysicsCompute({
