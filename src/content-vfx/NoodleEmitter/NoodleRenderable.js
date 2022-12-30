@@ -175,6 +175,8 @@ export class NoodleRenderable {
         return transformedNormal;
       }
 
+      varying vec3 vTN;
+
       `
 
       let transformV3 = `
@@ -186,6 +188,8 @@ export class NoodleRenderable {
 
             vec3 nPosNormal = makeGeoNormal();
             vec3 objectNormal = vec3( nPosNormal );
+
+            vTN = objectNormal;
 
             // #ifdef USE_TANGENT
             //   vec3 objectTangent = vec3( tangent.xyz );
@@ -229,6 +233,7 @@ gl_Position = projectionMatrix * mvPosition;
         `${`
   varying float vT;
   varying vec3 vSize;
+  varying vec3 vTN;
 
   `}\nvoid main() {`
       )
@@ -245,7 +250,8 @@ gl_Position = projectionMatrix * mvPosition;
           #endif
           gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
-          // gl_FragColor.rgb *= vec3(1.0, vT * vT, 0.0);
+          gl_FragColor.rgb *= vec3(vTN);
+
           gl_FragColor.a *= 1.0;//(1.0 - vT) * vT;
       `
       )
