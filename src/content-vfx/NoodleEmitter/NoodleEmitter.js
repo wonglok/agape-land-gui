@@ -68,9 +68,9 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       roughness: 0.0,
       metalness: 1.0,
 
-      transmission: 0,
-      ior: 1.4,
-      thickness: 1.1,
+      // transmission: 0,
+      // ior: 1.4,
+      // thickness: 1.1,
       side: DoubleSide,
 
       // // reflectivity: 1,
