@@ -35,7 +35,7 @@ export default function VR() {
   // let gs = useSnapshot(GateState)
   return (
     <>
-      <XRButton mode='AR'></XRButton>
+      {/* <XRButton mode='AR'></XRButton> */}
       <Canvas gl={{ antialias: true }}>
         <XR referenceSpace='local'>
           {/* <XRContent> */}
@@ -44,6 +44,7 @@ export default function VR() {
         </XR>
       </Canvas>
       <ARButton></ARButton>
+
       {/* {gs.supportAR ? (
         <XRButton></XRButton>
       ) : (
@@ -58,14 +59,14 @@ function Content() {
   // let glb = useGLTF(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
   let glb = useGLTF(`/xr/upsacel4x/4k-querlo-webp.glb`)
 
-  let apartment = useEnvironment({ preset: 'apartment' })
-  apartment.encoding = sRGBEncoding
+  // let apartment = useEnvironment({ preset: 'apartment' })
+  // apartment.encoding = sRGBEncoding
 
-  let tex = useTexture(`/env/yoyo.jpg`)
-  let scene = useThree((s) => s.scene)
-  tex.mapping = EquirectangularReflectionMapping
-  tex.encoding = sRGBEncoding
-  scene.environment = tex
+  // let tex = useTexture(`/env/yoyo.jpg`)
+  // // let scene = useThree((s) => s.scene)
+  // tex.mapping = EquirectangularReflectionMapping
+  // tex.encoding = sRGBEncoding
+  // scene.environment = tex
 
   // let sesison = useXR((s) => s.session)
   // if (sesison) {
@@ -97,7 +98,7 @@ function Content() {
       //   opacity: 1,
       // })
       // it.material.envMap = apartment
-      // it.material.envMapIntensity = 0.9
+      it.material.envMapIntensity = 2.5
     }
   })
 
@@ -127,14 +128,14 @@ function Content() {
           right.controller
         )}
 
-      <Environment preset='apartment'></Environment>
+      <Environment preset='night'></Environment>
 
       <Controllers
         hideRaysOnBlur={false}
         rayMaterial={new MeshBasicMaterial({ color: new Color('#ffffff') })}
       />
 
-      <group position={[0, -1, 0]} scale={0.5}>
+      <group position={[0, -1, 0]} scale={0.25}>
         <primitive object={glb.scene}></primitive>
       </group>
     </group>
