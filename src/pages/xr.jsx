@@ -67,12 +67,12 @@ function Content() {
   tex.encoding = sRGBEncoding
   scene.environment = tex
 
-  let sesison = useXR((s) => s.session)
-  if (sesison) {
-    scene.background = null
-  } else {
-    scene.background = tex
-  }
+  // let sesison = useXR((s) => s.session)
+  // if (sesison) {
+  //   scene.background = null
+  // } else {
+  //   scene.background = tex
+  // }
 
   glb.scene.traverse((it) => {
     if (it.name === 'Plane') {
@@ -127,14 +127,14 @@ function Content() {
           right.controller
         )}
 
-      {/* <Environment preset='apartment'></Environment> */}
+      <Environment preset='apartment'></Environment>
 
       <Controllers
         hideRaysOnBlur={false}
         rayMaterial={new MeshBasicMaterial({ color: new Color('#ffffff') })}
       />
 
-      <group position={[0, -0.3, 0]} scale={1}>
+      <group position={[0, -1, 0]} scale={0.5}>
         <primitive object={glb.scene}></primitive>
       </group>
     </group>
