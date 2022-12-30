@@ -150,7 +150,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       <primitive object={chaser}></primitive>
 
       {createPortal(
-        <Sphere args={[0.45, 35, 35]}>
+        <Sphere args={[0.1, 35, 35]}>
           {/* <pointLight
             ref={ptl}
             position={[0, 0.0, 0]}
@@ -162,7 +162,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
             reflectivity={3}
             // attenuationColor={`#DD8556`}
             transmission={1}
-            thickness={0.45 * 2}
+            thickness={0.1 * 2}
             ior={1.15}
             side={DoubleSide}
             envMapIntensity={0}

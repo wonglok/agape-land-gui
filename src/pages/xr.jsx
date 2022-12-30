@@ -117,8 +117,9 @@ function Content() {
   useFrame(({ camera }) => {
     if (right) {
       right.controller.getWorldPosition(base)
-      diff.set(0, 5, 0).applyQuaternion(right.controller.quaternion)
-      ribbon.position.copy(base).add(diff)
+      diff.set(0, 0, -5).applyQuaternion(right.controller.quaternion)
+      base.add(diff)
+      ribbon.position.lerp(base, 0.1)
     }
   })
 
