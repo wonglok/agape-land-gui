@@ -52,7 +52,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
         // delta.applyAxisAngle(up, 3.141592 + t * speed)
         // adder.add(delta)
         // adder.y += -0.3
-        chaser.position.lerp(adder, 0.01)
+        chaser.position.lerp(adder, 0.03)
       }
     })
 
