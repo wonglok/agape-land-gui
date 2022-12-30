@@ -18,7 +18,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
-  let howManyTracker = 42
+  let howManyTracker = 32
   let howLongTail = 64
 
   let { chaser, group } = useMemo(() => {
@@ -41,36 +41,36 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
-        let radius = 0.9
-        let speed = 10.5
+        // let radius = 0.9
+        // let speed = 10.5
         adder.copy(mouse3d.position)
-        delta.set(0, 0, radius)
-        up.x = Math.sin(t)
-        up.y = Math.cos(-t)
-        up.z = Math.cos(t)
-        up.normalize()
-        delta.applyAxisAngle(up, 3.141592 + t * speed)
-        adder.add(delta)
-        adder.y += -0.3
-        chaser.position.lerp(adder, 0.4)
+        // delta.set(0, 0, radius)
+        // up.x = Math.sin(t)
+        // up.y = Math.cos(-t)
+        // up.z = Math.cos(t)
+        // up.normalize()
+        // delta.applyAxisAngle(up, 3.141592 + t * speed)
+        // adder.add(delta)
+        // adder.y += -0.3
+        chaser.position.lerp(adder, 0.15)
       }
     })
 
     let mini = core
 
     let renderConfig = {
-      color: new Color('#ffffff'),
+      color: new Color('#ff0000'),
       // emissive: new Color('#ffffff'),
       // emissiveIntensity: 3,
       // envMapIntensity: 0,
-      transparent: false,
+      transparent: true,
       opacity: 1.0,
       roughness: 0.0,
-      metalness: 1.0,
+      metalness: 0.0,
 
-      // transmission: 0,
-      // ior: 1.4,
-      // thickness: 1.1,
+      transmission: 1.0,
+      ior: 1.4,
+      thickness: 1.1,
       side: DoubleSide,
 
       // // reflectivity: 1,
@@ -159,7 +159,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       <primitive object={chaser}></primitive>
 
       {createPortal(
-        <Sphere args={[0.1, 35, 35]}>
+        <Sphere args={[0.13, 35, 35]}>
           {/* <pointLight
             ref={ptl}
             position={[0, 0.0, 0]}

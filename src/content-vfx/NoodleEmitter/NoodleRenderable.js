@@ -245,7 +245,7 @@ gl_Position = projectionMatrix * mvPosition;
           #endif
           gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
-          gl_FragColor.rgb = vec3(1.0, vT * vT, 0.0);
+          // gl_FragColor.rgb *= vec3(1.0, vT * vT, 0.0);
           gl_FragColor.a *= 1.0;//(1.0 - vT) * vT;
       `
       )
