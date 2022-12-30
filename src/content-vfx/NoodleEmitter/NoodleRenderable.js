@@ -151,7 +151,7 @@ export class NoodleRenderable {
 
         vT = t;
 
-        vec2 volume = vec2(1.0, 1.0) * 0.015;
+        vec2 volume = vec2(1.0, 1.0) * 0.1 * vT * (1.0 - vT);
         vec3 transformedYo;
         vec3 objectNormal;
         createTube(t, volume, transformedYo, objectNormal);
@@ -245,6 +245,7 @@ gl_Position = projectionMatrix * mvPosition;
           #endif
           gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
+          gl_FragColor.rgb = vec3(1.0, vT * vT, 0.0);
           gl_FragColor.a *= 1.0;//(1.0 - vT) * vT;
       `
       )

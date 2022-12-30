@@ -408,7 +408,7 @@ export class NoodleSegmentCompute {
 
               latest.xyz = ballify(latest.rgb, sin(time) * 0.5);
 
-              latest *= rotateQ(normalize(vec3(0.0, 1.0, 0.0)), time * 3.0);
+              latest *= rotateQ(normalize(vec3(cos(time), 1.0, sin(time))), time * 3.0);
 
               positionHeadClone.xyz = latest.rgb;
 
