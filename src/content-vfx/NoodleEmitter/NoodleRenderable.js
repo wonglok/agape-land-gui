@@ -147,11 +147,11 @@ export class NoodleRenderable {
 
       vec3 makeGeo () {
         float t = (tubeInfo) + 0.5;
-        float thickness = 0.002 * 10.0;// * (1.0 - t) * t;
+        // float thickness = 0.002 * 10.0;// * (1.0 - t) * t;
 
         vT = t;
 
-        vec2 volume = vec2(1.0, 1.0) * 0.005;
+        vec2 volume = vec2(1.0, 1.0) * 0.015;
         vec3 transformedYo;
         vec3 objectNormal;
         createTube(t, volume, transformedYo, objectNormal);
@@ -245,7 +245,7 @@ gl_Position = projectionMatrix * mvPosition;
           #endif
           gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
-          gl_FragColor.a *= (1.0 - vT) * vT;
+          gl_FragColor.a *= 1.0;//(1.0 - vT) * vT;
       `
       )
 

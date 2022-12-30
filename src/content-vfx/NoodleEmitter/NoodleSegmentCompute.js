@@ -251,6 +251,7 @@ export class NoodleSegmentCompute {
         if (isDown && ${this.useLine()}) {
           gl_FragColor.w = 1.0;
         }
+
         // radius
         gl_FragColor.w *= 0.96;
 
@@ -405,7 +406,7 @@ export class NoodleSegmentCompute {
 
               // latest += cnoise(latest.rgb + time) * metaHead.w *  0.5;
 
-              latest.xyz = ballify(latest.rgb, sin(time) * 2.0);
+              latest.xyz = ballify(latest.rgb, sin(time) * 0.5);
 
               latest *= rotateQ(normalize(vec3(0.0, 1.0, 0.0)), time * 3.0);
 

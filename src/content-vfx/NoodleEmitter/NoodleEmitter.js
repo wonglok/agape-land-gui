@@ -18,8 +18,8 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
-  let howManyTracker = 128
-  let howLongTail = 32
+  let howManyTracker = 64
+  let howLongTail = 64
 
   let { chaser, group } = useMemo(() => {
     let group = new Object3D()
@@ -41,7 +41,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
-        let radius = 1
+        let radius = 0.1
         let speed = 1.5
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)
@@ -59,9 +59,10 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       // emissive: new Color('#ffffff'),
       // emissiveIntensity: 3,
       // envMapIntensity: 0,
-      transparent: true,
-      roughness: 0.0,
-      metalness: 1.0,
+      transparent: false,
+      opacity: 0.0,
+      roughness: 1.0,
+      metalness: 0.0,
       side: FrontSide,
 
       // // reflectivity: 1,
