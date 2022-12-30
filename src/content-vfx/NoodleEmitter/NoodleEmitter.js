@@ -60,15 +60,15 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
 
     let renderConfig = {
       color: new Color('#ff0000'),
-      // emissive: new Color('#ffffff'),
-      // emissiveIntensity: 3,
+      emissive: new Color('#ff0000'),
+      emissiveIntensity: 2,
       // envMapIntensity: 0,
       transparent: true,
       opacity: 1.0,
-      roughness: 0.0,
-      metalness: 0.0,
+      roughness: 0.1,
+      metalness: 0.5,
 
-      transmission: 1.0,
+      transmission: 0.5,
       ior: 1.4,
       thickness: 1.1,
       side: DoubleSide,
