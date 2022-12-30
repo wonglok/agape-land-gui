@@ -18,7 +18,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
-  let howManyTracker = 64
+  let howManyTracker = 42
   let howLongTail = 64
 
   let { chaser, group } = useMemo(() => {
