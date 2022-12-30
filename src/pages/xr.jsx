@@ -11,11 +11,20 @@ import {
 } from '@react-three/drei'
 import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { VRButton, XRButton, Controllers, useController } from '@react-three/xr'
+import {
+  VRButton,
+  XRButton,
+  Controllers,
+  useController,
+  ARButton,
+  XR,
+  useXR,
+} from '@react-three/xr'
 import { useMemo } from 'react'
 import {
   Color,
   EquirectangularReflectionMapping,
+  MeshPhysicalMaterial,
   Object3D,
   sRGBEncoding,
 } from 'three'
@@ -23,15 +32,18 @@ import { MeshBasicMaterial } from 'three140'
 import { useSnapshot } from 'valtio'
 
 export default function VR() {
-  let gs = useSnapshot(GateState)
+  // let gs = useSnapshot(GateState)
   return (
     <>
       <XRButton mode='AR'></XRButton>
       <Canvas gl={{ antialias: true }}>
-        <XRContent>
+        <XR referenceSpace='local'>
+          {/* <XRContent> */}
           <Content></Content>
-        </XRContent>
+          {/* </XRContent> */}
+        </XR>
       </Canvas>
+      <ARButton></ARButton>
       {/* {gs.supportAR ? (
         <XRButton></XRButton>
       ) : (
@@ -46,16 +58,46 @@ function Content() {
   // let glb = useGLTF(`/scene/2022-11-28-NYC/NYC_Expo_30.glb`)
   let glb = useGLTF(`/xr/upsacel4x/4k-querlo-webp.glb`)
 
+  let apartment = useEnvironment({ preset: 'apartment' })
+  apartment.encoding = sRGBEncoding
+
   let tex = useTexture(`/env/yoyo.jpg`)
-  // let scene = useThree((s) => s.scene)
+  let scene = useThree((s) => s.scene)
   tex.mapping = EquirectangularReflectionMapping
   tex.encoding = sRGBEncoding
-  // scene.environment = tex
-  // scene.background = tex
+  scene.environment = tex
+
+  let sesison = useXR((s) => s.session)
+  if (sesison) {
+    scene.background = null
+  } else {
+    scene.background = tex
+  }
 
   glb.scene.traverse((it) => {
+    if (it.name === 'Plane') {
+      it.visible = false
+    }
     if (it.material) {
-      // it.material.envMapIntensity = 0.4
+      if (!it.userData.oMat) {
+        it.userData.oMat = it.material.clone()
+      }
+      // it.material = new MeshPhysicalMaterial({
+      //   map: it.userData.oMat.map,
+      //   emissive: new Color('#ffffff'),
+      //   emissiveMap: it.userData.oMat.map,
+      //   emissiveIntensity: 0.2,
+      //   roughness: 1,
+      //   roughnessMap: it.userData.oMat.roughnessMap,
+      //   metalnessMap: it.userData.oMat.metalnessMap,
+      //   transmission: 1.1,
+      //   ior: 1.3,
+      //   thickness: 1,
+      //   transparent: true,
+      //   opacity: 1,
+      // })
+      // it.material.envMap = apartment
+      // it.material.envMapIntensity = 0.9
     }
   })
 
@@ -67,7 +109,7 @@ function Content() {
 
   ribbon.name = 'rightctrl'
 
-  useFrame(() => {
+  useFrame(({ camera }) => {
     if (right) {
       right.controller.getWorldPosition(ribbon.position)
     }
@@ -85,14 +127,14 @@ function Content() {
           right.controller
         )}
 
-      <Environment preset='apartment'></Environment>
+      {/* <Environment preset='apartment'></Environment> */}
 
       <Controllers
         hideRaysOnBlur={false}
         rayMaterial={new MeshBasicMaterial({ color: new Color('#ffffff') })}
       />
 
-      <group position={[0, -2, 0]}>
+      <group position={[0, -0.3, 0]} scale={1}>
         <primitive object={glb.scene}></primitive>
       </group>
     </group>
