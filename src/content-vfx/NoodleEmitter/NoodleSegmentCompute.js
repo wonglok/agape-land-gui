@@ -406,7 +406,7 @@ export class NoodleSegmentCompute {
 
               // latest += cnoise(latest.rgb + time) * metaHead.w *  0.5;
 
-              latest.xyz = ballify(latest.rgb, sin(time) * 0.5);
+              latest.xyz = ballify(latest.rgb, sin(time) * 0.2);
 
               latest *= rotateQ(normalize(vec3(cos(time), 1.0, sin(time))), time * 3.0);
 

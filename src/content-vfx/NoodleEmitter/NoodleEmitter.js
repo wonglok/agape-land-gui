@@ -31,7 +31,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
     })
 
     let mouse3d = false
-    let up = new Vector3(0, 1, 0)
+    let up = new Vector3(1, 1, 1)
     let delta = new Vector3(0, 0, 1)
     let adder = new Vector3(0, 0, 0)
 
@@ -41,10 +41,14 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
       mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
-        let radius = 0.1
-        let speed = 1.5
+        let radius = 0.9
+        let speed = 10.5
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)
+        up.x = Math.sin(t)
+        up.y = Math.cos(-t)
+        up.z = Math.cos(t)
+        up.normalize()
         delta.applyAxisAngle(up, 3.141592 + t * speed)
         adder.add(delta)
         adder.y += -0.3
@@ -55,15 +59,19 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
     let mini = core
 
     let renderConfig = {
-      color: new Color('#ff0000'),
+      color: new Color('#ffffff'),
       // emissive: new Color('#ffffff'),
       // emissiveIntensity: 3,
       // envMapIntensity: 0,
       transparent: false,
-      opacity: 0.0,
-      roughness: 1.0,
-      metalness: 0.0,
-      side: FrontSide,
+      opacity: 1.0,
+      roughness: 0.0,
+      metalness: 1.0,
+
+      transmission: 0,
+      ior: 1.4,
+      thickness: 1.1,
+      side: DoubleSide,
 
       // // reflectivity: 1,
       // transmission: 0,

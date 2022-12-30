@@ -151,7 +151,7 @@ export class NoodleRenderable {
 
         vT = t;
 
-        vec2 volume = vec2(1.0, 1.0) * 0.1 * vT * (1.0 - vT);
+        vec2 volume = vec2(1.0, 1.0) * 0.05 * vT * (1.0 - vT);
         vec3 transformedYo;
         vec3 objectNormal;
         createTube(t, volume, transformedYo, objectNormal);
