@@ -28,7 +28,7 @@ import {
   Object3D,
   sRGBEncoding,
 } from 'three'
-import { MeshBasicMaterial } from 'three140'
+import { MeshBasicMaterial, Vector3 } from 'three140'
 import { useSnapshot } from 'valtio'
 
 export default function VR() {
@@ -110,23 +110,25 @@ function Content() {
 
   ribbon.name = 'rightctrl'
 
+  let base = new Vector3()
+
+  let diff = new Vector3()
+  //
   useFrame(({ camera }) => {
     if (right) {
-      right.controller.getWorldPosition(ribbon.position)
+      right.controller.getWorldPosition(base)
+      diff.set(0, 5, 0).applyQuaternion(right.controller.quaternion)
+      ribbon.position.copy(base).add(diff)
     }
   })
 
   return (
     <group>
-      {/* <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter> */}
+      <NoodleEmitter nameToChase={'rightctrl'}></NoodleEmitter>
 
-      {right &&
-        createPortal(
-          <group position={[0, 0, -6]}>
-            <primitive object={ribbon}></primitive>
-          </group>,
-          right.controller
-        )}
+      <primitive object={ribbon}></primitive>
+      {/* {right &&
+        createPortal(<group position={[0, 0, -6]}></group>, right.controller)} */}
 
       <Environment preset='night'></Environment>
 
