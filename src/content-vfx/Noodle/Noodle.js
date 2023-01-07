@@ -120,7 +120,7 @@ export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
       chaser,
       group: group,
     }
-  }, [core, gl, howLongTail, howManyTracker, nameToChase])
+  }, [core, gl, howLongTail, howManyTracker, mouse3d])
 
   let roughnessMapTex = useTexture(`/texture/snow/pattern.jpeg`)
   roughnessMapTex.encoding = sRGBEncoding

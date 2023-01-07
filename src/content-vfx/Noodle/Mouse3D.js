@@ -75,9 +75,5 @@ export function Mouse3D({ collider, mouse3d }) {
     }
   }, [collider.geometry, get, gl, mouse3d.position])
 
-  return (
-    <group>
-      <Noodle mouse3d={mouse3d}></Noodle>
-    </group>
-  )
+  return <group></group>
 }

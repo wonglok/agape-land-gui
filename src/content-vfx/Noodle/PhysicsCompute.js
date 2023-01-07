@@ -201,7 +201,7 @@ void main ()	{
   // az += cos(time * 3.1415) * sin(time * 3.1415);
   // el += sin(time * 3.1415) * cos(time * 3.1415);
 
-  vec3 ball = fromBall(0.075 + 0.05 * sin(time * 3.14), az, el);
+  vec3 ball = fromBall((0.075 + 0.05 * sin(time * 3.14)) * 3.0, az, el);
 
   ball = ball * rotateY(time * 0.5);
 

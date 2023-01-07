@@ -23,6 +23,7 @@ import { applyGlass } from '@/content-vfx/GlassShader/applyGlass'
 import { BirdCamSync } from './BirdCamSync'
 import { AvaZoom } from './AvaZoom'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
+import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export const gameKey = Math.random()
 
@@ -60,11 +61,12 @@ export function AvatarGuide({
 
       <primitive object={aCore} />
 
+      <Mouse3D collider={collider} mouse3d={destObj}></Mouse3D>
+
       <BirdCamSync player={aCore.player}></BirdCamSync>
-      {aCore?.player && <AvaZoom mouse3d={destObj}></AvaZoom>}
-      <group>
-        <Mouse3D collider={collider} mouse3d={destObj}></Mouse3D>
-      </group>
+      <AvaZoom mouse3d={destObj}></AvaZoom>
+      <Noodle mouse3d={destObj}></Noodle>
+
       {/*  */}
     </group>
   )
