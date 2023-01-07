@@ -17,34 +17,34 @@ import '@/styles/index.css'
 function App({ Component, pageProps = { title: 'index' } }) {
   // let gs = useSnapshot(GateState)
 
-  useEffect(() => {
-    // if ('xr' in window.navigator) {
-    //   window?.navigator?.xr
-    //     ?.isSessionSupported('immersive-vr')
-    //     .then(
-    //       (v) => {
-    //         GateState.supportVR = v
-    //       },
-    //       () => {
-    //         GateState.supportVR = false
-    //       }
-    //     )
-    //     .then(() => {
-    //       window?.navigator?.xr?.isSessionSupported('immersive-ar').then(
-    //         (v) => {
-    //           GateState.supportAR = v
-    //         },
-    //         () => {
-    //           GateState.supportAR = false
-    //         }
-    //       )
-    //     })
-    // }
-  }, [])
+  // useEffect(() => {
+  //   // if ('xr' in window.navigator) {
+  //   //   window?.navigator?.xr
+  //   //     ?.isSessionSupported('immersive-vr')
+  //   //     .then(
+  //   //       (v) => {
+  //   //         GateState.supportVR = v
+  //   //       },
+  //   //       () => {
+  //   //         GateState.supportVR = false
+  //   //       }
+  //   //     )
+  //   //     .then(() => {
+  //   //       window?.navigator?.xr?.isSessionSupported('immersive-ar').then(
+  //   //         (v) => {
+  //   //           GateState.supportAR = v
+  //   //         },
+  //   //         () => {
+  //   //           GateState.supportAR = false
+  //   //         }
+  //   //       )
+  //   //     })
+  //   // }
+  // }, [])
 
-  useEffect(() => {
-    // hydration()
-  }, [])
+  // useEffect(() => {
+  //   // hydration()
+  // }, [])
 
   let SEO = Component.SEO || (() => null)
 

@@ -6,20 +6,15 @@ import { MeshBVH } from 'three-mesh-bvh'
 import { NoodleEmitter } from '../NoodleEmitter/NoodleEmitter'
 import { Noodle } from './Noodle'
 export function Mouse3D({ collider, mouse3d }) {
-  let raycastResult = useMemo(() => {
-    let dd = new Object3D()
-    dd.position.y = 2.5
-    return dd
-  }, [])
   let mouser = useRef({ isDown: false })
 
   useFrame(({ raycaster, mouse, camera, controls }, dt) => {
     //
     if (collider.geometry) {
-      if ('ontouchstart' in window) {
-        mouse.x = 0
-        mouse.y = 0
-      }
+      // if ('ontouchstart' in window) {
+      //   mouse.x = 0
+      //   mouse.y = 0
+      // }
       raycaster.setFromCamera(mouse, camera)
 
       /** @type {MeshBVH} */
@@ -28,9 +23,8 @@ export function Mouse3D({ collider, mouse3d }) {
 
       if (res) {
         if (mouse3d && mouser.current.isDown) {
-          raycastResult.position.copy(res.point)
-          raycastResult.position.addScaledVector(res.face.normal, 2.5)
-          mouse3d.position.lerp(raycastResult.position, 0.1)
+          mouse3d.position.copy(res.point)
+          mouse3d.position.addScaledVector(res.face.normal, 2.5)
         }
       }
     }
@@ -42,7 +36,6 @@ export function Mouse3D({ collider, mouse3d }) {
   let gl = useThree((s) => s.gl)
   useEffect(() => {
     let h = () => {
-      //
       mouser.current.isDown = true
     }
     let h2 = () => {
@@ -51,10 +44,10 @@ export function Mouse3D({ collider, mouse3d }) {
     let h3 = () => {
       let { raycaster, mouse, camera, controls } = get()
       if (collider.geometry) {
-        if ('ontouchstart' in window) {
-          mouse.x = 0
-          mouse.y = 0
-        }
+        // if ('ontouchstart' in window) {
+        //   mouse.x = 0
+        //   mouse.y = 0
+        // }
         raycaster.setFromCamera(mouse, camera)
 
         /** @type {MeshBVH} */
@@ -62,10 +55,10 @@ export function Mouse3D({ collider, mouse3d }) {
         let res = bvh.raycastFirst(raycaster.ray)
 
         if (res) {
-          raycastResult.position.copy(res.point)
-          raycastResult.position.addScaledVector(res.face.normal, 2.5)
+          mouse3d.position.copy(res.point)
+          mouse3d.position.addScaledVector(res.face.normal, 2.5)
 
-          mouse3d.position.lerp(raycastResult.position, 1)
+          mouse3d.position.lerp(mouse3d.position, 1)
         }
       }
     }
@@ -80,11 +73,11 @@ export function Mouse3D({ collider, mouse3d }) {
       gl.domElement.removeEventListener('touchstart', h)
       gl.domElement.removeEventListener('touchend', h2)
     }
-  }, [collider.geometry, get, gl, mouse3d.position, raycastResult.position])
+  }, [collider.geometry, get, gl, mouse3d.position])
 
   return (
     <group>
-      <Noodle mouse3d={raycastResult}></Noodle>
+      <Noodle mouse3d={mouse3d}></Noodle>
     </group>
   )
 }

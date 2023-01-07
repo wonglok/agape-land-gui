@@ -22,6 +22,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { applyGlass } from '@/content-vfx/GlassShader/applyGlass'
 import { BirdCamSync } from './BirdCamSync'
+import { AvaZoom } from './AvaZoom'
+import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 
 export const gameKey = Math.random()
 
@@ -60,7 +62,10 @@ export function AvatarGuide({
       <primitive object={aCore} />
 
       <BirdCamSync player={aCore.player}></BirdCamSync>
-
+      {aCore?.player && <AvaZoom mouse3d={destObj}></AvaZoom>}
+      <group>
+        <Mouse3D mouse3d={destObj} collider={collider}></Mouse3D>
+      </group>
       {/*  */}
     </group>
   )

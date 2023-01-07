@@ -6,10 +6,8 @@ import { useThree } from '@react-three/fiber'
 import { Environment, OrbitControls } from '@react-three/drei'
 import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { AvatarGuide } from './AvatarGuide'
-import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { useMemo } from 'react'
 import { Object3D } from 'three'
-import { BirdCamSync } from './BirdCamSync'
 
 export function AvatarLanding({ mapURL }) {
   let glb = useGLBLoader(mapURL)
@@ -69,9 +67,6 @@ export function AvatarLanding({ mapURL }) {
 
  */}
 
-              <group>
-                <Mouse3D mouse3d={destObj} collider={collider}></Mouse3D>
-              </group>
               <AvatarGuide destObj={destObj} collider={collider}></AvatarGuide>
             </group>
           )

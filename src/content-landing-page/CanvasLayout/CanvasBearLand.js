@@ -18,6 +18,7 @@ import { Core, CoreReady } from '../Core/Core'
 import { Suspense } from 'react'
 import { BackgroundColor } from '../NYCJourney/BackgroundColor'
 import { AvatarLanding } from '../AvatarLanding/AvatarLanding'
+import { AvaZoom } from '../AvatarLanding/AvaZoom'
 // import { Noodle } from '@/content-vfx/Noodle/Noodle'
 
 export function CanvasBearLand(
@@ -76,6 +77,7 @@ export function CanvasBearLand(
             }}
           />
         )} */}
+
         {/* <MetaverseMenu></MetaverseMenu> */}
         {/* <MetaverseWelcome></MetaverseWelcome> */}
 
