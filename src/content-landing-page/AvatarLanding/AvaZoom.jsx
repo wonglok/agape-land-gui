@@ -76,7 +76,6 @@ class AvaZoomCore {
     this.keyboard = new KeyboardControls({ core: this.core, parent: this })
     this.tempVector = new Vector3()
     this.upVector = new Vector3(0, 1, 0)
-    this.mouse3dSpeed = 10
 
     this.globalCameraPos = new Vector3()
     this.deltaRot = new Vector3()
@@ -184,6 +183,9 @@ class AvaZoomCore {
 
       let delta = clock.getDelta()
 
+      if (delta >= 0.1) {
+        delta = 0.1
+      }
       if (this.keyState.joyStickDown) {
         this.spherical.setFromCartesianCoords(
           this.camera.position.x - this.controls.target.x,
@@ -348,7 +350,7 @@ class KeyboardControls {
           break
 
         case 'Space':
-          this.parent.playerVelocity.y = 5.0
+          // this.parent.playerVelocity.y = 5.0
           break
       }
     }

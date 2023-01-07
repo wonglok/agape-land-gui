@@ -8,6 +8,10 @@ import { Environment, OrbitControls } from '@react-three/drei'
 import { AvatarGuide } from './AvatarGuide'
 import { useMemo } from 'react'
 import { Object3D } from 'three'
+import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
+import { Noodle } from '@/content-vfx/Noodle/Noodle'
+import { AvaZoom } from './AvaZoom'
+import { BirdCamSync } from './BirdCamSync'
 
 export function AvatarLanding({ mapURL }) {
   let glb = useGLBLoader(mapURL)
@@ -65,12 +69,72 @@ export function AvatarLanding({ mapURL }) {
 
               {/* <AvatarChaser collider={collider}></AvatarChaser> */}
 
-              <AvatarGuide destObj={destObj} collider={collider}></AvatarGuide>
+              {/*  */}
+              <AvatarGuide
+                chaseDist={2}
+                speed={1.5}
+                destObj={destObj}
+                collider={collider}
+                onACore={(aCore) => {
+                  return (
+                    <group>
+                      <BirdCamSync player={aCore.player}></BirdCamSync>
+
+                      <AvatarGuide
+                        chaseDist={2}
+                        destObj={aCore.player}
+                        collider={collider}
+                        speed={aCore.playerSpeed * 0.8}
+                        onACore={(aCore) => {
+                          return (
+                            <group>
+                              <AvatarGuide
+                                chaseDist={2}
+                                destObj={aCore.player}
+                                collider={collider}
+                                speed={aCore.playerSpeed * 0.8}
+                                onACore={(aCore) => {
+                                  return (
+                                    <group>
+                                      <AvatarGuide
+                                        chaseDist={2}
+                                        destObj={aCore.player}
+                                        collider={collider}
+                                        speed={aCore.playerSpeed * 0.8}
+                                        onACore={(aCore) => {
+                                          return <group></group>
+                                        }}
+                                      ></AvatarGuide>
+                                    </group>
+                                  )
+                                }}
+                              ></AvatarGuide>
+                            </group>
+                          )
+                        }}
+                      ></AvatarGuide>
+                    </group>
+                  )
+                }}
+              ></AvatarGuide>
+
+              {/*  */}
+              <Mouse3D collider={collider} mouse3d={destObj}></Mouse3D>
+
+              {/*  */}
+              <AvaZoom mouse3d={destObj}></AvaZoom>
+
+              {/*  */}
+              <Noodle mouse3d={destObj}></Noodle>
             </group>
           )
         }}
       ></Collider>
 
+      <gridHelper
+        args={[100, 100, 0x008888, 0x008888]}
+        position={[0, 0.01, 0]}
+      ></gridHelper>
       <Environment preset='apartment' background></Environment>
     </group>
   )

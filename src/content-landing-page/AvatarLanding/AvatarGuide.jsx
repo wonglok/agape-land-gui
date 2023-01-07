@@ -24,20 +24,27 @@ import { BirdCamSync } from './BirdCamSync'
 import { AvaZoom } from './AvaZoom'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
+import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 
 export const gameKey = Math.random()
 
 const FBXCache = new Map()
 const GLBCache = new Map()
 export function AvatarGuide({
+  speed = 1,
   collider = new Mesh(),
+  chaseDist = 2,
   destObj = new Object3D(),
   avatarUrl = `/scene/2023-01-07-skycity/loklok-space-ava.glb`,
+
+  onACore = () => null,
 }) {
   let core = useCore()
 
   let aCore = useMemo(() => {
     let aCore = new AvatarChaserCore({
+      chaseDist,
+      speed: speed,
       destination: destObj,
       core,
       name: 'chaser avatar',
@@ -46,11 +53,12 @@ export function AvatarGuide({
     })
 
     return aCore
-  }, [destObj, core, collider, avatarUrl])
+  }, [chaseDist, speed, destObj, core, collider, avatarUrl])
 
   useEffect(() => {
     return () => {
       //
+      aCore.core.clean()
     }
   }, [aCore])
   //
@@ -61,11 +69,7 @@ export function AvatarGuide({
 
       <primitive object={aCore} />
 
-      <Mouse3D collider={collider} mouse3d={destObj}></Mouse3D>
-
-      <BirdCamSync player={aCore.player}></BirdCamSync>
-      <AvaZoom mouse3d={destObj}></AvaZoom>
-      <Noodle mouse3d={destObj}></Noodle>
+      {aCore && onACore(aCore)}
 
       {/*  */}
     </group>
@@ -74,13 +78,17 @@ export function AvatarGuide({
 
 class AvatarChaserCore extends Object3D {
   constructor({
+    speed = 1,
     destination = new Object3D(),
     core = false,
     name = false,
     collider,
     avatarUrl,
+    chaseDist = 1,
   }) {
     super()
+    this.speed = speed
+    this.chaseDist = chaseDist
     //
     console.log('init avatar:', name)
     //
@@ -116,10 +124,13 @@ class AvatarChaserCore extends Object3D {
       }
       let prom = FBXCache.get(url)
 
-      prom.then((fbx) => {
+      return prom.then((fbx) => {
         let [firstAnim] = fbx.animations
         if (firstAnim) {
-          realAction = this.mixer.clipAction(firstAnim, this.avatarContainer)
+          realAction = this.mixer.clipAction(
+            firstAnim.clone(),
+            this.avatarContainer
+          )
 
           this.actions[name] = realAction
           if (name === 'standing') {
@@ -141,8 +152,9 @@ class AvatarChaserCore extends Object3D {
     //
     let prom = GLBCache.get(avatarUrl)
     prom.then((glb) => {
+      let glbScene = clone(glb.scene)
       //
-      glb.scene.traverse((it) => {
+      glbScene.traverse((it) => {
         //!SECTION
         it.frustumCulled = false
         if (it.material) {
@@ -170,15 +182,28 @@ class AvatarChaserCore extends Object3D {
           applyGlass({ it, core })
         }
       })
-      this.avatarContainer.add(glb.scene)
-      glb.scene.position.y = -1.52
+      this.avatarContainer.add(glbScene)
+      glbScene.position.y = -1.52
 
-      this.makeAction('standing', `/rpm/rpm-actions-locomotion/standing.fbx`)
-      this.makeAction('running', `/rpm/rpm-actions-locomotion/running.fbx`)
+      this.makeAction(
+        'standing',
+        `/rpm/rpm-actions-locomotion/standing.fbx`
+      ).then(() => {
+        this.reset()
+      })
+      this.makeAction(
+        'running',
+        `/rpm/rpm-actions-locomotion/running.fbx`
+      ).then(() => {
+        this.reset()
+      })
 
       let clock = new Clock()
       this.core.onLoop(() => {
         let dt = clock.getDelta()
+        if (dt >= 0.1) {
+          dt = 0.1
+        }
         this.mixer.update(dt)
         this.updatePlayer(dt)
       })
@@ -214,8 +239,8 @@ class AvatarChaserCore extends Object3D {
 
     /////////!SECTION
     this.gravity = -30
-    this.playerSpeed = 10
-    this.physicsSteps = 3
+    this.playerSpeed = this.speed
+    this.physicsSteps = 1
     this.playerIsOnGround = true
 
     this.changeView = ({ far }) => {
@@ -245,7 +270,10 @@ class AvatarChaserCore extends Object3D {
   }
 
   canRun() {
-    if (this.player.position.distanceTo(this.destination.position) >= 2) {
+    if (
+      this.player.position.distanceTo(this.destination.position) >=
+      this.chaseDist
+    ) {
       return true
     }
     return false
@@ -305,13 +333,13 @@ class AvatarChaserCore extends Object3D {
     //   // this.avatarContainer.position.y -= -1.5
 
     if (this.canRun()) {
-      let speed = 0.5
+      let speed = 1.0
 
       this.tempVector.set(0, 0, 1)
       this.tempVector.applyQuaternion(this.player.quaternion)
       this.player.position.addScaledVector(
         this.tempVector,
-        this.playerSpeed * delta * speed
+        this.playerSpeed * delta * speed * 5.0
       )
     }
 
@@ -487,7 +515,7 @@ class AvatarChaserCore extends Object3D {
 
     // if the player was primarily adjusted vertically we assume it's on something we should consider ground
     this.playerIsOnGround =
-      deltaVector.y > Math.abs(delta * this.playerVelocity.y * 0.25)
+      deltaVector.y > Math.abs(delta * this.playerVelocity.y * 1.0)
 
     const offset = Math.max(0.0, deltaVector.length() - 1e-5)
     deltaVector.normalize().multiplyScalar(offset)
@@ -532,8 +560,8 @@ class AvatarChaserCore extends Object3D {
     this.playerVelocity.set(0, 0, 0)
     this.player.position.copy(this.destination.position)
 
-    this.player.position.y += 1.1
-    this.player.position.x += 2
+    this.player.position.y += 1.5
+    this.player.position.x += 1
   }
 }
 
