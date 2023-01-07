@@ -50,10 +50,10 @@ class AvaZoomCore {
     this.core.clean()
   }
   constructor({ core, controls, mouse3d, camera }) {
+    this.core = core
     if (!controls) {
       return
     }
-    this.core = core
     this.mouse3d = mouse3d
     this.camera = camera
     this.controls = controls
