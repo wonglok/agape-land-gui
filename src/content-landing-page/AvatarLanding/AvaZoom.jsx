@@ -110,8 +110,11 @@ class AvaZoomCore {
         zone.style.display = 'flex'
         zone.style.justifyContent = 'center'
         zone.style.alignItems = 'center'
-        zone.style.left = 'calc(50% - 65px / 2)'
-        zone.style.bottom = 'calc(65px / 2)'
+
+        zone.style.right = '25px'
+        zone.style.bottom = '25px'
+        // zone.style.left = 'calc(50% - 65px / 2)'
+        // zone.style.bottom = 'calc(65px / 2)'
         zone.style.width = 'calc(65px)'
         zone.style.height = 'calc(65px)'
         zone.style.borderRadius = 'calc(65px)'
@@ -241,6 +244,8 @@ class AvaZoomCore {
 
               this.spherical.phi +=
                 this.keyState.joyStickVertical * -delta * 0.75
+
+              //
               // this.spherical.radius +=
               //   this.keyState.joyStickVertical * delta * 10.0
 
@@ -254,8 +259,8 @@ class AvaZoomCore {
               if (this.spherical.phi <= 0.03) {
                 this.spherical.phi = 0.03
               }
-              if (this.spherical.phi >= Math.PI * 0.5 * 0.9) {
-                this.spherical.phi = Math.PI * 0.5 * 0.9
+              if (this.spherical.phi >= Math.PI * 0.5 * 1.2) {
+                this.spherical.phi = Math.PI * 0.5 * 1.2
               }
               this.camera.position.setFromSpherical(this.spherical)
               this.camera.position.add(controls.target)
