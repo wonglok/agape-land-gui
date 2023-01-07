@@ -44,6 +44,7 @@ export function AvatarGuide({
 
   let aCore = useMemo(() => {
     let aCore = new AvatarChaserCore({
+      offset,
       chaseDist,
       speed: speed,
       destination: destObj,
@@ -51,7 +52,6 @@ export function AvatarGuide({
       name: 'chaser avatar',
       collider,
       avatarUrl,
-      offset,
     })
 
     return aCore
