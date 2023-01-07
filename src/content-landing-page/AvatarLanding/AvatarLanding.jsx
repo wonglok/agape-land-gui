@@ -71,6 +71,7 @@ export function AvatarLanding({ mapURL }) {
 
               {/*  */}
               <AvatarGuide
+                offset={[0, 2, 2]}
                 chaseDist={2}
                 speed={1.5}
                 destObj={destObj}
@@ -79,42 +80,6 @@ export function AvatarLanding({ mapURL }) {
                   return (
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
-
-                      <AvatarGuide
-                        offset={[0, 2, 2]}
-                        chaseDist={2}
-                        destObj={aCore.player}
-                        collider={collider}
-                        speed={aCore.playerSpeed * 0.8}
-                        onACore={(aCore) => {
-                          return (
-                            <group>
-                              <AvatarGuide
-                                offset={[0, 2, 2]}
-                                chaseDist={2}
-                                destObj={aCore.player}
-                                collider={collider}
-                                speed={aCore.playerSpeed * 0.8}
-                                onACore={(aCore) => {
-                                  return (
-                                    <group>
-                                      <AvatarGuide
-                                        chaseDist={2}
-                                        destObj={aCore.player}
-                                        collider={collider}
-                                        speed={aCore.playerSpeed * 0.8}
-                                        onACore={(aCore) => {
-                                          return <group></group>
-                                        }}
-                                      ></AvatarGuide>
-                                    </group>
-                                  )
-                                }}
-                              ></AvatarGuide>
-                            </group>
-                          )
-                        }}
-                      ></AvatarGuide>
                     </group>
                   )
                 }}
