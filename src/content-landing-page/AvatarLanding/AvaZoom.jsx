@@ -30,7 +30,6 @@ export function AvaZoom({ mouse3d }) {
     }
 
     let st = get()
-
     for (let kn in st) {
       api.now[kn] = st[kn]
     }
@@ -40,18 +39,18 @@ export function AvaZoom({ mouse3d }) {
     return { core: api, ava }
   }, [camera, controls, mouse3d, get])
 
+  useEffect(() => {
+    return () => {
+      ava.clean()
+    }
+  }, [ava])
+
   useFrame((st, dt) => {
     for (let kn in st) {
       core.now[kn] = st[kn]
     }
     core.work(st, dt)
   })
-
-  useEffect(() => {
-    return () => {
-      ava.clean()
-    }
-  }, [ava])
 
   return null
 }
