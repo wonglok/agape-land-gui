@@ -31,6 +31,7 @@ export const gameKey = Math.random()
 const FBXCache = new Map()
 const GLBCache = new Map()
 export function AvatarGuide({
+  offset = [0, 2, 2],
   speed = 1,
   collider = new Mesh(),
   chaseDist = 2,
@@ -50,10 +51,11 @@ export function AvatarGuide({
       name: 'chaser avatar',
       collider,
       avatarUrl,
+      offset,
     })
 
     return aCore
-  }, [chaseDist, speed, destObj, core, collider, avatarUrl])
+  }, [chaseDist, speed, destObj, core, collider, avatarUrl, offset])
 
   useEffect(() => {
     return () => {
@@ -78,6 +80,7 @@ export function AvatarGuide({
 
 class AvatarChaserCore extends Object3D {
   constructor({
+    offset = [0, 2, 2],
     speed = 1,
     destination = new Object3D(),
     core = false,
@@ -87,6 +90,7 @@ class AvatarChaserCore extends Object3D {
     chaseDist = 1,
   }) {
     super()
+    this.offset = offset
     this.speed = speed
     this.chaseDist = chaseDist
     //
@@ -560,8 +564,12 @@ class AvatarChaserCore extends Object3D {
     this.playerVelocity.set(0, 0, 0)
     this.player.position.copy(this.destination.position)
 
-    this.player.position.y += 1.5
-    this.player.position.x += 1
+    // this.player.position.y += 1.5
+    // this.player.position.x += 1
+
+    this.player.position.x += this.offset[0]
+    this.player.position.y += this.offset[1]
+    this.player.position.z += this.offset[2]
   }
 }
 
