@@ -4,7 +4,11 @@ import { useEffect, useMemo } from 'react'
 import { Clock, Spherical, Vector3 } from 'three'
 
 export function AvaZoom({ mouse3d }) {
-  let core = useMemo(() => {
+  let get = useThree((s) => s.get)
+  let camera = useThree((s) => s.camera)
+  let controls = useThree((s) => s.controls)
+
+  let { core, ava } = useMemo(() => {
     let api = {
       loops: [],
       cleans: [],
@@ -24,8 +28,17 @@ export function AvaZoom({ mouse3d }) {
         api.cleans.push(cl)
       },
     }
-    return api
-  }, [])
+
+    let st = get()
+
+    for (let kn in st) {
+      api.now[kn] = st[kn]
+    }
+
+    let ava = new AvaZoomCore({ core: api, controls, mouse3d, camera })
+
+    return { core: api, ava }
+  }, [camera, controls, mouse3d, get])
 
   useFrame((st, dt) => {
     for (let kn in st) {
@@ -36,21 +49,10 @@ export function AvaZoom({ mouse3d }) {
 
   useEffect(() => {
     return () => {
-      core.clean()
-    }
-  }, [core])
-
-  let camera = useThree((s) => s.camera)
-  let controls = useThree((s) => s.controls)
-  useEffect(() => {
-    if (!controls) {
-      return
-    }
-    let ava = new AvaZoomCore({ core, controls, mouse3d, camera })
-    return () => {
       ava.clean()
     }
-  }, [core, controls, mouse3d, camera])
+  }, [ava])
+
   return null
 }
 

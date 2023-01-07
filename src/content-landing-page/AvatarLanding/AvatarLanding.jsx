@@ -1,10 +1,10 @@
 import { Collider } from '@/lib/collider/Collider'
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
-import { WalkerGame } from '@/lib/walker/WalkerGame'
-import { Avatar } from '../Avatar/Avatar'
+// import { WalkerGame } from '@/lib/walker/WalkerGame'
+// import { Avatar } from '../Avatar/Avatar'
 import { useThree } from '@react-three/fiber'
 import { Environment, OrbitControls } from '@react-three/drei'
-import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
+// import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { AvatarGuide } from './AvatarGuide'
 import { useMemo } from 'react'
 import { Object3D } from 'three'
@@ -29,14 +29,6 @@ export function AvatarLanding({ mapURL }) {
             <group>
               <primitive object={glb.scene}></primitive>
 
-              {/* <group position={[0, 1.5, 0]}>
-                <group position={[5.523, 6.087, -14.196]}>
-                  <group scale={0.075}>
-                    <theVortex key={TheVortex.key}></theVortex>
-                  </group>
-                </group>
-              </group> */}
-
               <OrbitControls
                 args={[camera, gl.domElement]}
                 makeDefault
@@ -45,6 +37,14 @@ export function AvatarLanding({ mapURL }) {
                 object-position={[0, 10, 10]}
                 target={[0, 0, 0]}
               ></OrbitControls>
+
+              {/* <group position={[0, 1.5, 0]}>
+                <group position={[5.523, 6.087, -14.196]}>
+                  <group scale={0.075}>
+                    <theVortex key={TheVortex.key}></theVortex>
+                  </group>
+                </group>
+              </group> */}
 
               {/* <WalkerGame
                 startAt={[
@@ -63,9 +63,7 @@ export function AvatarLanding({ mapURL }) {
 
               <Avatar></Avatar> */}
 
-              {/* <AvatarChaser collider={collider}></AvatarChaser>
-
- */}
+              {/* <AvatarChaser collider={collider}></AvatarChaser> */}
 
               <AvatarGuide destObj={destObj} collider={collider}></AvatarGuide>
             </group>
