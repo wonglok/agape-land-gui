@@ -21,6 +21,7 @@ import { useFrame } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { applyGlass } from '@/content-vfx/GlassShader/applyGlass'
+import { BirdCamSync } from './BirdCamSync'
 
 export const gameKey = Math.random()
 
@@ -29,7 +30,7 @@ const GLBCache = new Map()
 export function AvatarGuide({
   collider = new Mesh(),
   destObj = new Object3D(),
-  avatarUrl = `/servant/lok/lok-compressed.glb`,
+  avatarUrl = `/scene/2023-01-07-skycity/loklok-space-ava.glb`,
 }) {
   let core = useCore()
 
@@ -52,26 +53,20 @@ export function AvatarGuide({
   }, [aCore])
   //
 
-  useFrame(({ scene }) => {
-    let myself = scene.getObjectByName(`myself-player`)
-    if (myself) {
-      myself.getWorldPosition(destObj.position)
-      myself.getWorldPosition(destObj.position)
-    }
-  })
-
   return (
     <group>
       {/*  */}
 
       <primitive object={aCore} />
 
+      <BirdCamSync player={aCore.player}></BirdCamSync>
+
       {/*  */}
     </group>
   )
 }
 
-export class AvatarChaserCore extends Object3D {
+class AvatarChaserCore extends Object3D {
   constructor({
     destination = new Object3D(),
     core = false,
@@ -513,9 +508,9 @@ export class AvatarChaserCore extends Object3D {
     if (this.player.position.y < -25) {
       this.reset()
     }
-    if (this.player.position.distanceTo(this.destination.position) >= 35) {
-      this.reset()
-    }
+    // if (this.player.position.distanceTo(this.destination.position) >= 35) {
+    //   this.reset()
+    // }
   }
 
   reset() {

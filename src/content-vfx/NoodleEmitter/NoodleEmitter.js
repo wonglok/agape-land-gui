@@ -14,7 +14,7 @@ import { useCore } from '@/lib/useCore'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Sphere, useTexture } from '@react-three/drei'
 
-export function NoodleEmitter({ nameToChase = `myself-player` }) {
+export function NoodleEmitter({ mouse3D, nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
@@ -38,7 +38,7 @@ export function NoodleEmitter({ nameToChase = `myself-player` }) {
     // item
     core.onLoop(({ clock }) => {
       let t = clock.getElapsedTime()
-      mouse3d = core.now.scene.getObjectByName(nameToChase)
+      mouse3d = mouse3D || core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
         // let radius = 0.9

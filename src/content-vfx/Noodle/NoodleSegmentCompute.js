@@ -181,7 +181,7 @@ export class NoodleSegmentCompute {
         } else {
           vec3 positionChain = texture2D( texturePosition, nextUV ).xyz;
 
-          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.8);
+          positionChain.rgb = lerp(positionHead.rgb, positionChain.rgb, 0.5);
 
           // positionChain.xyz *= 1.0 + sin(time) * 0.25 * 0.0135;
 

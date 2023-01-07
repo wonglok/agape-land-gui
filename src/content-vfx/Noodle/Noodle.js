@@ -17,7 +17,7 @@ import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { Icosahedron, Sphere, useTexture } from '@react-three/drei'
 // import { MouseEmitter } from './MouseEmitter'
 
-export function Noodle({ nameToChase = `myself-player` }) {
+export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
   let core = useCore()
   let gl = useThree((s) => s.gl)
 
@@ -32,7 +32,6 @@ export function Noodle({ nameToChase = `myself-player` }) {
     core.onLoop((st, dt) => {
       chaser.rotation.y += dt * 2
     })
-    let mouse3d = false
     let up = new Vector3(0, 1, 0)
     let delta = new Vector3(0, 0, 1)
     let adder = new Vector3(0, 0, 0)
@@ -40,7 +39,7 @@ export function Noodle({ nameToChase = `myself-player` }) {
     // item
     core.onLoop(({ clock }) => {
       let t = clock.getElapsedTime()
-      mouse3d = core.now.scene.getObjectByName(nameToChase)
+      // mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
         let radius = 1
@@ -49,8 +48,7 @@ export function Noodle({ nameToChase = `myself-player` }) {
         delta.set(0, 0, radius)
         delta.applyAxisAngle(up, t * speed)
         adder.add(delta)
-        adder.y += -0.3
-        chaser.position.lerp(adder, 0.4)
+        chaser.position.lerp(adder, 0.03)
       }
     })
 
@@ -98,23 +96,23 @@ export function Noodle({ nameToChase = `myself-player` }) {
 
     group.add(noodle.o3d)
 
-    let pars = new ParticleRenderable({
-      renderConfig,
-      sizeX: 1,
-      sizeY: howManyTracker,
-      core: mini,
-      getTextureAlpha: () => {
-        return physics.getHeadList()
-      },
-      getTextureBeta: () => {
-        return physics.getHeadList2()
-      },
-    })
+    // let pars = new ParticleRenderable({
+    //   renderConfig,
+    //   sizeX: 1,
+    //   sizeY: howManyTracker,
+    //   core: mini,
+    //   getTextureAlpha: () => {
+    //     return physics.getHeadList()
+    //   },
+    //   getTextureBeta: () => {
+    //     return physics.getHeadList2()
+    //   },
+    // })
 
-    group.add(pars)
+    // group.add(pars)
 
     mini.onClean(() => {
-      pars.removeFromParent()
+      // pars.removeFromParent()
       noodle.o3d.removeFromParent()
     })
 

@@ -25,14 +25,14 @@ export function WalkerGame({
       gameKey: gameKey,
       xrPlayer,
       startAt,
-      name,
+      name: collider.uuid,
       core,
       collider,
     })
     onGameReady({ game, core })
 
     return game
-  }, [name, onGameReady, startAt, xrPlayer, core, collider])
+  }, [onGameReady, startAt, xrPlayer, core, collider])
 
   useFrame((st, dt) => {
     if (game) {

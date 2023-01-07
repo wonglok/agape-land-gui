@@ -103,12 +103,12 @@ export function MetaverseContent({
           }}
         ></Collider>
 
-        <group>
-          <Noodle chaseName='bb00'></Noodle>
-        </group>
+        <group>{/* <Noodle chaseName='bb00'></Noodle> */}</group>
       </group>
 
       <Avatar></Avatar>
+
+      <Environment preset='apartment'></Environment>
 
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 

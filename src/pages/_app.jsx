@@ -43,7 +43,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
   }, [])
 
   useEffect(() => {
-    hydration()
+    // hydration()
   }, [])
 
   let SEO = Component.SEO || (() => null)
@@ -53,8 +53,9 @@ function App({ Component, pageProps = { title: 'index' } }) {
       {/*  */}
       <Header {...pageProps} />
       <SEO {...pageProps}></SEO>
+      <Component {...pageProps} />
 
-      {gs.readyStatus === 'done' ? (
+      {/* {gs.readyStatus === 'done' ? (
         <Component {...pageProps} />
       ) : (
         <div
@@ -67,7 +68,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
             alt={'agape town - here we go!'}
           ></img>
         </div>
-      )}
+      )} */}
 
       {/* {Component?.r3f && <>{Component.r3f(pageProps)}</>} */}
 
