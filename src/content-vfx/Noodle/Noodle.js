@@ -42,7 +42,7 @@ export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
       // mouse3d = core.now.scene.getObjectByName(nameToChase)
 
       if (mouse3d) {
-        let radius = 1
+        let radius = 1.5
         let speed = 1.5
         adder.copy(mouse3d.position)
         delta.set(0, 0, radius)

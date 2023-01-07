@@ -69,10 +69,10 @@ class AvaZoomCore {
       rgtPressed: false,
       joyStickDown: false,
       joyStickAngle: 0,
-      joyStickPressure: 0,
-      joyStickSide: 0,
+      joyStickVertical: 0,
+      joyStickHorizontal: 0,
     }
-
+    this.keyboard = new KeyboardControls({ core: this.core, parent: this })
     this.tempVector = new Vector3()
     this.upVector = new Vector3(0, 1, 0)
     this.mouse3dSpeed = 10
@@ -94,6 +94,7 @@ class AvaZoomCore {
         zone.id = 'avacontrols'
         document.body.appendChild(zone)
 
+        //
         // zone.style.cssText = `
         //   display: flex;
         //   justify-content: center;
@@ -105,23 +106,25 @@ class AvaZoomCore {
         //   width: 100px;
         //   height: 100px;
         // `
+        //
         zone.style.zIndex = '100'
         zone.style.position = 'absolute'
         zone.style.display = 'flex'
         zone.style.justifyContent = 'center'
         zone.style.alignItems = 'center'
 
-        zone.style.right = '25px'
+        zone.style.left = '25px'
         zone.style.bottom = '25px'
-        // zone.style.left = 'calc(50% - 65px / 2)'
-        // zone.style.bottom = 'calc(65px / 2)'
-        zone.style.width = 'calc(65px)'
-        zone.style.height = 'calc(65px)'
-        zone.style.borderRadius = 'calc(65px)'
+        // zone.style.left = 'calc(50% - 85px / 2)'
+        // zone.style.bottom = 'calc(85px / 2)'
+        zone.style.width = 'calc(85px)'
+        zone.style.height = 'calc(85px)'
+        zone.style.borderRadius = 'calc(85px)'
         zone.style.userSelect = 'none'
         // zone.style.backgroundColor = 'rgba(0,0,0,1)'=
         zone.style.backgroundImage = `url(/hud/rot.svg)`
         zone.style.backgroundSize = `cover`
+        zone.style.backdropFilter = 'invert(1)'
         zone.style.userSelect = `none`
         this.dynamic = nip.create({
           color: 'white',
@@ -142,7 +145,7 @@ class AvaZoomCore {
               //
               // //
               // if (data?.direction?.angle === 'up') {
-              //   this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //   this.keyState.joyStickHorizontal = data.angle.radian - Math.PI * 0.5
 
               //   this.keyState.joyStickVertical =
               //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
@@ -151,9 +154,9 @@ class AvaZoomCore {
               //   //
               // } else if (data?.direction?.angle === 'right') {
               //   if (data.direction.y == 'up') {
-              //     this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //     this.keyState.joyStickHorizontal = data.angle.radian - Math.PI * 0.5
               //   } else {
-              //     this.keyState.joyStickSide =
+              //     this.keyState.joyStickHorizontal =
               //       data.angle.radian - Math.PI * 2.0 - Math.PI * 0.5
               //   }
 
@@ -161,13 +164,13 @@ class AvaZoomCore {
               //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
               //     speed
               // } else if (data?.direction?.angle === 'left') {
-              //   this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //   this.keyState.joyStickHorizontal = data.angle.radian - Math.PI * 0.5
 
               //   this.keyState.joyStickVertical =
               //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
               //     speed
               // } else {
-              //   this.keyState.joyStickSide = data.angle.radian - Math.PI * 0.5
+              //   this.keyState.joyStickHorizontal = data.angle.radian - Math.PI * 0.5
               //   this.keyState.joyStickVertical =
               //     (Math.min(Math.abs(data.distance / 50.0) * 4, 5) / 5.0) *
               //     speed *
@@ -181,23 +184,22 @@ class AvaZoomCore {
               // }
 
               this.keyState.joyStickVertical = data.vector.y
-              this.keyState.joyStickSide = -data.vector.x * 0.8
+              this.keyState.joyStickHorizontal = -data.vector.x
 
-              if (this.keyState.joyStickVertical <= -1) {
-                this.keyState.joyStickVertical = -1
+              if (this.keyState.joyStickVertical <= -0.4) {
+                this.keyState.joyStickVertical = -0.4
               }
-              if (this.keyState.joyStickVertical >= 1) {
-                this.keyState.joyStickVertical = 1
-              }
-
-              if (this.keyState.joyStickSide >= Math.PI * 0.5) {
-                this.keyState.joyStickSide = Math.PI * 0.5
-              }
-              if (this.keyState.joyStickSide <= -Math.PI * 0.5) {
-                this.keyState.joyStickSide = -Math.PI * 0.5
+              if (this.keyState.joyStickVertical >= 0.4) {
+                this.keyState.joyStickVertical = 0.4
               }
 
-              //
+              if (this.keyState.joyStickHorizontal >= 0.4) {
+                this.keyState.joyStickHorizontal = 0.4
+              }
+              if (this.keyState.joyStickHorizontal <= -0.4) {
+                this.keyState.joyStickHorizontal = -0.4
+              }
+
               // this.keyState.joyStickAngle = data.angle.radian + Math.PI * 1.5
             }
 
@@ -218,23 +220,23 @@ class AvaZoomCore {
           let clock = new Clock()
           this.core.onLoop(() => {
             let delta = clock.getDelta()
-            let angle = controls.getAzimuthalAngle()
+            // let angle = controls.getAzimuthalAngle()
             if (this.keyState.joyStickDown) {
-              controls.object.getWorldPosition(this.globalCameraPos)
-              this.globalCameraPos.y = controls.target.y
-              let dist = controls.target.distanceTo(this.globalCameraPos)
+              // controls.object.getWorldPosition(this.globalCameraPos)
+              // this.globalCameraPos.y = controls.target.y
+              // let dist = controls.target.distanceTo(this.globalCameraPos)
 
-              this.deltaRot.setFromCylindricalCoords(
-                dist,
-                controls.getAzimuthalAngle() +
-                  delta * this.keyState.joyStickSide
-              )
+              // this.deltaRot.setFromCylindricalCoords(
+              //   dist,
+              //   controls.getAzimuthalAngle() +
+              //     delta * this.keyState.joyStickHorizontal
+              // )
 
-              let y = camera.position.y
-              camera.position.sub(controls.target)
-              camera.position.copy(this.deltaRot)
-              camera.position.add(controls.target)
-              camera.position.y = y
+              // let y = camera.position.y
+              // camera.position.sub(controls.target)
+              // camera.position.copy(this.deltaRot)
+              // camera.position.add(controls.target)
+              // camera.position.y = y
 
               this.spherical.setFromCartesianCoords(
                 this.camera.position.x - controls.target.x,
@@ -244,6 +246,8 @@ class AvaZoomCore {
 
               this.spherical.phi +=
                 this.keyState.joyStickVertical * -delta * 0.75
+              this.spherical.theta +=
+                this.keyState.joyStickHorizontal * -delta * 0.75
 
               //
               // this.spherical.radius +=
@@ -259,11 +263,12 @@ class AvaZoomCore {
               if (this.spherical.phi <= 0.03) {
                 this.spherical.phi = 0.03
               }
-              if (this.spherical.phi >= Math.PI * 0.5 * 1.2) {
-                this.spherical.phi = Math.PI * 0.5 * 1.2
+              if (this.spherical.phi >= Math.PI * 0.5) {
+                this.spherical.phi = Math.PI * 0.5
               }
               this.camera.position.setFromSpherical(this.spherical)
               this.camera.position.add(controls.target)
+
               // this.tempVector
               //   .set(0, 0, -1)
               //   .applyAxisAngle(
@@ -282,5 +287,81 @@ class AvaZoomCore {
           })
         })
       })
+  }
+}
+
+class KeyboardControls {
+  constructor({ core, parent }) {
+    this.core = core
+    this.parent = parent
+    this.keydown = (e) => {
+      switch (e.code) {
+        case 'KeyW':
+          this.parent.keyState.fwdPressed = true
+          break
+        case 'KeyS':
+          this.parent.keyState.bkdPressed = true
+          break
+        case 'KeyD':
+          this.parent.keyState.rgtPressed = true
+          break
+        case 'KeyA':
+          this.parent.keyState.lftPressed = true
+          break
+
+        case 'ArrowUp':
+          this.parent.keyState.joyStickVertical = 0.5
+          break
+        case 'ArrowDown':
+          this.parent.keyState.joyStickVertical = -0.5
+          break
+        case 'ArrowLeft':
+          this.parent.keyState.joyStickHorizontal = 0.5
+          break
+        case 'ArrowRight':
+          this.parent.keyState.joyStickHorizontal = -0.5
+          break
+        case 'Space':
+          this.parent.playerVelocity.y = 5.0
+          break
+      }
+    }
+
+    this.keyup = (e) => {
+      switch (e.code) {
+        case 'KeyW':
+          this.parent.keyState.fwdPressed = false
+          break
+        case 'KeyS':
+          this.parent.keyState.bkdPressed = false
+          break
+        case 'KeyD':
+          this.parent.keyState.rgtPressed = false
+          break
+        case 'KeyA':
+          this.parent.keyState.lftPressed = false
+          break
+
+        case 'ArrowUp':
+          this.parent.keyState.joyStickVertical = 0
+          break
+        case 'ArrowDown':
+          this.parent.keyState.joyStickVertical = -0
+          break
+        case 'ArrowRight':
+          this.parent.keyState.joyStickHorizontal = 0
+          break
+        case 'ArrowLeft':
+          this.parent.keyState.joyStickHorizontal = -0
+          break
+      }
+    }
+    window.addEventListener('keydown', this.keydown)
+    window.addEventListener('keyup', this.keyup)
+
+    this.core.onClean(() => {
+      window.removeEventListener('keydown', this.keydown)
+      window.removeEventListener('keyup', this.keyup)
+    })
   }
 }

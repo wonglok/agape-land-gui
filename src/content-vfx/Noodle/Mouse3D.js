@@ -24,7 +24,7 @@ export function Mouse3D({ collider, mouse3d }) {
       if (res) {
         if (mouse3d && mouser.current.isDown) {
           mouse3d.position.copy(res.point)
-          mouse3d.position.addScaledVector(res.face.normal, 2.5)
+          mouse3d.position.addScaledVector(res.face.normal, 1.0)
         }
       }
     }
@@ -56,7 +56,7 @@ export function Mouse3D({ collider, mouse3d }) {
 
         if (res) {
           mouse3d.position.copy(res.point)
-          mouse3d.position.addScaledVector(res.face.normal, 2.5)
+          mouse3d.position.addScaledVector(res.face.normal, 1.0)
 
           mouse3d.position.lerp(mouse3d.position, 1)
         }

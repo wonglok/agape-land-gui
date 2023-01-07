@@ -17,7 +17,7 @@ export function AvatarLanding({ mapURL }) {
 
   let destObj = useMemo(() => {
     let dd = new Object3D()
-    dd.position.y = 2.5
+    dd.position.y = 1.0
     return dd
   }, [])
   return (

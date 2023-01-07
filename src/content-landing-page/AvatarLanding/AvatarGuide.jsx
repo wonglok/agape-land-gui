@@ -64,7 +64,7 @@ export function AvatarGuide({
       <BirdCamSync player={aCore.player}></BirdCamSync>
       {aCore?.player && <AvaZoom mouse3d={destObj}></AvaZoom>}
       <group>
-        <Mouse3D mouse3d={destObj} collider={collider}></Mouse3D>
+        <Mouse3D collider={collider} mouse3d={destObj}></Mouse3D>
       </group>
       {/*  */}
     </group>
