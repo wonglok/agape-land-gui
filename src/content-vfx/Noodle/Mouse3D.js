@@ -27,11 +27,11 @@ export function Mouse3D({ collider, mouse3d }) {
       let res = bvh.raycastFirst(raycaster.ray)
 
       if (res) {
-      }
-      if (mouse3d && mouser.current.isDown) {
-        raycastResult.position.copy(res.point)
-        raycastResult.position.addScaledVector(res.face.normal, 2.5)
-        mouse3d.position.lerp(raycastResult.position, 0.1)
+        if (mouse3d && mouser.current.isDown) {
+          raycastResult.position.copy(res.point)
+          raycastResult.position.addScaledVector(res.face.normal, 2.5)
+          mouse3d.position.lerp(raycastResult.position, 0.1)
+        }
       }
     }
 
@@ -70,13 +70,17 @@ export function Mouse3D({ collider, mouse3d }) {
       }
     }
     gl.domElement.addEventListener('click', h3)
-    gl.domElement.addEventListener('pointerdown', h)
-    gl.domElement.addEventListener('pointerup', h2)
+    gl.domElement.addEventListener('mousedown', h)
+    gl.domElement.addEventListener('mouseup', h2)
+    gl.domElement.addEventListener('touchstart', h)
+    gl.domElement.addEventListener('touchend', h2)
     return () => {
-      gl.domElement.removeEventListener('pointerdown', h)
-      gl.domElement.removeEventListener('pointerup', h2)
+      gl.domElement.removeEventListener('mousedown', h)
+      gl.domElement.removeEventListener('mouseup', h2)
+      gl.domElement.removeEventListener('touchstart', h)
+      gl.domElement.removeEventListener('touchend', h2)
     }
-  }, [gl])
+  }, [collider.geometry, get, gl, mouse3d.position, raycastResult.position])
 
   return (
     <group>
