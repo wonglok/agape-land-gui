@@ -101,9 +101,9 @@ function CameraZoom() {
     camera.position.z = 0.0
     camera.position.z += move
 
-    move -= (1 / 300) * Math.pow(1.0 / move, move)
+    move -= (1 / 500) * Math.pow(1.0 / move, move)
 
-    if (move <= 0.1) {
+    if (move <= 0.15) {
       move = 1
       setTick((s) => s + 1)
     }
@@ -111,30 +111,29 @@ function CameraZoom() {
 
   return (
     <>
-      <group position={[0.005, 1.5, 0.3]} rotation={[-0.4, 0, 0]} scale={0.13}>
+      <group position={[0.005, 1.5, 0.3]} rotation={[-0.4, 0, 0]} scale={0.1}>
         <Center>
           <Text3D
             bevelEnabled
             bevelThickness={0.2}
-            bevelSegments={3}
-            bevelSize={0.03}
-            bevelOffset={0.0}
+            bevelSegments={5}
+            bevelSize={0.06}
+            bevelOffset={0.001}
             font={font}
-            height={0.01}
+            size={1.5}
           >
             AGAPE
             <MeshTransmissionMaterial
               {...{
-                meshPhysicalMaterial: false,
                 transmissionSampler: false,
                 samples: 6,
                 resolution: 1024,
                 transmission: 1,
-                roughness: 0.15,
+                roughness: 0.3,
                 thickness: 1.5,
                 ior: 1.5,
                 chromaticAberration: 0.26,
-                anisotropy: 0.2,
+                anisotropy: 0.3,
                 distortion: 0.3,
                 distortionScale: 0.3,
                 temporalDistortion: 0.5,
