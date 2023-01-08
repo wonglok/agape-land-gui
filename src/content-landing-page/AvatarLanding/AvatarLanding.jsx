@@ -75,7 +75,7 @@ export function AvatarLanding({ mapURL }) {
                 offset={[0, 2, 2]}
                 chaseDist={2}
                 speed={1.5}
-                destObj={aCore.player}
+                destObj={destObj}
                 collider={collider}
                 onACore={(aCore) => {
                   return (
