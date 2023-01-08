@@ -71,7 +71,7 @@ export function AvatarLanding({ mapURL }) {
 
               {/*  */}
               <AvatarGuide
-                offset={[0, 2, 2]}
+                offset={[0, 2, 0]}
                 chaseDist={2}
                 speed={1.5}
                 destObj={destObj}
@@ -80,6 +80,23 @@ export function AvatarLanding({ mapURL }) {
                   return (
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
+
+                      {/*  */}
+
+                      <AvatarGuide
+                        offset={[0, 2, 2]}
+                        chaseDist={2}
+                        speed={1.5}
+                        destObj={destObj}
+                        collider={collider}
+                        onACore={(aCore) => {
+                          return (
+                            <group>
+                              <BirdCamSync player={aCore.player}></BirdCamSync>
+                            </group>
+                          )
+                        }}
+                      ></AvatarGuide>
                     </group>
                   )
                 }}
