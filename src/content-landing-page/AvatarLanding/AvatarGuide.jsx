@@ -308,6 +308,9 @@ class AvatarChaserCore extends Object3D {
   }
 
   updatePlayer(delta) {
+    if (delta >= 1 / 60) {
+      delta = 1 / 60
+    }
     this.t += delta
     let collider = this.collider
 
@@ -324,6 +327,10 @@ class AvatarChaserCore extends Object3D {
     }
 
     this.playerVelocity.y += this.playerIsOnGround ? 0 : delta * this.gravity
+
+    if (this.playerVelocity.y <= -7) {
+      this.playerVelocity.y = -7
+    }
     this.player.position.addScaledVector(this.playerVelocity, delta)
 
     this.avatarContainer.copy(this.player)

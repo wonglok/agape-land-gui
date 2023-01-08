@@ -33,7 +33,7 @@ export function AvatarLanding({ mapURL }) {
       <AvatarGuide
         offset={[2, 2, 0]}
         chaseDist={2}
-        speed={aCore.playerSpeed * 0.75}
+        speed={aCore.playerSpeed * 0.88}
         destObj={aCore.player}
         collider={collider}
         avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb?a=2`}
@@ -93,7 +93,7 @@ export function AvatarLanding({ mapURL }) {
               <AvatarGuide
                 offset={[0, 2, 2]}
                 chaseDist={1}
-                speed={1.5}
+                speed={2}
                 destObj={destObj}
                 collider={collider}
                 avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
@@ -102,7 +102,7 @@ export function AvatarLanding({ mapURL }) {
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
 
-                      {makeFollower(collider, 3, aCore)}
+                      {makeFollower(collider, 5, aCore)}
                     </group>
                   )
                 }}
