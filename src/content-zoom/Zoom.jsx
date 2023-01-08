@@ -185,7 +185,7 @@ function CameraZoom() {
         <group>
           <Smaller
             visible={tick % 5 === 4.0}
-            gesture={`/rpm/rpm-actions-emoji/sit-1.fbx`}
+            gesture={`/rpm/rpm-actions-emoji/greet.fbx`}
             url={`/rpm/avatar/default-lok.glb`}
           ></Smaller>
         </group>
