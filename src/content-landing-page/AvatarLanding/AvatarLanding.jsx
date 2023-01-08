@@ -25,6 +25,13 @@ export function AvatarLanding({ mapURL }) {
     return dd
   }, [])
 
+  let clothes = [
+    //
+    `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
+    `/scene/2023-01-07-skycity/lok-dune.glb`,
+    `/scene/2023-01-07-skycity/lok-jacket.glb`,
+    `/scene/2023-01-07-skycity/lok-groom.glb`,
+  ]
   let makeFollower = (collider, level = 3, aCore) => {
     if (level < 0) {
       return null
@@ -38,7 +45,7 @@ export function AvatarLanding({ mapURL }) {
         speed={aCore.playerSpeed * 0.88}
         destObj={aCore.player}
         collider={collider}
-        avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb?a=2`}
+        avatarUrl={clothes[(clothes.length - level) % clothes.length]}
         onACore={(aCore) => {
           return <group>{makeFollower(collider, level - 1, aCore)}</group>
         }}
