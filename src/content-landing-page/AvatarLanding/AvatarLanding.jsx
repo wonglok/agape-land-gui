@@ -29,6 +29,8 @@ export function AvatarLanding({ mapURL }) {
     if (level < 0) {
       return null
     }
+
+    //
     return (
       <AvatarGuide
         offset={[2, 2, 0]}
@@ -43,6 +45,7 @@ export function AvatarLanding({ mapURL }) {
       ></AvatarGuide>
     )
   }
+
   return (
     <group>
       <Collider
