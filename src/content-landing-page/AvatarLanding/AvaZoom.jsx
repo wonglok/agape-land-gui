@@ -1,4 +1,4 @@
-import { useCore } from '@/hooks/use-core'
+import { CoreTJ } from '@/lib/core/CoreTJ'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo } from 'react'
 import { Clock, Spherical, Vector3 } from 'three'
@@ -7,29 +7,10 @@ export function AvaZoom({ mouse3d }) {
   let camera = useThree((s) => s.camera)
   let controls = useThree((s) => s.controls)
 
-  let { core, ava } = useMemo(() => {
-    let api = {
-      loops: [],
-      cleans: [],
-      onLoop: (v) => {
-        api.loops.push(v)
-      },
-      work: (st, dt) => {
-        api.loops.forEach((it) => it(st, dt))
-      },
-      clean: () => {
-        api.cleans.forEach((t) => t())
-        api.cleans = []
-        api.loops = []
-      },
-      onClean: (cl) => {
-        api.cleans.push(cl)
-      },
-    }
+  let { ava } = useMemo(() => {
+    let ava = new AvaZoomCore({ controls, mouse3d, camera })
 
-    let ava = new AvaZoomCore({ core: api, controls, mouse3d, camera })
-
-    return { core: api, ava }
+    return { ava }
   }, [camera, controls, mouse3d])
 
   useEffect(() => {
@@ -39,18 +20,15 @@ export function AvaZoom({ mouse3d }) {
   }, [ava])
 
   useFrame((st, dt) => {
-    core.work(st, dt)
+    ava.core.work(st, dt)
   })
 
   return null
 }
 
-class AvaZoomCore {
-  clean() {
-    this.core.clean()
-  }
-  constructor({ core, controls, mouse3d, camera }) {
-    this.core = core
+class AvaZoomCore extends CoreTJ {
+  constructor({ controls, mouse3d, camera }) {
+    super()
     if (!controls) {
       return
     }
@@ -87,7 +65,7 @@ class AvaZoomCore {
       })
       .then(async (nip) => {
         document.querySelector('#avacontrols')?.remove()
-        core.onClean(() => {
+        this.core.onClean(() => {
           document.querySelector('#avacontrols')?.remove()
         })
         let zone = document.createElement('div')

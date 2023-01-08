@@ -71,6 +71,8 @@ export function AvatarLanding({ mapURL }) {
                 target={[0, 0, 0]}
               ></OrbitControls>
 
+              {/*  */}
+
               {/* <group position={[0, 1.5, 0]}>
                 <group position={[5.523, 6.087, -14.196]}>
                   <group scale={0.075}>
@@ -97,8 +99,6 @@ export function AvatarLanding({ mapURL }) {
               <Avatar></Avatar> */}
 
               {/* <AvatarChaser collider={collider}></AvatarChaser> */}
-
-              {/*  */}
 
               <AvatarGuide
                 offset={[0, 2, 2]}

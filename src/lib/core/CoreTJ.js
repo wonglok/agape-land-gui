@@ -2,6 +2,7 @@ import { Object3D } from 'three'
 
 export class CoreTJ extends Object3D {
   constructor() {
+    super()
     this.core = {
       loops: [],
       cleans: [],
