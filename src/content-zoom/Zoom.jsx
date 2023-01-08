@@ -130,7 +130,7 @@ function CameraZoom() {
             <MeshTransmissionMaterial
               {...{
                 transmissionSampler: false,
-                samples: 6,
+                samples: 5,
                 resolution: 512,
                 transmission: 1,
                 roughness: 0.3,
