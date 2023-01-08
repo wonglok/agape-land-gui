@@ -1,3 +1,3 @@
-import { CanvasBearLand } from '@/content-landing-page/CanvasLayout/CanvasBearLand'
+import { Zoom } from '@/content-zoom/Zoom'
 
-export default CanvasBearLand
+export default Zoom
