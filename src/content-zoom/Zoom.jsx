@@ -12,6 +12,14 @@ import { Fog } from 'three'
 import { useState } from 'react'
 import { AnimationMixer } from 'three'
 import { Vector3 } from 'three'
+import {
+  Bloom,
+  ChromaticAberration,
+  EffectComposer,
+  SSR,
+} from '@react-three/postprocessing'
+import { Color } from 'three'
+import { useEffect } from 'react'
 // import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 
 function Smaller({ url = `/rpm/white-armor-lok.glb` }) {
@@ -39,12 +47,17 @@ function Smaller({ url = `/rpm/white-armor-lok.glb` }) {
     sc.getObjectByName('Head').getWorldPosition(headCenter)
 
     st.camera.position.fromArray(headCenter.toArray())
-    st.camera.position.y += 0.08
-    st.camera.position.x += 0.02
+    st.camera.position.y += 0.075 * 0.998
+    st.camera.position.x += 0.025
+    st.camera.lookAt(
+      st.camera.position.x,
+      st.camera.position.y - 0.02,
+      st.camera.position.z - 0.1
+    )
   })
 
   return (
-    <group ref={ref}>
+    <group rotation={[0, 0.05, 0]} ref={ref}>
       <primitive object={sc}></primitive>
     </group>
   )
@@ -54,29 +67,22 @@ function CameraZoom() {
   let scene = useThree((s) => s.scene)
   let camera = useThree((s) => s.camera)
 
-  //
-  // useWheel(
-  //   (ev) => {
-  //     if (ev.axis === 'y') {
-  //       //
-  //     }
-  //   },
-  //   {
-  //     target: gl.domElement,
-  //   }
-  // )
-  let fog = new Fog(0xffffff, 0.1, 1)
+  let fog = new Fog(0x000000, 0.1, 1)
+  scene.background = new Color(0x000000)
   scene.fog = fog
   let move = 1
+
+  useEffect(() => {}, [])
 
   let [tick, setTick] = useState(0)
   useFrame(({}) => {
     //
     camera.near = 0.01
     camera.far = 2
-    camera.fov = move * 120
-    fog.near = 0.8
-    fog.far = 1
+    camera.fov = move * 130
+
+    fog.near = 0.4
+    fog.far = 1.4
     camera.updateProjectionMatrix()
     camera.position.z = 0.0
     camera.position.z += move
@@ -91,25 +97,25 @@ function CameraZoom() {
 
   return (
     <>
-      <group visible={tick % 4 === 0.0}>
-        <Smaller url={`/scene/2023-01-07-skycity/lok-groom.glb`}></Smaller>
-      </group>
-      <group visible={tick % 4 === 1.0}>
-        <Smaller url={`/scene/2023-01-07-skycity/lok-jacket.glb`}></Smaller>
-      </group>
-      <group visible={tick % 4 === 2.0}>
-        <Smaller url={`/scene/2023-01-07-skycity/lok-dune.glb`}></Smaller>
-      </group>
-      <group visible={tick % 4 === 3.0}>
-        <Smaller
-          url={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
-        ></Smaller>
+      <group>
+        <group visible={tick % 4 === 0.0}>
+          <Smaller url={`/scene/2023-01-07-skycity/lok-groom.glb`}></Smaller>
+        </group>
+        <group visible={tick % 4 === 1.0}>
+          <Smaller url={`/scene/2023-01-07-skycity/lok-jacket.glb`}></Smaller>
+        </group>
+        <group visible={tick % 4 === 2.0}>
+          <Smaller url={`/scene/2023-01-07-skycity/lok-dune.glb`}></Smaller>
+        </group>
+        <group visible={tick % 4 === 3.0}>
+          <Smaller url={`/rpm/avatar/default-lok.glb`}></Smaller>
+        </group>
       </group>
     </>
   )
 }
 
-export function ZoomRPM(props) {
+export function ZoomRPM() {
   return (
     <group>
       <CameraZoom></CameraZoom>
@@ -122,6 +128,10 @@ export function Zoom() {
     <Canvas gl={{ antialias: true }}>
       <Environment preset='apartment'></Environment>
       <ZoomRPM></ZoomRPM>
+      <EffectComposer disableNormalPass>
+        <Bloom luminanceThreshold={0.5} intensity={0.5} mipmapBlur></Bloom>
+        <ChromaticAberration offset={[0.001, 0.0]}></ChromaticAberration>
+      </EffectComposer>
     </Canvas>
   )
 }
