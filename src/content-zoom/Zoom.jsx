@@ -131,7 +131,7 @@ function CameraZoom() {
               {...{
                 transmissionSampler: false,
                 samples: 6,
-                resolution: 1024,
+                resolution: 512,
                 transmission: 1,
                 roughness: 0.3,
                 thickness: 1.5,
@@ -204,9 +204,13 @@ export function Zoom() {
   return (
     <>
       <Canvas gl={{ antialias: true }}>
+        {/*  */}
         <Environment preset='lobby' blur={0.3}></Environment>
+
+        {/*  */}
         <ZoomRPM></ZoomRPM>
 
+        {/*  */}
         <EffectComposer disableNormalPass>
           <Bloom luminanceThreshold={0.3} intensity={1.0} mipmapBlur></Bloom>
           <ChromaticAberration offset={[0.0005, 0.0]}></ChromaticAberration>
