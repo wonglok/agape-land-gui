@@ -115,7 +115,7 @@ function CameraZoom() {
 
   return (
     <>
-      <group position={[0.005, 1.505, 0.4]} rotation={[-0.4, 0, 0]} scale={0.1}>
+      <group position={[0.0, 1.505, 0.4]} rotation={[-0.4, 0, 0]} scale={0.05}>
         <Center>
           <Text3D
             bevelEnabled
@@ -208,8 +208,8 @@ export function Zoom() {
         <ZoomRPM></ZoomRPM>
 
         <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={0.4} intensity={1.0} mipmapBlur></Bloom>
-          <ChromaticAberration offset={[0.001, 0.0]}></ChromaticAberration>
+          <Bloom luminanceThreshold={0.3} intensity={1.0} mipmapBlur></Bloom>
+          <ChromaticAberration offset={[0.0005, 0.0]}></ChromaticAberration>
         </EffectComposer>
       </Canvas>
     </>
