@@ -102,7 +102,7 @@ export function AvatarLanding({ mapURL }) {
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
 
-                      {makeFollower(collider, 5, aCore)}
+                      {makeFollower(collider, 2, aCore)}
                     </group>
                   )
                 }}
