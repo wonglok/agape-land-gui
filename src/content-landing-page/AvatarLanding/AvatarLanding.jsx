@@ -31,7 +31,7 @@ export function AvatarLanding({ mapURL }) {
     }
     return (
       <AvatarGuide
-        offset={[2, 2, 2]}
+        offset={[2, 2, 0]}
         chaseDist={2}
         speed={aCore.playerSpeed * 0.75}
         destObj={aCore.player}
@@ -121,10 +121,6 @@ export function AvatarLanding({ mapURL }) {
         }}
       ></Collider>
 
-      <gridHelper
-        args={[100, 100, 0x008888, 0x008888]}
-        position={[0, 0.01, 0]}
-      ></gridHelper>
       <Environment preset='apartment' background></Environment>
     </group>
   )
