@@ -117,7 +117,7 @@ function CameraZoom() {
 
   return (
     <>
-      <group position={[0.005, 1.505, 0.3]} rotation={[-0.4, 0, 0]} scale={0.1}>
+      <group position={[0.005, 1.505, 0.4]} rotation={[-0.4, 0, 0]} scale={0.1}>
         <Center>
           <Text3D
             bevelEnabled
