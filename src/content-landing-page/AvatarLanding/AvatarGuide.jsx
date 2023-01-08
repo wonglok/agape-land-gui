@@ -25,6 +25,7 @@ import { AvaZoom } from './AvaZoom'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
+import { useFrame } from '@react-three/fiber'
 
 export const gameKey = Math.random()
 
@@ -40,22 +41,39 @@ export function AvatarGuide({
 
   onACore = () => null,
 }) {
-  let core = useCore()
-
   let aCore = useMemo(() => {
+    let api = {
+      loops: [],
+      cleans: [],
+      onLoop: (v) => {
+        api.loops.push(v)
+      },
+      work: (st, dt) => {
+        api.loops.forEach((it) => it(st, dt))
+      },
+      clean: () => {
+        api.cleans.forEach((t) => t())
+        api.cleans = []
+        api.loops = []
+      },
+      onClean: (cl) => {
+        api.cleans.push(cl)
+      },
+    }
+
     let aCore = new AvatarChaserCore({
       offset,
       chaseDist,
       speed: speed,
       destination: destObj,
-      core,
+      core: api,
       name: 'chaser avatar',
       collider,
       avatarUrl,
     })
 
     return aCore
-  }, [chaseDist, speed, destObj, core, collider, avatarUrl, offset])
+  }, [chaseDist, speed, destObj, collider, avatarUrl, offset])
 
   useEffect(() => {
     return () => {
@@ -63,6 +81,10 @@ export function AvatarGuide({
       aCore.core.clean()
     }
   }, [aCore])
+
+  useFrame(() => {
+    aCore.core.work()
+  })
   //
 
   return (
@@ -199,6 +221,8 @@ class AvatarChaserCore extends Object3D {
         'running',
         `/rpm/rpm-actions-locomotion/running.fbx`
       ).then(() => {
+        this.mixer.stopAllAction()
+        this.actions.running.play()
         this.reset()
       })
 
@@ -239,7 +263,7 @@ class AvatarChaserCore extends Object3D {
       radius: 0.5,
       segment: new Line3(new Vector3(), new Vector3(0, -1.0, 0.0)),
     }
-    this.player.name = 'myself-player'
+    this.player.name = 'ava-player'
 
     /////////!SECTION
     this.gravity = -30
@@ -519,12 +543,15 @@ class AvatarChaserCore extends Object3D {
 
     // if the player was primarily adjusted vertically we assume it's on something we should consider ground
     this.playerIsOnGround =
-      deltaVector.y > Math.abs(delta * this.playerVelocity.y * 1.0)
+      deltaVector.y > Math.abs(delta * this.playerVelocity.y * 0.25)
 
     const offset = Math.max(0.0, deltaVector.length() - 1e-5)
     deltaVector.normalize().multiplyScalar(offset)
 
     // adjust the player model
+    if (deltaVector.y <= -0.05) {
+      deltaVector.y = -0.05
+    }
     this.player.position.add(deltaVector)
 
     if (!this.playerIsOnGround) {

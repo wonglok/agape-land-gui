@@ -24,6 +24,25 @@ export function AvatarLanding({ mapURL }) {
     dd.position.y = 1.0
     return dd
   }, [])
+
+  let makeFollower = (collider, level = 3, aCore) => {
+    if (level < 0) {
+      return null
+    }
+    return (
+      <AvatarGuide
+        offset={[2, 2, 2]}
+        chaseDist={2}
+        speed={aCore.playerSpeed * 0.75}
+        destObj={aCore.player}
+        collider={collider}
+        avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb?a=2`}
+        onACore={(aCore) => {
+          return <group>{makeFollower(collider, level - 1, aCore)}</group>
+        }}
+      ></AvatarGuide>
+    )
+  }
   return (
     <group>
       <Collider
@@ -73,14 +92,17 @@ export function AvatarLanding({ mapURL }) {
 
               <AvatarGuide
                 offset={[0, 2, 2]}
-                chaseDist={2}
+                chaseDist={1}
                 speed={1.5}
                 destObj={destObj}
                 collider={collider}
+                avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
                 onACore={(aCore) => {
                   return (
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
+
+                      {makeFollower(collider, 3, aCore)}
                     </group>
                   )
                 }}

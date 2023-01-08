@@ -20,11 +20,9 @@ export function Collider({ scene, onReady = () => null }) {
   let [st, setST] = useState(null)
   useEffect(() => {
     colldierProm.then((v) => {
-      if (!st) {
-        setST(onReady(v))
-      }
+      setST(onReady(v))
     })
-  }, [colldierProm, onReady, st])
+  }, [colldierProm, onReady])
 
   return (
     <group>
