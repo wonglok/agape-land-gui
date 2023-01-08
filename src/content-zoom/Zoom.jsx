@@ -22,6 +22,7 @@ import { Vector3 } from 'three'
 import {
   Bloom,
   ChromaticAberration,
+  DepthOfField,
   EffectComposer,
   SSR,
 } from '@react-three/postprocessing'
@@ -79,7 +80,7 @@ function CameraZoom() {
   texture.encoding = sRGBEncoding
   texture.mapping = EquirectangularReflectionMapping
 
-  scene.background = texture // new Color(0x000000)
+  scene.background = texture
   let move = 1
 
   useEffect(() => {}, [])
@@ -135,11 +136,11 @@ export function Zoom() {
   return (
     <>
       <Canvas gl={{ antialias: true }}>
-        <Environment preset='apartment'></Environment>
+        <Environment preset='lobby' blur={0.3}></Environment>
         <ZoomRPM></ZoomRPM>
         <EffectComposer disableNormalPass>
           <Bloom luminanceThreshold={0.5} intensity={0.5} mipmapBlur></Bloom>
-          <ChromaticAberration offset={[0.001, 0.0]}></ChromaticAberration>
+          <ChromaticAberration offset={[0.0013, 0.0]}></ChromaticAberration>
         </EffectComposer>
       </Canvas>
       <Loader></Loader>
