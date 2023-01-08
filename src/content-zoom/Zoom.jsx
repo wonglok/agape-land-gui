@@ -134,7 +134,7 @@ function CameraZoom() {
                 resolution: 512,
                 transmission: 1,
                 roughness: 0.3,
-                thickness: 1.5,
+                thickness: 2.5,
                 ior: 1.5,
                 chromaticAberration: 0.26,
                 anisotropy: 0.3,
@@ -144,7 +144,6 @@ function CameraZoom() {
                 attenuationDistance: 0.5,
                 attenuationColor: '#ffffff',
                 color: '#ffffff',
-                bg: '#ffffff',
               }}
               // background={texture}
             ></MeshTransmissionMaterial>
