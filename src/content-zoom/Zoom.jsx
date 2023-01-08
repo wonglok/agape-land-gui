@@ -36,7 +36,11 @@ import { EquirectangularReflectionMapping } from 'three'
 import font from '../../public/fonts/Days/Days_Regular.json'
 // import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 
-function Smaller({ url = `/rpm/white-armor-lok.glb` }) {
+function Smaller({
+  visible = true,
+  url = `/rpm/white-armor-lok.glb`,
+  gesture = `/rpm/rpm-actions-emoji/yes.fbx`,
+}) {
   const glb = useGLTF(url)
 
   let sc = clone(glb.scene)
@@ -47,7 +51,7 @@ function Smaller({ url = `/rpm/white-armor-lok.glb` }) {
 
   let {
     animations: [firstAnim],
-  } = useFBX(`/rpm/rpm-actions-emoji/salute.fbx`)
+  } = useFBX(gesture)
 
   let mixer = new AnimationMixer(sc)
   mixer.clipAction(firstAnim).play()
@@ -58,20 +62,22 @@ function Smaller({ url = `/rpm/white-armor-lok.glb` }) {
   useFrame((st, dt) => {
     mixer.update(dt)
 
-    sc.getObjectByName('Head').getWorldPosition(headCenter)
+    if (visible) {
+      sc.getObjectByName('Head').getWorldPosition(headCenter)
 
-    st.camera.position.copy(headCenter)
-    st.camera.position.y += 0.045 + 0.04
-    st.camera.position.x += 0.025 + 0.01
-    st.camera.lookAt(
-      st.camera.position.x,
-      st.camera.position.y - 0.02,
-      st.camera.position.z - 0.1
-    )
+      st.camera.position.copy(headCenter)
+      st.camera.position.y += 0.045 + 0.04
+      st.camera.position.x += 0.025 + 0.01
+      st.camera.lookAt(
+        st.camera.position.x,
+        st.camera.position.y - 0.02,
+        st.camera.position.z - 0.1
+      )
+    }
   })
 
   return (
-    <group rotation={[0, 0.0, 0]} ref={ref}>
+    <group visible={visible} rotation={[0, 0.0, 0]} ref={ref}>
       <primitive object={sc}></primitive>
     </group>
   )
@@ -111,7 +117,7 @@ function CameraZoom() {
 
   return (
     <>
-      <group position={[0.005, 1.5, 0.3]} rotation={[-0.4, 0, 0]} scale={0.1}>
+      <group position={[0.005, 1.505, 0.3]} rotation={[-0.4, 0, 0]} scale={0.1}>
         <Center>
           <Text3D
             bevelEnabled
@@ -148,17 +154,33 @@ function CameraZoom() {
         </Center>
       </group>
       <group>
-        <group visible={tick % 4 === 0.0}>
-          <Smaller url={`/scene/2023-01-07-skycity/lok-groom.glb`}></Smaller>
+        <group>
+          <Smaller
+            visible={tick % 4 === 0.0}
+            gesture={`/rpm/rpm-actions-emoji/salute.fbx`}
+            url={`/scene/2023-01-07-skycity/lok-dune.glb`}
+          ></Smaller>
         </group>
-        <group visible={tick % 4 === 1.0}>
-          <Smaller url={`/scene/2023-01-07-skycity/lok-jacket.glb`}></Smaller>
+        <group>
+          <Smaller
+            visible={tick % 4 === 1.0}
+            gesture={`/rpm/rpm-actions-emoji/head.fbx`}
+            url={`/scene/2023-01-07-skycity/lok-jacket.glb`}
+          ></Smaller>
         </group>
-        <group visible={tick % 4 === 2.0}>
-          <Smaller url={`/scene/2023-01-07-skycity/lok-dune.glb`}></Smaller>
+        <group>
+          <Smaller
+            visible={tick % 4 === 2.0}
+            gesture={`/rpm/rpm-actions-emoji/yes.fbx`}
+            url={`/scene/2023-01-07-skycity/lok-groom.glb`}
+          ></Smaller>
         </group>
-        <group visible={tick % 4 === 3.0}>
-          <Smaller url={`/rpm/avatar/default-lok.glb`}></Smaller>
+        <group>
+          <Smaller
+            visible={tick % 4 === 3.0}
+            gesture={`/rpm/rpm-actions-emoji/bored.fbx`}
+            url={`/rpm/avatar/default-lok.glb`}
+          ></Smaller>
         </group>
       </group>
     </>
