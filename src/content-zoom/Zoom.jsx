@@ -210,7 +210,7 @@ export function Zoom() {
         <ZoomRPM></ZoomRPM>
 
         <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={0.5} intensity={0.5} mipmapBlur></Bloom>
+          <Bloom luminanceThreshold={0.3} intensity={1.0} mipmapBlur></Bloom>
           <ChromaticAberration offset={[0.001, 0.0]}></ChromaticAberration>
         </EffectComposer>
       </Canvas>
