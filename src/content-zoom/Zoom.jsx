@@ -156,29 +156,36 @@ function CameraZoom() {
       <group>
         <group>
           <Smaller
-            visible={tick % 4 === 0.0}
+            visible={tick % 5 === 0.0}
             gesture={`/rpm/rpm-actions-emoji/salute.fbx`}
             url={`/scene/2023-01-07-skycity/lok-dune.glb`}
           ></Smaller>
         </group>
         <group>
           <Smaller
-            visible={tick % 4 === 1.0}
+            visible={tick % 5 === 1.0}
             gesture={`/rpm/rpm-actions-emoji/head.fbx`}
             url={`/scene/2023-01-07-skycity/lok-jacket.glb`}
           ></Smaller>
         </group>
         <group>
           <Smaller
-            visible={tick % 4 === 2.0}
+            visible={tick % 5 === 2.0}
             gesture={`/rpm/rpm-actions-emoji/yes.fbx`}
             url={`/scene/2023-01-07-skycity/lok-groom.glb`}
           ></Smaller>
         </group>
         <group>
           <Smaller
-            visible={tick % 4 === 3.0}
+            visible={tick % 5 === 3.0}
             gesture={`/rpm/rpm-actions-emoji/bored.fbx`}
+            url={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
+          ></Smaller>
+        </group>
+        <group>
+          <Smaller
+            visible={tick % 5 === 4.0}
+            gesture={`/rpm/rpm-actions-emoji/sit-1.fbx`}
             url={`/rpm/avatar/default-lok.glb`}
           ></Smaller>
         </group>
