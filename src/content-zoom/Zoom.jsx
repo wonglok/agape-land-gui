@@ -89,7 +89,7 @@ function CameraZoom() {
     //
     camera.near = 0.01
     camera.far = 2
-    camera.fov = move * 130
+    camera.fov = move * 110
 
     camera.updateProjectionMatrix()
     camera.position.z = 0.0
