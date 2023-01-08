@@ -28,9 +28,7 @@ import {
   ChromaticAberration,
   DepthOfField,
   EffectComposer,
-  SSR,
 } from '@react-three/postprocessing'
-import { Color } from 'three'
 import { useEffect } from 'react'
 import { EquirectangularReflectionMapping } from 'three'
 import font from '../../public/fonts/Days/Days_Regular.json'
@@ -210,7 +208,7 @@ export function Zoom() {
         <ZoomRPM></ZoomRPM>
 
         <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={0.3} intensity={1.0} mipmapBlur></Bloom>
+          <Bloom luminanceThreshold={0.4} intensity={1.0} mipmapBlur></Bloom>
           <ChromaticAberration offset={[0.001, 0.0]}></ChromaticAberration>
         </EffectComposer>
       </Canvas>
