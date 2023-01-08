@@ -99,8 +99,8 @@ class AvaZoomCore extends CoreTJ {
         zone.style.userSelect = 'none'
         // zone.style.backgroundColor = 'rgba(0,0,0,1)'=
         zone.style.backgroundImage = `url(/hud/rot.svg)`
+        zone.style.backgroundColor = `rgba(255,255,255, 0.5)`
         zone.style.backgroundSize = `cover`
-        zone.style.backdropFilter = 'invert(1)'
         zone.style.userSelect = `none`
         this.dynamic = nip.create({
           color: 'white',
