@@ -396,10 +396,10 @@ class AvatarChaserCore extends Object3D {
     let shouldDo = null
 
     if (this.actions.standing && this.actions.running) {
-      if (this.canRun()) {
-        shouldDo = this.actions.running
-      } else {
+      if (!this.canRun()) {
         shouldDo = this.actions.standing
+      } else {
+        shouldDo = this.actions.running
       }
 
       if (this.lastAction) {
