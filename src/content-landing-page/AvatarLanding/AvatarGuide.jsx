@@ -217,6 +217,7 @@ class AvatarChaserCore extends Object3D {
       ).then(() => {
         this.reset()
       })
+
       this.makeAction(
         'running',
         `/rpm/rpm-actions-locomotion/running.fbx`
