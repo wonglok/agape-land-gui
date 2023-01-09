@@ -68,9 +68,9 @@ function Smaller({
 
       st.camera.position.copy(headCenter)
       st.camera.position.y += 0.045 + 0.04
-      st.camera.position.x += 0.025 + 0.01
+      // st.camera.position.x += 0.025 + 0.01
       st.camera.lookAt(
-        st.camera.position.x + 0.01,
+        st.camera.position.x,
         st.camera.position.y - 0.025,
         st.camera.position.z - 0.1
       )
@@ -85,6 +85,7 @@ function Smaller({
 }
 
 function CameraZoom() {
+  let ref = useRef()
   let scene = useThree((s) => s.scene)
   let camera = useThree((s) => s.camera)
 
@@ -93,7 +94,8 @@ function CameraZoom() {
   texture.mapping = EquirectangularReflectionMapping
 
   scene.background = texture
-  let move = 1
+  let moveInit = 1.05
+  let move = moveInit
 
   useEffect(() => {}, [])
 
@@ -110,97 +112,64 @@ function CameraZoom() {
 
     move -= 1 / 600
 
+    // ref.current.scale.setScalar((1.0 - move) * 2.0)
+
     if (move <= 0.21) {
-      move = 1
+      move = moveInit
       setTick((s) => s + 1)
     }
   })
 
   return (
     <>
-      <group
-        position={[0.0, 1.505 - 0.02, 0.4]}
-        rotation={[-0.45, 0, 0]}
-        scale={0.055}
-      >
-        <Center>
-          <Text3D
-            bevelEnabled
-            bevelThickness={0.2}
-            bevelSegments={5}
-            bevelSize={0.06}
-            bevelOffset={0.001}
-            font={font}
-            size={1.25}
-          >
-            {tick % 5 === 0.0 && `SALUTE!`}
-            {tick % 5 === 1.0 && `AVATAR`}
-            {tick % 5 === 2.0 && `NEW YOU`}
-            {tick % 5 === 3.0 && `3D World`}
-            {tick % 5 === 4.0 && `Metadata`}
+      <group ref={ref}>
+        <group
+          position={[0.01, 1.505 - 0.02, 0.4]}
+          rotation={[-0.45, 0, 0]}
+          scale={0.055}
+        >
+          <Center>
+            <Text3D
+              bevelEnabled
+              bevelThickness={0.2}
+              bevelSegments={5}
+              bevelSize={0.06}
+              bevelOffset={0.001}
+              font={font}
+              size={1.25}
+            >
+              {tick % 5 === 0.0 && `SALUTE!`}
+              {tick % 5 === 1.0 && `AVATAR`}
+              {tick % 5 === 2.0 && `NEW YOU`}
+              {tick % 5 === 3.0 && `3D World`}
+              {tick % 5 === 4.0 && `Metadata`}
 
-            {/*  */}
-            {/*  */}
-            {/*  */}
-            <MeshTransmissionMaterial
-              {...{
-                transmissionSampler: true,
-                samples: 5,
-                // resolution: 512,
-                transmission: 1,
-                roughness: 0.3,
-                thickness: 2.5,
-                ior: 1.5,
-                chromaticAberration: 0.26,
-                anisotropy: 0.3,
-                distortion: 0.3,
-                distortionScale: 0.3,
-                temporalDistortion: 0.5,
-                attenuationDistance: 0.5,
-                attenuationColor: '#ffffff',
-                color: '#ffffff',
-              }}
-              // background={texture}
-            ></MeshTransmissionMaterial>
-          </Text3D>
-        </Center>
-      </group>
-      <group position={[0.0, 0, 0.4]} rotation={[-0.4, 0, 0]} scale={0.055}>
-        <Center>
-          <Text3D
-            bevelEnabled
-            bevelThickness={0.2}
-            bevelSegments={5}
-            bevelSize={0.06}
-            bevelOffset={0.001}
-            font={font}
-            size={1.5}
-          >
-            {`Wekcine to AGAPE`}
-            <MeshTransmissionMaterial
-              {...{
-                transmissionSampler: true,
-                samples: 5,
-                // resolution: 512,
-                transmission: 1,
-                roughness: 0.3,
-                thickness: 2.5,
-                ior: 1.5,
-                chromaticAberration: 0.26,
-                anisotropy: 0.3,
-                distortion: 0.3,
-                distortionScale: 0.3,
-                temporalDistortion: 0.5,
-                attenuationDistance: 0.5,
-                attenuationColor: '#ffffff',
-                color: '#ffffff',
-              }}
-              // background={texture}
-            ></MeshTransmissionMaterial>
-          </Text3D>
-        </Center>
-      </group>
-      <group>
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              <MeshTransmissionMaterial
+                {...{
+                  transmissionSampler: true,
+                  samples: 5,
+                  // resolution: 512,
+                  transmission: 1,
+                  roughness: 0.3,
+                  thickness: 2.5,
+                  ior: 1.5,
+                  chromaticAberration: 0.26,
+                  anisotropy: 0.3,
+                  distortion: 0.3,
+                  distortionScale: 0.3,
+                  temporalDistortion: 0.5,
+                  attenuationDistance: 0.5,
+                  attenuationColor: '#ffffff',
+                  color: '#ffffff',
+                }}
+                // background={texture}
+              ></MeshTransmissionMaterial>
+            </Text3D>
+          </Center>
+        </group>
         <group>
           <Smaller
             visible={tick % 5 === 0.0}
