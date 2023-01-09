@@ -70,8 +70,8 @@ function Smaller({
       st.camera.position.y += 0.045 + 0.04
       st.camera.position.x += 0.025 + 0.01
       st.camera.lookAt(
-        st.camera.position.x,
-        st.camera.position.y - 0.02,
+        st.camera.position.x + 0.01,
+        st.camera.position.y - 0.025,
         st.camera.position.z - 0.1
       )
     }
@@ -119,7 +119,7 @@ function CameraZoom() {
   return (
     <>
       <group
-        position={[0.0, 1.505 + 0.05 + 0.01, 0.4]}
+        position={[0.0, 1.505 - 0.02, 0.4]}
         rotation={[-0.45, 0, 0]}
         scale={0.055}
       >
