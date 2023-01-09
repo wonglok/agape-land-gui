@@ -15,7 +15,7 @@ import {
   useGLTF,
   useTexture,
 } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber'
 import { useWheel } from '@use-gesture/react'
 // import { FrontSide } from 'three'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
@@ -105,7 +105,7 @@ function CameraZoom() {
     camera.position.z = 0.0
     camera.position.z += move
 
-    move -= (1 / 500) * Math.pow(1.0 / move, move)
+    move -= (1 / 650) * Math.pow(1.0 / move, move)
 
     if (move <= 0.15) {
       move = 1
@@ -128,9 +128,44 @@ function CameraZoom() {
           >
             {tick % 5 === 0.0 && `Exploring`}
             {tick % 5 === 1.0 && `The Mind of`}
-            {tick % 5 === 2.0 && `An AVATAR`}
-            {tick % 5 === 3.0 && `Enjoy!`}
-            {tick % 5 === 4.0 && `See you!`}
+            {tick % 5 === 2.0 && `AVATARS`}
+            {tick % 5 === 3.0 && `Enjoy.`}
+            {tick % 5 === 4.0 && `See You!`}
+            <MeshTransmissionMaterial
+              {...{
+                transmissionSampler: true,
+                samples: 5,
+                // resolution: 512,
+                transmission: 1,
+                roughness: 0.3,
+                thickness: 2.5,
+                ior: 1.5,
+                chromaticAberration: 0.26,
+                anisotropy: 0.3,
+                distortion: 0.3,
+                distortionScale: 0.3,
+                temporalDistortion: 0.5,
+                attenuationDistance: 0.5,
+                attenuationColor: '#ffffff',
+                color: '#ffffff',
+              }}
+              // background={texture}
+            ></MeshTransmissionMaterial>
+          </Text3D>
+        </Center>
+      </group>
+      <group position={[0.0, 0, 0.4]} rotation={[-0.4, 0, 0]} scale={0.055}>
+        <Center>
+          <Text3D
+            bevelEnabled
+            bevelThickness={0.2}
+            bevelSegments={5}
+            bevelSize={0.06}
+            bevelOffset={0.001}
+            font={font}
+            size={1.5}
+          >
+            {`Wekcine to AGAPE`}
             <MeshTransmissionMaterial
               {...{
                 transmissionSampler: true,
@@ -165,7 +200,7 @@ function CameraZoom() {
         <group>
           <Smaller
             visible={tick % 5 === 1.0}
-            gesture={`/rpm/rpm-actions-emoji/head.fbx`}
+            gesture={`/rpm/rpm-actions-locomotion/swim-float.fbx`}
             url={`/scene/2023-01-07-skycity/lok-jacket.glb`}
           ></Smaller>
         </group>
@@ -196,10 +231,50 @@ function CameraZoom() {
 }
 
 export function ZoomRPM() {
+  let camera = useThree((s) => s.camera)
   return (
-    <group>
-      <CameraZoom></CameraZoom>
-    </group>
+    <>
+      {createPortal(
+        <group scale={0.1} rotation={[0.2, 0, 0]} position={[0, 0, -0.5]}>
+          <Center>
+            <Text3D
+              bevelEnabled
+              bevelThickness={0.2}
+              bevelSegments={5}
+              bevelSize={0.06}
+              bevelOffset={0.001}
+              font={font}
+              size={1.5}
+            >
+              {`Exploring`}
+
+              <MeshTransmissionMaterial
+                {...{
+                  transmissionSampler: true,
+                  samples: 5,
+                  // resolution: 512,
+                  transmission: 1,
+                  roughness: 0.3,
+                  thickness: 2.5,
+                  ior: 1.5,
+                  chromaticAberration: 0.26,
+                  anisotropy: 0.3,
+                  distortion: 0.3,
+                  distortionScale: 0.3,
+                  temporalDistortion: 0.5,
+                  attenuationDistance: 0.5,
+                  attenuationColor: '#ffffff',
+                  color: '#ffffff',
+                }}
+                // background={texture}
+              ></MeshTransmissionMaterial>
+            </Text3D>
+          </Center>
+        </group>,
+        camera
+      )}
+      <primitive object={camera}></primitive>9{' '}
+    </>
   )
 }
 
@@ -211,7 +286,9 @@ export function Zoom() {
         <Environment preset='lobby' blur={0.3}></Environment>
 
         {/*  */}
-        <ZoomRPM></ZoomRPM>
+        {/* <ZoomRPM></ZoomRPM> */}
+
+        <CameraZoom></CameraZoom>
 
         {/*  */}
         <EffectComposer disableNormalPass>
