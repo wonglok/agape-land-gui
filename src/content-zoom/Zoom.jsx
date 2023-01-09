@@ -139,8 +139,8 @@ function CameraZoom() {
               size={1.25}
             >
               {tick % 5 === 0.0 && `AVATAR`}
-              {tick % 5 === 1.0 && `SALUTE`}
-              {tick % 5 === 2.0 && `NEW YOU!`}
+              {tick % 5 === 1.0 && `SALUTE!`}
+              {tick % 5 === 2.0 && `NEW YOU`}
               {tick % 5 === 3.0 && `3D World`}
               {tick % 5 === 4.0 && `META-DATA`}
 
