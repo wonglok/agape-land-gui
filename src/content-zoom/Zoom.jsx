@@ -108,7 +108,7 @@ function CameraZoom() {
     camera.position.z = 0.0
     camera.position.z += move
 
-    move -= 1 / 550
+    move -= 1 / 600
 
     if (move <= 0.18) {
       move = 1
@@ -118,7 +118,11 @@ function CameraZoom() {
 
   return (
     <>
-      <group position={[0.0, 1.505, 0.4]} rotation={[-0.4, 0, 0]} scale={0.055}>
+      <group
+        position={[0.0, 1.505 + 0.05 + 0.01, 0.4]}
+        rotation={[-0.45, 0, 0]}
+        scale={0.055}
+      >
         <Center>
           <Text3D
             bevelEnabled
@@ -127,13 +131,17 @@ function CameraZoom() {
             bevelSize={0.06}
             bevelOffset={0.001}
             font={font}
-            size={1.5}
+            size={1.25}
           >
-            {tick % 5 === 0.0 && `WELCOME `}
+            {tick % 5 === 0.0 && `SALUTE!`}
             {tick % 5 === 1.0 && `AVATAR`}
-            {tick % 5 === 2.0 && `3D World`}
-            {tick % 5 === 3.0 && `Metadata`}
-            {tick % 5 === 4.0 && `Metaverse`}
+            {tick % 5 === 2.0 && `NEW YOU`}
+            {tick % 5 === 3.0 && `3D World`}
+            {tick % 5 === 4.0 && `Metadata`}
+
+            {/*  */}
+            {/*  */}
+            {/*  */}
             <MeshTransmissionMaterial
               {...{
                 transmissionSampler: true,
@@ -225,7 +233,7 @@ function CameraZoom() {
           <Smaller
             visible={tick % 5 === 4.0}
             gesture={`/rpm/rpm-actions-emoji/stand-idle.fbx`}
-            url={`/rpm/avatar/default-lok.glb`}
+            url={`/scene/2023-01-07-skycity/lok-school.glb`}
           ></Smaller>
         </group>
       </group>
