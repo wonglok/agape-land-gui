@@ -105,7 +105,7 @@ function CameraZoom() {
     //
     camera.near = 0.01
     camera.far = 2
-    camera.fov = 90 * move
+    camera.fov = 100 * move
 
     camera.updateProjectionMatrix()
     camera.position.z = 0.0
@@ -115,7 +115,7 @@ function CameraZoom() {
 
     // ref.current.scale.setScalar((1.0 - move) * 2.0)
 
-    if (move <= 0.3) {
+    if (move <= 0.35) {
       move = moveInit
       setTick((s) => s + 1)
     }
@@ -185,7 +185,6 @@ function CameraZoom() {
           ></Smaller>
         </group>
         <group>
-          =
           <Smaller
             visible={tick % 5 === 2.0}
             gesture={`/rpm/rpm-actions-emoji/yes.fbx`}
