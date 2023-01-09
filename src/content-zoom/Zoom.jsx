@@ -284,7 +284,7 @@ export function ZoomRPM() {
         </group>,
         camera
       )}
-      <primitive object={camera}></primitive>9{' '}
+      <primitive object={camera}></primitive>
     </>
   )
 }
@@ -303,7 +303,7 @@ export function Zoom() {
 
         {/*  */}
         <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={0.3} intensity={1.0} mipmapBlur></Bloom>
+          <Bloom luminanceThreshold={0.5} intensity={1.3} mipmapBlur></Bloom>
           <ChromaticAberration offset={[0.0005, 0.0]}></ChromaticAberration>
         </EffectComposer>
       </Canvas>
