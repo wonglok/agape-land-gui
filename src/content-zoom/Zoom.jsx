@@ -126,12 +126,12 @@ function CameraZoom() {
             font={font}
             size={1.5}
           >
-            AGAPE
+            {`AGAPE`}
             <MeshTransmissionMaterial
               {...{
-                transmissionSampler: false,
+                transmissionSampler: true,
                 samples: 5,
-                resolution: 512,
+                // resolution: 512,
                 transmission: 1,
                 roughness: 0.3,
                 thickness: 2.5,
