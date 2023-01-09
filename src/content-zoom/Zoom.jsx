@@ -77,6 +77,7 @@ function Smaller({
     }
   })
 
+  //
   return (
     <group visible={visible} rotation={[0, 0.0, 0]} ref={ref}>
       <primitive object={sc}></primitive>
@@ -114,7 +115,7 @@ function CameraZoom() {
 
     // ref.current.scale.setScalar((1.0 - move) * 2.0)
 
-    if (move <= 0.25) {
+    if (move <= 0.3) {
       move = moveInit
       setTick((s) => s + 1)
     }
