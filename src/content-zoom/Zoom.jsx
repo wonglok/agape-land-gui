@@ -126,7 +126,11 @@ function CameraZoom() {
             font={font}
             size={1.5}
           >
-            {`AGAPE`}
+            {tick % 5 === 0.0 && `Exploring`}
+            {tick % 5 === 1.0 && `The Mind of`}
+            {tick % 5 === 2.0 && `An AVATAR`}
+            {tick % 5 === 3.0 && `Enjoy!`}
+            {tick % 5 === 4.0 && `See you!`}
             <MeshTransmissionMaterial
               {...{
                 transmissionSampler: true,
