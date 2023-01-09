@@ -215,7 +215,7 @@ class AvatarChaserCore extends Object3D {
         'standing',
         `/rpm/rpm-actions-locomotion/standing.fbx`
       ).then(() => {
-        this.reset()
+        // this.reset()
       })
 
       this.makeAction(
@@ -224,7 +224,7 @@ class AvatarChaserCore extends Object3D {
       ).then(() => {
         this.mixer.stopAllAction()
         this.actions.running.play()
-        this.reset()
+        // this.reset()
       })
 
       let clock = new Clock()
@@ -296,11 +296,18 @@ class AvatarChaserCore extends Object3D {
     this.lookerO3D = new Object3D()
     this.lastAction = false
     this.t = 0
+
+    this.lastPos = new Object3D()
+    this.diffPos = new Object3D()
+    this.compare = new Object3D()
+    this.running = true
   }
 
   canRun() {
+    this.compare.position.copy(this.player.position)
+    this.compare.position.y = this.destination.position.y
     if (
-      this.player.position.distanceTo(this.destination.position) >=
+      this.compare.position.distanceTo(this.destination.position) >=
       this.chaseDist
     ) {
       return true
@@ -397,7 +404,7 @@ class AvatarChaserCore extends Object3D {
     let shouldDo = null
 
     if (this.actions.standing && this.actions.running) {
-      if (!this.canRun()) {
+      if (this.running) {
         shouldDo = this.actions.standing
       } else {
         shouldDo = this.actions.running
@@ -584,6 +591,16 @@ class AvatarChaserCore extends Object3D {
     // if (this.player.position.distanceTo(this.destination.position) >= 35) {
     //   this.reset()
     // }
+
+    // this.running =
+
+    let dist = this.diffPos.position
+      .copy(this.player.position)
+      .sub(this.lastPos.position)
+      .length()
+    this.running = dist <= 0.05
+    // console.log(dist)
+    this.lastPos.position.copy(this.player.position)
   }
 
   reset() {
@@ -599,8 +616,8 @@ class AvatarChaserCore extends Object3D {
     this.playerVelocity.set(0, 0, 0)
     this.player.position.copy(this.destination.position)
 
-    this.player.position.y += 1.5
-    this.player.position.x += 1
+    this.player.position.y += 1.52
+    // this.player.position.x += 1
 
     this.player.position.x += this.offset[0]
     this.player.position.y += this.offset[1]

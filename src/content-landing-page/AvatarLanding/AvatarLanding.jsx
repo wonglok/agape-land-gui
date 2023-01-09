@@ -40,12 +40,12 @@ export function AvatarLanding({ mapURL }) {
     //
     return (
       <AvatarGuide
-        offset={[2, 2, 0]}
-        chaseDist={2}
-        speed={aCore.playerSpeed * 0.88}
+        offset={[0.01, 1, 0]}
+        chaseDist={1.2}
+        speed={aCore.playerSpeed * 0.98}
         destObj={aCore.player}
         collider={collider}
-        avatarUrl={clothes[(clothes.length - level) % clothes.length]}
+        avatarUrl={clothes[level % clothes.length]}
         onACore={(aCore) => {
           return <group>{makeFollower(collider, level - 1, aCore)}</group>
         }}
@@ -112,7 +112,7 @@ export function AvatarLanding({ mapURL }) {
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
 
-                      {makeFollower(collider, clothes.length - 1, aCore)}
+                      {makeFollower(collider, 40, aCore)}
                     </group>
                   )
                 }}
