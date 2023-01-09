@@ -41,7 +41,10 @@ function Smaller({
 }) {
   const glb = useGLTF(url)
 
+  let gl = useThree((s) => s.gl)
+  let camera = useThree((s) => s.camera)
   let sc = clone(glb.scene)
+  gl.compile(sc, camera)
 
   sc.traverse((it) => {
     it.frustumCulled = false
@@ -105,9 +108,9 @@ function CameraZoom() {
     camera.position.z = 0.0
     camera.position.z += move
 
-    move -= (1 / 650) * Math.pow(1.0 / move, move)
+    move -= (1 / 400) * Math.pow(1.0 / move, move)
 
-    if (move <= 0.15) {
+    if (move <= 0.18) {
       move = 1
       setTick((s) => s + 1)
     }
@@ -126,11 +129,11 @@ function CameraZoom() {
             font={font}
             size={1.5}
           >
-            {tick % 5 === 0.0 && `Exploring`}
-            {tick % 5 === 1.0 && `The Mind of`}
-            {tick % 5 === 2.0 && `AVATARS`}
-            {tick % 5 === 3.0 && `Enjoy.`}
-            {tick % 5 === 4.0 && `See You!`}
+            {tick % 5 === 0.0 && `WELCOME `}
+            {tick % 5 === 1.0 && `AVATAR`}
+            {tick % 5 === 2.0 && `3D World`}
+            {tick % 5 === 3.0 && `Metadata`}
+            {tick % 5 === 4.0 && `Metaverse`}
             <MeshTransmissionMaterial
               {...{
                 transmissionSampler: true,
@@ -221,7 +224,7 @@ function CameraZoom() {
         <group>
           <Smaller
             visible={tick % 5 === 4.0}
-            gesture={`/rpm/rpm-actions-emoji/greet.fbx`}
+            gesture={`/rpm/rpm-actions-emoji/stand-idle.fbx`}
             url={`/rpm/avatar/default-lok.glb`}
           ></Smaller>
         </group>
