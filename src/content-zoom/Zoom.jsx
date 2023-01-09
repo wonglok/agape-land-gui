@@ -110,7 +110,7 @@ function CameraZoom() {
 
     move -= 1 / 600
 
-    if (move <= 0.18) {
+    if (move <= 0.21) {
       move = 1
       setTick((s) => s + 1)
     }
