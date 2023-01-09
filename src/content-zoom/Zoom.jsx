@@ -100,17 +100,17 @@ function CameraZoom() {
   useEffect(() => {}, [])
 
   let [tick, setTick] = useState(0)
-  useFrame(({}) => {
+  useFrame(({}, dt) => {
     //
     camera.near = 0.01
     camera.far = 2
-    camera.fov = 90
+    camera.fov = 90 * move
 
     camera.updateProjectionMatrix()
     camera.position.z = 0.0
     camera.position.z += move
 
-    move -= 1 / 600
+    move -= dt / 4.5
 
     // ref.current.scale.setScalar((1.0 - move) * 2.0)
 
