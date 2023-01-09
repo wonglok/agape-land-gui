@@ -104,7 +104,7 @@ function CameraZoom() {
     //
     camera.near = 0.01
     camera.far = 2
-    camera.fov = move * 90
+    camera.fov = 90
 
     camera.updateProjectionMatrix()
     camera.position.z = 0.0
@@ -142,7 +142,7 @@ function CameraZoom() {
               {tick % 5 === 1.0 && `SALUTE`}
               {tick % 5 === 2.0 && `NEW YOU!`}
               {tick % 5 === 3.0 && `3D World`}
-              {tick % 5 === 4.0 && `Metadata`}
+              {tick % 5 === 4.0 && `META-DATA`}
 
               {/*  */}
               {/*  */}
@@ -169,7 +169,7 @@ function CameraZoom() {
             </Text3D>
           </Center>
         </group>
-        <group>
+        <group position={[0, 0, -0.15]}>
           <Smaller
             visible={tick % 5 === 0.0}
             gesture={`/rpm/rpm-actions-locomotion/swim-float.fbx`}
