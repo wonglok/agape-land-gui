@@ -216,6 +216,7 @@ function CameraZoom() {
           ></Smaller>
         </group>
         <group>
+          =
           <Smaller
             visible={tick % 5 === 2.0}
             gesture={`/rpm/rpm-actions-emoji/yes.fbx`}
@@ -226,7 +227,7 @@ function CameraZoom() {
           <Smaller
             visible={tick % 5 === 3.0}
             gesture={`/rpm/rpm-actions-emoji/bored.fbx`}
-            url={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
+            url={`/scene/2023-01-07-skycity/lok-pajamas.glb`}
           ></Smaller>
         </group>
         <group>
