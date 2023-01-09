@@ -110,7 +110,7 @@ function CameraZoom() {
     camera.position.z = 0.0
     camera.position.z += move
 
-    move -= dt / 4.5
+    move -= dt / 10
 
     // ref.current.scale.setScalar((1.0 - move) * 2.0)
 
