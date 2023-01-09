@@ -114,7 +114,7 @@ function CameraZoom() {
 
     // ref.current.scale.setScalar((1.0 - move) * 2.0)
 
-    if (move <= 0.21) {
+    if (move <= 0.25) {
       move = moveInit
       setTick((s) => s + 1)
     }
@@ -124,9 +124,9 @@ function CameraZoom() {
     <>
       <group ref={ref}>
         <group
-          position={[0.01, 1.505 - 0.02, 0.4]}
+          position={[0.0, 1.505 - 0.02, 0.4]}
           rotation={[-0.45, 0, 0]}
-          scale={0.055}
+          scale={0.05}
         >
           <Center>
             <Text3D
@@ -138,9 +138,9 @@ function CameraZoom() {
               font={font}
               size={1.25}
             >
-              {tick % 5 === 0.0 && `SALUTE!`}
-              {tick % 5 === 1.0 && `AVATAR`}
-              {tick % 5 === 2.0 && `NEW YOU`}
+              {tick % 5 === 0.0 && `AVATAR`}
+              {tick % 5 === 1.0 && `SALUTE`}
+              {tick % 5 === 2.0 && `NEW YOU!`}
               {tick % 5 === 3.0 && `3D World`}
               {tick % 5 === 4.0 && `Metadata`}
 
@@ -165,7 +165,6 @@ function CameraZoom() {
                   attenuationColor: '#ffffff',
                   color: '#ffffff',
                 }}
-                // background={texture}
               ></MeshTransmissionMaterial>
             </Text3D>
           </Center>
@@ -173,15 +172,15 @@ function CameraZoom() {
         <group>
           <Smaller
             visible={tick % 5 === 0.0}
-            gesture={`/rpm/rpm-actions-emoji/salute.fbx`}
-            url={`/scene/2023-01-07-skycity/lok-dune.glb`}
+            gesture={`/rpm/rpm-actions-locomotion/swim-float.fbx`}
+            url={`/scene/2023-01-07-skycity/lok-jacket.glb`}
           ></Smaller>
         </group>
         <group>
           <Smaller
             visible={tick % 5 === 1.0}
-            gesture={`/rpm/rpm-actions-locomotion/swim-float.fbx`}
-            url={`/scene/2023-01-07-skycity/lok-jacket.glb`}
+            gesture={`/rpm/rpm-actions-emoji/salute.fbx`}
+            url={`/scene/2023-01-07-skycity/lok-dune.glb`}
           ></Smaller>
         </group>
         <group>
