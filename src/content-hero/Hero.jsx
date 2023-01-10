@@ -18,8 +18,13 @@ export function Hero() {
 function Content() {
   return (
     <group>
-      <MapControls enableDamping screenSpacePanning makeDefault></MapControls>
       {/* <OrbitControls makeDefault></OrbitControls> */}
+      <MapControls
+        object-position={[0, 0, 500]}
+        enableDamping
+        screenSpacePanning
+        makeDefault
+      ></MapControls>
       <Background></Background>
       <DirectForceGraph></DirectForceGraph>
       <Environment preset='apartment'></Environment>
