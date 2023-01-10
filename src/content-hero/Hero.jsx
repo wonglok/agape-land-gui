@@ -1,7 +1,7 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { Environment, MapControls, OrbitControls } from '@react-three/drei'
 import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
@@ -18,7 +18,8 @@ export function Hero() {
 function Content() {
   return (
     <group>
-      <OrbitControls makeDefault></OrbitControls>
+      <MapControls enableDamping screenSpacePanning makeDefault></MapControls>
+      {/* <OrbitControls makeDefault></OrbitControls> */}
       <Background></Background>
       <DirectForceGraph></DirectForceGraph>
       <Environment preset='apartment'></Environment>
