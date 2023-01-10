@@ -104,19 +104,18 @@ export function DirectForceGraph({}) {
         //
         // color: new Color(color),
         color: new Color('#ffffff'),
-        reflectivity: 0.5,
+        reflectivity: 1,
         roughness: 0.3,
-        metalness: 0.0,
+        metalness: 0.01,
         transmission: 1,
-        thickness: 1.5,
+        thickness: 2.5,
         ior: 1.4,
-        emissive: new Color('#00ffff'),
-        emissiveIntensity: 0.35,
         attenuationColor: new Color('#00ffff'),
-        attenuationDistance: 2,
+        attenuationDistance: 1,
       })
 
       colorMap.set(color, mat)
+
       return mat
     }
 
