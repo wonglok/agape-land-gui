@@ -112,7 +112,7 @@ export function DirectForceGraph() {
         it.__threeObj.material = getMat({ color: it.color })
         it.__threeObj.__data = it
         it.__threeObj.geometry = iGeo
-        it.__threeObj.scale.setScalar(it.size * 1.3)
+        it.__threeObj.scale.setScalar(it.size)
       }
 
       return it
@@ -166,16 +166,22 @@ export function DirectForceGraph() {
       console.log('dispose')
     }
   }, [camera, controls, gl, myGraph])
+
   return (
     <>
       <group
         onPointerOut={(ev) => {
           controls.enabled = true
-          ev.object.material.color.set('#ffffff')
+          document.body.style.cursor = ''
         }}
         onPointerOver={(ev) => {
           controls.enabled = true
-          ev.object.material.color.set('#ffcc000')
+          document.body.style.cursor = 'grab'
+        }}
+        onPointerDown={(ev) => {
+          controls.enabled = false
+          document.body.style.cursor = 'move'
+          document.body.style.cursor = ''
         }}
       >
         {root}
@@ -237,24 +243,24 @@ async function setupDragContorls({
     ;['x', 'y', 'z'].forEach((c) => (node[`f${c}`] = node[c]))
 
     // drag cursor
-    renderer.domElement.classList.add('grabbable')
+    // renderer.domElement.classList.add('grabbable')
 
     state.onNodeDragStart(node, event.object.position)
 
-    controls.enabled = false // Disable controls while dragging
+    // controls.enabled = false // Disable controls while dragging
 
-    setTimeout(() => {
-      controls.enabled = true // Disable controls while dragging
-    })
+    // setTimeout(() => {
+    //   controls.enabled = true // Disable controls while dragging
+    // })
   })
 
-  let ttR = 0
-  dragControls.addEventListener('hoveron', () => {
-    controls.enabled = true
-  })
-  dragControls.addEventListener('hoveroff', () => {
-    controls.enabled = true
-  })
+  // let ttR = 0
+  // dragControls.addEventListener('hoveron', () => {
+  //   controls.enabled = true
+  // })
+  // dragControls.addEventListener('hoveroff', () => {
+  //   controls.enabled = true
+  // })
   dragControls.addEventListener('drag', function (event) {
     const nodeObj = getGraphObj(event.object)
 
@@ -328,11 +334,11 @@ async function setupDragContorls({
     state.forceGraph
       .d3AlphaTarget(0) // release engine low intensity
       .resetCountdown() // let the engine readjust after releasing fixed nodes
-    controls.enabled = true
-    clearInterval(ttR)
-    ttR = setTimeout(() => {
-      controls.enabled = true
-    }, 10)
+    // controls.enabled = true
+    // clearInterval(ttR)
+    // ttR = setTimeout(() => {
+    //   controls.enabled = true
+    // }, 10)
     //
     // if (state.enableNavigationControls) {
     //   controls.enabled = true // Re-enable controls
@@ -345,7 +351,7 @@ async function setupDragContorls({
     // }
 
     // clear cursor
-    renderer.domElement.classList.remove('grabbable')
+    // renderer.domElement.classList.remove('grabbable')
   })
 
   return {
