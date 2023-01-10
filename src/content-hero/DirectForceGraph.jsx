@@ -1,8 +1,8 @@
-import { Plane } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { Html, Plane } from '@react-three/drei'
+import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { TorusKnotGeometry } from 'three'
+import { Sprite, TorusKnotGeometry } from 'three'
 import { SphereBufferGeometry } from 'three'
 import { Color } from 'three'
 import { SphereGeometry } from 'three'
@@ -12,6 +12,7 @@ import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
 import { DragControls } from 'three-stdlib'
 // import ThreeRenderObjects from 'three-render-objects'
+import SpriteText from 'three-spritetext'
 
 export function DirectForceGraph() {
   let [root, setO3D] = useState(null)
@@ -190,6 +191,7 @@ export function DirectForceGraph() {
         ></Plane>
       </group>
       <group
+        onPointerEnter={(ev) => {}}
         onPointerOut={(ev) => {
           controls.enabled = true
           document.body.style.cursor = ''

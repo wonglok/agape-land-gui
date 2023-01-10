@@ -83,6 +83,7 @@
     "three-forcegraph": "^1.40.0",
     "three-mesh-bvh": "^0.5.17",
     "three-render-objects": "^1.27.7",
+    "three-spritetext": "^1.6.5",
     "three-stdlib": "^2.12.1",
     "three140": "npm:three@^0.140.0",
     "three143": "npm:three@^0.143.0",
