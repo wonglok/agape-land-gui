@@ -2,6 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { TorusKnotGeometry } from 'three'
+import { SphereBufferGeometry } from 'three'
 import { Color } from 'three'
 import { SphereGeometry } from 'three'
 // import { MeshStandardMaterial } from 'three'
@@ -93,8 +94,8 @@ export function DirectForceGraph() {
         roughness: 0.3,
         metalness: 0.0,
         transmission: 1,
-        thickness: 1.65,
-        ior: 1.2,
+        thickness: 1.5,
+        ior: 1.3,
         // attenuationColor: new Color(color).setHSL(0, 1, 0.6),
         // attenuationDistance: 1.5,
       })
@@ -103,13 +104,15 @@ export function DirectForceGraph() {
       return mat
     }
 
-    let icoGeo = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 7)
+    let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 3, 4)
+    let sphere = new SphereGeometry(1, 32, 32)
+    let iGeo = sphere
 
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
         it.__threeObj.__data = it
-        it.__threeObj.geometry = icoGeo
+        it.__threeObj.geometry = iGeo
         it.__threeObj.scale.setScalar(it.size * 1.3)
       }
 
@@ -164,7 +167,17 @@ export function DirectForceGraph() {
       console.log('dispose')
     }
   }, [camera, controls, gl, myGraph])
-  return <>{root}</>
+  return (
+    <>
+      <group
+        onPointerOut={() => {
+          controls.enabled = true
+        }}
+      >
+        {root}
+      </group>
+    </>
+  )
 }
 
 function getGraphObj(object) {
