@@ -1,6 +1,8 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { IcosahedronGeometry } from 'three'
+import { MeshStandardMaterial } from 'three'
 import { MeshBasicMaterial } from 'three'
 import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
@@ -37,7 +39,7 @@ export function DirectForceGraph() {
     // Gen random data
     const N = 300
     const gData = {
-      nodes: [...Array(N).keys()].map((i) => ({ id: i })),
+      nodes: [...Array(N).keys()].map((i) => ({ id: i, size: 15 })),
       links: [...Array(N).keys()]
         .filter((id) => id)
         .map((id) => ({
@@ -48,17 +50,29 @@ export function DirectForceGraph() {
 
     myGraph.graphData(gData)
 
+    myGraph.nodeRelSize(15)
+
+    let transp = new MeshPhysicalMaterial({
+      //
+      roughness: 0.25,
+      transmission: 1,
+      thickness: 1.5,
+      ior: 1.5,
+    })
+
+    let icoGeo = new IcosahedronGeometry(1, 3)
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
-        it.__threeObj.material = new MeshBasicMaterial({
-          //
-        })
+        it.__threeObj.material = transp
         it.__threeObj.__data = it
+        it.__threeObj.geometry = icoGeo
+        it.__threeObj.scale.setScalar(it.size)
       }
 
       return it
     })
 
+    //
     let o3d = new Object3D()
 
     //
@@ -90,6 +104,7 @@ export function DirectForceGraph() {
       controls,
       graphData: gData,
     }).then(({ clean }) => {
+      cleanDrag()
       cleanDrag = clean
     })
 
@@ -160,6 +175,7 @@ async function setupDragContorls({
     renderer.domElement.classList.add('grabbable')
   })
 
+  let ttR = 0
   dragControls.addEventListener('drag', function (event) {
     const nodeObj = getGraphObj(event.object)
 
@@ -190,9 +206,16 @@ async function setupDragContorls({
 
     node.__dragged = true
     state.onNodeDrag(node, translate)
+
+    clearInterval(ttR)
+    ttR = setTimeout(() => {
+      controls.enabled = true
+    })
   })
 
   dragControls.addEventListener('dragend', function (event) {
+    controls.enabled = true
+
     delete event.object.__initialPos // remove tracking attributes
     delete event.object.__prevPos
 
@@ -226,11 +249,13 @@ async function setupDragContorls({
       }
     }
 
+    //
+
     state.forceGraph
       .d3AlphaTarget(0) // release engine low intensity
       .resetCountdown() // let the engine readjust after releasing fixed nodes
 
-    controls.enabled = true
+    //
     // if (state.enableNavigationControls) {
     //   controls.enabled = true // Re-enable controls
     //   controls.domElement &&
