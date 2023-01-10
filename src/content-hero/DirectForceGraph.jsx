@@ -1,3 +1,4 @@
+import { Plane } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -53,6 +54,7 @@ export function DirectForceGraph() {
         .filter((id) => id)
         .map((id) => {
           return {
+            color: '#ffffff',
             source: id,
             target: Math.round(Math.random() * (id - 1)),
           }
@@ -163,12 +165,32 @@ export function DirectForceGraph() {
 
     return () => {
       cleanDrag()
+      controls.enabled = true
       console.log('dispose')
     }
   }, [camera, controls, gl, myGraph])
 
   return (
     <>
+      <group>
+        <Plane
+          ref={(item) => {
+            setInterval(() => {
+              item?.lookAt(camera.position)
+            })
+          }}
+          onPointerOut={(ev) => {
+            controls.enabled = true
+            document.body.style.cursor = ''
+          }}
+          onPointerOver={(ev) => {
+            controls.enabled = true
+            document.body.style.cursor = 'grab'
+          }}
+          scale={10000000}
+          visible={false}
+        ></Plane>
+      </group>
       <group
         onPointerOut={(ev) => {
           controls.enabled = true

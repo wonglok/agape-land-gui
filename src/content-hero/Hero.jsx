@@ -20,7 +20,7 @@ function Content() {
     <group>
       {/* <OrbitControls makeDefault></OrbitControls> */}
       <MapControls
-        object-position={[0, 0, 500]}
+        object-position={[0, 0, 100]}
         enableDamping
         screenSpacePanning
         makeDefault
