@@ -120,6 +120,7 @@ export function DirectForceGraph({}) {
     let box = new BoxGeometry(1, 1, 1)
 
     sphere.scale(0.3, 0.3, 0.3)
+    sphere.translate(0, 0, 0.3)
 
     let iGeo = sphere
 
