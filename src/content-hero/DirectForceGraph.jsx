@@ -1,9 +1,10 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { IcosahedronGeometry } from 'three'
-import { MeshStandardMaterial } from 'three'
-import { MeshBasicMaterial } from 'three'
+import { Color } from 'three'
+import { SphereGeometry } from 'three'
+// import { MeshStandardMaterial } from 'three'
+// import { MeshBasicMaterial } from 'three'
 import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
 import { DragControls } from 'three-stdlib'
@@ -36,37 +37,79 @@ export function DirectForceGraph() {
     if (!controls) {
       return
     }
+
+    //
     // Gen random data
-    const N = 300
+    const N = 150
     const gData = {
-      nodes: [...Array(N).keys()].map((i) => ({ id: i, size: 15 })),
+      nodes: [...Array(N).keys()].map((i) => ({
+        id: i,
+        size: 15,
+        color: '#' + new Color(0xffffff).getHexString(),
+      })),
       links: [...Array(N).keys()]
         .filter((id) => id)
-        .map((id) => ({
-          source: id,
-          target: Math.round(Math.random() * (id - 1)),
-        })),
+        .map((id) => {
+          return {
+            source: id,
+            target: Math.round(Math.random() * (id - 1)),
+          }
+        }),
     }
 
-    myGraph.graphData(gData)
-
-    myGraph.nodeRelSize(15)
-
-    let transp = new MeshPhysicalMaterial({
-      //
-      roughness: 0.25,
-      transmission: 1,
-      thickness: 1.5,
-      ior: 1.5,
+    gData.nodes.forEach((it) => {
+      it.size = gData.links.filter((e) => e.target === it.id).length || 1
+      if (it.size <= 1.5) {
+        it.size = 1.5
+      }
+      it.size *= 4
     })
 
-    let icoGeo = new IcosahedronGeometry(1, 3)
+    myGraph.graphData(gData)
+    myGraph.numDimensions(2)
+    myGraph.nodeRelSize(15)
+    myGraph.dagLevelDistance(20)
+
+    let DagMode = 'bu'
+    // myGraph.dagMode('bu')
+
+    let resetDAG = () => {
+      // myGraph.dagMode(DagMode)
+      myGraph.d3ReheatSimulation()
+      myGraph.cooldownTicks(60 * 1)
+    }
+
+    let colorMap = new Map()
+    let getMat = ({ color }) => {
+      if (colorMap.has(color)) {
+        colorMap.get(color)
+      }
+
+      let mat = new MeshPhysicalMaterial({
+        //
+        color: new Color(color),
+        reflectivity: 0.5,
+        roughness: 0.3,
+        metalness: 0.0,
+        transmission: 1,
+        thickness: 1.65,
+        ior: 1.2,
+        // attenuationColor: new Color(color).setHSL(0, 1, 0.6),
+        // attenuationDistance: 1.5,
+      })
+
+      colorMap.set(color, mat)
+      return mat
+    }
+
+    let icoGeo = new SphereGeometry(1, 24, 24)
+
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
-        it.__threeObj.material = transp
+        it.__threeObj.material = getMat({ color: it.color })
         it.__threeObj.__data = it
         it.__threeObj.geometry = icoGeo
-        it.__threeObj.scale.setScalar(it.size)
+        it.__threeObj.scale.setScalar(it.size * 1.3)
       }
 
       return it
@@ -76,15 +119,7 @@ export function DirectForceGraph() {
     let o3d = new Object3D()
 
     //
-    setO3D(<primitive object={o3d}></primitive>)
     //
-
-    // let array = []
-    // myGraph.traverse((it) => {
-    //   if (it.geometry) {
-    //     array.push(it)
-    //   }
-    // })
 
     let cleanDrag = () => {}
 
@@ -92,11 +127,15 @@ export function DirectForceGraph() {
       state: {
         enableNavigationControls: true,
         forceGraph: myGraph,
+        onNodeDragStart: (node) => {
+          //
+        },
         onNodeDrag: (node, translate) => {
           //
         },
         onNodeDragEnd: (node, translate) => {
           //
+          resetDAG()
         },
       },
       camera,
@@ -109,6 +148,15 @@ export function DirectForceGraph() {
     })
 
     o3d.add(myGraph)
+
+    window.addEventListener('focus', () => {
+      resetDAG()
+    })
+    window.addEventListener('blur', () => {
+      resetDAG()
+    })
+
+    setO3D(<primitive object={o3d}></primitive>)
 
     return () => {
       cleanDrag()
@@ -142,8 +190,8 @@ async function setupDragContorls({
 
   let clean = () => {}
 
-  await new Promise((resolve, reject) => {
-    //!SECTION
+  await new Promise((resolve) => {
+    //!SECTION reject
 
     let tt = setInterval(() => {
       if (gtr.items.length > 0) {
@@ -153,8 +201,9 @@ async function setupDragContorls({
     })
   })
 
-  let dragControls = new DragControls(gtr.items, camera, renderer.domElement)
+  //!SECTION
 
+  let dragControls = new DragControls(gtr.items, camera, renderer.domElement)
   dragControls.addEventListener('dragstart', function (event) {
     controls.enabled = false // Disable controls while dragging
 
@@ -173,6 +222,8 @@ async function setupDragContorls({
 
     // drag cursor
     renderer.domElement.classList.add('grabbable')
+
+    state.onNodeDragStart(node, event.object.position)
   })
 
   let ttR = 0
@@ -206,11 +257,6 @@ async function setupDragContorls({
 
     node.__dragged = true
     state.onNodeDrag(node, translate)
-
-    clearInterval(ttR)
-    ttR = setTimeout(() => {
-      controls.enabled = true
-    })
   })
 
   dragControls.addEventListener('dragend', function (event) {
@@ -254,7 +300,11 @@ async function setupDragContorls({
     state.forceGraph
       .d3AlphaTarget(0) // release engine low intensity
       .resetCountdown() // let the engine readjust after releasing fixed nodes
-
+    controls.enabled = true
+    clearInterval(ttR)
+    ttR = setTimeout(() => {
+      controls.enabled = true
+    }, 10)
     //
     // if (state.enableNavigationControls) {
     //   controls.enabled = true // Re-enable controls

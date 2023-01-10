@@ -3,6 +3,7 @@ import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
 import { Environment, OrbitControls } from '@react-three/drei'
 import { AmbientLight } from 'three140'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 export function Hero() {
   return (
@@ -21,6 +22,9 @@ function Content() {
       <Background></Background>
       <DirectForceGraph></DirectForceGraph>
       <Environment preset='apartment'></Environment>
+      <EffectComposer disableNormalPass>
+        <Bloom luminanceThreshold={0.6} mipmapBlur intensity={3}></Bloom>
+      </EffectComposer>
     </group>
   )
 }
