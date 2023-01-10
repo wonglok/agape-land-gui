@@ -123,13 +123,11 @@ export function DirectForceGraph({}) {
 
     let sphere = new SphereGeometry(1, 32, 32)
     // let torus = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 4)
-    // let box = new BoxGeometry(1, 1, 1)
+    let box = new BoxGeometry(2, 2, 2)
 
     // sphere.translate(0, 0, 0.3)
 
     let iGeo = sphere
-
-    let iMat = false
 
     let array = []
 
@@ -148,21 +146,26 @@ export function DirectForceGraph({}) {
     })
 
     let inst = new InstancedMesh(
-      iGeo,
+      box,
       getMat({ color: '#ffffff' }),
       array.length
     )
     inst.count = array.length
-    inst.needsUpdate = true
 
     let rAFID = 0
+    let temp3 = new Object3D()
+
     let rAF = () => {
       rAFID = requestAnimationFrame(rAF)
 
       array.forEach((item, i) => {
         if (item) {
-          item.updateMatrixWorld()
-          inst.setMatrixAt(inst.count, item.matrixWorld)
+          item.getWorldPosition(temp3.position)
+          item.getWorldQuaternion(temp3.quaternion)
+          item.getWorldScale(temp3.scale)
+
+          temp3.updateMatrix()
+          inst.setMatrixAt(i, temp3.matrix)
         }
       })
 
@@ -231,6 +234,7 @@ export function DirectForceGraph({}) {
       cleanDrag()
       controls.enabled = true
       console.log('dispose')
+      cancelAnimationFrame(rAFID)
     }
   }, [camera, controls, gl, glb.scene, myGraph])
 
