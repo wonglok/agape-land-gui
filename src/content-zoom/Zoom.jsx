@@ -125,7 +125,7 @@ function CameraZoom() {
     <>
       <group ref={ref}>
         <group
-          position={[0.0, 1.505 - 0.02, 0.4]}
+          position={[0.0, 1.505, 0.4]}
           rotation={[-0.45, 0, 0]}
           scale={0.05}
         >
@@ -170,6 +170,7 @@ function CameraZoom() {
             </Text3D>
           </Center>
         </group>
+        {/*  */}
         <group position={[0, 0, -0.15]}>
           <Smaller
             visible={tick % 5 === 0.0}
