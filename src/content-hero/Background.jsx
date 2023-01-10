@@ -1,5 +1,6 @@
 import { useTexture } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
+import { Fog } from 'three'
 import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
 
 export function Background() {

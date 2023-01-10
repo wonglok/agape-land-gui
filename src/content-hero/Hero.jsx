@@ -17,19 +17,29 @@ export function Hero() {
 
 function Content() {
   return (
-    <group>
+    <group rotation={[0, 0, 0]}>
       {/* <OrbitControls makeDefault></OrbitControls> */}
       <MapControls
-        object-position={[0, 0, 100]}
+        object-position={[0, 0, 25]}
+        object-rotation={[0.0, 0, 0]}
+        target={[0, 0, 0]}
         enableDamping
-        screenSpacePanning
+        screenSpacePanning={true}
         makeDefault
+        enableRotate={false}
       ></MapControls>
       <Background></Background>
-      <DirectForceGraph></DirectForceGraph>
+
+      <group rotation={[Math.PI * -0.5, 0, 0]}>
+        <gridHelper args={[100 * 10, 50 * 10, 0x444444, 0x444444]}></gridHelper>
+      </group>
+
+      <group scale={0.1} position={[0, 0, 0]}>
+        <DirectForceGraph></DirectForceGraph>
+      </group>
       <Environment preset='apartment'></Environment>
       <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.6} mipmapBlur intensity={3}></Bloom>
+        <Bloom luminanceThreshold={0.25} mipmapBlur intensity={3}></Bloom>
       </EffectComposer>
     </group>
   )

@@ -1,7 +1,10 @@
+import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 import { Html, Plane } from '@react-three/drei'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { BoxGeometry, InstancedMesh } from 'three'
+import { BoxBufferGeometry } from 'three'
 import { TorusKnotGeometry } from 'three'
 import { Color } from 'three'
 import { SphereGeometry } from 'three'
@@ -13,7 +16,8 @@ import { DragControls } from 'three-stdlib'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
-export function DirectForceGraph() {
+export function DirectForceGraph({}) {
+  let glb = useGLBLoader(`/scene/2023-01-07-skycity/flower-geoonly.glb`)
   let [root, setO3D] = useState(null)
 
   /** @type {[import('three-forcegraph').default, () =>{}]} */
@@ -70,12 +74,16 @@ export function DirectForceGraph() {
     })
 
     myGraph.graphData(gData)
-    myGraph.numDimensions(2)
     myGraph.nodeRelSize(15)
     myGraph.dagLevelDistance(20)
 
-    // let DagMode = 'bu'
-    // myGraph.dagMode('bu')
+    // myGraph.linkDirectionalParticles(1)
+    // myGraph.linkDirectionalParticleSpeed(10)
+    // myGraph.linkDirectionalParticleWidth(5)
+    // myGraph.linkDirectionalParticleColor(0xfffff)
+    // myGraph.linkDirectionalParticleResolution(3)
+    // myGraph.dagMode('zin')
+    myGraph.numDimensions(2)
 
     let resetDAG = () => {
       // myGraph.dagMode(DagMode)
@@ -105,23 +113,75 @@ export function DirectForceGraph() {
       return mat
     }
 
-    let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 3, 4)
+    let o3d = new Object3D()
+
     let sphere = new SphereGeometry(1, 32, 32)
+    let torus = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 4)
+    let box = new BoxGeometry(1, 1, 1)
+
+    sphere.scale(0.3, 0.3, 0.3)
+
     let iGeo = sphere
+
+    let iMat = false
+
+    let array = []
+
+    glb.scene.traverse((it) => {
+      //
+
+      if (it.geometry) {
+        array.push(it)
+        // it.geometry.computeBoundingBox()
+        // iGeo = it.geometry.clone()
+        // iGeo.rotateX(Math.PI * 0.5)
+        // iGeo.scale(0.15, 0.15, 0.15)
+        // iGeo.translate(0, 0, 0.8)
+        // iMat = it.material
+      }
+    })
+
+    let inst = new InstancedMesh(
+      iGeo,
+      getMat({ color: '#ffffff' }),
+      array.length
+    )
+    inst.count = array.length
+    inst.needsUpdate = true
+
+    let rAFID = 0
+    let rAF = () => {
+      rAFID = requestAnimationFrame(rAF)
+
+      array.forEach((item, i) => {
+        if (item) {
+          item.updateMatrixWorld()
+          inst.setMatrixAt(inst.count, item.matrixWorld)
+        }
+      })
+
+      inst.instanceMatrix.needsUpdate = true
+    }
+    rAFID = requestAnimationFrame(rAF)
+
+    o3d.add(inst)
 
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
-        it.__threeObj.__data = it
         it.__threeObj.geometry = iGeo
-        it.__threeObj.scale.setScalar(it.size)
+
+        //!SECTION
+        it.__threeObj.scale.setScalar(it.size * 2)
+        // it.__threeObj.scale.setScalar(20)
+        it.__threeObj.__data = it
+        it.__threeObj.visible = true
       }
 
       return it
     })
 
     //
-    let o3d = new Object3D()
 
     //
     //
