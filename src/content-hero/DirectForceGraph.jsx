@@ -67,15 +67,19 @@ export function DirectForceGraph({}) {
 
     gData.nodes.forEach((it) => {
       it.size = gData.links.filter((e) => e.target === it.id).length || 1
-      if (it.size <= 1.5) {
-        it.size = 1.5
+      it.size = Math.pow(it.size, 1.1)
+      if (it.size <= 2) {
+        it.size = 2
       }
-      it.size *= 4
+      if (it.size >= 5) {
+        it.size = 5
+      }
+      it.size *= 3
     })
 
     myGraph.graphData(gData)
-    myGraph.nodeRelSize(15)
-    myGraph.dagLevelDistance(20)
+    // myGraph.nodeRelSize(15)
+    // myGraph.dagLevelDistance(20)
 
     // myGraph.linkDirectionalParticles(1)
     // myGraph.linkDirectionalParticleSpeed(10)
@@ -98,15 +102,18 @@ export function DirectForceGraph({}) {
 
       let mat = new MeshPhysicalMaterial({
         //
-        color: new Color(color),
+        // color: new Color(color),
+        color: new Color('#ffffff'),
         reflectivity: 0.5,
         roughness: 0.3,
         metalness: 0.0,
         transmission: 1,
         thickness: 1.5,
-        ior: 1.3,
-        // attenuationColor: new Color(color).setHSL(0, 1, 0.6),
-        // attenuationDistance: 1.5,
+        ior: 1.4,
+        emissive: new Color('#00ffff'),
+        emissiveIntensity: 0.35,
+        attenuationColor: new Color('#00ffff'),
+        attenuationDistance: 2,
       })
 
       colorMap.set(color, mat)
@@ -116,11 +123,10 @@ export function DirectForceGraph({}) {
     let o3d = new Object3D()
 
     let sphere = new SphereGeometry(1, 32, 32)
-    let torus = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 4)
-    let box = new BoxGeometry(1, 1, 1)
+    // let torus = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 4)
+    // let box = new BoxGeometry(1, 1, 1)
 
-    sphere.scale(0.3, 0.3, 0.3)
-    sphere.translate(0, 0, 0.3)
+    // sphere.translate(0, 0, 0.3)
 
     let iGeo = sphere
 
@@ -173,7 +179,7 @@ export function DirectForceGraph({}) {
         it.__threeObj.geometry = iGeo
 
         //!SECTION
-        it.__threeObj.scale.setScalar(it.size * 2)
+        it.__threeObj.scale.setScalar(it.size)
         // it.__threeObj.scale.setScalar(20)
         it.__threeObj.__data = it
         it.__threeObj.visible = true
@@ -227,7 +233,7 @@ export function DirectForceGraph({}) {
       controls.enabled = true
       console.log('dispose')
     }
-  }, [camera, controls, gl, myGraph])
+  }, [camera, controls, gl, glb.scene, myGraph])
 
   return (
     <>
@@ -414,7 +420,7 @@ async function setupDragContorls({
     //
 
     state.forceGraph
-      .d3AlphaTarget(0) // release engine low intensity
+      .d3AlphaTarget(0.4) // release engine low intensity
       .resetCountdown() // let the engine readjust after releasing fixed nodes
     // controls.enabled = true
     // clearInterval(ttR)
