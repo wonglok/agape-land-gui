@@ -154,16 +154,14 @@ export function DirectForceGraph() {
 
     o3d.add(myGraph)
 
-    window.addEventListener('focus', () => {
-      resetDAG()
-    })
-    window.addEventListener('blur', () => {
-      resetDAG()
-    })
+    window.addEventListener('focus', resetDAG)
+    window.addEventListener('blur', resetDAG)
 
     setO3D(<primitive object={o3d}></primitive>)
 
     return () => {
+      window.removeEventListener('focus', resetDAG)
+      window.removeEventListener('blur', resetDAG)
       cleanDrag()
       controls.enabled = true
       console.log('dispose')
