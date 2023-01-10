@@ -31,7 +31,12 @@ export function DirectForceGraph({}) {
   }, [])
 
   useFrame(() => {
-    myGraph?.tickFrame()
+    if (myGraph) {
+      myGraph.tickFrame()
+      myGraph
+        .d3AlphaTarget(0.1) // release engine low intensity
+        .resetCountdown()
+    }
   })
 
   let camera = useThree((s) => s.camera)
@@ -45,9 +50,7 @@ export function DirectForceGraph({}) {
       return
     }
 
-    //
-    // Gen random data
-    const N = 150
+    const N = 250
     const gData = {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
@@ -104,14 +107,14 @@ export function DirectForceGraph({}) {
         //
         // color: new Color(color),
         color: new Color('#ffffff'),
-        reflectivity: 1,
-        roughness: 0.3,
-        metalness: 0.01,
+        reflectivity: 0,
+        roughness: 0.3333,
+        metalness: 0.0,
         transmission: 1,
-        thickness: 2.5,
-        ior: 1.4,
+        thickness: 2,
+        ior: 1.5,
         attenuationColor: new Color('#00ffff'),
-        attenuationDistance: 1,
+        attenuationDistance: 2,
       })
 
       colorMap.set(color, mat)
@@ -122,6 +125,7 @@ export function DirectForceGraph({}) {
     let o3d = new Object3D()
 
     let sphere = new SphereGeometry(1, 32, 32)
+    sphere.scale(1, 1, 1)
     // let torus = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 4)
     let box = new BoxGeometry(2, 2, 2)
 
@@ -145,35 +149,35 @@ export function DirectForceGraph({}) {
       }
     })
 
-    let inst = new InstancedMesh(
-      box,
-      getMat({ color: '#ffffff' }),
-      array.length
-    )
-    inst.count = array.length
+    // let inst = new InstancedMesh(
+    //   box,
+    //   getMat({ color: '#ffffff' }),
+    //   array.length
+    // )
+    // inst.count = array.length
 
-    let rAFID = 0
-    let temp3 = new Object3D()
+    // let rAFID = 0
+    // let temp3 = new Object3D()
+    // let rAF = () => {
+    //   rAFID = requestAnimationFrame(rAF)
 
-    let rAF = () => {
-      rAFID = requestAnimationFrame(rAF)
+    //   array.forEach((item, i) => {
+    //     if (item) {
+    //       item.getWorldPosition(temp3.position)
+    //       item.getWorldQuaternion(temp3.quaternion)
+    //       item.getWorldScale(temp3.scale)
 
-      array.forEach((item, i) => {
-        if (item) {
-          item.getWorldPosition(temp3.position)
-          item.getWorldQuaternion(temp3.quaternion)
-          item.getWorldScale(temp3.scale)
+    //       temp3.updateMatrix()
+    //       inst.setMatrixAt(i, temp3.matrix)
+    //     }
+    //   })
 
-          temp3.updateMatrix()
-          inst.setMatrixAt(i, temp3.matrix)
-        }
-      })
+    //   inst.instanceMatrix.needsUpdate = true
+    //   inst.needsUpdate = true
+    // }
+    // rAFID = requestAnimationFrame(rAF)
 
-      inst.instanceMatrix.needsUpdate = true
-    }
-    rAFID = requestAnimationFrame(rAF)
-
-    o3d.add(inst)
+    // o3d.add(inst)
 
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
@@ -229,12 +233,12 @@ export function DirectForceGraph({}) {
     setO3D(<primitive object={o3d}></primitive>)
 
     return () => {
+      console.log('dispose')
       window.removeEventListener('focus', resetDAG)
       window.removeEventListener('blur', resetDAG)
       cleanDrag()
       controls.enabled = true
-      console.log('dispose')
-      cancelAnimationFrame(rAFID)
+      // cancelAnimationFrame(rAFID)
     }
   }, [camera, controls, gl, glb.scene, myGraph])
 
