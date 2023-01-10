@@ -47,7 +47,7 @@ export function DirectForceGraph() {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
         size: 15,
-        color: '#' + new Color(0xffffff).getHexString(),
+        color: '#' + new Color('#ffffff').getHexString(),
       })),
       links: [...Array(N).keys()]
         .filter((id) => id)
@@ -78,7 +78,6 @@ export function DirectForceGraph() {
     let resetDAG = () => {
       // myGraph.dagMode(DagMode)
       myGraph.d3ReheatSimulation()
-      myGraph.cooldownTicks(60 * 1)
     }
 
     let colorMap = new Map()
@@ -170,8 +169,13 @@ export function DirectForceGraph() {
   return (
     <>
       <group
-        onPointerOut={() => {
+        onPointerOut={(ev) => {
           controls.enabled = true
+          ev.object.material.color.set('#ffffff')
+        }}
+        onPointerOver={(ev) => {
+          controls.enabled = true
+          ev.object.material.color.set('#ffcc000')
         }}
       >
         {root}
