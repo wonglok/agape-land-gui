@@ -67,12 +67,12 @@ export function DirectForceGraph({}) {
 
     gData.nodes.forEach((it) => {
       it.size = gData.links.filter((e) => e.target === it.id).length || 1
-      it.size = Math.pow(it.size, 1.1)
-      if (it.size <= 2) {
-        it.size = 2
+      it.size = Math.pow(it.size, 1.5)
+      if (it.size <= 1.5) {
+        it.size = 1.5
       }
-      if (it.size >= 5) {
-        it.size = 5
+      if (it.size >= 7) {
+        it.size = 7
       }
       it.size *= 3
     })
