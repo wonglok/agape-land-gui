@@ -1,6 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { TorusKnotGeometry } from 'three'
 import { Color } from 'three'
 import { SphereGeometry } from 'three'
 // import { MeshStandardMaterial } from 'three'
@@ -102,7 +103,7 @@ export function DirectForceGraph() {
       return mat
     }
 
-    let icoGeo = new SphereGeometry(1, 24, 24)
+    let icoGeo = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 7)
 
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
@@ -205,8 +206,6 @@ async function setupDragContorls({
 
   let dragControls = new DragControls(gtr.items, camera, renderer.domElement)
   dragControls.addEventListener('dragstart', function (event) {
-    controls.enabled = false // Disable controls while dragging
-
     // track drag object movement
     event.object.__initialPos = event.object.position.clone()
     event.object.__prevPos = event.object.position.clone()
@@ -224,9 +223,21 @@ async function setupDragContorls({
     renderer.domElement.classList.add('grabbable')
 
     state.onNodeDragStart(node, event.object.position)
+
+    controls.enabled = false // Disable controls while dragging
+
+    setTimeout(() => {
+      controls.enabled = true // Disable controls while dragging
+    })
   })
 
   let ttR = 0
+  dragControls.addEventListener('hoveron', () => {
+    controls.enabled = true
+  })
+  dragControls.addEventListener('hoveroff', () => {
+    controls.enabled = true
+  })
   dragControls.addEventListener('drag', function (event) {
     const nodeObj = getGraphObj(event.object)
 
