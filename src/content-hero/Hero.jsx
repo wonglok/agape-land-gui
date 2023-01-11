@@ -2,6 +2,7 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
 import {
+  Detailed,
   Environment,
   MapControls,
   OrbitControls,
@@ -23,8 +24,8 @@ export function Hero() {
 function Content() {
   return (
     <group rotation={[0, 0, 0]}>
-      {/* <OrbitControls makeDefault></OrbitControls> */}
       <PerspectiveCamera position={[0, 0, 0]} makeDefault></PerspectiveCamera>
+
       <MapControls
         panSpeed={1.5}
         object-position={[0, 40, 50]}
@@ -35,15 +36,19 @@ function Content() {
         makeDefault
         enableRotate={false}
       ></MapControls>
+
       <Background></Background>
 
-      <gridHelper args={[1000, 100]}></gridHelper>
+      <gridHelper args={[500, 50]}></gridHelper>
+
       <group rotation={[Math.PI * -0.5, 0, 0]}>
         <group scale={0.1} position={[0, 0, 0]}>
           <DirectForceGraph></DirectForceGraph>
         </group>
       </group>
+
       <Environment preset='apartment'></Environment>
+
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={0.3} mipmapBlur intensity={1}></Bloom>
       </EffectComposer>

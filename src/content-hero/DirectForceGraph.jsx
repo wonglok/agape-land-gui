@@ -40,7 +40,7 @@ export function DirectForceGraph({}) {
 
   useFrame(() => {
     if (myGraph) {
-      myGraph.tickFrame()
+      myGraph?.tickFrame()
       myGraph
         .d3AlphaTarget(0.2) // release engine low intensity
         .resetCountdown()
@@ -138,8 +138,8 @@ export function DirectForceGraph({}) {
     let sphere = new SphereGeometry(1, 32, 32)
     sphere.scale(1, 1, 1)
     let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
-    torus.scale(0.3, 0.3, 2.5)
-    torus.translate(0, 0, 2.5 / 2)
+    torus.scale(0.6, 0.6, 4.0)
+    torus.translate(0, 0, 4.0 / 2)
     let box = new BoxGeometry(2, 2, 2)
 
     let glbGeo = false
@@ -171,6 +171,8 @@ export function DirectForceGraph({}) {
         if (it.connection >= 3) {
           it.__threeObj.geometry = glbGeo
           it.__threeObj.material = glbMat
+        } else if (it.connection >= 2) {
+          it.__threeObj.geometry = torus
         } else {
           it.__threeObj.geometry = sphere
         }
