@@ -192,6 +192,7 @@ export function DirectForceGraph({}) {
     })
 
     let instGeo = new TorusKnotGeometry(1, 0.2, 125, 35, 5, 3)
+    instGeo.translate(0, 0, (1.0 + 0.2) / 2)
     instGeo.scale(1.3, 1.3, 3)
     instGeo.scale(0.5, 0.5, 0.5)
     let instMesh = new InstancedMesh(
@@ -304,11 +305,15 @@ export function DirectForceGraph({}) {
             })
           }}
           onPointerOut={(ev) => {
-            controls.enabled = true
+            if (controls) {
+              controls.enabled = true
+            }
             document.body.style.cursor = ''
           }}
           onPointerOver={(ev) => {
-            controls.enabled = true
+            if (controls) {
+              controls.enabled = true
+            }
             document.body.style.cursor = 'grab'
           }}
           scale={10000000}
@@ -318,15 +323,21 @@ export function DirectForceGraph({}) {
       <group
         onPointerEnter={(ev) => {}}
         onPointerOut={(ev) => {
-          controls.enabled = true
+          if (controls) {
+            controls.enabled = true
+          }
           document.body.style.cursor = ''
         }}
         onPointerOver={(ev) => {
-          controls.enabled = true
+          if (controls) {
+            controls.enabled = true
+          }
           document.body.style.cursor = 'grab'
         }}
         onPointerDown={(ev) => {
-          controls.enabled = false
+          if (controls) {
+            controls.enabled = false
+          }
           document.body.style.cursor = 'move'
           document.body.style.cursor = ''
         }}

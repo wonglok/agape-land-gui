@@ -12,6 +12,8 @@ import {
 } from '@react-three/drei'
 import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { CoreReady } from '@/content-landing-page/Core/Core'
+import { AvatarLanding } from '@/content-landing-page/AvatarLanding/AvatarLanding'
 
 export function Hero() {
   return (
@@ -28,7 +30,7 @@ function Content() {
     <group rotation={[0, 0, 0]}>
       <PerspectiveCamera position={[0, 0, 0]} makeDefault></PerspectiveCamera>
 
-      <MapControls
+      {/* <MapControls
         panSpeed={1}
         object-position={[0, 50 * 1.0, 50 * 1.618]}
         object-rotation={[0.0, 0, 0]}
@@ -36,7 +38,7 @@ function Content() {
         screenSpacePanning={false}
         makeDefault
         enableRotate={false}
-      ></MapControls>
+      ></MapControls> */}
 
       <Background></Background>
 
@@ -66,6 +68,12 @@ function Content() {
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={0.9} mipmapBlur intensity={3}></Bloom>
       </EffectComposer>
+
+      <CoreReady></CoreReady>
+
+      <AvatarLanding
+        mapURL={`/scene/2023-01-07-skycity/skycity.glb`}
+      ></AvatarLanding>
 
       {/*  */}
 
