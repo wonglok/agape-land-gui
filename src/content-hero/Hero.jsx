@@ -2,15 +2,15 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
 import {
-  Detailed,
-  MapControls,
-  OrbitControls,
-  OrthographicCamera,
+  // Plane,
+  // Box,
+  // MeshTransmissionMaterial,
+  // Detailed,
+  // MapControls,
+  // OrbitControls,
+  // OrthographicCamera,
   Environment,
   PerspectiveCamera,
-  Plane,
-  Box,
-  MeshTransmissionMaterial,
 } from '@react-three/drei'
 // import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
