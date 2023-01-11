@@ -31,9 +31,9 @@ export function AvatarLanding({ mapURL }) {
 
   let clothes = [
     //
-    `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
+    // `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
     `/scene/2023-01-07-skycity/lok-dune.glb`,
-    `/scene/2023-01-07-skycity/lok-jacket.glb`,
+    // `/scene/2023-01-07-skycity/lok-jacket.glb`,
     `/scene/2023-01-07-skycity/lok-groom.glb`,
   ]
   let makeFollower = (collider, level = 3, aCore) => {
