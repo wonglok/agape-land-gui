@@ -21,6 +21,8 @@ import { SphereGeometry } from 'three'
 // import { MeshBasicMaterial } from 'three'
 import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
+import { InstancedMesh } from 'three'
+import { MeshNormalMaterial } from 'three'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
@@ -70,7 +72,7 @@ export function DirectForceGraph({}) {
         .filter((id) => id)
         .map((id) => {
           return {
-            color: '#ffffff',
+            color: '#000000',
             source: id,
             target: Math.round(Math.random() * (id - 1)),
           }
@@ -91,6 +93,10 @@ export function DirectForceGraph({}) {
     })
 
     myGraph.graphData(gData)
+
+    myGraph.linkColor('color')
+    myGraph.linkOpacity(0.5)
+    myGraph.linkWidth(0.5)
 
     // myGraph.nodeRelSize(15)
     // myGraph.dagLevelDistance(20)
@@ -154,6 +160,7 @@ export function DirectForceGraph({}) {
           glbGeo.rotateX(Math.PI * 0.5)
           glbGeo.translate(0, 0, glbGeo.boundingSphere.radius)
           glbGeo.scale(0.1, 0.1, 0.1)
+          glbGeo.rotateZ(Math.PI * 0.25 * 0.0)
           glbMat = new MeshPhysicalMaterial({
             map: it.material.map,
             normalMap: it.material.normalMap,
@@ -166,6 +173,14 @@ export function DirectForceGraph({}) {
       }
     })
 
+    let sphere2 = new SphereGeometry(10, 32, 32)
+    let iMesh = new InstancedMesh(
+      sphere2,
+      new MeshNormalMaterial(),
+      gData.nodes.length
+    )
+    iMesh.count = gData.nodes.length
+    let i = 0
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         if (it.connection >= 4) {
@@ -173,11 +188,17 @@ export function DirectForceGraph({}) {
           it.__threeObj.material = glbMat
         } else if (it.connection >= 3) {
           it.__threeObj.geometry = torus
-          it.__threeObj.material = getMat({ color: '#00ffff' })
+          it.__threeObj.material = getMat({ color: '#00ffcc' })
         } else {
           it.__threeObj.geometry = sphere
-          it.__threeObj.material = getMat({ color: '#00ffff' })
+          it.__threeObj.material = getMat({ color: '#00ffcc' })
         }
+
+        if (it.__threeObj) {
+          iMesh.setMatrixAt(i, it.__threeObj.matrix)
+        }
+        i++
+        i = i % iMesh.count
 
         //!SECTION
         it.__threeObj.scale.setScalar(it.size)
