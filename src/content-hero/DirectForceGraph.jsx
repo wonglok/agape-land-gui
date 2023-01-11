@@ -189,14 +189,16 @@ export function DirectForceGraph({}) {
       }
     })
 
-    let sphere2 = new SphereGeometry(10, 32, 32)
-    let iMesh = new InstancedMesh(
+    let sphere2 = new SphereGeometry(1, 32, 32)
+    let iSphere = new InstancedMesh(
       sphere2,
       new MeshNormalMaterial(),
       gData.nodes.length
     )
-    iMesh.count = gData.nodes.length
+    iSphere.count = gData.nodes.length
+    o3d.add(iSphere)
 
+    let temp3D = new Object3D()
     let i = 0
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
@@ -214,15 +216,21 @@ export function DirectForceGraph({}) {
         }
 
         if (it.__threeObj) {
-          iMesh.setMatrixAt(i, it.__threeObj.matrix)
+          temp3D.position.copy(it.__threeObj.position)
+          temp3D.scale.copy(it.__threeObj.scale)
+          temp3D.quaternion.copy(it.__threeObj.quaternion)
+
+          temp3D.updateMatrix()
+          iSphere.setMatrixAt(i, temp3D.matrix)
+          iSphere.instanceMatrix.needsUpdate = true
         }
         i++
-        i = i % iMesh.count
+        i = i % iSphere.count
 
         //!SECTION
         it.__threeObj.scale.setScalar(it.size)
         it.__threeObj.__data = it
-        it.__threeObj.visible = true
+        it.__threeObj.visible = false
       }
       return it
     })

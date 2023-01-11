@@ -29,11 +29,10 @@ function Content() {
       <PerspectiveCamera position={[0, 0, 0]} makeDefault></PerspectiveCamera>
 
       <MapControls
-        panSpeed={1.5}
+        panSpeed={1}
         object-position={[0, 50 * 1.0, 50 * 1.618]}
         object-rotation={[0.0, 0, 0]}
         target={[0, 0, 0]}
-        enableDamping={true}
         screenSpacePanning={false}
         makeDefault
         enableRotate={false}
@@ -49,8 +48,9 @@ function Content() {
           args={[1000, 1000]}
         >
           <meshStandardMaterial
-            color={'#999999'}
+            color={'#ffffff'}
             roughness={1.0}
+            metalness={1.0}
           ></meshStandardMaterial>
         </Plane>
       </group>
@@ -66,6 +66,10 @@ function Content() {
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={0.9} mipmapBlur intensity={3}></Bloom>
       </EffectComposer>
+
+      {/*  */}
+
+      {/*  */}
     </group>
   )
 }
