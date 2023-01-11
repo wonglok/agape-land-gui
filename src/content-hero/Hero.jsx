@@ -38,7 +38,6 @@ function Content() {
         object-rotation={[0.0, 0, 0]}
         target={[0, 0, 0]}
         screenSpacePanning={false}
-        makeDefault
         enableRotate={false}
       ></MapControls> */}
 

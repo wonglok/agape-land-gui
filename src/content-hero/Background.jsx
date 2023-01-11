@@ -1,6 +1,6 @@
 import { Sphere, useTexture } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
-import { DoubleSide, Fog } from 'three'
+import { BackSide, DoubleSide, Fog } from 'three'
 import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
 
 export function Background() {
@@ -19,8 +19,8 @@ export function Background() {
 
   return (
     <>
-      <Sphere rotation={[-0.65, 2, 0]} args={[1700, 50, 50]}>
-        <meshBasicMaterial side={DoubleSide} map={texture}></meshBasicMaterial>
+      <Sphere rotation={[-0.6, 2, 0]} args={[500, 50, 50]}>
+        <meshBasicMaterial side={BackSide} map={texture}></meshBasicMaterial>
       </Sphere>
     </>
   )
