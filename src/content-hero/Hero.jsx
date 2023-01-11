@@ -39,7 +39,7 @@ function Content() {
 
       <Background></Background>
 
-      <gridHelper args={[500, 50]}></gridHelper>
+      <gridHelper args={[500, 50, 0xffaa00, 0xffaa00]}></gridHelper>
 
       <group rotation={[Math.PI * -0.5, 0, 0]}>
         <group scale={0.1} position={[0, 0, 0]}>
