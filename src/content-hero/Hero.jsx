@@ -43,14 +43,14 @@ function Content() {
       <Background></Background>
 
       <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
-        <gridHelper args={[1000, 100, 0x000000, 0x000000]}></gridHelper>
+        {/* <gridHelper args={[1000, 100, 0x000000, 0x000000]}></gridHelper> */}
         <Plane
-          position={[0, -10, 0]}
+          position={[0, 0, 0]}
           rotation={[-Math.PI * 0.5, 0, 0]}
           args={[1000, 1000]}
         >
           <meshStandardMaterial
-            color={'#ffffff'}
+            color={'#bababa'}
             roughness={1.0}
             metalness={1.0}
           ></meshStandardMaterial>

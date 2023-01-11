@@ -63,6 +63,7 @@ export function AvatarLanding({ mapURL }) {
     new BoxBufferGeometry(2000, 0.1, 2000),
     new MeshBasicMaterial({ color: new Color('#ffbaba') })
   )
+  colliderScene.add(clone(glb.scene))
   colliderScene.add(floor)
   return (
     <group>
