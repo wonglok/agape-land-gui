@@ -86,10 +86,10 @@ export function AvatarLanding({ mapURL }) {
 
   return (
     <group>
-      <gridHelper
+      {/* <gridHelper
         rotation-y={Math.PI * 0.25}
         args={[300, 100, '#8F6A1A', '#8F6A1A']}
-      />
+      /> */}
       <Collider
         scene={colliderScene}
         onReady={(collider) => {

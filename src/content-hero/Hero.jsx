@@ -16,7 +16,6 @@ import {
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { CoreReady } from '@/content-landing-page/Core/Core'
 import { AvatarLanding } from '@/content-landing-page/AvatarLanding/AvatarLanding'
-import { Querlo } from './Querlo'
 
 export function Hero() {
   return (
@@ -45,10 +44,10 @@ function Content() {
       <Background></Background>
 
       <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
-        {/* <gridHelper args={[1000, 100, 0x000000, 0x000000]}></gridHelper> */}
+        <gridHelper args={[1000, 250, '#8F6A1A', '#8F6A1A']}></gridHelper>
       </group>
 
-      <group rotation={[Math.PI * -0.5, 0, 0]} position={[0, 0.15, 0]}>
+      <group rotation={[Math.PI * -0.5, 0, 0]} position={[0, 1, 0]}>
         <group scale={0.1} position={[0, 0, 0]}>
           <DirectForceGraph></DirectForceGraph>
         </group>
