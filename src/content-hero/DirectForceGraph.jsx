@@ -118,14 +118,14 @@ export function DirectForceGraph({}) {
       let mat = new MeshPhysicalMaterial({
         //
         // color: new Color(color),
-        color: new Color('#ffffff'),
+        color: new Color(color),
         reflectivity: 0,
         roughness: 0.3,
         metalness: 0.0,
         transmission: 1,
         thickness: 3,
         ior: 1.5,
-        attenuationColor: new Color('#00ffff'),
+        attenuationColor: new Color(color),
         attenuationDistance: 2,
       })
 
@@ -173,10 +173,10 @@ export function DirectForceGraph({}) {
           it.__threeObj.material = glbMat
         } else if (it.connection >= 3) {
           it.__threeObj.geometry = torus
-          it.__threeObj.material = getMat({ color: it.color })
+          it.__threeObj.material = getMat({ color: '#00ffff' })
         } else {
           it.__threeObj.geometry = sphere
-          it.__threeObj.material = getMat({ color: it.color })
+          it.__threeObj.material = getMat({ color: '#00ffff' })
         }
 
         //!SECTION
