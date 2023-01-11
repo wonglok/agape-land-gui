@@ -62,6 +62,7 @@ export function DirectForceGraph({}) {
     const gData = {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
+        connection: 1,
         size: 15,
         color: '#' + new Color('#ffffff').getHexString(),
       })),
@@ -77,6 +78,7 @@ export function DirectForceGraph({}) {
     }
 
     gData.nodes.forEach((it) => {
+      it.connection = gData.links.filter((e) => e.target === it.id).length || 1
       it.size = gData.links.filter((e) => e.target === it.id).length || 1
       it.size = Math.pow(it.size, 0.6)
       // if (it.size <= 1.5) {
@@ -166,7 +168,7 @@ export function DirectForceGraph({}) {
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
-        if (it.size >= 5) {
+        if (it.connection >= 3) {
           it.__threeObj.geometry = glbGeo
           it.__threeObj.material = glbMat
         } else {
