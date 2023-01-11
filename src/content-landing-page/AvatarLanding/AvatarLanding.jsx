@@ -12,6 +12,10 @@ import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { AvaZoom } from './AvaZoom'
 import { BirdCamSync } from './BirdCamSync'
+import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
+import { PlaneBufferGeometry } from 'three'
+import { BoxBufferGeometry } from 'three'
+import { Mesh } from 'three'
 
 export function AvatarLanding({ mapURL }) {
   let glb = useGLBLoader(mapURL)
@@ -37,7 +41,6 @@ export function AvatarLanding({ mapURL }) {
       return null
     }
 
-    //
     return (
       <AvatarGuide
         offset={[0.01, 1, 0]}
@@ -53,14 +56,17 @@ export function AvatarLanding({ mapURL }) {
     )
   }
 
+  let colliderScene = new Object3D() // clone(glb.scene)
+  colliderScene.add(new Mesh(new BoxBufferGeometry(2000, 0.1, 2000)))
   return (
     <group>
       <Collider
-        scene={glb.scene}
+        scene={colliderScene}
         onReady={(collider) => {
           return (
             <group>
-              <primitive object={glb.scene}></primitive>
+              {/* <primitive object={colliderScene}></primitive> */}
+              {/* <primitive object={glb.scene}></primitive> */}
 
               <OrbitControls
                 args={[camera, gl.domElement]}
