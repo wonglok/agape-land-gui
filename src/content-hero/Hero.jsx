@@ -3,14 +3,16 @@ import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
 import {
   Detailed,
-  Environment,
   MapControls,
   OrbitControls,
   OrthographicCamera,
+  Environment,
   PerspectiveCamera,
   Plane,
+  Box,
+  MeshTransmissionMaterial,
 } from '@react-three/drei'
-import { AmbientLight } from 'three140'
+// import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { CoreReady } from '@/content-landing-page/Core/Core'
 import { AvatarLanding } from '@/content-landing-page/AvatarLanding/AvatarLanding'
@@ -44,17 +46,6 @@ function Content() {
 
       <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
         {/* <gridHelper args={[1000, 100, 0x000000, 0x000000]}></gridHelper> */}
-        <Plane
-          position={[0, 0, 0]}
-          rotation={[-Math.PI * 0.5, 0, 0]}
-          args={[1000, 1000]}
-        >
-          <meshStandardMaterial
-            color={'#bababa'}
-            roughness={1.0}
-            metalness={1.0}
-          ></meshStandardMaterial>
-        </Plane>
       </group>
 
       <group rotation={[Math.PI * -0.5, 0, 0]}>
