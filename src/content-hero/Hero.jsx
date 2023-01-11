@@ -13,7 +13,7 @@ import {
   MeshTransmissionMaterial,
 } from '@react-three/drei'
 // import { AmbientLight } from 'three140'
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { CoreReady } from '@/content-landing-page/Core/Core'
 import { AvatarLanding } from '@/content-landing-page/AvatarLanding/AvatarLanding'
 

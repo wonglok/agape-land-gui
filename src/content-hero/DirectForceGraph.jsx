@@ -191,13 +191,20 @@ export function DirectForceGraph({}) {
       }
     })
 
-    let instGeo = new TorusKnotGeometry(1, 0.2, 125, 35, 5, 3)
-    instGeo.translate(0, 0, (1.0 + 0.2) / 2)
+    let instGeo = new TorusKnotGeometry(1, 0.18, 125, 35, 5, 3)
+    instGeo.translate(0, 0, (1.0 + 0.18) / 2)
     instGeo.scale(1.3, 1.3, 3)
     instGeo.scale(0.5, 0.5, 0.5)
     let instMesh = new InstancedMesh(
       instGeo,
-      new MeshNormalMaterial({ flatShading: true }),
+      new MeshPhysicalMaterial({
+        thickness: 3,
+        roughness: 0.3,
+        transmission: 1,
+        metalness: 0.05,
+        attenuationColor: new Color('#bababa'),
+        attenuationDistance: 3,
+      }),
       gData.nodes.length
     )
     instMesh.instanceMatrix.setUsage(DynamicDrawUsage)
