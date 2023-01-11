@@ -1,7 +1,12 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
-import { Environment, MapControls, OrbitControls } from '@react-three/drei'
+import {
+  Environment,
+  MapControls,
+  OrbitControls,
+  PerspectiveCamera,
+} from '@react-three/drei'
 import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
@@ -19,11 +24,13 @@ function Content() {
   return (
     <group rotation={[0, 0, 0]}>
       {/* <OrbitControls makeDefault></OrbitControls> */}
+      <PerspectiveCamera position={[0, 0, 0]} makeDefault></PerspectiveCamera>
       <MapControls
-        object-position={[0, 50, 50]}
+        panSpeed={1.5}
+        object-position={[0, 40, 50]}
         object-rotation={[0.0, 0, 0]}
         target={[0, 0, 0]}
-        enableDamping
+        enableDamping={true}
         screenSpacePanning={false}
         makeDefault
         enableRotate={false}

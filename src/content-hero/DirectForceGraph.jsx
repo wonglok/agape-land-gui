@@ -157,7 +157,11 @@ export function DirectForceGraph({}) {
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
-        it.__threeObj.geometry = iGeo
+        if (it.size >= 5) {
+          it.__threeObj.geometry = iGeo
+        } else {
+          it.__threeObj.geometry = sphere
+        }
 
         //!SECTION
         it.__threeObj.scale.setScalar(it.size)
