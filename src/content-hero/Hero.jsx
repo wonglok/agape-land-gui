@@ -40,6 +40,7 @@ function Content() {
         screenSpacePanning={false}
         enableRotate={false}
       ></MapControls> */}
+      {/*  */}
       <Background></Background>
       <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
         <gridHelper args={[1000, 250, '#8F6A1A', '#8F6A1A']}></gridHelper>
