@@ -16,6 +16,8 @@ import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 import { PlaneBufferGeometry } from 'three'
 import { BoxBufferGeometry } from 'three'
 import { Mesh } from 'three'
+import { MeshBasicMaterial } from 'three140'
+import { Color } from 'three'
 
 export function AvatarLanding({ mapURL }) {
   let glb = useGLBLoader(mapURL)
@@ -57,7 +59,11 @@ export function AvatarLanding({ mapURL }) {
   }
 
   let colliderScene = new Object3D() // clone(glb.scene)
-  colliderScene.add(new Mesh(new BoxBufferGeometry(2000, 0.1, 2000)))
+  let floor = new Mesh(
+    new BoxBufferGeometry(2000, 0.1, 2000),
+    new MeshBasicMaterial({ color: new Color('#ffbaba') })
+  )
+  colliderScene.add(floor)
   return (
     <group>
       <Collider
@@ -66,7 +72,7 @@ export function AvatarLanding({ mapURL }) {
           return (
             <group>
               {/* <primitive object={colliderScene}></primitive> */}
-              {/* <primitive object={glb.scene}></primitive> */}
+              <primitive object={glb.scene}></primitive>
 
               <OrbitControls
                 args={[camera, gl.domElement]}
