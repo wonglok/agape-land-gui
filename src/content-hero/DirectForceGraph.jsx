@@ -44,10 +44,14 @@ export function DirectForceGraph({}) {
 
   useFrame(() => {
     if (myGraph) {
-      myGraph?.tickFrame()
-      myGraph
-        .d3AlphaTarget(0.2) // release engine low intensity
-        .resetCountdown()
+      try {
+        myGraph?.tickFrame()
+        myGraph
+          // .d3AlphaTarget(0.2) // release engine low intensity
+          .resetCountdown()
+      } catch (e) {
+        console.log(e)
+      }
     }
   })
 
@@ -125,6 +129,7 @@ export function DirectForceGraph({}) {
 
       let mat = new MeshPhysicalMaterial({
         //
+        //
         // color: new Color(color),
         color: new Color(color),
         reflectivity: 0,
@@ -145,16 +150,20 @@ export function DirectForceGraph({}) {
     let o3d = new Object3D()
 
     let sphere = new SphereGeometry(1, 32, 32)
-
     sphere.scale(1, 1, 1)
 
     let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
     torus.scale(0.6, 0.6, 4.0)
     torus.translate(0, 0, 4.0 / 2)
 
-    let box = new CylinderGeometry(0.4, 0.4, 10, 32, 32, false)
+    let largerTorus = new TorusKnotGeometry(1, 0.15, 150, 45, 4, 3)
+    largerTorus.scale(0.6, 0.6, 4.0)
+    largerTorus.translate(0, 0, 4.0 / 2)
+    // largerTorus.scale(1.0, 1.0, 1.1)
+
+    let box = new CylinderGeometry(1.3, 1.3, 5.2, 32, 32, false)
     box.rotateX(Math.PI * -0.5)
-    box.translate(0, 0, 10 / 2)
+    box.translate(0, 0, 5.2 / 2)
 
     let glbGeo = false
     let glbMat = false
@@ -187,20 +196,21 @@ export function DirectForceGraph({}) {
       gData.nodes.length
     )
     iMesh.count = gData.nodes.length
+
     let i = 0
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         if (it.connection >= 4) {
-          it.__threeObj.geometry = glbGeo
-          it.__threeObj.material = glbMat
-
-          it.__threeObj.geometry = box
+          // it.__threeObj.geometry = glbGeo
+          // it.__threeObj.material = glbMat
+          it.__threeObj.material = getMat({ color: '#ffffff' })
+          it.__threeObj.geometry = largerTorus
         } else if (it.connection >= 3) {
           it.__threeObj.geometry = torus
-          it.__threeObj.material = getMat({ color: '#00ffcc' })
+          it.__threeObj.material = getMat({ color: '#cccccc' })
         } else {
           it.__threeObj.geometry = sphere
-          it.__threeObj.material = getMat({ color: '#00ffcc' })
+          it.__threeObj.material = getMat({ color: '#444444' })
         }
 
         if (it.__threeObj) {
@@ -261,7 +271,6 @@ export function DirectForceGraph({}) {
         return it
       })
 
-      //
       console.log('dispose')
       window.removeEventListener('focus', resetDAG)
       window.removeEventListener('blur', resetDAG)
