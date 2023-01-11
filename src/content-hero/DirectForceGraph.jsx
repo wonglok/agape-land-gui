@@ -156,7 +156,7 @@ export function DirectForceGraph({}) {
           glbGeo.scale(0.1, 0.1, 0.1)
           glbMat = new MeshPhysicalMaterial({
             map: it.material.map,
-            emissiveMap: it.material.emissiveMap,
+            normalMap: it.material.normalMap,
             roughness: 0,
             transmission: 1,
             thickness: 3,
@@ -168,14 +168,15 @@ export function DirectForceGraph({}) {
 
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
-        it.__threeObj.material = getMat({ color: it.color })
         if (it.connection >= 4) {
           it.__threeObj.geometry = glbGeo
           it.__threeObj.material = glbMat
         } else if (it.connection >= 3) {
           it.__threeObj.geometry = torus
+          it.__threeObj.material = getMat({ color: it.color })
         } else {
           it.__threeObj.geometry = sphere
+          it.__threeObj.material = getMat({ color: it.color })
         }
 
         //!SECTION
