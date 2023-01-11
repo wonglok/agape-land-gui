@@ -26,6 +26,7 @@ import { MeshNormalMaterial } from 'three'
 import { BoxGeometry } from 'three'
 import { CylinderGeometry } from 'three'
 import { IcosahedronGeometry } from 'three'
+import { DynamicDrawUsage } from 'three'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
@@ -48,7 +49,7 @@ export function DirectForceGraph({}) {
       try {
         myGraph?.tickFrame()
         myGraph
-          // .d3AlphaTarget(0.2) // release engine low intensity
+          .d3AlphaTarget(0.4) // release engine low intensity
           .resetCountdown()
       } catch (e) {
         console.log(e)
@@ -190,14 +191,17 @@ export function DirectForceGraph({}) {
       }
     })
 
-    let sphere2 = new IcosahedronGeometry(1, 0)
-    let iSphere = new InstancedMesh(
-      sphere2,
-      new MeshNormalMaterial(),
+    let instGeo = new TorusKnotGeometry(1, 0.2, 125, 35, 5, 3)
+    instGeo.scale(1.3, 1.3, 3)
+    instGeo.scale(0.5, 0.5, 0.5)
+    let instMesh = new InstancedMesh(
+      instGeo,
+      new MeshNormalMaterial({ flatShading: true }),
       gData.nodes.length
     )
-    iSphere.count = gData.nodes.length
-    o3d.add(iSphere)
+    instMesh.instanceMatrix.setUsage(DynamicDrawUsage)
+    instMesh.count = gData.nodes.length
+    o3d.add(instMesh)
 
     let temp3D = new Object3D()
     let i = 0
@@ -222,11 +226,11 @@ export function DirectForceGraph({}) {
           temp3D.quaternion.copy(it.__threeObj.quaternion)
 
           temp3D.updateMatrix()
-          iSphere.setMatrixAt(i, temp3D.matrix)
-          iSphere.instanceMatrix.needsUpdate = true
+          instMesh.setMatrixAt(i, temp3D.matrix)
+          instMesh.instanceMatrix.needsUpdate = true
         }
         i++
-        i = i % iSphere.count
+        i = i % instMesh.count
 
         //!SECTION
         it.__threeObj.scale.setScalar(it.size)
