@@ -86,6 +86,15 @@ export function AvatarLanding({ mapURL }) {
 
   return (
     <group>
+      <OrbitControls
+        args={[camera, gl.domElement]}
+        makeDefault
+        enableRotate={false}
+        enablePan={false}
+        object-position={[0, 20, 40]}
+        target={[0, 0, 0]}
+      ></OrbitControls>
+
       {/* <gridHelper
         rotation-y={Math.PI * 0.25}
         args={[300, 100, '#8F6A1A', '#8F6A1A']}
@@ -97,22 +106,13 @@ export function AvatarLanding({ mapURL }) {
             <group>
               {/* <primitive object={colliderScene}></primitive> */}
               <group
-                onClick={(ev) => {
-                  console.log(ev.object?.name)
-                }}
+              // onClick={(ev) => {
+              //   console.log(ev.object?.name)
+              // }}
               >
                 <primitive object={cloneQuerlo}></primitive>
                 {/* <primitive object={showGLB}></primitive> */}
               </group>
-
-              <OrbitControls
-                args={[camera, gl.domElement]}
-                makeDefault
-                enableRotate={false}
-                enablePan={false}
-                object-position={[0, 10, 10]}
-                target={[0, 0, 0]}
-              ></OrbitControls>
 
               {/*  */}
 
