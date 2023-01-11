@@ -11,6 +11,7 @@ import {
   // OrthographicCamera,
   Environment,
   PerspectiveCamera,
+  Plane,
 } from '@react-three/drei'
 // import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
@@ -42,9 +43,13 @@ function Content() {
       ></MapControls> */}
       {/*  */}
       <Background></Background>
-      <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
+      {/* <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
         <gridHelper args={[1000, 250, '#8F6A1A', '#8F6A1A']}></gridHelper>
-      </group>
+      </group> */}
+
+      <Plane args={[300, 300]} rotation={[Math.PI * -0.5, 0, 0]}>
+        <meshBasicMaterial transparent opacity={0.1}></meshBasicMaterial>
+      </Plane>
       <group rotation={[Math.PI * -0.5, 0, 0]} position={[0, 1, 0]}>
         <group scale={0.1} position={[0, 0, 0]}>
           <DirectForceGraph></DirectForceGraph>
@@ -59,7 +64,6 @@ function Content() {
         mapURL={`/scene/2023-01-07-skycity/skycity.glb`}
       ></AvatarLanding>
       {/*  */}
-      {/*  */}]
       {process.env.NODE_ENV === 'development' && (
         <Perf
           showGraph={false}
