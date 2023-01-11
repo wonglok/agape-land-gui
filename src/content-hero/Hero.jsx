@@ -20,22 +20,21 @@ function Content() {
     <group rotation={[0, 0, 0]}>
       {/* <OrbitControls makeDefault></OrbitControls> */}
       <MapControls
-        object-position={[0, 0, 100]}
+        object-position={[0, 50, 50]}
         object-rotation={[0.0, 0, 0]}
         target={[0, 0, 0]}
         enableDamping
-        screenSpacePanning={true}
+        screenSpacePanning={false}
         makeDefault
         enableRotate={false}
       ></MapControls>
       <Background></Background>
 
-      {/* <group rotation={[Math.PI * -0.5, 0, 0]}>
-        <gridHelper args={[100 * 10, 50 * 10, 0x444444, 0x444444]}></gridHelper>
-      </group> */}
-
-      <group scale={1} position={[0, 0, 0]}>
-        <DirectForceGraph></DirectForceGraph>
+      <gridHelper args={[1000, 100]}></gridHelper>
+      <group rotation={[Math.PI * -0.5, 0, 0]}>
+        <group scale={0.1} position={[0, 0, 0]}>
+          <DirectForceGraph></DirectForceGraph>
+        </group>
       </group>
       <Environment preset='apartment'></Environment>
       <EffectComposer disableNormalPass>

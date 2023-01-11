@@ -1,5 +1,14 @@
+import {
+  EventDispatcher,
+  Matrix4,
+  Plane,
+  Raycaster,
+  Vector2,
+  Vector3,
+} from 'three'
+
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
-import { Html, Plane } from '@react-three/drei'
+import { Plane as DRPlane } from '@react-three/drei'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -12,12 +21,11 @@ import { SphereGeometry } from 'three'
 // import { MeshBasicMaterial } from 'three'
 import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
-import { DragControls } from 'three-stdlib'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
 export function DirectForceGraph({}) {
-  let glb = useGLBLoader(`/scene/2023-01-07-skycity/flower-geoonly.glb`)
+  let glb = useGLBLoader(`/scene/2023-01-07-skycity/taipei101.glb`)
   let [root, setO3D] = useState(null)
 
   /** @type {[import('three-forcegraph').default, () =>{}]} */
@@ -34,7 +42,7 @@ export function DirectForceGraph({}) {
     if (myGraph) {
       myGraph.tickFrame()
       myGraph
-        .d3AlphaTarget(0.1) // release engine low intensity
+        .d3AlphaTarget(0.2) // release engine low intensity
         .resetCountdown()
     }
   })
@@ -81,6 +89,7 @@ export function DirectForceGraph({}) {
     })
 
     myGraph.graphData(gData)
+
     // myGraph.nodeRelSize(15)
     // myGraph.dagLevelDistance(20)
 
@@ -126,58 +135,24 @@ export function DirectForceGraph({}) {
 
     let sphere = new SphereGeometry(1, 32, 32)
     sphere.scale(1, 1, 1)
-    // let torus = new TorusKnotGeometry(1, 0.2, 150, 45, 1, 4)
+    let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
     let box = new BoxGeometry(2, 2, 2)
 
-    // sphere.translate(0, 0, 0.3)
-
-    let iGeo = sphere
-
-    let array = []
-
+    let glbGeo = false
     glb.scene.traverse((it) => {
-      //
-
-      if (it.geometry) {
-        array.push(it)
-        // it.geometry.computeBoundingBox()
-        // iGeo = it.geometry.clone()
-        // iGeo.rotateX(Math.PI * 0.5)
-        // iGeo.scale(0.15, 0.15, 0.15)
-        // iGeo.translate(0, 0, 0.8)
-        // iMat = it.material
+      if (!glbGeo) {
+        if (it.geometry) {
+          glbGeo = it.geometry.clone()
+          glbGeo.center()
+          glbGeo.computeBoundingSphere()
+          glbGeo.rotateX(Math.PI * 0.5)
+          glbGeo.translate(0, 0, glbGeo.boundingSphere.radius)
+          glbGeo.scale(0.1, 0.1, 0.1)
+        }
       }
     })
 
-    // let inst = new InstancedMesh(
-    //   box,
-    //   getMat({ color: '#ffffff' }),
-    //   array.length
-    // )
-    // inst.count = array.length
-
-    // let rAFID = 0
-    // let temp3 = new Object3D()
-    // let rAF = () => {
-    //   rAFID = requestAnimationFrame(rAF)
-
-    //   array.forEach((item, i) => {
-    //     if (item) {
-    //       item.getWorldPosition(temp3.position)
-    //       item.getWorldQuaternion(temp3.quaternion)
-    //       item.getWorldScale(temp3.scale)
-
-    //       temp3.updateMatrix()
-    //       inst.setMatrixAt(i, temp3.matrix)
-    //     }
-    //   })
-
-    //   inst.instanceMatrix.needsUpdate = true
-    //   inst.needsUpdate = true
-    // }
-    // rAFID = requestAnimationFrame(rAF)
-
-    // o3d.add(inst)
+    let iGeo = glbGeo
 
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
@@ -186,11 +161,9 @@ export function DirectForceGraph({}) {
 
         //!SECTION
         it.__threeObj.scale.setScalar(it.size)
-        // it.__threeObj.scale.setScalar(20)
         it.__threeObj.__data = it
         it.__threeObj.visible = true
       }
-
       return it
     })
 
@@ -245,7 +218,7 @@ export function DirectForceGraph({}) {
   return (
     <>
       <group>
-        <Plane
+        <DRPlane
           ref={(item) => {
             setInterval(() => {
               item?.lookAt(camera.position)
@@ -261,7 +234,7 @@ export function DirectForceGraph({}) {
           }}
           scale={10000000}
           visible={false}
-        ></Plane>
+        ></DRPlane>
       </group>
       <group
         onPointerEnter={(ev) => {}}
@@ -451,5 +424,202 @@ async function setupDragContorls({
 
   return {
     clean,
+  }
+}
+
+const _plane = new Plane()
+const _raycaster = new Raycaster()
+
+const _pointer = new Vector2()
+const _offset = new Vector3()
+const _intersection = new Vector3()
+const _worldPosition = new Vector3()
+const _inverseMatrix = new Matrix4()
+
+class DragControls extends EventDispatcher {
+  constructor(_objects, _camera, _domElement) {
+    super()
+
+    _domElement.style.touchAction = 'none' // disable touch scroll
+
+    let _selected = null,
+      _hovered = null
+
+    const _intersections = []
+
+    //
+
+    const scope = this
+
+    function activate() {
+      _domElement.addEventListener('pointermove', onPointerMove)
+      _domElement.addEventListener('pointerdown', onPointerDown)
+      _domElement.addEventListener('pointerup', onPointerCancel)
+      _domElement.addEventListener('pointerleave', onPointerCancel)
+    }
+
+    function deactivate() {
+      _domElement.removeEventListener('pointermove', onPointerMove)
+      _domElement.removeEventListener('pointerdown', onPointerDown)
+      _domElement.removeEventListener('pointerup', onPointerCancel)
+      _domElement.removeEventListener('pointerleave', onPointerCancel)
+
+      _domElement.style.cursor = ''
+    }
+
+    function dispose() {
+      deactivate()
+    }
+
+    function getObjects() {
+      return _objects
+    }
+
+    function getRaycaster() {
+      return _raycaster
+    }
+
+    let yUp = new Vector3(0, 1, 0)
+    function onPointerMove(event) {
+      if (scope.enabled === false) return
+
+      updatePointer(event)
+
+      _raycaster.setFromCamera(_pointer, _camera)
+
+      if (_selected) {
+        if (_raycaster.ray.intersectPlane(_plane, _intersection)) {
+          _selected.position.copy(
+            _intersection.sub(_offset).applyMatrix4(_inverseMatrix)
+          )
+        }
+
+        scope.dispatchEvent({ type: 'drag', object: _selected })
+
+        return
+      }
+
+      // hover support
+
+      if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+        _intersections.length = 0
+
+        _raycaster.setFromCamera(_pointer, _camera)
+        _raycaster.intersectObjects(_objects, true, _intersections)
+
+        if (_intersections.length > 0) {
+          const object = _intersections[0].object
+
+          // _plane.setFromNormalAndCoplanarPoint(
+          //   _camera.getWorldDirection(_plane.normal),
+          //   _worldPosition.setFromMatrixPosition(object.matrixWorld)
+          // )
+
+          // lok
+          _plane.normal.copy(yUp)
+          _plane.setFromNormalAndCoplanarPoint(
+            yUp,
+            _worldPosition.setFromMatrixPosition(object.matrixWorld)
+          )
+
+          if (_hovered !== object && _hovered !== null) {
+            scope.dispatchEvent({ type: 'hoveroff', object: _hovered })
+
+            _domElement.style.cursor = 'auto'
+            _hovered = null
+          }
+
+          if (_hovered !== object) {
+            scope.dispatchEvent({ type: 'hoveron', object: object })
+
+            _domElement.style.cursor = 'pointer'
+            _hovered = object
+          }
+        } else {
+          if (_hovered !== null) {
+            scope.dispatchEvent({ type: 'hoveroff', object: _hovered })
+
+            _domElement.style.cursor = 'auto'
+            _hovered = null
+          }
+        }
+      }
+    }
+
+    function onPointerDown(event) {
+      if (scope.enabled === false) return
+
+      updatePointer(event)
+
+      _intersections.length = 0
+
+      _raycaster.setFromCamera(_pointer, _camera)
+      _raycaster.intersectObjects(_objects, true, _intersections)
+
+      if (_intersections.length > 0) {
+        _selected =
+          scope.transformGroup === true ? _objects[0] : _intersections[0].object
+
+        // _plane.setFromNormalAndCoplanarPoint(
+        //   _camera.getWorldDirection(_plane.normal),
+        //   _worldPosition.setFromMatrixPosition(_selected.matrixWorld)
+        // )
+
+        // _plane.setFromNormalAndCoplanarPoint(
+        //   _camera.getWorldDirection(_plane.normal),
+        //   _worldPosition.setFromMatrixPosition(_selected.matrixWorld)
+        // )
+
+        // lok
+        _plane.normal.copy(yUp)
+        _plane.setFromNormalAndCoplanarPoint(
+          yUp,
+          _worldPosition.setFromMatrixPosition(_selected.matrixWorld)
+        )
+
+        if (_raycaster.ray.intersectPlane(_plane, _intersection)) {
+          _inverseMatrix.copy(_selected.parent.matrixWorld).invert()
+          _offset
+            .copy(_intersection)
+            .sub(_worldPosition.setFromMatrixPosition(_selected.matrixWorld))
+        }
+
+        _domElement.style.cursor = 'move'
+
+        scope.dispatchEvent({ type: 'dragstart', object: _selected })
+      }
+    }
+
+    function onPointerCancel() {
+      if (scope.enabled === false) return
+
+      if (_selected) {
+        scope.dispatchEvent({ type: 'dragend', object: _selected })
+
+        _selected = null
+      }
+
+      _domElement.style.cursor = _hovered ? 'pointer' : 'auto'
+    }
+
+    function updatePointer(event) {
+      const rect = _domElement.getBoundingClientRect()
+
+      _pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
+      _pointer.y = (-(event.clientY - rect.top) / rect.height) * 2 + 1
+    }
+
+    activate()
+
+    // API
+
+    this.enabled = true
+    this.transformGroup = false
+
+    this.activate = activate
+    this.deactivate = deactivate
+    this.dispose = dispose
+    this.getObjects = getObjects
+    this.getRaycaster = getRaycaster
   }
 }
