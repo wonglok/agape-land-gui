@@ -87,7 +87,7 @@ export function DirectForceGraph({}) {
       // if (it.size >= 7) {
       //   it.size = 7
       // }
-      it.size *= 4.5
+      it.size *= 5.5
     })
 
     myGraph.graphData(gData)
