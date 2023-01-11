@@ -141,6 +141,7 @@ export function DirectForceGraph({}) {
     let box = new BoxGeometry(2, 2, 2)
 
     let glbGeo = false
+    let glbMat = false
     glb.scene.traverse((it) => {
       if (!glbGeo) {
         if (it.geometry) {
@@ -150,6 +151,14 @@ export function DirectForceGraph({}) {
           glbGeo.rotateX(Math.PI * 0.5)
           glbGeo.translate(0, 0, glbGeo.boundingSphere.radius)
           glbGeo.scale(0.1, 0.1, 0.1)
+          glbMat = new MeshPhysicalMaterial({
+            map: it.material.map,
+            emissiveMap: it.material.emissiveMap,
+            roughness: 0,
+            transmission: 1,
+            thickness: 3,
+            ior: 1.4,
+          })
         }
       }
     })
@@ -158,7 +167,8 @@ export function DirectForceGraph({}) {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
         if (it.size >= 5) {
-          it.__threeObj.geometry = torus
+          it.__threeObj.geometry = glbGeo
+          it.__threeObj.material = glbMat
         } else {
           it.__threeObj.geometry = sphere
         }
