@@ -47,7 +47,7 @@ function Content() {
         {/* <gridHelper args={[1000, 100, 0x000000, 0x000000]}></gridHelper> */}
       </group>
 
-      <group rotation={[Math.PI * -0.5, 0, 0]}>
+      <group rotation={[Math.PI * -0.5, 0, 0]} position={[0, 0.15, 0]}>
         <group scale={0.1} position={[0, 0, 0]}>
           <DirectForceGraph></DirectForceGraph>
         </group>
