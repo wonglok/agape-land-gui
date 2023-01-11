@@ -23,6 +23,8 @@ import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
 import { InstancedMesh } from 'three'
 import { MeshNormalMaterial } from 'three'
+import { BoxGeometry } from 'three'
+import { CylinderGeometry } from 'three'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
@@ -143,11 +145,16 @@ export function DirectForceGraph({}) {
     let o3d = new Object3D()
 
     let sphere = new SphereGeometry(1, 32, 32)
+
     sphere.scale(1, 1, 1)
+
     let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
     torus.scale(0.6, 0.6, 4.0)
     torus.translate(0, 0, 4.0 / 2)
-    // let box = new BoxGeometry(2, 2, 2)
+
+    let box = new CylinderGeometry(0.4, 0.4, 10, 32, 32, false)
+    box.rotateX(Math.PI * -0.5)
+    box.translate(0, 0, 10 / 2)
 
     let glbGeo = false
     let glbMat = false
@@ -186,6 +193,8 @@ export function DirectForceGraph({}) {
         if (it.connection >= 4) {
           it.__threeObj.geometry = glbGeo
           it.__threeObj.material = glbMat
+
+          it.__threeObj.geometry = box
         } else if (it.connection >= 3) {
           it.__threeObj.geometry = torus
           it.__threeObj.material = getMat({ color: '#00ffcc' })

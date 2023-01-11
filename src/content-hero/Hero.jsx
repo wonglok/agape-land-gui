@@ -43,18 +43,16 @@ function Content() {
 
       <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
         <gridHelper args={[1000, 100, 0x000000, 0x000000]}></gridHelper>
-        {/* <Plane
+        <Plane
           position={[0, -10, 0]}
           rotation={[-Math.PI * 0.5, 0, 0]}
           args={[1000, 1000]}
         >
           <meshStandardMaterial
-            color={'#ffffff'}
+            color={'#999999'}
             roughness={1.0}
-            opacity={0.5}
-            transparent
           ></meshStandardMaterial>
-        </Plane> */}
+        </Plane>
       </group>
 
       <group rotation={[Math.PI * -0.5, 0, 0]}>
