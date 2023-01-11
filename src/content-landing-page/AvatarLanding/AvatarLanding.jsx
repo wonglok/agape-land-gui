@@ -63,17 +63,44 @@ export function AvatarLanding({ mapURL }) {
     new BoxBufferGeometry(2000, 0.1, 2000),
     new MeshBasicMaterial({ color: new Color('#ffbaba') })
   )
-  colliderScene.add(clone(glb.scene))
+
+  //
+  let querlo = useGLBLoader(`/xr/upsacel4x/querlo-4x-2kres.glb`)
+
+  querlo.scene.traverse((it) => {
+    if (it.name === 'Plane') {
+      it.visible = false
+    }
+  })
+
+  let showGLB = clone(glb.scene)
+  colliderScene.add(showGLB)
   colliderScene.add(floor)
+  colliderScene.traverse((it) => {
+    if (it.name === 'ground') {
+      it.visible = false
+    }
+  })
+  let cloneQuerlo = clone(querlo.scene)
+  colliderScene.add(cloneQuerlo)
+
   return (
     <group>
+      <gridHelper args={[300, 100, '#E4BE6C', '#E4BE6C']} />
       <Collider
         scene={colliderScene}
         onReady={(collider) => {
           return (
             <group>
               {/* <primitive object={colliderScene}></primitive> */}
-              <primitive object={glb.scene}></primitive>
+              <group
+                onClick={(ev) => {
+                  console.log(ev.object?.name)
+                }}
+              >
+                <primitive object={cloneQuerlo}></primitive>
+                {/* <primitive object={showGLB}></primitive> */}
+              </group>
 
               <OrbitControls
                 args={[camera, gl.domElement]}

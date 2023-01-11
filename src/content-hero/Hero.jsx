@@ -16,6 +16,7 @@ import {
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { CoreReady } from '@/content-landing-page/Core/Core'
 import { AvatarLanding } from '@/content-landing-page/AvatarLanding/AvatarLanding'
+import { Querlo } from './Querlo'
 
 export function Hero() {
   return (
@@ -64,7 +65,6 @@ function Content() {
       <AvatarLanding
         mapURL={`/scene/2023-01-07-skycity/skycity.glb`}
       ></AvatarLanding>
-
       {/*  */}
 
       {/*  */}
