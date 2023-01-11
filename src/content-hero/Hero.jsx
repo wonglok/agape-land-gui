@@ -28,7 +28,7 @@ function Content() {
 
       <MapControls
         panSpeed={1.5}
-        object-position={[0, 40, 50]}
+        object-position={[0, 40 * 1.3, 50 * 1.3]}
         object-rotation={[0.0, 0, 0]}
         target={[0, 0, 0]}
         enableDamping={true}

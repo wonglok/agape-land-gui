@@ -140,7 +140,7 @@ export function DirectForceGraph({}) {
     let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
     torus.scale(0.6, 0.6, 4.0)
     torus.translate(0, 0, 4.0 / 2)
-    let box = new BoxGeometry(2, 2, 2)
+    // let box = new BoxGeometry(2, 2, 2)
 
     let glbGeo = false
     let glbMat = false
@@ -185,9 +185,6 @@ export function DirectForceGraph({}) {
       return it
     })
 
-    //
-
-    //
     //
 
     let cleanDrag = () => {}
