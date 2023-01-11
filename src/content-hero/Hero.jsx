@@ -56,7 +56,7 @@ function Content() {
       <Environment preset='apartment'></Environment>
 
       <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.3} mipmapBlur intensity={1}></Bloom>
+        <Bloom luminanceThreshold={0.9} mipmapBlur intensity={3}></Bloom>
       </EffectComposer>
 
       <CoreReady></CoreReady>
