@@ -152,13 +152,11 @@ export function DirectForceGraph({}) {
       }
     })
 
-    let iGeo = glbGeo
-
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
         if (it.size >= 5) {
-          it.__threeObj.geometry = iGeo
+          it.__threeObj.geometry = torus
         } else {
           it.__threeObj.geometry = sphere
         }
