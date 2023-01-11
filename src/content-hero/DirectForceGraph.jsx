@@ -25,6 +25,7 @@ import { InstancedMesh } from 'three'
 import { MeshNormalMaterial } from 'three'
 import { BoxGeometry } from 'three'
 import { CylinderGeometry } from 'three'
+import { IcosahedronGeometry } from 'three'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
@@ -189,7 +190,7 @@ export function DirectForceGraph({}) {
       }
     })
 
-    let sphere2 = new SphereGeometry(1, 32, 32)
+    let sphere2 = new IcosahedronGeometry(1, 0)
     let iSphere = new InstancedMesh(
       sphere2,
       new MeshNormalMaterial(),
