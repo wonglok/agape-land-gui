@@ -58,7 +58,7 @@ export function DirectForceGraph({}) {
       return
     }
 
-    const N = 250
+    const N = 200
     const gData = {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
