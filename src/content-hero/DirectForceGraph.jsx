@@ -101,6 +101,7 @@ export function DirectForceGraph({}) {
     // myGraph.linkDirectionalParticleColor(0xfffff)
     // myGraph.linkDirectionalParticleResolution(3)
     // myGraph.dagMode('zin')
+
     myGraph.numDimensions(2)
 
     let resetDAG = () => {
@@ -168,10 +169,10 @@ export function DirectForceGraph({}) {
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         it.__threeObj.material = getMat({ color: it.color })
-        if (it.connection >= 3) {
+        if (it.connection >= 4) {
           it.__threeObj.geometry = glbGeo
           it.__threeObj.material = glbMat
-        } else if (it.connection >= 2) {
+        } else if (it.connection >= 3) {
           it.__threeObj.geometry = torus
         } else {
           it.__threeObj.geometry = sphere
