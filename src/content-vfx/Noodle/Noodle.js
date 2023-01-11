@@ -138,7 +138,7 @@ export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
   useFrame((st, dt) => {
     t += dt
 
-    ptl.current.intensity = (3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7
+    // ptl.current.intensity = (3 + 1.5 * Math.sin(t * 3.1415) + 0.5) * 0.7
   })
 
   return (
@@ -151,7 +151,7 @@ export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
           <pointLight
             ref={ptl}
             position={[0, 0.0, 0]}
-            intensity={3}
+            intensity={0}
           ></pointLight>
           <meshPhysicalMaterial
             metalness={0.0}
