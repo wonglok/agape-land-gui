@@ -27,11 +27,13 @@ import { BoxGeometry } from 'three'
 import { CylinderGeometry } from 'three'
 import { IcosahedronGeometry } from 'three'
 import { DynamicDrawUsage } from 'three'
+import { Box3 } from 'three'
+import { MeshBasicMaterial } from 'three'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
 export function DirectForceGraph({}) {
-  let glb = useGLBLoader(`/scene/2023-01-07-skycity/taipei101.glb`)
+  // let glb = useGLBLoader(`/scene/2023-01-07-skycity/taipei101.glb`)
   let [root, setO3D] = useState(null)
 
   /** @type {[import('three-forcegraph').default, () =>{}]} */
@@ -68,7 +70,7 @@ export function DirectForceGraph({}) {
       return
     }
 
-    const N = 200
+    const N = 100
     const gData = {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
@@ -80,7 +82,7 @@ export function DirectForceGraph({}) {
         .filter((id) => id)
         .map((id) => {
           return {
-            color: '#000000',
+            color: new Color('#00ffff'),
             source: id,
             target: Math.round(Math.random() * (id - 1)),
           }
@@ -89,120 +91,114 @@ export function DirectForceGraph({}) {
 
     gData.nodes.forEach((it) => {
       it.connection = gData.links.filter((e) => e.target === it.id).length || 1
-      it.size = gData.links.filter((e) => e.target === it.id).length || 1
-      it.size = Math.pow(it.size, 0.6)
+      // it.size = gData.links.filter((e) => e.target === it.id).length || 1
+      // it.size = Math.pow(it.size, 0.6)
       // if (it.size <= 1.5) {
       //   it.size = 1.5
       // }
       // if (it.size >= 7) {
       //   it.size = 7
       // }
-      it.size *= 5.5
+      it.size *= 0.5
     })
 
     myGraph.graphData(gData)
 
-    myGraph.linkColor('color')
-    myGraph.linkOpacity(0.5)
-    myGraph.linkWidth(0.5)
+    myGraph.linkMaterial((link) => {
+      return new MeshBasicMaterial({ color: new Color('#00ffff') })
+    })
+    myGraph.linkOpacity(1)
+    myGraph.linkWidth(1)
 
-    // myGraph.nodeRelSize(15)
-    // myGraph.dagLevelDistance(20)
+    myGraph.dagLevelDistance(30)
+    myGraph.dagMode('td')
 
-    // myGraph.linkDirectionalParticles(1)
-    // myGraph.linkDirectionalParticleSpeed(10)
-    // myGraph.linkDirectionalParticleWidth(5)
-    // myGraph.linkDirectionalParticleColor(0xfffff)
-    // myGraph.linkDirectionalParticleResolution(3)
-    // myGraph.dagMode('zin')
-
-    myGraph.numDimensions(2)
+    myGraph.numDimensions(3)
 
     let resetDAG = () => {
-      // myGraph.dagMode(DagMode)
       myGraph.d3ReheatSimulation()
     }
 
-    let colorMap = new Map()
-    let getMat = ({ color }) => {
-      if (colorMap.has(color)) {
-        colorMap.get(color)
-      }
+    // let colorMap = new Map()
+    // let getMat = ({ color }) => {
+    //   if (colorMap.has(color)) {
+    //     colorMap.get(color)
+    //   }
 
-      let mat = new MeshPhysicalMaterial({
-        //
-        //
-        // color: new Color(color),
-        color: new Color(color),
-        reflectivity: 0,
-        roughness: 0.3,
-        metalness: 0.0,
-        transmission: 1,
-        thickness: 3,
-        ior: 1.5,
-        attenuationColor: new Color(color),
-        attenuationDistance: 2,
-      })
+    //   let mat = new MeshPhysicalMaterial({
+    //     //
+    //     //
+    //     // color: new Color(color),
+    //     color: new Color(color),
+    //     reflectivity: 0,
+    //     roughness: 0.3,
+    //     metalness: 0.0,
+    //     transmission: 1,
+    //     thickness: 3,
+    //     ior: 1.5,
+    //     attenuationColor: new Color(color),
+    //     attenuationDistance: 2,
+    //   })
 
-      colorMap.set(color, mat)
+    //   colorMap.set(color, mat)
 
-      return mat
-    }
+    //   return mat
+    // }
 
     let o3d = new Object3D()
 
     let sphere = new SphereGeometry(1, 32, 32)
     sphere.scale(1, 1, 1)
 
-    let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
-    torus.scale(0.6, 0.6, 4.0)
-    torus.translate(0, 0, 4.0 / 2)
+    // let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
+    // torus.scale(0.6, 0.6, 4.0)
+    // torus.translate(0, 0, 4.0 / 2)
 
-    let largerTorus = new TorusKnotGeometry(1, 0.15, 150, 45, 4, 3)
-    largerTorus.scale(0.6, 0.6, 4.0)
-    largerTorus.translate(0, 0, 4.0 / 2)
-    // largerTorus.scale(1.0, 1.0, 1.1)
+    // let largerTorus = new TorusKnotGeometry(1, 0.15, 150, 45, 4, 3)
+    // largerTorus.scale(0.6, 0.6, 4.0)
+    // largerTorus.translate(0, 0, 4.0 / 2)
+    // // largerTorus.scale(1.0, 1.0, 1.1)
 
-    let box = new CylinderGeometry(1.3, 1.3, 5.2, 32, 32, false)
-    box.rotateX(Math.PI * -0.5)
-    box.translate(0, 0, 5.2 / 2)
+    // let box = new CylinderGeometry(1.3, 1.3, 5.2, 32, 32, false)
+    // box.rotateX(Math.PI * -0.5)
+    // box.translate(0, 0, 5.2 / 2)
 
-    let glbGeo = false
-    let glbMat = false
-    glb.scene.traverse((it) => {
-      if (!glbGeo) {
-        if (it.geometry) {
-          glbGeo = it.geometry.clone()
-          glbGeo.center()
-          glbGeo.computeBoundingSphere()
-          glbGeo.rotateX(Math.PI * 0.5)
-          glbGeo.translate(0, 0, glbGeo.boundingSphere.radius)
-          glbGeo.scale(0.1, 0.1, 0.1)
-          glbGeo.rotateZ(Math.PI * 0.25 * 0.0)
-          glbMat = new MeshPhysicalMaterial({
-            map: it.material.map,
-            normalMap: it.material.normalMap,
-            roughness: 0,
-            transmission: 1,
-            thickness: 3,
-            ior: 1.4,
-          })
-        }
-      }
-    })
+    // let glbGeo = false
+    // let glbMat = false
+    // glb.scene.traverse((it) => {
+    //   if (!glbGeo) {
+    //     if (it.geometry) {
+    //       glbGeo = it.geometry.clone()
+    //       glbGeo.center()
+    //       glbGeo.computeBoundingSphere()
+    //       glbGeo.rotateX(Math.PI * 0.5)
+    //       glbGeo.translate(0, 0, glbGeo.boundingSphere.radius)
+    //       glbGeo.scale(0.1, 0.1, 0.1)
+    //       glbGeo.rotateZ(Math.PI * 0.25 * 0.0)
+    //       glbMat = new MeshPhysicalMaterial({
+    //         map: it.material.map,
+    //         normalMap: it.material.normalMap,
+    //         roughness: 0,
+    //         transmission: 1,
+    //         thickness: 3,
+    //         ior: 1.4,
+    //       })
+    //     }
+    //   }
+    // })
 
-    let instGeo = new TorusKnotGeometry(1, 0.18, 125, 35, 5, 3)
-    instGeo.translate(0, 0, (1.0 + 0.18) / 2)
-    instGeo.scale(1.3, 1.3, 3)
-    instGeo.scale(0.5, 0.5, 0.5)
+    // let instGeo = new TorusKnotGeometry(1, 0.18, 125, 35, 5, 3)
+    // instGeo.translate(0, 0, (1.0 + 0.18) / 2)
+    // instGeo.scale(1.3, 1.3, 3)
+    // instGeo.scale(0.5, 0.5, 0.5)
     let instMesh = new InstancedMesh(
-      instGeo,
+      sphere,
       new MeshPhysicalMaterial({
         thickness: 3,
         roughness: 0.3,
         transmission: 1,
         metalness: 0.05,
-        attenuationColor: new Color('#bababa'),
+        attenuationColor: new Color('#00ffff'),
         attenuationDistance: 3,
       }),
       gData.nodes.length
@@ -215,18 +211,18 @@ export function DirectForceGraph({}) {
     let i = 0
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
-        if (it.connection >= 4) {
-          // it.__threeObj.geometry = glbGeo
-          // it.__threeObj.material = glbMat
-          it.__threeObj.material = getMat({ color: '#ffffff' })
-          it.__threeObj.geometry = largerTorus
-        } else if (it.connection >= 3) {
-          it.__threeObj.geometry = torus
-          it.__threeObj.material = getMat({ color: '#cccccc' })
-        } else {
-          it.__threeObj.geometry = sphere
-          it.__threeObj.material = getMat({ color: '#444444' })
-        }
+        // if (it.connection >= 4) {
+        //   // it.__threeObj.geometry = glbGeo
+        //   // it.__threeObj.material = glbMat
+        //   it.__threeObj.material = getMat({ color: '#00ffff' })
+        //   it.__threeObj.geometry = sphere
+        // } else if (it.connection >= 3) {
+        //   it.__threeObj.geometry = sphere
+        //   it.__threeObj.material = getMat({ color: '#00ffff' })
+        // } else {
+        //   it.__threeObj.geometry = sphere
+        //   it.__threeObj.material = getMat({ color: '#00ffff' })
+        // }
 
         if (it.__threeObj) {
           temp3D.position.copy(it.__threeObj.position)
@@ -281,9 +277,20 @@ export function DirectForceGraph({}) {
     window.addEventListener('focus', resetDAG)
     window.addEventListener('blur', resetDAG)
 
+    let box3 = new Box3()
+
+    let size = new Vector3()
+    let ttt = setInterval(() => {
+      box3.setFromObject(o3d)
+      box3.getSize(size)
+      o3d.position.y = size.y * 2.0 * 2.0
+    })
+
     setO3D(<primitive object={o3d}></primitive>)
 
     return () => {
+      clearInterval(ttt)
+
       myGraph.nodeThreeObjectExtend((it) => {
         if (it.__threeObj) {
           delete it.__threeObj.it
@@ -300,7 +307,7 @@ export function DirectForceGraph({}) {
 
       // cancelAnimationFrame(rAFID)
     }
-  }, [camera, controls, gl, glb.scene, myGraph])
+  }, [camera, controls, gl, myGraph])
 
   return (
     <>

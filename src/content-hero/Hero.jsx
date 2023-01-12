@@ -2,6 +2,7 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Background } from './Background'
 import { DirectForceGraph } from './DirectForceGraph'
 import {
+  Center,
   // Plane,
   // Box,
   // MeshTransmissionMaterial,
@@ -52,14 +53,19 @@ function Content() {
         <meshBasicMaterial transparent opacity={0.1}></meshBasicMaterial>
       </Plane> */}
 
-      <group rotation={[Math.PI * -0.5, 0, 0]} position={[0, 1, 0]}>
-        <group scale={0.1} position={[0, 0, 0]}>
+      <group
+        rotation={[Math.PI * -0.5 * 0.0, 0, 0]}
+        position={[0, 0, 0]}
+        scale={1}
+      >
+        <group scale={0.05} position={[0, 10, 0]}>
           <DirectForceGraph></DirectForceGraph>
         </group>
       </group>
+
       <Environment preset='apartment'></Environment>
       <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.8} mipmapBlur intensity={1}></Bloom>
+        <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1}></Bloom>
       </EffectComposer>
 
       <BirdWalk></BirdWalk>
