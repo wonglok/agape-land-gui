@@ -19,7 +19,7 @@ export function Background() {
 
   return (
     <>
-      <Sphere rotation={[-0.6, 2, 0]} args={[500, 50, 50]}>
+      <Sphere rotation={[-0.6, 2, 0]} args={[1000, 50, 50]}>
         <meshBasicMaterial side={BackSide} map={texture}></meshBasicMaterial>
       </Sphere>
     </>

@@ -45,6 +45,7 @@ function Content() {
       ></MapControls> */}
       {/*  */}
       <Background></Background>
+
       <group position={[0, -5, 0]} rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
         <gridHelper args={[1000, 250, '#8F6A1A', '#8F6A1A']}></gridHelper>
       </group>
@@ -70,6 +71,7 @@ function Content() {
       </group>
 
       <Environment preset='apartment'></Environment>
+
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1}></Bloom>
       </EffectComposer>
