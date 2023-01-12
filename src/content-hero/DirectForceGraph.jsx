@@ -29,6 +29,7 @@ import { IcosahedronGeometry } from 'three'
 import { DynamicDrawUsage } from 'three'
 import { Box3 } from 'three'
 import { MeshBasicMaterial } from 'three'
+import { SphereBufferGeometry } from 'three'
 // import ThreeRenderObjects from 'three-render-objects'
 // import SpriteText from 'three-spritetext'
 
@@ -70,7 +71,7 @@ export function DirectForceGraph({}) {
       return
     }
 
-    const N = 100
+    const N = 250
     const gData = {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
@@ -111,8 +112,8 @@ export function DirectForceGraph({}) {
     myGraph.linkOpacity(1)
     myGraph.linkWidth(1)
 
-    myGraph.dagLevelDistance(30)
-    myGraph.dagMode('td')
+    myGraph.dagLevelDistance(15)
+    myGraph.dagMode('bu')
 
     myGraph.numDimensions(3)
 
@@ -148,8 +149,9 @@ export function DirectForceGraph({}) {
 
     let o3d = new Object3D()
 
-    let sphere = new SphereGeometry(1, 32, 32)
-    sphere.scale(1, 1, 1)
+    // let sphere = new SphereGeometry(1, 32, 32)
+    // sphere.scale(1, 2, 1)
+    // sphere.translate(0, -2, 0)
 
     // let torus = new TorusKnotGeometry(1, 0.15, 150, 45, 5, 3)
     // torus.scale(0.6, 0.6, 4.0)
@@ -189,11 +191,14 @@ export function DirectForceGraph({}) {
     // })
 
     // let instGeo = new TorusKnotGeometry(1, 0.18, 125, 35, 5, 3)
-    // instGeo.translate(0, 0, (1.0 + 0.18) / 2)
-    // instGeo.scale(1.3, 1.3, 3)
-    // instGeo.scale(0.5, 0.5, 0.5)
+    // instGeo.translate(0, 0, (1.0 + 0.18) / -2)
+    // instGeo.rotateX(Math.PI * -0.5)
+    // instGeo.scale(1, 3, 1)
+
+    let instGeo = new SphereGeometry(1, 32, 32)
+
     let instMesh = new InstancedMesh(
-      sphere,
+      instGeo,
       new MeshPhysicalMaterial({
         thickness: 3,
         roughness: 0.3,
@@ -278,19 +283,19 @@ export function DirectForceGraph({}) {
     window.addEventListener('focus', resetDAG)
     window.addEventListener('blur', resetDAG)
 
-    let box3 = new Box3()
+    // let box3 = new Box3()
 
-    let size = new Vector3()
-    let ttt = setInterval(() => {
-      box3.setFromObject(o3d)
-      box3.getSize(size)
-      o3d.position.y = size.y * 2.0 * 2.0
-    })
+    // let size = new Vector3()
+    // let ttt = setInterval(() => {
+    //   box3.setFromObject(o3d)
+    //   box3.getSize(size)
+    //   o3d.position.y = size.y * 2.0 * 2.0
+    // })
 
     setO3D(<primitive object={o3d}></primitive>)
 
     return () => {
-      clearInterval(ttt)
+      // clearInterval(ttt)
 
       myGraph.nodeThreeObjectExtend((it) => {
         if (it.__threeObj) {

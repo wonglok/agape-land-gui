@@ -55,11 +55,17 @@ function Content() {
 
       <group
         rotation={[Math.PI * -0.5 * 0.0, 0, 0]}
-        position={[0, 0, 0]}
+        position={[0, 20, 0]}
         scale={1}
       >
-        <group scale={0.05} position={[0, 8, 50]}>
-          <DirectForceGraph></DirectForceGraph>
+        {/* <group scale={[0.1, 0.1, 0.1]} position={[0, 3, 0]}>
+          <theVortex key={TheVortex.key}></theVortex>
+          <CoreReady></CoreReady>
+        </group> */}
+        <group scale={0.08}>
+          <Center>
+            <DirectForceGraph></DirectForceGraph>
+          </Center>
         </group>
       </group>
 
@@ -69,11 +75,6 @@ function Content() {
       </EffectComposer>
 
       <BirdWalk></BirdWalk>
-
-      {/* <group scale={[0.1, 0.1, 0.1]} position={[0, 20, 0]}>
-        <theVortex key={TheVortex.key}></theVortex>
-        <CoreReady></CoreReady>
-      </group> */}
 
       {process.env.NODE_ENV === 'development' && (
         <Perf
