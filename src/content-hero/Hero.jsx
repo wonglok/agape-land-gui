@@ -45,9 +45,9 @@ function Content() {
       ></MapControls> */}
       {/*  */}
       <Background></Background>
-      {/* <group rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
+      <group position={[0, -2, 0]} rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
         <gridHelper args={[1000, 250, '#8F6A1A', '#8F6A1A']}></gridHelper>
-      </group> */}
+      </group>
 
       {/* <Plane args={[300, 300]} rotation={[Math.PI * -0.5, 0, 0]}>
         <meshBasicMaterial transparent opacity={0.1}></meshBasicMaterial>
@@ -58,7 +58,7 @@ function Content() {
         position={[0, 0, 0]}
         scale={1}
       >
-        <group scale={0.05} position={[0, 10, 0]}>
+        <group scale={0.05} position={[0, 8, 50]}>
           <DirectForceGraph></DirectForceGraph>
         </group>
       </group>

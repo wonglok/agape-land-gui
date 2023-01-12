@@ -104,8 +104,9 @@ export function DirectForceGraph({}) {
 
     myGraph.graphData(gData)
 
+    let linkMat = new MeshBasicMaterial({ color: new Color('#00ffff') })
     myGraph.linkMaterial((link) => {
-      return new MeshBasicMaterial({ color: new Color('#00ffff') })
+      return linkMat
     })
     myGraph.linkOpacity(1)
     myGraph.linkWidth(1)
