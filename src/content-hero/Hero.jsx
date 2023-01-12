@@ -16,8 +16,9 @@ import {
 // import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 import { CoreReady } from '@/content-landing-page/Core/Core'
-import { AvatarLanding } from '@/content-landing-page/AvatarLanding/AvatarLanding'
+import { BirdWalk } from '@/content-landing-page/BirdWalk/BirdWalk'
 import { Perf } from 'r3f-perf'
+import { TheVortex } from '@/content-landing-page/TheVortex/TheVortex'
 
 export function Hero() {
   return (
@@ -47,9 +48,10 @@ function Content() {
         <gridHelper args={[1000, 250, '#8F6A1A', '#8F6A1A']}></gridHelper>
       </group> */}
 
-      <Plane args={[300, 300]} rotation={[Math.PI * -0.5, 0, 0]}>
+      {/* <Plane args={[300, 300]} rotation={[Math.PI * -0.5, 0, 0]}>
         <meshBasicMaterial transparent opacity={0.1}></meshBasicMaterial>
-      </Plane>
+      </Plane> */}
+
       <group rotation={[Math.PI * -0.5, 0, 0]} position={[0, 1, 0]}>
         <group scale={0.1} position={[0, 0, 0]}>
           <DirectForceGraph></DirectForceGraph>
@@ -57,13 +59,16 @@ function Content() {
       </group>
       <Environment preset='apartment'></Environment>
       <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.9} mipmapBlur intensity={3}></Bloom>
+        <Bloom luminanceThreshold={0.8} mipmapBlur intensity={1}></Bloom>
       </EffectComposer>
-      <CoreReady></CoreReady>
-      <AvatarLanding
-        mapURL={`/scene/2023-01-07-skycity/skycity.glb`}
-      ></AvatarLanding>
-      {/*  */}
+
+      <BirdWalk></BirdWalk>
+
+      {/* <group scale={[0.1, 0.1, 0.1]} position={[0, 20, 0]}>
+        <theVortex key={TheVortex.key}></theVortex>
+        <CoreReady></CoreReady>
+      </group> */}
+
       {process.env.NODE_ENV === 'development' && (
         <Perf
           showGraph={false}

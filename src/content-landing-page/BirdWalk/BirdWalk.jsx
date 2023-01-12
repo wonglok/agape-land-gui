@@ -2,8 +2,16 @@ import { Collider } from '@/lib/collider/Collider'
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 // import { WalkerGame } from '@/lib/walker/WalkerGame'
 // import { Avatar } from '../Avatar/Avatar'
-import { useThree } from '@react-three/fiber'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { createPortal, useThree } from '@react-three/fiber'
+import {
+  CubeCamera,
+  Environment,
+  MeshRefractionMaterial,
+  MeshTransMissionMaterial,
+  MeshTransmissionMaterial,
+  OrbitControls,
+  useEnvironment,
+} from '@react-three/drei'
 // import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { AvatarGuide } from './AvatarGuide'
 import { useMemo } from 'react'
@@ -14,14 +22,13 @@ import { AvaZoom } from './AvaZoom'
 import { BirdCamSync } from './BirdCamSync'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 import { PlaneBufferGeometry } from 'three'
-import { BoxBufferGeometry } from 'three'
+import { BoxBufferGeometry, DoubleSide } from 'three'
 import { Mesh } from 'three'
 import { MeshBasicMaterial } from 'three140'
 import { Color } from 'three'
+import { MeshReflectorMaterial } from '@react-three/drei'
 
-export function AvatarLanding({ mapURL }) {
-  let glb = useGLBLoader(mapURL)
-
+export function BirdWalk() {
   let gl = useThree((s) => s.gl)
   let camera = useThree((s) => s.camera)
 
@@ -33,10 +40,10 @@ export function AvatarLanding({ mapURL }) {
 
   let clothes = [
     //
-    // `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
     `/scene/2023-01-07-skycity/lok-dune.glb`,
-    // `/scene/2023-01-07-skycity/lok-jacket.glb`,
+    `/scene/2023-01-07-skycity/lok-jacket.glb`,
     `/scene/2023-01-07-skycity/lok-groom.glb`,
+    `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
   ]
   let makeFollower = (collider, level = 3, aCore) => {
     if (level < 0) {
@@ -63,29 +70,66 @@ export function AvatarLanding({ mapURL }) {
     new BoxBufferGeometry(2000, 0.1, 2000),
     new MeshBasicMaterial({ color: new Color('#ffbaba') })
   )
+  floor.position.y = -1
 
   //
-  let querlo = useGLBLoader(`/xr/upsacel4x/querlo-4x-2kres.glb`)
+  let querlo = useGLBLoader(`/xr/upsacel4x/querlo-island.glb`)
 
-  querlo.scene.traverse((it) => {
-    if (it.name === 'Plane') {
-      it.visible = false
-    }
-  })
-
-  let showGLB = clone(glb.scene)
-  colliderScene.add(showGLB)
   colliderScene.add(floor)
   colliderScene.traverse((it) => {
     if (it.name === 'ground') {
       it.visible = false
     }
   })
+
   let cloneQuerlo = clone(querlo.scene)
   colliderScene.add(cloneQuerlo)
 
+  let island = cloneQuerlo.getObjectByName('island')
+
+  /*
+
+    <MeshTransmissionMaterial
+            {...{
+              transmissionSampler: false,
+              samples: 5,
+              resolution: 512,
+              transmission: 1,
+              roughness: 0.3,
+              thickness: 2.5,
+              ior: 1.5,
+              chromaticAberration: 0.26,
+              anisotropy: 0.3,
+              distortion: 0.3,
+              distortionScale: 0.3,
+              temporalDistortion: 0.5,
+              attenuationDistance: 0.5,
+              attenuationColor: '#ffffff',
+              color: '#ffffff',
+              side: DoubleSide,
+            }}
+          ></MeshTransmissionMaterial>*/
+  // let tex = useEnvironment({ preset: 'apartment' })
+
   return (
     <group>
+      <primitive object={cloneQuerlo}></primitive>
+
+      {/* {island &&
+        createPortal(
+          <MeshRefractionMaterial
+            side={DoubleSide}
+            envMap={tex}
+            bounces={5}
+            ior={1.4}
+            fresnel={0.1}
+            aberrationStrength={0.1}
+            color={'#ffffff'}
+            fastChroma={true}
+          ></MeshRefractionMaterial>,
+          island
+        )} */}
+
       <OrbitControls
         args={[camera, gl.domElement]}
         makeDefault
@@ -110,7 +154,6 @@ export function AvatarLanding({ mapURL }) {
               //   console.log(ev.object?.name)
               // }}
               >
-                <primitive object={cloneQuerlo}></primitive>
                 {/* <primitive object={showGLB}></primitive> */}
               </group>
 
