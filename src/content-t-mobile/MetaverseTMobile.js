@@ -94,9 +94,7 @@ export function MetaverseTMobile({
         }}
       ></Collider>
 
-      <group>
-        <Noodle chaseName='bb00'></Noodle>
-      </group>
+      <group>{/* <Noodle chaseName='bb00'></Noodle> */}</group>
 
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 
