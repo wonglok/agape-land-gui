@@ -24,6 +24,8 @@ import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { CoreReady } from '@/content-landing-page/Core/Core'
 import { Avatar } from '@/content-landing-page/Avatar/Avatar'
 import { EquirectangularReflectionMapping, sRGBEncoding } from 'three'
+import { Object3D } from 'three'
+import { useMemo } from 'react'
 
 const GameName = 'Tmobile'
 
@@ -45,7 +47,7 @@ export function MetaverseTMobile({
   let gl = useThree((s) => s.gl)
 
   let walk = useSnapshot(WalkerState)
-
+  let mouse3d = useMemo(() => new Object3D(), [])
   return (
     <group>
       <CoreReady></CoreReady>
@@ -73,8 +75,8 @@ export function MetaverseTMobile({
                 collider={collider}
                 onGameReady={({ game, core }) => {
                   //
-                  WalkerState[GameName] = game
-                  WalkerState.current = game
+                  // WalkerState[GameName] = game
+                  // WalkerState.current = game
                 }}
               ></WalkerGame>
 
@@ -82,10 +84,10 @@ export function MetaverseTMobile({
               {/*  */}
               <Avatar></Avatar>
 
-              <AvatarChaser collider={collider}></AvatarChaser>
+              {/* <AvatarChaser collider={collider}></AvatarChaser> */}
 
               <group>
-                <Mouse3D collider={collider}></Mouse3D>
+                {/* <Mouse3D mouse3d={mouse3d} collider={collider}></Mouse3D> */}
               </group>
             </group>
           )
