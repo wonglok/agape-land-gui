@@ -52,12 +52,12 @@ function Content() {
   tex.encoding = sRGBEncoding
 
   let scene = useThree((s) => s.scene)
-  // scene.environment = tex
+  scene.environment = tex
   scene.background = tex
 
   glb.scene.traverse((it) => {
     if (it.material) {
-      it.material.envMapIntensity = 1.0
+      it.material.envMapIntensity = 5.0
     }
   })
 
@@ -81,7 +81,7 @@ function Content() {
 
       {(right && createPortal(<primitive object={ribbon}></primitive>), right)} */}
 
-      <Environment preset='apartment'></Environment>
+      {/* <Environment preset='apartment'></Environment> */}
 
       <Controllers
         hideRaysOnBlur={false}
