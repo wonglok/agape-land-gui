@@ -158,7 +158,7 @@ export function LoginContentGate() {
                         origin: window.location.origin,
                         version: '1',
                         // chainId: connetorData.chain.id,
-                        nonce: getID() + getID() + getID() + getID(),
+                        nonce: getID() + getID() + getID() + getID() + getID(),
                       }
                       let message = `Welcome to Agape!
 Let's sign you in...
