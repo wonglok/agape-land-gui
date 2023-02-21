@@ -10,7 +10,7 @@ import {
 import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 import { Plane as DRPlane } from '@react-three/drei'
 import { createPortal, useFrame, useThree } from '@react-three/fiber'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useEffect } from 'react'
 // import { BoxGeometry, InstancedMesh } from 'three'
 // import { BoxBufferGeometry } from 'three'
@@ -22,10 +22,10 @@ import { SphereGeometry } from 'three'
 import { MeshPhysicalMaterial } from 'three'
 import { Object3D } from 'three'
 import { InstancedMesh } from 'three'
-import { MeshNormalMaterial } from 'three'
-import { BoxGeometry } from 'three'
-import { CylinderGeometry } from 'three'
-import { IcosahedronGeometry } from 'three'
+// import { MeshNormalMaterial } from 'three'
+// import { BoxGeometry } from 'three'
+// import { CylinderGeometry } from 'three'
+// import { IcosahedronGeometry } from 'three'
 import { DynamicDrawUsage } from 'three'
 import { Box3 } from 'three'
 import { MeshBasicMaterial } from 'three'
@@ -36,6 +36,10 @@ import { SphereBufferGeometry } from 'three'
 export function DirectForceGraph({}) {
   // let glb = useGLBLoader(`/scene/2023-01-07-skycity/taipei101.glb`)
   let [root, setO3D] = useState(null)
+
+  let mapForNumberNode = useMemo(() => {
+    return new Map()
+  }, [])
 
   /** @type {[import('three-forcegraph').default, () =>{}]} */
   let [myGraph, setMyGraph] = useState()
@@ -72,10 +76,10 @@ export function DirectForceGraph({}) {
     }
 
     const N = 250
-    const gData = {
+    let gData = {
       nodes: [...Array(N).keys()].map((i) => ({
         id: i,
-        connection: 1,
+        // connection: 1,
         size: 15,
         color: '#' + new Color('#ffffff').getHexString(),
       })),
@@ -90,6 +94,66 @@ export function DirectForceGraph({}) {
         }),
     }
 
+    gData.nodes = [
+      {
+        id: '_skin',
+        // connection: 1,
+        size: 5,
+        color: '#' + new Color('#ffffff').getHexString(),
+      },
+
+      //
+      {
+        id: '_skin_eye',
+        // connection: 1,
+        size: 5,
+        color: '#' + new Color('#ffffff').getHexString(),
+      },
+      {
+        id: '_skin_mouth',
+        // connection: 1,
+        size: 5,
+        color: '#' + new Color('#ffffff').getHexString(),
+      },
+      {
+        id: '_skinn_hand',
+        // connection: 1,
+        size: 5,
+        color: '#' + new Color('#ffffff').getHexString(),
+      },
+
+      {
+        id: '_skinn_hand_finger',
+        // connection: 1,
+        size: 5,
+        color: '#' + new Color('#ffffff').getHexString(),
+      },
+
+      {
+        id: '_skinn_hand_finger_nail',
+        // connection: 1,
+        size: 5,
+        color: '#' + new Color('#ffffff').getHexString(),
+      },
+    ]
+
+    gData.links = [
+      //
+      { color: new Color('#00ffff'), source: '_skin', target: '_skin_eye' },
+      { color: new Color('#00ffff'), source: '_skin', target: '_skin_mouth' },
+      { color: new Color('#00ffff'), source: '_skin', target: '_skinn_hand' },
+      {
+        color: new Color('#00ffff'),
+        source: '_skinn_hand',
+        target: '_skinn_hand_finger',
+      },
+      {
+        color: new Color('#00ffff'),
+        source: '_skinn_hand_finger',
+        target: '_skinn_hand_finger_nail',
+      },
+    ]
+
     gData.nodes.forEach((it) => {
       it.connection = gData.links.filter((e) => e.target === it.id).length || 1
       // it.size = gData.links.filter((e) => e.target === it.id).length || 1
@@ -100,7 +164,7 @@ export function DirectForceGraph({}) {
       // if (it.size >= 7) {
       //   it.size = 7
       // }
-      it.size *= 0.5
+      it.size *= 1.0
     })
 
     myGraph.graphData(gData)
@@ -112,9 +176,8 @@ export function DirectForceGraph({}) {
     myGraph.linkOpacity(1)
     myGraph.linkWidth(1)
 
-    myGraph.dagLevelDistance(15)
-    myGraph.dagMode('bu')
-
+    myGraph.dagLevelDistance(30)
+    myGraph.dagMode('td')
     myGraph.numDimensions(3)
 
     let resetDAG = () => {
@@ -215,6 +278,7 @@ export function DirectForceGraph({}) {
 
     let temp3D = new Object3D()
     let i = 0
+
     myGraph.nodeThreeObjectExtend((it) => {
       if (it.__threeObj) {
         // if (it.connection >= 4) {
@@ -238,7 +302,10 @@ export function DirectForceGraph({}) {
           temp3D.updateMatrix()
           instMesh.setMatrixAt(i, temp3D.matrix)
           instMesh.instanceMatrix.needsUpdate = true
+
+          mapForNumberNode.set(`${i}`, it.__threeObj.__data)
         }
+
         i++
         i = i % instMesh.count
 
@@ -313,7 +380,7 @@ export function DirectForceGraph({}) {
 
       // cancelAnimationFrame(rAFID)
     }
-  }, [camera, controls, gl, myGraph])
+  }, [camera, controls, gl, mapForNumberNode, myGraph])
 
   return (
     <>
@@ -353,6 +420,16 @@ export function DirectForceGraph({}) {
             controls.enabled = true
           }
           document.body.style.cursor = 'grab'
+
+          if (ev.object.isInstancedMesh) {
+            console.log(
+              ev.object,
+              mapForNumberNode.get(ev.instanceId + ''),
+              ev.instanceId + ''
+            )
+          }
+          //
+          //
         }}
         onPointerDown={(ev) => {
           if (controls) {

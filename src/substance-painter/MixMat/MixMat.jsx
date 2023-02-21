@@ -1,7 +1,7 @@
 import { getID } from '@/lib/getID'
 import { useFrame, useThree } from '@react-three/fiber'
 import { forwardRef, useMemo } from 'react'
-import { Clock, RepeatWrapping, TextureLoader } from 'three'
+import { Clock, TextureLoader } from 'three'
 import { CanvasDrawTexture } from './CanvasDrawTexture'
 import fragmentShader from './shader/fragmentShader.glsl'
 import vertexShader from './shader/vertexShader.glsl'

@@ -16,10 +16,10 @@ import {
 } from '@react-three/drei'
 // import { AmbientLight } from 'three140'
 import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
-import { CoreReady } from '@/content-landing-page/Core/Core'
+// import { CoreReady } from '@/content-landing-page/Core/Core'
 import { BirdWalk } from '@/content-landing-page/BirdWalk/BirdWalk'
 import { Perf } from 'r3f-perf'
-import { TheVortex } from '@/content-landing-page/TheVortex/TheVortex'
+// import { TheVortex } from '@/content-landing-page/TheVortex/TheVortex'
 
 export function Hero() {
   return (

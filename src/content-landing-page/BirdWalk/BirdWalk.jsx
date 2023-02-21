@@ -21,12 +21,12 @@ import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { AvaZoom } from './AvaZoom'
 import { BirdCamSync } from './BirdCamSync'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
-import { PlaneBufferGeometry } from 'three'
+// import { PlaneBufferGeometry } from 'three'
 import { BoxBufferGeometry, DoubleSide } from 'three'
 import { Mesh } from 'three'
 import { MeshBasicMaterial } from 'three140'
 import { Color } from 'three'
-import { MeshReflectorMaterial } from '@react-three/drei'
+// import { MeshReflectorMaterial } from '@react-three/drei'
 
 export function BirdWalk() {
   let gl = useThree((s) => s.gl)
@@ -49,6 +49,8 @@ export function BirdWalk() {
     if (level < 0) {
       return null
     }
+
+    window.follow = aCore.player
 
     return (
       <AvatarGuide
@@ -85,6 +87,18 @@ export function BirdWalk() {
   let cloneQuerlo = clone(querlo.scene)
   colliderScene.add(cloneQuerlo)
 
+  let querlo2 = {
+    scene: clone(querlo.scene),
+  }
+  querlo2.scene.position.x += 50
+  colliderScene.add(querlo2.scene)
+
+  let querlo3 = {
+    scene: clone(querlo.scene),
+  }
+  querlo3.scene.position.x -= 50
+  colliderScene.add(querlo3.scene)
+
   let island = cloneQuerlo.getObjectByName('island')
 
   /*
@@ -114,6 +128,8 @@ export function BirdWalk() {
   return (
     <group>
       <primitive object={cloneQuerlo}></primitive>
+      <primitive object={querlo2.scene}> </primitive>
+      <primitive object={querlo3.scene}> </primitive>
 
       {/* {island &&
         createPortal(
