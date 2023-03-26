@@ -15,7 +15,7 @@ import {
 } from '@react-three/drei'
 // import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { AvatarGuide } from './AvatarGuide'
-import { useMemo } from 'react'
+import { Suspense, useMemo } from 'react'
 import { Object3D, RepeatWrapping } from 'three'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
@@ -29,44 +29,48 @@ import { MeshBasicMaterial } from 'three140'
 import { Color } from 'three'
 // import { MeshReflectorMaterial } from '@react-three/drei'
 
-export function BirdWalk() {
+export function BirdWalk({
+  fromPos = [-114.53729027988135, -3.5075186591256147, 38.81601512130067],
+}) {
   let gl = useThree((s) => s.gl)
   let camera = useThree((s) => s.camera)
 
   let destObj = useMemo(() => {
     let dd = new Object3D()
     dd.position.y = 1.0
+
     return dd
   }, [])
+  destObj.position.fromArray(fromPos)
 
-  let clothes = [
-    //
-    `/scene/2023-01-07-skycity/lok-dune.glb`,
-    `/scene/2023-01-07-skycity/lok-jacket.glb`,
-    `/scene/2023-01-07-skycity/lok-groom.glb`,
-    `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
-  ]
-  let makeFollower = (collider, level = 3, aCore) => {
-    if (level < 0) {
-      return null
-    }
+  // let clothes = [
+  //   //
+  //   `/scene/2023-01-07-skycity/lok-dune.glb`,
+  //   `/scene/2023-01-07-skycity/lok-jacket.glb`,
+  //   `/scene/2023-01-07-skycity/lok-groom.glb`,
+  //   `/scene/2023-01-07-skycity/lok-dark-armor.glb`,
+  // ]
+  // let makeFollower = (collider, level = 3, aCore) => {
+  //   if (level < 0) {
+  //     return null
+  //   }
 
-    window.follow = aCore.player
+  //   window.follow = aCore.player
 
-    return (
-      <AvatarGuide
-        offset={[0.01, 1, 0]}
-        chaseDist={1.2}
-        speed={aCore.playerSpeed * 0.98}
-        destObj={aCore.player}
-        collider={collider}
-        avatarUrl={clothes[level % clothes.length]}
-        onACore={(aCore) => {
-          return <group>{makeFollower(collider, level - 1, aCore)}</group>
-        }}
-      ></AvatarGuide>
-    )
-  }
+  //   return (
+  //     <AvatarGuide
+  //       offset={[0.01, 1, 0]}
+  //       chaseDist={1.2}
+  //       speed={aCore.playerSpeed * 0.98}
+  //       destObj={aCore.player}
+  //       collider={collider}
+  //       avatarUrl={clothes[level % clothes.length]}
+  //       onACore={(aCore) => {
+  //         return <group>{makeFollower(collider, level - 1, aCore)}</group>
+  //       }}
+  //     ></AvatarGuide>
+  //   )
+  // }
 
   let colliderScene = new Object3D() // clone(glb.scene)
   // let floor = new Mesh(
@@ -130,6 +134,7 @@ export function BirdWalk() {
           ></MeshTransmissionMaterial>*/
   // let tex = useEnvironment({ preset: 'apartment' })
   let controls = useThree((r) => r.controls)
+
   return (
     <group>
       <primitive object={cloneQuerlo}></primitive>
@@ -156,8 +161,8 @@ export function BirdWalk() {
         makeDefault
         enableRotate={false}
         enablePan={false}
-        object-position={[0, 25, 25]}
-        target={[0, 0, 0]}
+        object-position={[fromPos[0], fromPos[1] + 25, fromPos[2] + 25]}
+        target={fromPos}
       ></OrbitControls>
 
       <Collider
@@ -173,9 +178,7 @@ export function BirdWalk() {
               >
                 {/* <primitive object={showGLB}></primitive> */}
               </group>
-
               {/*  */}
-
               {/* <group position={[0, 1.5, 0]}>
                 <group position={[5.523, 6.087, -14.196]}>
                   <group scale={0.075}>
@@ -183,7 +186,6 @@ export function BirdWalk() {
                   </group>
                 </group>
               </group> */}
-
               {/* <WalkerGame
                 startAt={[
                   0, 1.5, 0,
@@ -200,21 +202,16 @@ export function BirdWalk() {
               ></WalkerGame>
 
               <Avatar></Avatar> */}
-
               {/* <AvatarChaser collider={collider}></AvatarChaser> */}
 
               <AvatarGuide
-                offset={[0, 2, 0]}
+                offset={[0, 0, 0]}
                 chaseDist={1}
                 speed={2}
                 destObj={destObj}
                 collider={collider}
                 avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
                 onACore={(aCore) => {
-                  let fromPos = [
-                    -114.53729027988135, -3.5075186591256147, 38.81601512130067,
-                  ]
-
                   if (controls) {
                     controls.object.position.set(
                       fromPos[0],
@@ -235,13 +232,10 @@ export function BirdWalk() {
                   )
                 }}
               ></AvatarGuide>
-
               {/*  */}
               <Mouse3D collider={collider} mouse3d={destObj}></Mouse3D>
-
               {/*  */}
               <AvaZoom mouse3d={destObj}></AvaZoom>
-
               {/*  */}
               <Noodle mouse3d={destObj}></Noodle>
             </group>

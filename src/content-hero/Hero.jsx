@@ -19,6 +19,7 @@ import { Bloom, EffectComposer, SSR } from '@react-three/postprocessing'
 // import { CoreReady } from '@/content-landing-page/Core/Core'
 import { BirdWalk } from '@/content-landing-page/BirdWalk/BirdWalk'
 import { Perf } from 'r3f-perf'
+import { Suspense } from 'react'
 // import { TheVortex } from '@/content-landing-page/TheVortex/TheVortex'
 
 export function Hero() {
@@ -32,6 +33,7 @@ export function Hero() {
 }
 
 function Content() {
+  let fromPos = [-114.53729027988135, -3.5075186591256147, 38.81601512130067]
   return (
     <group rotation={[0, 0, 0]}>
       <PerspectiveCamera position={[0, 0, 0]} makeDefault></PerspectiveCamera>
@@ -70,13 +72,13 @@ function Content() {
         </group>
       </group>
 
-      <Environment preset='apartment'></Environment>
-
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={0.65} mipmapBlur intensity={2}></Bloom>
       </EffectComposer>
 
-      <BirdWalk></BirdWalk>
+      <Suspense fallback={<></>}>
+        <BirdWalk fromPos={fromPos}></BirdWalk>
+      </Suspense>
 
       {process.env.NODE_ENV === 'development' && (
         <Perf
