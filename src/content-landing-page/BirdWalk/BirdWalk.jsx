@@ -156,7 +156,7 @@ export function BirdWalk() {
         makeDefault
         enableRotate={false}
         enablePan={false}
-        object-position={[0, 50, 50]}
+        object-position={[0, 25, 25]}
         target={[0, 0, 0]}
       ></OrbitControls>
 
