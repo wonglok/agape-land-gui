@@ -73,7 +73,7 @@ function Content() {
       <Environment preset='apartment'></Environment>
 
       <EffectComposer disableNormalPass>
-        <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1}></Bloom>
+        <Bloom luminanceThreshold={0.65} mipmapBlur intensity={2}></Bloom>
       </EffectComposer>
 
       <BirdWalk></BirdWalk>
