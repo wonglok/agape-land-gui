@@ -11,11 +11,12 @@ import {
   MeshTransmissionMaterial,
   OrbitControls,
   useEnvironment,
+  useGLTF,
 } from '@react-three/drei'
 // import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
 import { AvatarGuide } from './AvatarGuide'
 import { useMemo } from 'react'
-import { Object3D } from 'three'
+import { Object3D, RepeatWrapping } from 'three'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
 import { AvaZoom } from './AvaZoom'
@@ -68,16 +69,17 @@ export function BirdWalk() {
   }
 
   let colliderScene = new Object3D() // clone(glb.scene)
-  let floor = new Mesh(
-    new BoxBufferGeometry(2000, 0.1, 2000),
-    new MeshBasicMaterial({ color: new Color('#ffbaba') })
-  )
-  floor.position.y = -1
+  // let floor = new Mesh(
+  //   new BoxBufferGeometry(2000, 0.1, 2000),
+  //   new MeshBasicMaterial({ color: new Color('#ffbaba') })
+  // )
+  // floor.position.y = -1
 
-  //
-  let querlo = useGLBLoader(`/xr/upsacel4x/querlo-island.glb`)
+  //public/
+  let querlo = useGLTF(`/places/grass/grass.glb`)
+  // let querlo = useGLBLoader(`/xr/upsacel4x/querlo-island.glb`)
 
-  colliderScene.add(floor)
+  // colliderScene.add(floor)
   colliderScene.traverse((it) => {
     if (it.name === 'ground') {
       it.visible = false
@@ -86,20 +88,23 @@ export function BirdWalk() {
 
   let cloneQuerlo = clone(querlo.scene)
   colliderScene.add(cloneQuerlo)
-
-  let querlo2 = {
-    scene: clone(querlo.scene),
+  let island = cloneQuerlo.getObjectByName('Terrain001')
+  if (island) {
+    island.material.map.wrapS = island.material.map.wrapS = RepeatWrapping
+    island.material.map.repeat.set(30, 30)
   }
-  querlo2.scene.position.x += 50
-  colliderScene.add(querlo2.scene)
 
-  let querlo3 = {
-    scene: clone(querlo.scene),
-  }
-  querlo3.scene.position.x -= 50
-  colliderScene.add(querlo3.scene)
+  // let querlo2 = {
+  //   scene: clone(querlo.scene),
+  // }
+  // querlo2.scene.position.x += 50
+  // colliderScene.add(querlo2.scene)
 
-  let island = cloneQuerlo.getObjectByName('island')
+  // let querlo3 = {
+  //   scene: clone(querlo.scene),
+  // }
+  // querlo3.scene.position.x -= 50
+  // colliderScene.add(querlo3.scene)
 
   /*
 
@@ -128,8 +133,8 @@ export function BirdWalk() {
   return (
     <group>
       <primitive object={cloneQuerlo}></primitive>
-      <primitive object={querlo2.scene}> </primitive>
-      <primitive object={querlo3.scene}> </primitive>
+      {/* <primitive object={querlo2.scene}> </primitive>
+      <primitive object={querlo3.scene}> </primitive> */}
 
       {/* {island &&
         createPortal(
@@ -151,14 +156,10 @@ export function BirdWalk() {
         makeDefault
         enableRotate={false}
         enablePan={false}
-        object-position={[0, 20, 40]}
+        object-position={[0, 50, 50]}
         target={[0, 0, 0]}
       ></OrbitControls>
 
-      {/* <gridHelper
-        rotation-y={Math.PI * 0.25}
-        args={[300, 100, '#8F6A1A', '#8F6A1A']}
-      /> */}
       <Collider
         scene={colliderScene}
         onReady={(collider) => {

@@ -1,5 +1,13 @@
 export function CanvasDrawTexture(parentTexture) {
   this._canvas = document.createElement('canvas')
+  document.body.appendChild(this._canvas)
+  this._canvas.style.position = 'fixed'
+  this._canvas.style.top = '0px'
+  this._canvas.style.width = '100px'
+  this._canvas.style.height = '100px'
+  this._canvas.style.background = 'red'
+  this._canvas.style.left = '0px'
+  this._canvas.style.zIndex = 100000
   this._canvas.width = this._canvas.height = 1024
   this._context2D = this._canvas.getContext('2d')
 

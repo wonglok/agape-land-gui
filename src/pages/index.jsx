@@ -1,3 +1,3 @@
-import { Zoom } from '@/content-zoom/Zoom'
+import { Hero } from '@/content-hero/Hero'
 
-export default Zoom
+export default Hero

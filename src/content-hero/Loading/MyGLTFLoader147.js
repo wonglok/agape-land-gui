@@ -3190,7 +3190,7 @@ class GLTFParser {
               anime({
                 targets: [shader.uniforms.progress],
                 value: 1,
-                duration: 8000,
+                duration: 15000,
                 delay: 0,
                 easing: 'linear',
                 // direction: 'alternate',
@@ -3206,7 +3206,7 @@ class GLTFParser {
             setInterval(() => {
               if (window?.follow?.position) {
                 shader.uniforms.target.value.copy(window?.follow?.position)
-                shader.uniforms.target.value.y += 2
+                shader.uniforms.target.value.y += 0
               }
             })
 
