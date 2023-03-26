@@ -215,7 +215,7 @@ export function BirdWalk() {
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
 
-                      {makeFollower(collider, 3, aCore)}
+                      {/* {makeFollower(collider, 0, aCore)} */}
                     </group>
                   )
                 }}

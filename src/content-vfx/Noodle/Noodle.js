@@ -22,7 +22,7 @@ export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
   let gl = useThree((s) => s.gl)
 
   let howManyTracker = 64
-  let howLongTail = 64
+  let howLongTail = 32
 
   let { chaser, group } = useMemo(() => {
     let group = new Object3D()
@@ -48,7 +48,7 @@ export function Noodle({ mouse3d = false, nameToChase = `myself-player` }) {
         delta.set(0, 0, radius)
         delta.applyAxisAngle(up, t * speed)
         adder.add(delta)
-        chaser.position.lerp(adder, 0.03)
+        chaser.position.lerp(adder, 0.13)
       }
     })
 
