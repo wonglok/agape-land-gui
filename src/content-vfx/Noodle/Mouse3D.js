@@ -59,6 +59,8 @@ export function Mouse3D({ collider, mouse3d }) {
           mouse3d.position.addScaledVector(res.face.normal, 1.0)
 
           mouse3d.position.lerp(mouse3d.position, 1)
+
+          console.log(mouse3d.position.toArray())
         }
       }
     }

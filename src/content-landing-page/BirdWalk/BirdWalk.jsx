@@ -129,7 +129,7 @@ export function BirdWalk() {
             }}
           ></MeshTransmissionMaterial>*/
   // let tex = useEnvironment({ preset: 'apartment' })
-
+  let controls = useThree((r) => r.controls)
   return (
     <group>
       <primitive object={cloneQuerlo}></primitive>
@@ -204,13 +204,28 @@ export function BirdWalk() {
               {/* <AvatarChaser collider={collider}></AvatarChaser> */}
 
               <AvatarGuide
-                offset={[0, 2, 2]}
+                offset={[0, 2, 0]}
                 chaseDist={1}
                 speed={2}
                 destObj={destObj}
                 collider={collider}
                 avatarUrl={`/scene/2023-01-07-skycity/loklok-space-ava.glb`}
                 onACore={(aCore) => {
+                  let fromPos = [
+                    -114.53729027988135, -3.5075186591256147, 38.81601512130067,
+                  ]
+
+                  if (controls) {
+                    controls.object.position.set(
+                      fromPos[0],
+                      fromPos[1] + 25,
+                      fromPos[2] + 25
+                    )
+                    controls.target.fromArray(fromPos)
+                  }
+
+                  aCore.player.position.fromArray(fromPos)
+                  destObj.position.fromArray(fromPos)
                   return (
                     <group>
                       <BirdCamSync player={aCore.player}></BirdCamSync>
