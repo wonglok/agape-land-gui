@@ -1,5 +1,5 @@
 import { Collider } from '@/lib/collider/Collider'
-import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
+// import { useGLBLoader } from '@/lib/glb-loader/useGLBLoader'
 // import { WalkerGame } from '@/lib/walker/WalkerGame'
 // import { Avatar } from '../Avatar/Avatar'
 import { createPortal, useThree } from '@react-three/fiber'
@@ -14,8 +14,9 @@ import {
   useGLTF,
 } from '@react-three/drei'
 // import { AvatarChaser } from '../AvatarChaser/AvatarChaser'
+//Suspense,
 import { AvatarGuide } from './AvatarGuide'
-import { Suspense, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Object3D, RepeatWrapping } from 'three'
 import { Mouse3D } from '@/content-vfx/Noodle/Mouse3D'
 import { Noodle } from '@/content-vfx/Noodle/Noodle'
@@ -23,10 +24,10 @@ import { AvaZoom } from './AvaZoom'
 import { BirdCamSync } from './BirdCamSync'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils'
 // import { PlaneBufferGeometry } from 'three'
-import { BoxBufferGeometry, DoubleSide } from 'three'
-import { Mesh } from 'three'
-import { MeshBasicMaterial } from 'three140'
-import { Color } from 'three'
+// import { BoxBufferGeometry, DoubleSide } from 'three'
+// import { Mesh } from 'three'
+// import { MeshBasicMaterial } from 'three140'
+// import { Color } from 'three'
 // import { MeshReflectorMaterial } from '@react-three/drei'
 
 export function BirdWalk({
@@ -243,7 +244,7 @@ export function BirdWalk({
         }}
       ></Collider>
 
-      <Environment preset='apartment' background></Environment>
+      <Environment files={`/hdr/shanghai_bund_1k.hdr`} background></Environment>
     </group>
   )
 }

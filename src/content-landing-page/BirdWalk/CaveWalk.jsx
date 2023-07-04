@@ -264,7 +264,7 @@ export function CaveWalk({ fromPos = [0, 0, 0] }) {
         }}
       ></Collider>
 
-      <Environment preset='apartment' background></Environment>
+      <Environment files={`/hdr/shanghai_bund_1k.hdr`} background></Environment>
     </group>
   )
 }

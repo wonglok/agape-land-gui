@@ -108,7 +108,7 @@ export function MetaverseContent({
 
       <Avatar></Avatar>
 
-      <Environment preset='apartment'></Environment>
+      <Environment files={`/hdr/shanghai_bund_1k.hdr`} background></Environment>
 
       {/* <EXR url={`/hdr/exr/nebula-1k.exr`}></EXR> */}
 

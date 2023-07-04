@@ -19,7 +19,7 @@ export default function Material() {
       <Canvas>
         <Suspense fallback={null}>
           <Content></Content>
-          <Environment preset='apartment'></Environment>
+          <Environment files={`/hdr/shanghai_bund_1k.hdr`}></Environment>
           <OrbitControls></OrbitControls>
         </Suspense>
 

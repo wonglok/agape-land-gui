@@ -3,8 +3,8 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { MathUtils, Object3D, Vector3 } from 'three'
 import { MeshBVH } from 'three-mesh-bvh'
-import { NoodleEmitter } from '../NoodleEmitter/NoodleEmitter'
-import { Noodle } from './Noodle'
+// import { NoodleEmitter } from '../NoodleEmitter/NoodleEmitter'
+// import { Noodle } from './Noodle'
 export function Mouse3D({ collider, mouse3d }) {
   let mouser = useRef({ isDown: false })
 

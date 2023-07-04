@@ -81,8 +81,6 @@ function Content() {
 
       {(right && createPortal(<primitive object={ribbon}></primitive>), right)} */}
 
-      {/* <Environment preset='apartment'></Environment> */}
-
       <Controllers
         hideRaysOnBlur={false}
         rayMaterial={new MeshBasicMaterial({ color: new Color('#ffffff') })}

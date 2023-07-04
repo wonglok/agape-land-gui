@@ -43,7 +43,7 @@ export function AvaLand() {
           <YoBB></YoBB>
         </Suspense>
 
-        <Environment preset='apartment'></Environment>
+        <Environment files={`/hdr/shanghai_bund_1k.hdr`}></Environment>
         <YoCam></YoCam>
         <YoBG></YoBG>
       </Suspense>

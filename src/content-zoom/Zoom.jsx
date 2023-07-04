@@ -264,7 +264,11 @@ export function Zoom() {
     <>
       <Canvas gl={{ antialias: true }}>
         {/*  */}
-        <Environment preset='lobby' blur={0.3}></Environment>
+        <Environment
+          background
+          blur={0.3}
+          files={`/hdr/shanghai_bund_1k.hdr`}
+        ></Environment>
 
         {/*  */}
         {/* <ZoomRPM></ZoomRPM> */}
