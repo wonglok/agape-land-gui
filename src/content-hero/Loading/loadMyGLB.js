@@ -109,6 +109,38 @@ material.onBeforeCompile = (shader, renderer) => {
           mat2 m = mat2(c, -s, s, c);
           return m * v;
         }
+
+
+        float dot2( in vec2 v ) { return dot(v,v); }
+        float dot2( in vec3 v ) { return dot(v,v); }
+        float ndot( in vec2 a, in vec2 b ) { return a.x*b.x - a.y*b.y; }
+
+        // Round Cone - exact   (https://www.shadertoy.com/view/tdXGWr)
+
+        float sdRoundCone( vec3 p, vec3 a, vec3 b, float r1, float r2 )
+        {
+          // sampling independent computations (only depend on shape)
+          vec3  ba = b - a;
+          float l2 = dot(ba,ba);
+          float rr = r1 - r2;
+          float a2 = l2 - rr*rr;
+          float il2 = 1.0/l2;
+
+          // sampling dependant computations
+          vec3 pa = p - a;
+          float y = dot(pa,ba);
+          float z = y - l2;
+          float x2 = dot2( pa*l2 - ba*y );
+          float y2 = y*y*l2;
+          float z2 = z*z*l2;
+
+          // single square root!
+          float k = sign(rr)*rr*rr*x2;
+          if( sign(z)*a2*z2>k ) return  sqrt(x2 + z2)        *il2 - r2;
+          if( sign(y)*a2*y2<k ) return  sqrt(x2 + y2)        *il2 - r1;
+                                return (sqrt(x2*a2*il2)+y*rr)*il2 - r1;
+        }
+
       `
 
   let atEnd = `
@@ -140,6 +172,25 @@ material.onBeforeCompile = (shader, renderer) => {
               gl_FragColor.rgb += gl_FragColor.rgb * gridColorPattern * fade * raveColor.rgb * 2.0;
             }
           }
+
+          float hit = sdRoundCone(mvPos4.xyz, vec3(vCamPos.x, vCamPos.y, vCamPos.z), vec3(target.x, target.y + 0.5, target.z), 1.0, 0.5);
+
+          if (hit <= 0.0) {
+
+            float diff = 30.0;
+
+            float a = mod(gl_FragCoord.x, diff) - diff * 0.5;
+            float b = mod(gl_FragCoord.y, diff) - diff * 0.5;
+
+            if (length(vec2(a,b)) > diff * 0.1) {
+              discard;
+            } else {
+              discard;
+            }
+
+            return;
+          }
+
 
           //
           // float raidus = length(vCamPos.xyz - target) / 20.0;

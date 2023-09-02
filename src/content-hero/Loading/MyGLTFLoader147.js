@@ -3333,7 +3333,7 @@ class GLTFParser {
           //   }
           // }
 
-          float hit = sdRoundCone(mvPos4.xyz, vec3(vCamPos.x, vCamPos.y, vCamPos.z), vec3(target.x, target.y + 1.0, target.z), 1.0, 0.1);
+          float hit = sdRoundCone(mvPos4.xyz, vec3(vCamPos.x, vCamPos.y, vCamPos.z), vec3(target.x, target.y + 0.5, target.z), 1.0, 0.5);
 
           if (hit <= 0.0) {
 
@@ -3342,9 +3342,11 @@ class GLTFParser {
             float a = mod(gl_FragCoord.x, diff) - diff * 0.5;
             float b = mod(gl_FragCoord.y, diff) - diff * 0.5;
 
-            if (length(vec2(a,b)) > diff * 0.25) {
+            if (length(vec2(a,b)) > diff * 0.1) {
               discard;
             }
+
+            return;
           }
 
           //

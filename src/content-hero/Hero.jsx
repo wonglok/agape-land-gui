@@ -46,6 +46,7 @@ function Content() {
         enableRotate={false}
       ></MapControls> */}
       {/*  */}
+
       <Background></Background>
 
       <group position={[0, -5, 0]} rotation={[0, Math.PI * 0.25 * 0.0, 0]}>
