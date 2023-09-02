@@ -3269,6 +3269,38 @@ class GLTFParser {
           mat2 m = mat2(c, -s, s, c);
           return m * v;
         }
+
+
+        float dot2( in vec2 v ) { return dot(v,v); }
+        float dot2( in vec3 v ) { return dot(v,v); }
+        float ndot( in vec2 a, in vec2 b ) { return a.x*b.x - a.y*b.y; }
+
+        // Round Cone - exact   (https://www.shadertoy.com/view/tdXGWr)
+
+        float sdRoundCone( vec3 p, vec3 a, vec3 b, float r1, float r2 )
+        {
+          // sampling independent computations (only depend on shape)
+          vec3  ba = b - a;
+          float l2 = dot(ba,ba);
+          float rr = r1 - r2;
+          float a2 = l2 - rr*rr;
+          float il2 = 1.0/l2;
+
+          // sampling dependant computations
+          vec3 pa = p - a;
+          float y = dot(pa,ba);
+          float z = y - l2;
+          float x2 = dot2( pa*l2 - ba*y );
+          float y2 = y*y*l2;
+          float z2 = z*z*l2;
+
+          // single square root!
+          float k = sign(rr)*rr*rr*x2;
+          if( sign(z)*a2*z2>k ) return  sqrt(x2 + z2)        *il2 - r2;
+          if( sign(y)*a2*y2<k ) return  sqrt(x2 + y2)        *il2 - r1;
+                                return (sqrt(x2*a2*il2)+y*rr)*il2 - r1;
+        }
+
       `
 
             let atEnd = `
@@ -3284,20 +3316,34 @@ class GLTFParser {
           //   gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
           // }
 
-          vec3 center = vec3(0.0, 0.0, 0.0);
-          float distFromTarget = length(mvPos4.xyz - target.xyz);
-          float turnOnDistance = progress * 130.0;
-          float thickness = 10.0;
+          // vec3 center = vec3(0.0, 0.0, 0.0);
+          // float distFromTarget = length(mvPos4.xyz - target.xyz);
+          // float turnOnDistance = progress * 130.0;
+          // float thickness = 10.0;
 
-          vec4 patternNormal = texture2D(pattern, rotate2d(myUV * 2.5, progress * 0.25 * 0.0));
-          float gridColorPattern = abs(dot(normalize(patternNormal.rgb), normalize(mvPos4.xyz))) * 5.0;
-          if (distFromTarget >= turnOnDistance - thickness && distFromTarget <= (turnOnDistance) + thickness) {
-            float fade = (1.0 - abs(distFromTarget - turnOnDistance) / (thickness));
+          // vec4 patternNormal = texture2D(pattern, rotate2d(myUV * 2.5, progress * 0.25 * 0.0));
+          // float gridColorPattern = abs(dot(normalize(patternNormal.rgb), normalize(mvPos4.xyz))) * 5.0;
+          // if (distFromTarget >= turnOnDistance - thickness && distFromTarget <= (turnOnDistance) + thickness) {
+          //   float fade = (1.0 - abs(distFromTarget - turnOnDistance) / (thickness));
 
-            if (length(gl_FragColor.rgb) <= 0.1) {
-              gl_FragColor.rgb += gridColorPattern * fade * raveColor.rgb * 2.0;
-            } else {
-              gl_FragColor.rgb += gl_FragColor.rgb * gridColorPattern * fade * raveColor.rgb * 2.0;
+          //   if (length(gl_FragColor.rgb) <= 0.1) {
+          //     gl_FragColor.rgb += gridColorPattern * fade * raveColor.rgb * 2.0;
+          //   } else {
+          //     gl_FragColor.rgb += gl_FragColor.rgb * gridColorPattern * fade * raveColor.rgb * 2.0;
+          //   }
+          // }
+
+          float hit = sdRoundCone(mvPos4.xyz, vec3(vCamPos.x, vCamPos.y, vCamPos.z), vec3(target.x, target.y + 1.0, target.z), 1.0, 0.1);
+
+          if (hit <= 0.0) {
+
+            float diff = 30.0;
+
+            float a = mod(gl_FragCoord.x, diff) - diff * 0.5;
+            float b = mod(gl_FragCoord.y, diff) - diff * 0.5;
+
+            if (length(vec2(a,b)) > diff * 0.25) {
+              discard;
             }
           }
 
@@ -3316,27 +3362,29 @@ class GLTFParser {
           // float diffTargetFragment = length(mvPos4.xyz - target.xyz);
           //
 
-          float diff = length((vCamPos.xyz * 0.95 + target * 0.05) - mvPos4.xyz);
+          // sdRoundCone
 
-          bool cutOff = false;
+          // float diff = length((vCamPos.xyz * 0.95 + target * 0.05) - mvPos4.xyz);
 
-          float radius = length(vCamPos.xyz - target.xyz);
-          radius = radius * 0.1;
+          // bool cutOff = false;
 
-          if (diff < radius) {
-            cutOff = true;
-          }
+          // float radius = length(vCamPos.xyz - target.xyz);
+          // radius = radius * 0.1;
 
-          if (cutOff) {
-            float diff = 30.0;
+          // if (diff < radius) {
+          //   cutOff = true;
+          // }
 
-            float a = mod(gl_FragCoord.x, diff) - diff * 0.5;
-            float b = mod(gl_FragCoord.y, diff) - diff * 0.5;
+          // if (cutOff) {
+          //   float diff = 30.0;
 
-            if (length(vec2(a,b)) > diff * 0.25) {
-              discard;
-            }
-          }
+          //   float a = mod(gl_FragCoord.x, diff) - diff * 0.5;
+          //   float b = mod(gl_FragCoord.y, diff) - diff * 0.5;
+
+          //   if (length(vec2(a,b)) > diff * 0.25) {
+          //     discard;
+          //   }
+          // }
       `
             //
             shader.fragmentShader = `${atBeginF.trim()}\n${
