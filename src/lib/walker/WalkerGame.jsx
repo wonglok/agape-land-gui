@@ -46,7 +46,7 @@ export function WalkerGame({
   return (
     <group>
       <group>
-        {/* {collider && <WalkerCam collider={collider}></WalkerCam>} */}
+        {collider && <WalkerCam collider={collider}></WalkerCam>}
         <primitive visible={false} object={game.player}></primitive>
       </group>
     </group>
